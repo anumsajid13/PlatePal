@@ -1,0 +1,170 @@
+/* Navbar styles */
+
+@import url("https://fonts.googleapis.com/css2?family=Calistoga&family=Chonburi&family=EB+Garamond:ital,wght@1,500&family=Elsie:wght@400;900&family=IBM+Plex+Sans:wght@600&family=Marcellus&family=Montserrat:wght@100;500&family=Outfit&family=Poppins:ital@1&family=Quattrocento&display=swap");
+
+.body {
+  font-family: "Quattrocento";
+  font-weight: bold;
+}
+.navbar {
+  background-color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.2%;
+}
+
+.logo {
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: Chonburi;
+  margin-left: 2%;
+}
+/* Add these styles for the search bar */
+.search-bar {
+  display: flex;
+  align-items: center;
+}
+
+/* Update the width of the search input in .search-bar input */
+.search-bar input {
+  width: 500px; /* Set your desired width */
+  padding: 8px;
+  margin-right: 10px;
+  border: 2px solid rgb(90, 127, 237);
+  border-radius: 5px;
+  font-size: 14px;
+}
+.search-button {
+  color: rgb(90, 127, 237) !important; /* Set your desired color */
+  border: none;
+  padding: 5px;
+  border-radius: 2px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  font-family: "Quattrocento";
+  font-weight: bold;
+}
+
+.nav-links div {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+/* Best Food container styles */
+.best-food-container {
+  background-color: rgb(252, 130, 178);
+  margin: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: row; /* Change to column layout */
+  height: auto;
+  padding: 40px;
+  border-radius: 15px; /* Add rounded edges */
+  gap: 20%;
+}
+
+.best-food-text {
+  font-family: Chonburi;
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 10px; /* Add margin between text and image */
+}
+.image {
+  height: auto;
+  width: 50%; /* Adjust the width of the image container */
+}
+
+.best-food-image {
+  max-width: 100%;
+  max-height: 300px; /* Set a maximum height for the image */
+  border-radius: 10px; /* Add rounded edges to the image */
+  align-self: flex-end; /* Align the image to the start (left side) */
+}
+
+.inline-text {
+  display: inline-block;
+  margin-right: 10px; /* Add some space between "The best delicious food" and the additional text */
+}
+/* Discover menu button styles */
+.discover-menu-button {
+  background-color: rgb(90, 127, 237); /* Green background color */
+  color: white; /* White text color */
+  border: none; /* Remove border */
+  padding: 15px 60px; /* Add padding */
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 10px; /* Add rounded edges */
+  cursor: pointer;
+  margin-top: 80px; /* Add margin from the text */
+  white-space: nowrap;
+}
+.additional-text {
+  font-family: "Quattrocento";
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.category-container {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.category {
+  padding: 10px;
+  margin-right: 17px;
+  cursor: pointer;
+  border: 1px solid;
+  border-radius: 5px;
+  font-family: "Quattrocento";
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s; /* Add smooth transition effect */
+}
+
+/* Change color on hover */
+.category:hover {
+  background-color: rgb(90, 127, 237);
+  color: white;
+}
+
+.food-info-container {
+  display: flex;
+  gap: 10%;
+  margin-top: 20px;
+  border-radius: 10px; /* Add rounded edges */
+  overflow: hidden; /* Hide overflow content */
+}
+
+.food-info {
+  flex: 0 0 20%; /* Adjust the width of the food info */
+  text-align: center;
+  margin: 0 10px;
+  border: 2px solid rgb(90, 127, 237); /* Add border color */
+}
+
+.food-info img {
+  max-width: 100%;
+  max-height: 150px; /* Adjust the height of the image */
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.icon-link {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+/* Google Material Icons styles */
+.material-icons {
+  font-size: 24px;
+  vertical-align: middle;
+}
