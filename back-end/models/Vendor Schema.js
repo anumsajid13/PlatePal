@@ -1,8 +1,39 @@
 const mongoose = require('mongoose');
-const Person = require('./Notification Schema');
-const Notification = require('./Notification Schema');
+const Notification = require('./User_Notification Schema');
 
 const vendorSchema = new mongoose.Schema({
+
+    name: {
+        type: String,
+        required: true,
+    },
+      username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    
+    profilePicture: {
+        type: Buffer,
+        validate: {
+          validator: function (v) {   
+            return /\.(png|jpg|jpeg)$/.test(v);
+          },
+          message: props => `${props.value} is not a valid image file. Please use PNG, JPG, or JPEG.`,
+        },
+      },
+
+      address: String,
+
   certificationImage: {
     type: Buffer,
     validate: {
@@ -19,6 +50,6 @@ const vendorSchema = new mongoose.Schema({
   notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
 });
 
-const Vendor =  Person.discriminator('Vendor', vendorSchema);
+const Vendor =   mongoose.model('Vendor', vendorSchema);
 
-module.exports = Vendor;
+module.exports =  Vendor;
