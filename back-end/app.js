@@ -33,7 +33,8 @@ app.use(cors());
 
 
 app.use(express.json());
-
+const recipeSeekerRoutes = require('./RecipeSeeker/routes/signup_route');
+app.use('/recipeSeeker_signup', recipeSeekerRoutes);
 
 // Connecting to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/PlatePal', { useNewUrlParser: true });
