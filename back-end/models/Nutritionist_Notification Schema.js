@@ -10,6 +10,10 @@ const nutritionist_notificationSchema = new mongoose.Schema({
 type: {
   type: String, 
   required: true,
+},
+notification_text:
+{
+  type :String
 }
 });
 

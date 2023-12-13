@@ -11,9 +11,10 @@ type: {
   required: true,
 }
 ,
-reason: {
-  type: String, // Adjust the data type based on your report requirements
-},
+notification_text:
+{
+  type :String
+}
 });
 
 const admin_Notification = mongoose.model('admin_Notification', admin_notificationSchema);
