@@ -2,7 +2,9 @@ const Nutritionist = require('./Nutritionist Schema');
 const Admin = require('./Admin Schema');
 const isAdmin = require("./middleware");
 const admin_Notification = require('./Admin_Notification Schema');
-
+const Chef = require('./Chef Schema');
+const ChefNotification = require('./Chef_Notification Schema');
+const NutritionistBlockReport= require ('./NutritionistBlockReport Schema');
 // Endpoint to login admin
 app.post('/admin/login', async (req, res) => {
     const { username, password } = req.body;
@@ -61,35 +63,47 @@ router.post('/block-nutritionist/:nutritionistId', isAdmin, async (req, res) => 
     }
   });
   
-
-  // Endpoint to send a message or guidelines to a user
-app.post('/admin/send-message/:userId', isAdmin, async (req, res) => {
+// Endpoint to view nutritionist block reports
+router.get('/admin/view-nutritionist-block-reports', isAdmin, async (req, res) => {
     try {
-      const { userId } = req.params;
-      const { message } = req.body;
+      // Fetch all nutritionist block reports
+      const blockReports = await NutritionistBlockReport.find().populate('nutritionist');
   
-      // Find the user by ID (adjust this based on your user model)
-      const user = await User.findById(userId);
-  
-      if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-      }
-  
-      // Assuming your user model has a field for messages
-      user.messages.push({
-        from: req.user._id, // Admin sending the message
-        content: message,
-        timestamp: new Date(),
-      });
-  
-      await user.save();
-  
-      return res.json({ message: 'Message sent successfully' });
+      return res.json({ blockReports });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+ // Endpoint to send a message or guidelines to a nutritionist
+router.post('/admin/send-message-to-nutritionist/:nutritionistId', isAdmin, async (req, res) => {
+    try {
+      const { nutritionistId } = req.params;
+      const { message } = req.body;
+  
+      // Find the nutritionist by ID
+      const nutritionist = await Nutritionist.findById(nutritionistId);
+  
+      if (!nutritionist) {
+        return res.status(404).json({ error: 'Nutritionist not found' });
+      }
+  
+      // Assuming your Nutritionist model has a field for notifications
+      nutritionist.notifications.push({
+        content: message,
+        timestamp: new Date(),
+      });
+  
+      await nutritionist.save();
+  
+      return res.json({ message: 'Message sent successfully to nutritionist' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
 
 // Endpoint to delete a chef
 router.delete('/delete-chef/:chefId', isAdmin, async (req, res) => {
@@ -125,15 +139,14 @@ router.delete('/delete-chef/:chefId', isAdmin, async (req, res) => {
       // Block the chef
       chef.isBlocked = true;
       await chef.save();
-  
       return res.json({ message: 'Chef blocked successfully' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
-  
-  
+
+
 // Endpoint to retrieve all admin notifications
 app.get('/admin/notifications', isAdmin, async (req, res) => {
     try {
@@ -147,3 +160,4 @@ app.get('/admin/notifications', isAdmin, async (req, res) => {
   });
   
 
+  module.exports = router;
