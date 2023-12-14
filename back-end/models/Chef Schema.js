@@ -42,7 +42,7 @@ const chefSchema = new mongoose.Schema({
       validator: function (v) {   
         return /\.(pdf)$/.test(v);
       },
-      message: props => `${props.value} is not a valid image file. Please use PNG, JPG, or JPEG.`,
+      message: props => `${props.value} is not a valid  file. Please use a PDF`,
     },
   },
 
