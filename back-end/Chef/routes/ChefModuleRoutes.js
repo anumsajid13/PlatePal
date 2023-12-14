@@ -7,13 +7,13 @@ require('dotenv').config();
 const router = express.Router();
 
 
-router.post('/chef-signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
     const { name, username, email, password, address } = req.body;
   
     try {
 
       //check if all fields are not filled
-      if (!(req.body.name && req.body.username && req.body.email && req.body.password && req.user.address)) {
+      if (!(name && username && email && password && address)) {
             return res.status(400).json({ message:'All fields are not provided'});
       }
 
@@ -41,17 +41,18 @@ router.post('/chef-signup', async (req, res) => {
   
       res.status(201).json({ message: 'Chef signed up successfully' });
     } catch (error) {
+        
       res.status(500).json({ message: 'Server Error' });
     }
   });
 
-router.post('/chef-login', async (req,res) => {
+router.post('/login', async (req,res) => {
     const { email, password } = req.body;
 
     try{
 
         //find chef by email
-        const chef = await Chef.findOne({username});
+        const chef = await Chef.findOne({email});
 
         if(!chef){
             return res.status(404).json({ message: 'Chef not found' });
@@ -68,12 +69,13 @@ router.post('/chef-login', async (req,res) => {
         }
 
         //getting token using jwt
-        const token = jwt.sign({ id: chef._id, username: chef.username, chef: user.email}, process.env.SECRET);
+        const token = jwt.sign({ id: chef._id, username: chef.username, email: chef.email}, process.env.SECRET_KEY);
 
         res.status(200).json({ token });
 
     }
     catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Server Error' });
 
     }
