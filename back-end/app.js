@@ -33,8 +33,7 @@ app.use(cors());
 
 
 app.use(express.json());
-const recipeSeekerRoutes = require('./RecipeSeeker/routes/signup_route');
-app.use('/recipeSeeker_signup', recipeSeekerRoutes);
+
 
 // Connecting to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/PlatePal', { useNewUrlParser: true });
@@ -43,6 +42,9 @@ con.on('open', () => {
     console.log('Connected to MongoDB');
 });
 
+
+//chefModule Routes
+app.use('/chef', chefLoginSignUp);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
