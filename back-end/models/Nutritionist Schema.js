@@ -52,6 +52,8 @@ const nutritionistSchema = new mongoose.Schema({
   type: Date,
   default: null, // Initially set to null, indicating not blocked
 },
+followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'RecipeSeeker' }],
+
   notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'nutritionist_Notification' }],
 });
 
