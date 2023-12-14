@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const admin_notificationSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin' },
   Time: {
@@ -10,6 +9,11 @@ const admin_notificationSchema = new mongoose.Schema({
 type: {
   type: String, 
   required: true,
+}
+,
+notification_text:
+{
+  type :String
 }
 });
 

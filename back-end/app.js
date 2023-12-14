@@ -40,6 +40,14 @@ con.on('open', () => {
     console.log('Connected to MongoDB');
 });
 
+const chefLoginSignUp = require('./Chef/routes/ChefModuleRoutes')
+const User_Signin = require('./RecipeSeeker/routes/signin_route')
+const User_SignUp = require('./RecipeSeeker/routes/signup_route')
+//chefModule Routes
+app.use('/chef', chefLoginSignUp);
+//recepie seeker routes
+app.use('/recepieSeeker', User_Signin); 
+app.use('/recepieSeeker', User_SignUp);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
