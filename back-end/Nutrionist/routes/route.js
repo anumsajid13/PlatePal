@@ -1,4 +1,11 @@
 
+const express = require('express');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const nutritionist = require('../../models/Nutritionist Schema');
+require('dotenv').config();
+const router = express.Router();
 
 // Endpoint to handle nutritionist login
 router.post('/nutritionist-login', async (req, res) => {
@@ -27,7 +34,10 @@ router.post('/nutritionist-login', async (req, res) => {
         return res.status(401).json({ error: 'Invalid password' });
       }
   //have rto crate token rn
-  
+  // //getting token using jwt
+      //  const token = jwt.sign({ id: chef._id, username: chef.username, email: chef.email}, process.env.SECRET_KEY);
+
+      //  res.status(200).json({ token });
       return res.json({ message: 'Login successful', token });
     } catch (error) {
       console.error('Error during login:', error);
