@@ -20,8 +20,6 @@ const User_Nutritionist_Inbox = require('./models/User-Nutritionist_Inbox Schema
 const Vendor = require('./models/Vendor Schema');
 const VendorBlockReport = require('./models/VendorBlockReport Schema');
 const VendorCollaboration = require('./models/VendorCollaboration Schema');
-
-
 //app.js
 const express = require('express');
 const mongoose = require('mongoose');
