@@ -41,6 +41,9 @@ const nutritionistSchema = new mongoose.Schema({
       },
       message: props => `${props.value} is not a valid image file. Please use pdf.`,
     },
+  },allowSignup: {
+    type: Boolean,
+    default: false,
   },
   isBlocked:{
     type: Boolean,
