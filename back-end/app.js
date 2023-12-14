@@ -42,6 +42,7 @@ con.on('open', () => {
     console.log('Connected to MongoDB');
 });
 
+const chefLoginSignUp = require('./Chef/routes/ChefModuleRoutes')
 
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
