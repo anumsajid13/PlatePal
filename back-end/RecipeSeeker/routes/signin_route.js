@@ -1,12 +1,9 @@
 // Signin
-
-
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const RecipeSeeker = require('../../models/RecipeSeekerSchema');
 const router = express.Router();
-
 
 router.post('/signin', async (req, res) => {
     try {
