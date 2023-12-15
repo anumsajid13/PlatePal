@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const isAdmin = require('../middleware/isAdmin'); 
+const Chef = require('../models/Chef');
 
 const Nutritionist = require('../models/Nutritionist');
 
@@ -41,4 +42,43 @@ router.put('/allow-nutritionist-signup/:nutritionistId', isAdmin, async (req, re
     }
   });
   
+// Endpoint to view certification image of chefs
+router.get('/view-chef-certifications', isAdmin, async (req, res) => {
+    try {
+      const chefs = await Chef.find({}, 'name certificationImage');
+  
+      return res.json({ chefs });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
+  
+
+// Endpoint to change the boolean value to allow chefs to sign up
+router.put('/allow-chef-signup/:chefId', isAdmin, async (req, res) => {
+  try {
+    const { allowSignup } = req.body;
+    const chef = await Chef.findById(req.params.chefId);
+
+    if (!chef) {
+      return res.status(404).json({ error: 'Chef not found' });
+    }
+
+    chef.allowSignup = allowSignup;
+    await chef.save();
+
+    const message = allowSignup
+      ? 'Allow chef signup status updated successfully'
+      : 'Chef signup is currently not allowed';
+
+    return res.json({ message });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+
   module.exports=router;

@@ -43,4 +43,54 @@ router.post('/nutritionist-login', async (req, res) => {
     }
   });
   
+// Endpoint to sign up as a nutritionist
+router.post('/nutritionist-signup', async (req, res) => {
+  try {
+    const { name, username, email, password, profilePicture, address, certificationPictures } = req.body;
+
+    // Assuming you have validation and sanitation logic here
+
+    // Check if nutritionist signup is allowed
+    const allowSignup = await Nutritionist.findOne({ allowSignup: true });
+
+    if (!allowSignup) {
+      return res.status(403).json({ error: 'Nutritionist signup is currently not allowed' });
+    }
+
+     //check if all fields are not filled
+     if (!(name && username && email && password && address)) {
+      return res.status(400).json({ message:'All fields are not provided'});
+      }
+
+  //check if the username or email already exists
+  const existingN = await Nutritionist.findOne({ $or: [{ username }, { email }] });
+  if (existingN) {
+    return res.status(400).json({ message: 'Username or email already exists' });
+  }
+
+//hash the password
+const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new nutritionist
+    const newNutritionist = new Nutritionist({
+      name,
+      username,
+      email,
+      password:hashedPassword,
+      profilePicture,
+      address,
+      certificationPictures,
+      // Add other fields as needed
+    });
+
+    await newNutritionist.save();
+
+    return res.json({ message: 'Nutritionist signed up successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
   module.exports = router;
