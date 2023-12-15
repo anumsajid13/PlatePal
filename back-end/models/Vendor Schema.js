@@ -46,6 +46,12 @@ const vendorSchema = new mongoose.Schema({
   isBlocked:{
     type: Boolean,
     default: false,
+},blockCount: {
+  type: Number,
+  default: 0,
+}, unblockTime: {
+  type: Date,
+  default: null, // Initially set to null, indicating not blocked
 },
   notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
 });
