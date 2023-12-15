@@ -5,30 +5,34 @@ const Recipe = require('../../models/Recipe Schema');
 
 router.get('/allRecipes', async (req, res) => {
   try {
+    // Parse query parameters for pagination
+    const page = parseInt(req.query.page) || 1; // Default to page 1
+    const pageSize = parseInt(req.query.pageSize) || 10; // Default page size to 10
+
+    // Calculate the number of documents to skip
+    const skip = (page - 1) * pageSize;
+
     const recipes = await Recipe.find({})
       .populate({
-            path:'Rating',
-            populate:{
-                path:'ratingNumber user Time',
-                model:'Comment Schema'
-        }
-      })
-      .populate(
-        {
-            path:'comments',
-            populate:{
-                path:'comment user Time', //will have to make a route to display the name of the one who commented, cuz there are t2 possibilities: recepie seeekr or chef
-                model:'Comment'
-            }
-        }
-      )
-      .populate({
-        path: 'chef',
+        path: 'ratings',
         populate: {
-          path: 'name',
-          model: 'Chef Schema',
+          path: 'user',
+          model: 'RecipeSeeker',
         },
       })
+      .populate({
+        path: 'comments',
+        populate: {
+          path: 'user',
+          model: 'RecipeSeeker',
+        },
+      })
+      .populate({
+        path: 'chef',
+        model: 'Chef',
+      })
+      .skip(skip)
+      .limit(pageSize)
       .exec();
 
     res.status(200).json({ recipes });
