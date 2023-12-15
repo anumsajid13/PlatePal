@@ -21,9 +21,10 @@ router.post('/recipeSeeker_signup', upload.single('profilePicture'), async (req,
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword,
-      profilePicture: req.file ? req.file.buffer.toString('base64') : undefined, // Convert image buffer to base64
+      profilePicture: req.file ?`/uploads/${req.file.filename}` : undefined //req.file.buffer.toString('base64') : undefined,  Convert image buffer to base64
     });
 
+    
     const savedRecipeSeeker = await recipeSeeker.save();
     console.log("Saved to the DB")
     res.status(201).json({ message: 'Signup successful', data: savedRecipeSeeker });
