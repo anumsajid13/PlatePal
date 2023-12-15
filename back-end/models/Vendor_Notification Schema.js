@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 
 const Vendor_notificationSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
+  vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
+  chef:{type:mongoose.Schema.Types.ObjectId,ref:'Chef'},
   Time: {
     type: Date,
     default: Date.now,

@@ -4,10 +4,14 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Chef = require('../../models/Chef Schema');
 require('dotenv').config();
+const multer = require('multer');
 const router = express.Router();
 
+// Multer configuration
+//const storage = multer.memoryStorage(); // Store the image in memory
+//const upload = multer({ storage: storage });
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', /*upload.fields([ { name: 'certificationImage', maxCount: 1 }, { name: 'profilePicture', maxCount: 1 }]),*/ async (req, res) => {
     const { name, username, email, password, address } = req.body;
   
     try {
@@ -25,15 +29,18 @@ router.post('/signup', async (req, res) => {
   
       //hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
-  
-      
+
+      //const profilePictureBuffer = req.files['profilePicture'][0].buffer;
+      //const certificationImageBuffer = req.files['certificationImage'][0].buffer;
+
       const newChef = new Chef({
         name,
         username,
         email,
         password: hashedPassword,
         address,
-        //certificationImage,
+        //profilePicture: profilePictureBuffer,
+        //certificationImage: certificationImageBuffer,
       });
   
       //save the new Chef 
@@ -41,7 +48,7 @@ router.post('/signup', async (req, res) => {
   
       res.status(201).json({ message: 'Chef signed up successfully' });
     } catch (error) {
-        
+        console.error(error);
       res.status(500).json({ message: 'Server Error' });
     }
   });
@@ -75,7 +82,7 @@ router.post('/login', async (req,res) => {
 
     }
     catch (error) {
-        console.error(error);
+        
         res.status(500).json({ message: 'Server Error' });
 
     }

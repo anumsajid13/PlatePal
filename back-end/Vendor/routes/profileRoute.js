@@ -78,20 +78,13 @@ router.post("/register", async (req, res) => {
   });
 
   //edit profile
-  router.put('/editprofile', async (req, res) => {
+  router.put('/editprofile', authenticateToken, async (req, res) => {
     try {
-      const { name, email, address } = req.body;
-      if (!name || !email || !address) //validating all fields are filled
-      {  
-        return res.status(400).json({ message: 'All input fields are not filled.' });
-      }
-      const user = await vendor.findOne({ email });
-      if(!user){
+      const updatedUser = await vendor.findByIdAndUpdate(req.user.id, req.body, { new: true });
+      if(!updatedUser){
         return res.status(401).send("Invalid email.");
       }
-      user.name=name;
-      user.address=address;
-      await user.save();
+      await updatedUser.save();
       return res.status(200).send('Profile updated successfully');
     } catch (error) {
       console.error(error);
@@ -100,4 +93,16 @@ router.post("/register", async (req, res) => {
   });
 
   //delete profile
+  router.delete('/deleteprofile', authenticateToken, async (req, res) => {
+    try {
+      const deletedUser = await vendor.findByIdAndDelete(req.user.id);
+      if(!deletedUser){
+        return res.status(401).send("Invalid email.");
+      }
+      return res.status(200).send('Profile deleted successfully');
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("Internal Server Error");
+    }
+  });
   
