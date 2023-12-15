@@ -53,7 +53,8 @@ const vendorSchema = new mongoose.Schema({
   type: Date,
   default: null, // Initially set to null, indicating not blocked
 },
-  notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
+  notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }] //dont need this as a separate table already exists
+  //need to add a ingredients id
 });
 
 const Vendor =   mongoose.model('Vendor', vendorSchema);

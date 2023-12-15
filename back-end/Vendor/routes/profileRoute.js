@@ -1,8 +1,8 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const vendor = require('../../models/Vendor Schema');
+const authenticateToken = require('../../TokenAuthentication/token_authentication');
 const router = express.Router();
 require('dotenv').config();
  
