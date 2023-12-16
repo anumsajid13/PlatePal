@@ -4,8 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import useNavbarStore from './navbarStore';
 import useTokenStore from './tokenStore';
 import './SignIn.css';
-import { useHistory } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 
 const SignInPage =  () => {
     const navigate = useNavigate();
@@ -71,7 +69,6 @@ const SignInPage =  () => {
   };
 
   const signInAdmin = async () => {
-    const history = useHistory();
 
     try {
       const response = await fetch('http://localhost:9000/admin/login', {

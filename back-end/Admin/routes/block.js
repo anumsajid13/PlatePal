@@ -65,7 +65,7 @@ router.post('/block-chef/:chefId', authenticateToken, async (req, res) => {
 
   /////////////////////VIEW BLOCK REPORTS ///////////////////////////////////
 // Endpoint to view nutritionist block reports
-router.get('/admin/view-nutritionist-block-reports', autheticateToken , async (req, res) => {
+router.get('/view-nutritionist-block-reports', autheticateToken , async (req, res) => {
     try {
       // Fetch all nutritionist block reports
       const blockReports = await NutritionistBlockReport.find().populate('nutritionist');
@@ -77,7 +77,7 @@ router.get('/admin/view-nutritionist-block-reports', autheticateToken , async (r
     }
   });
 // Endpoint to view chef block reports
-router.get('/admin/view-chef-block-reports', autheticateToken , async (req, res) => {
+router.get('/view-chef-block-reports', autheticateToken , async (req, res) => {
     try {
       // Fetch all chef block reports
       const blockReports = await ChefBlockReport.find().populate('chef');
@@ -90,11 +90,11 @@ router.get('/admin/view-chef-block-reports', autheticateToken , async (req, res)
   });
   
   // Endpoint to view vendor block reports
-  router.get('/admin/view-vendor-block-reports', autheticateToken , async (req, res) => {
+  router.get('/view-vendor-block-reports', autheticateToken , async (req, res) => {
     try {
       // Fetch all vendor block reports
       const blockReports = await VendorBlockReport.find().populate('vendor');
-  
+      
       return res.json({ blockReports });
     } catch (error) {
       console.error(error);
