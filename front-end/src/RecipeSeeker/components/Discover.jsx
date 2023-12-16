@@ -11,7 +11,7 @@ const Discover = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('http://localhost:9000/allRecipes');
+        const response = await fetch('http://localhost:9000/recepieSeeker/allRecipes?page=$1&pageSize=$3');
         if (!response.ok) {
           throw new Error('Failed to fetch recipes');
         }
