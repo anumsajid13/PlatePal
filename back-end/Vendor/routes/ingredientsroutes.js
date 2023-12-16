@@ -1,26 +1,32 @@
 const express = require('express');
+const router = express.Router();
 const Ingredient = require('../../models/Ingredient Schema');
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
-const router = express.Router();
+
  
 
 // Add a new ingredient
-router.post('/new',authenticateToken, async (req, res) => {
+router.post('/new', authenticateToken, async (req, res) => {
   try {
-    const { name, price, description, type, quantity, constituentsOf } = req.body;
+    const { name, price, type,description, quantity, constituentsOf } = req.body;
 
     // Validate required fields
-    if (!name || !price || !type) {
-      return res.status(400).json({ message: 'Name, price,type and quantity are required fields.' });
+    if (!name || !price || !type || !quantity) {
+      return res.status(400).json({ message: 'Name, price, type, and quantity are required fields.' });
     }
 
-    // Create a new ingredient
+    // Use the authenticated vendor from the middleware
+    const vendorId = req.authenticatedVendor._id;
+
+    // Create a new ingredient associated with the authenticated vendor
     const newIngredient = new Ingredient({
       name,
+      description: description || '',
       price,
-      description: description || '', // Set default value if not provided
       type,
-      constituentsOf: constituentsOf || null, 
+      quantity,
+      constituentsOf: constituentsOf || '',
+      vendor: vendorId,
     });
 
     // Save the new ingredient
@@ -33,25 +39,33 @@ router.post('/new',authenticateToken, async (req, res) => {
   }
 });
 
-  //update an ingredient
-router.put('/ingredients/:id', async (req, res) => {
+//update an ingredient
+router.put('/update/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
 
   try {
-    //find by id and then update the information
-    const ingredient = await Ingredient.findByIdAndUpdate(id,{ $set: req.body }, { new: true } );//set ensures that only those fields that are updated are changed
-//if only use req.body then all the fields are updated even if they are not changed or are not provided
+    // Find the authenticated vendor from the middleware
+    const vendorId = req.authenticatedVendor._id;
+
+    // Find the ingredient by ID and vendor
+    const ingredient = await Ingredient.findOne({ _id: id, vendor: vendorId });
+
     if (!ingredient) {
-      return res.status(404).json({ message: 'Ingredient not found' });
+      return res.status(404).json({ message: 'Ingredient not found or unauthorized' });
     }
-    return res.json(ingredient);
+
+    // Update the ingredient information
+    const updatedIngredient = await Ingredient.findByIdAndUpdate(id, { $set: req.body }, { new: true });
+
+    return res.json(updatedIngredient);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
-router.delete('/ingredients/:id', authenticateToken, async (req, res) => {
+//delte an ingredient
+router.delete('/delete/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -72,19 +86,21 @@ router.delete('/ingredients/:id', authenticateToken, async (req, res) => {
   }
 });
 
-// ... (other routes remain unchanged)
 
 
-//get an ingredient
-router.get('/ingredients/:id', async (req, res) => {
+// Get an ingredient
+router.get('/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Find the ingredient by ID
-    const foundIngredient = await Ingredient.findById(id);
+    // Get the vendor ID from the authenticated vendor
+    const vendorId = req.authenticatedVendor._id;
+
+    // Find the ingredient by ID and vendor
+    const foundIngredient = await Ingredient.findOne({ _id: id, vendor: vendorId });
 
     if (!foundIngredient) {
-      return res.status(404).json({ message: 'Ingredient not found' });
+      return res.status(404).json({ message: 'Ingredient not found or unauthorized' });
     }
 
     return res.json(foundIngredient);
@@ -95,14 +111,16 @@ router.get('/ingredients/:id', async (req, res) => {
 });
 
 
+
 //get all ingredients with filtering ,sorting and pagination
-router.get('/ingredients', async (req, res) => {
+router.get('/',authenticateToken, async (req, res) => {
   try {
     // Extract query parameters
     const { sortBy, sortOrder, filterType, filterValue, page=1, pageSize=30 } = req.query;
+    const vendorId = req.authenticatedVendor._id;
 
     // Build the query object
-    const query = {};
+    const query = { vendor: vendorId }; // Filter by vendor ID
     if (filterType && filterValue) {
       if(filterType=='type')
       {
