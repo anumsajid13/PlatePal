@@ -7,10 +7,9 @@ require('dotenv').config();
 const router = express.Router();
 
 // Endpoint to login admin
-router.post('/admin/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     const { username, password } = req.body;
   
-
     // Check if the provided credentials match the predefined admin credentials
     if (username === 'admin' && password === 'admin123') {
       try {
