@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Rating = require('./Rating Schema');
 const Comment = require('./Comment Schema');
 const Chef = require('./Chef Schema');
+const Vendor = require('./Vendor Schema');
 
 const recipeSchema = new mongoose.Schema({
   title: String,
@@ -26,7 +27,8 @@ const recipeSchema = new mongoose.Schema({
   recipeImage:{
     data: Buffer,
     contentType: String
-  } 
+  },
+  vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' }
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);

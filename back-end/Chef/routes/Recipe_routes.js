@@ -121,12 +121,29 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-//get all my recipes (person who is logged in)
+//get all my recipes where there is a vendor collab like its postedd (person who is logged in)
 router.get('/myrecipes', authenticateToken,  async (req, res) => {
     const loggedInUserId = req.user.id; 
     try {
-      const userRecipes = await Recipe.find({ chef: loggedInUserId });
-      res.json(userRecipes);
+        const userRecipesWithVendor = await Recipe.find({
+            chef: loggedInUserId,
+            vendor: { $exists: true, $ne: null } //filtering for recipes with a vendor
+          });
+          res.json(userRecipesWithVendor);
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to fetch user recipes' });
+    }
+});
+
+//get all my recipes where there is no vendor collab like its not postedd yett (person who is logged in)
+router.get('/myrecipes', authenticateToken,  async (req, res) => {
+    const loggedInUserId = req.user.id; 
+    try {
+        const userRecipesWithoutVendor = await Recipe.find({
+            chef: loggedInUserId,
+            vendor: { $exists: true, $eq: null } //filtering for recipes without a vendor
+          });
+          res.json(userRecipesWithoutVendor);
     } catch (error) {
       res.status(500).json({ message: 'Failed to fetch user recipes' });
     }

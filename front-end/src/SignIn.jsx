@@ -1,11 +1,12 @@
 // SignInPage.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useNavbarStore from './navbarStore';
 import useTokenStore from './tokenStore';
 import './SignIn.css';
 
 const SignInPage =  () => {
+    const navigate = useNavigate();
   const { setToken } = useTokenStore();
   const { showDropdown, toggleDropdown, activeLink, setActiveLink, searchInput, setSearchInput } = useNavbarStore();
   const [username, setUsername] = useState('');
@@ -58,8 +59,9 @@ const SignInPage =  () => {
         const data = await response.json();
         console.log('Sign In successful:', data.message);
         alert('Sign In successful')
-        // Store the token using the token store
+        
         setToken(data.token);
+        navigate('/recipe-seeker/Discover');
       } catch (error) {
         console.error('Error during Sign In:', error.message);
         alert('Could not sign in')
@@ -190,10 +192,12 @@ const SignInPage =  () => {
             <button className='button-signin' type="button" onClick={handleSignIn}>
               Sign In
             </button>
+            
           </div>
-
-          <div className="image-side">
+          <div className="image-side1">
+          
           </div>
+          
         </div>
       </div>
     </div>
