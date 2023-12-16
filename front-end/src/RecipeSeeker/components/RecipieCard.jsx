@@ -8,7 +8,6 @@ const RecipeCard = ({ recipe }) => {
       <p>{recipe.description}</p>
       <p>Chef: {recipe.chef.name}</p>
       <p>Ratings: {recipe.ratings.length}</p>
-      {/* Add more information as needed */}
     </div>
   );
 };
