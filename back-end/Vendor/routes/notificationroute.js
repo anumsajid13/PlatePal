@@ -16,6 +16,7 @@ router.get('/notifications', authenticateToken, async (req, res) => {
     sortOptions[sortBy]=1;
     }
     if (sortBy && sortBy=='time') {
+      let sortvalue;
       if (!sortOrder) {
         sortvalue = 1;//asc default
       } else if (sortOrder === 'oldest') {
@@ -38,7 +39,7 @@ router.get('/notifications', authenticateToken, async (req, res) => {
         .sort(sortOptions)
         .skip((page - 1) * limit)
         .limit(Number(limit))
-        .exec();
+
   
       if (notifications.length === 0) {
         return res.status(404).json({ message: 'No notifications found for the vendor' });
@@ -51,5 +52,5 @@ router.get('/notifications', authenticateToken, async (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   });
-  
+  // Endpoint to mark a notification as read or delete it
   module.exports = router;
