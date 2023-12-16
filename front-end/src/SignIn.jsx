@@ -22,7 +22,7 @@ const SignInPage =  () => {
         await signInRecipeSeeker();
         break;
       case 'admin':
-        // Redirect to Admin route
+        await signInAdmin();        
         break;
       case 'chef':
         // Redirect to Chef route
@@ -64,6 +64,34 @@ const SignInPage =  () => {
         console.error('Error during Sign In:', error.message);
         alert('Could not sign in')
       }
+  };
+
+  const signInAdmin = async () => {
+    try {
+      const response = await fetch('http://localhost:9000/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        console.error('Admin Sign In failed:', data.error);
+        alert('Admin Sign In failed');
+        return;
+      }
+
+      const data = await response.json();
+      console.log('Admin Sign In successful:', data.token);
+      alert('Admin Sign In successful');
+      // Store the admin token using the token store (if needed)
+      setToken(data.token);
+    } catch (error) {
+      console.error('Error during Admin Sign In:', error.message);
+      alert('Could not sign in as admin');
+    }
   };
 
   return (

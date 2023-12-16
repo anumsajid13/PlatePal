@@ -3,15 +3,14 @@ const Ingredient = require('../../models/Ingredient Schema');
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
 const router = express.Router();
  
-//add authentication middleware? either add in the vendor an array of ingredient ids or add in ingreditnt an array of ids of vendors who sell it
-//then using authentciate middleware get vendor id and form that id get the ingredients ids
+
 // Add a new ingredient
-router.post('/new', async (req, res) => {
+router.post('/new',authenticateToken, async (req, res) => {
   try {
     const { name, price, description, type, quantity, constituentsOf } = req.body;
 
     // Validate required fields
-    if (!name || !price || !type || !quantity) {
+    if (!name || !price || !type) {
       return res.status(400).json({ message: 'Name, price,type and quantity are required fields.' });
     }
 
@@ -21,7 +20,6 @@ router.post('/new', async (req, res) => {
       price,
       description: description || '', // Set default value if not provided
       type,
-      quantity: quantity || null, 
       constituentsOf: constituentsOf || null, 
     });
 
@@ -53,17 +51,18 @@ router.put('/ingredients/:id', async (req, res) => {
   }
 });
 
-
-  //delete an ingredient
-router.delete('/ingredients/:id', async (req, res) => {
+router.delete('/ingredients/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Findt by ID and remove the ingredient
-    const deletedIngredient = await Ingredient.findByIdAndRemove(id);
+    // Find the authenticated vendor from the middleware
+    const vendorId = req.authenticatedVendor._id;
+
+    // Find and remove the ingredient by ID and vendor
+    const deletedIngredient = await Ingredient.findOneAndRemove({ _id: id, vendor: vendorId });
 
     if (!deletedIngredient) {
-      return res.status(404).json({ message: 'Ingredient not found' });
+      return res.status(404).json({ message: 'Ingredient not found or unauthorized' });
     }
 
     return res.json({ message: 'Ingredient deleted successfully', deletedIngredient });
@@ -72,6 +71,9 @@ router.delete('/ingredients/:id', async (req, res) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
+// ... (other routes remain unchanged)
+
 
 //get an ingredient
 router.get('/ingredients/:id', async (req, res) => {

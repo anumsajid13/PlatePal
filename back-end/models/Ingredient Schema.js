@@ -23,6 +23,7 @@ const ingredientSchema = new mongoose.Schema({
     type: String,
     default: null,
   },
+  vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
 });
 
 const Ingredient = mongoose.model('Ingredient', ingredientSchema);

@@ -1,12 +1,34 @@
 // AdminNav.js
-import React from 'react';
+import React, { useState } from 'react';
 import './adminNav.css'; // Import the CSS file
+import NotificationPopup from './NotificationPopup';
+import './sidebar.css';
+
 
 const AdminNav = () => {
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const handleNotificationsClick = () => {
+    setShowNotifications(true);
+  };
+
+  const handleCloseNotifications = () => {
+    setShowNotifications(false);
+  };
+
+  const handleSidebarToggle = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
+    <div>
     <nav className="admin-navbar">
       {/* Plate Pal logo on the left */}
-      <div className="logo">Plate Pal</div>
+
+      <div className="icon-link" title="Toggle Sidebar" onClick={handleSidebarToggle}>
+          <span className="material-icons">menu</span>
+        </div>
 
       {/* Search bar with search icon */}
       <div className="search-bar">
@@ -20,17 +42,28 @@ const AdminNav = () => {
       <div className="nav-links">
         <div>Home</div>
         <div>Recipes</div>
-        <div>Plan</div>
         <div>Reviews</div>
         <div>Nutritionist</div>
         <div className="icon-link" title="Profile">
           <span className="material-icons google-icon">person</span>
         </div>
-        <div className="icon-link" title="Cart">
-          <span className="material-icons google-icon">notifications</span>
-        </div>
+        <div className="icon-link" title="Cart" onClick={handleNotificationsClick}>
+        <span className="material-icons google-icon">notifications</span>
       </div>
+      </div>
+      {showNotifications && <NotificationPopup onClose={handleCloseNotifications} />}
+
     </nav>
+
+      <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <a href="#" onClick={handleSidebarToggle} className="close-btn">×</a>
+        <a href="#">View All users</a>
+        <a href="#">View Block Reports</a>
+        <a href="#">Blocked users</a>
+        <a href="#">Registered Users</a>
+      </div>
+      </div>
+
   );
 };
 

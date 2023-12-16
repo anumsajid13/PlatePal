@@ -12,6 +12,7 @@ const Vendor_Chef_InboxSchema = new mongoose.Schema({
       time: Date,
     },
   ],
+  
 });
 
 const Vendor_Chef_Inbox = mongoose.model('VendorInbox', Vendor_Chef_InboxSchema );

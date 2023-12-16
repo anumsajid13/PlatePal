@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Chef = require('../../models/Chef Schema');
+const authenticateToken = require('../../TokenAuthentication/token_authentication')
 require('dotenv').config();
 const multer = require('multer');
 const router = express.Router();
@@ -61,7 +62,7 @@ router.post('/login', async (req,res) => {
 
     try{
 
-    
+      
         //find chef by email
         const chef = await Chef.findOne({email});
 
@@ -69,6 +70,10 @@ router.post('/login', async (req,res) => {
             return res.status(404).json({ message: 'Chef not found' });
         }
 
+        if (!chef.allowSignup) {
+          return res.status(403).json({ message: 'Admin is reviewing your certificate' });
+        }
+        
         const passwordMatch = await bcrypt.compare(password, chef.password);
 
         if (!passwordMatch) {
@@ -92,6 +97,32 @@ router.post('/login', async (req,res) => {
     }
 
 });
-  
 
-  module.exports = router;
+//update profile
+router.put('update/:id', authenticateToken, async (req, res) => {
+
+  const { id } = req.params;
+  try {
+    const updateChef  = await Chef.findByIdAndUpdate(id, req.body, { new: true });
+  
+    return res.status(200).json('Profile updated successfully');
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ message: 'Failed to update profile' });
+  }
+});
+
+//delete profile
+router.delete('delete/:id', authenticateToken, async (req, res) => {
+
+  const { id } = req.params;
+  try {
+      await Chef.findByIdAndDelete(id);
+      res.json({ message: 'Profile deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to delete profile' });
+  }
+}); 
+
+module.exports = router;
