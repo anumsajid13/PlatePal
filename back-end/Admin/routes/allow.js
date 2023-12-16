@@ -3,11 +3,12 @@ const express = require('express');
 const router = express.Router();
 const isAdmin = require('../middleware/isAdmin'); 
 const Chef = require('../models/Chef');
+const autheticateToken = require('../../TokenAuthentication/token_authentication');
 
 const Nutritionist = require('../models/Nutritionist');
 
 // Endpoint to view certification pictures of nutritionists
-router.get('/view-certifications', isAdmin, async (req, res) => {
+router.get('/view-certifications', autheticateToken, async (req, res) => {
   try {
     const nutritionists = await Nutritionist.find({}, 'name certificationPictures');
 
@@ -19,7 +20,7 @@ router.get('/view-certifications', isAdmin, async (req, res) => {
 });
 
 // Endpoint to change the boolean value to allow nutritionists to sign up
-router.put('/allow-nutritionist-signup/:nutritionistId', isAdmin, async (req, res) => {
+router.put('/allow-nutritionist-signup/:nutritionistId', autheticateToken, async (req, res) => {
     try {
       const { allowSignup } = req.body;
       const nutritionist = await Nutritionist.findById(req.params.nutritionistId);
@@ -43,7 +44,7 @@ router.put('/allow-nutritionist-signup/:nutritionistId', isAdmin, async (req, re
   });
   
 // Endpoint to view certification image of chefs
-router.get('/view-chef-certifications', isAdmin, async (req, res) => {
+router.get('/view-chef-certifications', autheticateToken, async (req, res) => {
     try {
       const chefs = await Chef.find({}, 'name certificationImage');
   
@@ -56,7 +57,7 @@ router.get('/view-chef-certifications', isAdmin, async (req, res) => {
   
 
 // Endpoint to change the boolean value to allow chefs to sign up
-router.put('/allow-chef-signup/:chefId', isAdmin, async (req, res) => {
+router.put('/allow-chef-signup/:chefId', autheticateToken, async (req, res) => {
   try {
     const { allowSignup } = req.body;
     const chef = await Chef.findById(req.params.chefId);
@@ -78,7 +79,6 @@ router.put('/allow-chef-signup/:chefId', isAdmin, async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 
 
   module.exports=router;

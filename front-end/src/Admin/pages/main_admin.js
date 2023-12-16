@@ -8,14 +8,7 @@ const Adminmain = () => {
       <AdminNav />
       <div className="admin-content-container">
         {/* Left Side - Navigation Buttons */}
-        <div className="navigation-buttons">
-          <button className="nav-button">View Blocked Users</button>
-          <button className="nav-button">View Registered Users</button>
-          <button className="nav-button">View Block Reports</button>
-          <button className="nav-button">View Block Reports</button>
-
-          {/* Add more buttons as needed */}
-        </div>
+       
 
         {/* Middle Section - Top 5 Lists */}
         <div className="top-lists">

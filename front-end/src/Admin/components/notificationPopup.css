@@ -1,0 +1,35 @@
+/* notificationPopup.css */
+.notification-popup {
+    position: absolute;
+    top: 1%; /* Position below the icon */
+    right: 10px; /* Adjust as needed for the desired position */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    z-index: 1000;
+  }
+  
+  .notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .notification-list {
+    margin-top: 20px;
+  }
+  
+  .notification-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  /* Add more styles as needed */
+  

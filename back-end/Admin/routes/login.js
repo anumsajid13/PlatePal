@@ -24,7 +24,7 @@ router.post('/admin/login', async (req, res) => {
         // Create a JWT token with the admin's ID
         const token = jwt.sign({ id: admin._id },`${process.env.SECRET_KEY}`
         , { expiresIn: '24h' });
-  
+  console.log(token);
         return res.json({ token });
       } catch (error) {
         console.error(error);
