@@ -1,0 +1,144 @@
+// SignInPage.js
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import useNavbarStore from './navbarStore';
+import './SignIn.css';
+
+const SignInPage = () => {
+  const { showDropdown, toggleDropdown, activeLink, setActiveLink, searchInput, setSearchInput } = useNavbarStore();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [userType, setUserType] = useState('recipeSeeker');
+
+  const handleSignIn = () => {
+    console.log('Username:', username);
+    console.log('Password:', password);
+    console.log('User Type:', userType);
+
+    switch (userType) {
+      case 'recipeSeeker':
+        break;
+      case 'admin':
+        // Redirect to Admin route
+        break;
+      case 'chef':
+        // Redirect to Chef route
+        break;
+      case 'vendor':
+        // Redirect to Vendor route
+        break;
+      case 'nutritionist':
+        // Redirect to Nutritionist route
+        break;
+      default:
+        // Handle invalid user type
+    }
+  };
+
+  return (
+    <div>
+      <nav className="navbar" style={{ height: '45px' }}>
+        <div className="logo">Plate Pal</div>
+        <div className="nav-links">
+        <Link to="/"  style={{ color: 'black', textDecoration: 'none' }} onClick={() => setActiveLink('Home')} className={activeLink === 'Home' ? 'active-link' : ''}>
+          Home
+          </Link>
+          <div onClick={() => setActiveLink('Contact Us')} className={activeLink === 'Contact Us' ? 'active-link' : ''}>
+            Contact Us
+          </div>
+          <div onClick={() => setActiveLink('About Us')} className={activeLink === 'About Us' ? 'active-link' : ''}>
+            About Us
+          </div>
+          <div className="icon-link dropdown" title="Profile" onClick={toggleDropdown}>
+            <span className="material-icons google-icon">person</span>
+            {showDropdown && (
+              <div className="dropdown-menu">
+                <Link to="/signup" className="link">
+                  Sign Up
+                </Link>
+                <Link to="/signin" className="link">
+                  Sign In
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      <div className="page-container">
+        <div className="card-container">
+          <div className="form-side">
+            <h2 className="heading1">Sign In To Your Account</h2>
+            <label>
+              Username
+              <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+            </label>
+            <br />
+            <label>
+              Password
+              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </label>
+            <br />
+            <label>
+              User Type
+              <br />
+              <input className="radio-button"
+                type="radio"
+                name="userType"
+                value="recipeSeeker"
+                checked={userType === 'recipeSeeker'}
+                onChange={() => setUserType('recipeSeeker')}
+              />{' '}
+              Recipe Seeker
+              <br />
+              <input className="radio-button"
+                type="radio"
+                name="userType"
+                value="admin"
+                checked={userType === 'admin'}
+                onChange={() => setUserType('admin')}
+              />{' '}
+              Admin
+              <br />
+              <input className="radio-button"
+                type="radio"
+                name="userType"
+                value="chef"
+                checked={userType === 'chef'}
+                onChange={() => setUserType('chef')}
+              />{' '}
+              Chef
+              <br />
+              <input className="radio-button"
+                type="radio"
+                name="userType"
+                value="vendor"
+                checked={userType === 'vendor'}
+                onChange={() => setUserType('vendor')}
+              />{' '}
+              Vendor
+              <br />
+              <input className="radio-button"
+                type="radio"
+                name="userType"
+                value="nutritionist"
+                checked={userType === 'nutritionist'}
+                onChange={() => setUserType('nutritionist')}
+              />{' '}
+              Nutritionist
+            </label>
+            <br />
+            <button className='button-signin' type="button" onClick={handleSignIn}>
+              Sign In
+            </button>
+          </div>
+
+          <div className="image-side">
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SignInPage;

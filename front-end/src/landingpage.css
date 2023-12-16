@@ -1,11 +1,11 @@
-/* Navbar styles */
-
+/*landingpage.css*/
 @import url("https://fonts.googleapis.com/css2?family=Calistoga&family=Chonburi&family=EB+Garamond:ital,wght@1,500&family=Elsie:wght@400;900&family=IBM+Plex+Sans:wght@600&family=Marcellus&family=Montserrat:wght@100;500&family=Outfit&family=Poppins:ital@1&family=Quattrocento&display=swap");
 
 .body {
   font-family: "Quattrocento";
   font-weight: bold;
   background-color: #ECDCC9;
+  
 }
 .navbar {
   background-color: #C4E0F9;
@@ -31,25 +31,33 @@
 .search-bar input {
   width: 500px; /* Set your desired width */
   padding: 8px;
-  margin-right: 10px;
+  margin-right: 5px;
   border: 2px solid #C4E0F9;
   border-radius: 5px;
   font-size: 14px;
 }
 .search-button {
-  color: #C4E0F9 !important; /* Set your desired color */
   border: none;
-  padding: 5px;
+  padding: 0;
   border-radius: 2px;
   cursor: pointer;
-  background-color: white;
+  width: 30px;
+  height: 30px;
 }
 
+/* Style the image to fill the button */
+.search-button img {
+  width: 30px; /* Make the image fill the container */
+  height: 30px; /* Make the image fill the container */
+  object-fit: cover; /* Maintain aspect ratio and cover the container */
+  
+}
 .nav-links {
   display: flex;
   align-items: center;
   font-family: "Quattrocento";
   font-weight: bold;
+  
 }
 
 .nav-links div {
@@ -94,6 +102,8 @@
   display: inline-block;
   margin-right: 10px; /* Add some space between "The best delicious food" and the additional text */
 }
+
+
 /* Discover menu button styles */
 .discover-menu-button {
   background-color: #B95F89; /* Green background color */
@@ -114,6 +124,9 @@
   font-weight: bold;
 }
 
+.outer-container{
+ /* background-color: #E5ECE9;*/
+}
 .category-container {
   display: flex;
   margin-top: 20px;
@@ -146,7 +159,7 @@
   margin-top: 20px;
   border-radius: 10px; /* Add rounded edges */
   overflow: hidden; /* Hide overflow content */
-  background-color: #ECDCC9;
+  /*background-color: #ECDCC9;*/
 }
 
 .food-info {
@@ -172,4 +185,41 @@
 .material-icons {
   font-size: 24px;
   vertical-align: middle;
+}
+
+.dropdown {
+  position: relative;
+}
+
+
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  z-index: 1000;
+  display: none; 
+  flex-direction: column;
+  min-width: 120px;
+}
+
+.dropdown-menu a {
+  padding: 10px;
+
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.dropdown-menu a:hover{
+  background-color: rgb(207, 206, 206);
+}
+
+
+.dropdown:hover .dropdown-menu {
+  display: flex; 
 }

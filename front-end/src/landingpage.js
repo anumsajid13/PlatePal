@@ -1,9 +1,15 @@
-// Import necessary modules from React
+//landngpage.js
 import React from 'react';
-import './landingpage.css'; // Import the CSS file
+import './landingpage.css'; 
+import  { useState } from 'react';
+import { Link } from 'react-router-dom';
+import useNavbarStore from './navbarStore'; 
 
 // Create the functional component for the landing page
 const LandingPage = () => {
+
+  const { showDropdown, toggleDropdown, activeLink, setActiveLink, searchInput, setSearchInput } = useNavbarStore();
+ 
   return (
     <div>
       {/* White navigation bar */}
@@ -13,7 +19,12 @@ const LandingPage = () => {
 
         {/* Search bar with search icon */}
         <div className="search-bar">
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
           <button className="search-button">
             <span className="material-icons google-icon">search</span>
           </button>
@@ -21,17 +32,38 @@ const LandingPage = () => {
 
         {/* Clickable components on the right */}
         <div className="nav-links">
-          <div>Home</div>
-          <div>Recipes</div>
-          <div>Plan</div>
-          <div>Reviews</div>
-          <div>Nutritionist</div>
-          <div className="icon-link" title="Profile">
-    <span className="material-icons google-icon">person</span>
-  </div>
-  <div className="icon-link" title="Cart">
-    <span className="material-icons google-icon">shopping_cart</span>
-  </div>
+          <div onClick={() => setActiveLink('/')} className={activeLink === 'Home' ? 'active-link' : ''} 
+          style={{
+            color: activeLink === 'Home' ? 'red' : 'black', 
+            textDecoration: 'none', 
+            cursor: 'pointer', 
+          }}
+          >Home</div>
+          <div onClick={() => setActiveLink('Contact Us')} className={activeLink === 'Contact Us' ? 'active-link' : ''}
+           style={{
+            color: activeLink === 'Contact Us' ? 'red' : 'black', 
+            textDecoration: 'none', 
+            cursor: 'pointer', 
+          }}
+          >Contact Us</div>
+          <div onClick={() => setActiveLink('About Us')} className={activeLink === 'About Us' ? 'active-link' : ''}
+           style={{
+            color: activeLink === 'About US' ? 'red' : 'black', 
+            textDecoration: 'none', 
+            cursor: 'pointer', 
+          }}
+          >About Us</div>
+          <div className="icon-link dropdown" title="Profile" onClick={toggleDropdown}>
+            <span className="material-icons google-icon">person</span>
+
+            {/* Dropdown menu */}
+            {showDropdown && (
+              <div className="dropdown-menu">
+                <Link to="/signup" className='link'>Sign Up</Link>
+                <Link to="/signin" className='link'>Sign In</Link>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
 
@@ -57,6 +89,7 @@ const LandingPage = () => {
         </div>
       </div>
 
+    <div className="outer-container">
       {/* Clickable text divs row */}
       <div className="category-container">
         <div className="category" >
@@ -95,6 +128,8 @@ const LandingPage = () => {
           <p>Lemony Shrimp Bowl</p>
           <p>$14.99</p>
         </div>
+      </div>
+
       </div>
     </div>
   );

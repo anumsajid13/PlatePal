@@ -1,0 +1,102 @@
+/* SignInPage.css */
+
+.page-container {
+    font-family: 'Quattrocento', sans-serif;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+  
+  .card-container {
+    display: flex;
+    max-width: 75%;
+    width: 90%;
+    background-color: #ECDCC9;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 5%;
+    margin-bottom: 10%;
+  }
+  
+  .heading1{
+    margin-left: 10%;
+    color:#a34f76;
+  }
+  .form-side {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .form-side h2 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+
+  label {
+    font-size: 1rem;
+    display: block;
+  }
+  
+  input {
+    width: 60%;
+    padding: 10px;
+    border: 2px solid #C4E0F9;
+    border-radius: 10px;
+    height:10px;
+    margin-top: 3px;
+    font-size: 14px;
+    margin-left: 7px;
+  }
+  
+  input[type="radio"] {
+    margin-right: 5px;
+    margin-left: 16%;
+  }
+ 
+  .radio-button{
+    width:10px;
+  }
+  .button-signin {
+    background-color: #B95F89;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    width:30%;
+    margin-left: 35%;
+  }
+  
+  .button-signin:hover {
+    background-color: #944c6f;
+  }
+  
+  
+  .image-side {
+    flex: 1;
+    background-image: url('../public/signin.svg'); 
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    margin-right: 10%;
+    
+  }
+  
+  .overlay-text {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
