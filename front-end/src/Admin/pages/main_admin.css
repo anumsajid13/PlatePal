@@ -10,12 +10,13 @@
     display: flex;
     flex-direction: column;
     margin-top: 50px;
+    margin-left:150px;
   }
   
   .nav-button {
     margin-bottom: 10px;
     padding: 10px;
-    border: 2px solid rgb(252, 130, 178);
+    border: 2px solid ;
     border-radius: 8px;
     cursor: pointer;
     background-color: #ffffff;
@@ -24,16 +25,12 @@
     font-weight: bold;
   }
   
-  .nav-button:hover {
-    background-color: rgb(252, 130, 178);
-  }
-  
   .top-lists {
     display: flex;
   flex-direction: column;
   align-items: center; /* Center the lists horizontally */
   margin-right: 30%;
-  gap: 50px;
+  gap: 10px;
   }
   
   .top-chefs-list,
