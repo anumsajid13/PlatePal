@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const authenticateToken = require('../middleware/authenticateToken');
-const Recipe = require('../models/RecipeSchema');
-const Comment = require('../models/CommentSchema');
+const authenticateToken = require('../../TokenAuthentication/token_authentication');
+const Recipe = require('../../models/Recipe Schema');
+const Comment = require('../../models/Comment Schema');
 
-// Route to add a comment to a recipe
+
 router.post('/addComment/:recipeId', authenticateToken, async (req, res) => {
   try {
     const { commentText } = req.body;

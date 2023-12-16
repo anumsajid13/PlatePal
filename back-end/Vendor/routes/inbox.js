@@ -68,5 +68,7 @@ router.get('/inbox/messages/:chefId', authenticateToken, async (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   });
+  //endpoint to delete all messages from a certain chef
+  //endpoint to delete his messages to a certain chef
   
 module.exports = router;
