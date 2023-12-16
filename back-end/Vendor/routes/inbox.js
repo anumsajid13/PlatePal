@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const VendorChefInbox = require('../models/Vendor-Chef_Inbox Schema');
 const authenticateToken = require('../TokenAuthentication/token_authenticate');
+const Chef_Notification = require('../../models/Chef_Notification Schema');
 
 // Endpoint to get all messages for a vendor
 router.get('/vendor/inbox', authenticateToken, async (req, res) => {
@@ -40,6 +41,18 @@ router.post('/inbox/reply', authenticateToken, async (req, res) => {
       });
   
       await inboxEntry.save();
+
+
+    //create a notification for vendor
+    const chefNotification = new Chef_Notification({
+      vendor: vendorId,
+      chef: req.user.id,
+      type: `message`, 
+      notification_text: `Vendor ${chefName} sent you a message.`,
+      Time: new Date(),
+    });
+
+     await chefNotification.save();
   
       res.json({ message: 'Message sent successfully' });
     } catch (error) {
@@ -72,3 +85,5 @@ router.get('/inbox/messages/:chefId', authenticateToken, async (req, res) => {
   //endpoint to delete his messages to a certain chef
   
 module.exports = router;
+ 
+

@@ -69,6 +69,7 @@ const SignInPage =  () => {
   };
 
   const signInAdmin = async () => {
+
     try {
       const response = await fetch('http://localhost:9000/admin/login', {
         method: 'POST',
@@ -88,8 +89,11 @@ const SignInPage =  () => {
       const data = await response.json();
       console.log('Admin Sign In successful:', data.token);
       alert('Admin Sign In successful');
+
       // Store the admin token using the token store (if needed)
       setToken(data.token);
+      navigate('/admin');
+
     } catch (error) {
       console.error('Error during Admin Sign In:', error.message);
       alert('Could not sign in as admin');

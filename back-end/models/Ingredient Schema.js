@@ -21,7 +21,7 @@ const ingredientSchema = new mongoose.Schema({
   },
   constituentsOf: {
     type: String,
-    default: null,
+    default: ' ',
   },
   vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
 });

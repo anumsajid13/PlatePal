@@ -85,7 +85,7 @@ router.post('/login', async (req,res) => {
         }
 
         //getting token using jwt
-        const token = jwt.sign({ id: chef._id, username: chef.username, email: chef.email}, process.env.SECRET_KEY);
+        const token = jwt.sign({ id: chef._id, username: chef.username, email: chef.email, name: chef.name}, process.env.SECRET_KEY);
 
         res.status(200).json({ token });
 

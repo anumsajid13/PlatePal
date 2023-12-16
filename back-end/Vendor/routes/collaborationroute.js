@@ -29,6 +29,7 @@ router.get('/vendor/collaboration/:collaborationId', authenticateToken, async (r
     }
   });
 
+  
 //Endpoint to see all collaborations of a vendor with a chef 
 router.get('/vendor/collaborations', authenticateToken, async (req, res) => {
     try {
