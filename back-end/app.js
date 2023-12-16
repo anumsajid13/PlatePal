@@ -46,6 +46,10 @@ const chefLoginSignUp = require('./Chef/routes/ChefModule_routes')
 const User_Signin = require('./RecipeSeeker/routes/signin_route')
 const User_SignUp = require('./RecipeSeeker/routes/signup_route')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
+const admin_signin = require('./Admin/routes/login');
+
+const block = require('./Admin/routes/block');
+
 const vendor_Routes = require('./Vendor/routes/profileRoute');
 const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
@@ -56,6 +60,10 @@ app.use('/recepieSeeker', User_Signin);
 app.use('/recepieSeeker', User_SignUp);
 //recipe routes
 app.use('/recipes', Reipe_routes);
+app.use('/admin', admin_signin);
+
+app.use('/admin', block);
+
 //vendor routes
 app.use('/vendor', vendor_Routes);
 //ingredient routes
