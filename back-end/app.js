@@ -48,6 +48,7 @@ const User_SignUp = require('./RecipeSeeker/routes/signup_route')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
 const vendor_Routes = require('./Vendor/routes/profileRoute');
 const ingredientRoutes = require('./Vendor/routes/ingredientsroutes');
+const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 //recepie seeker routes
@@ -58,8 +59,9 @@ app.use('/recipes', Reipe_routes);
 //vendor routes
 app.use('/vendor', vendor_Routes);
 //ingredient routes
-app.use('/ingredients', ingredientRoutes);
-
+//app.use('/ingredients', ingredientRoutes);
+//block report by chef
+app.use('/chef', blockreportroVendorRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
