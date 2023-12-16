@@ -1,0 +1,107 @@
+
+.chef-signup-container {
+    font-family: 'Quattrocento', sans-serif;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+.chef-for-flex{
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background-color: #E5ECE9;
+    width: 70%;
+    
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 10%;
+    
+    margin-left: 5%;
+    margin-top: 13%;
+    height: 90%;
+  }
+  .chef-card-container1{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 90%;
+    margin-left: 5%;
+  }
+  
+  .heading1 {
+    margin-left: 10%;
+    color: #a34f76;
+  }
+  
+  .form-side {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .form-side h2 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .chef-form-label {
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    width:90%;
+    margin-left: 5%;
+  }
+
+  .chl1{
+    margin-top: 8%;
+    margin-left: 10%;
+    color:#a34f76
+  }
+  
+  input,
+  button {
+    padding: 10px;
+    border: 2px solid #C4E0F9;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  
+  input[type="file"] {
+    border: none;
+  }
+  
+  button {
+    background-color: #B95F89;
+    color: white;
+    margin-left: 25%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+    width: 30%;
+    margin-bottom: 5%;
+  }
+  
+  button:hover {
+    background-color: #944c6f;
+  }
+  
+  .chef-image-side {
+    flex: 1;
+    background-image: url('../assets/images/20547281_6310532.svg'); 
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    margin-right: 10%;
+  }
+
+  .Profile-Picture{
+    height:50%;
+  }
+  
