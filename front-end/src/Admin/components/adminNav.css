@@ -35,7 +35,7 @@
     padding: 5px;
     border-radius: 2px;
     cursor: pointer;
-    background-color: white;
+    background-color: #C4E0F9;
   }
   
   .nav-links {
@@ -59,4 +59,6 @@
     font-size: 24px;
     vertical-align: middle;
   }
-  
+  .sidebar.open {
+  width: 250px;
+}

@@ -27,10 +27,11 @@
   
   .top-lists {
     display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center; /* Center the lists horizontally */
-  margin-right: 30%;
-  gap: 10px;
+  margin-right: 10px;
+  margin-left:190px;
+  gap: 20px;
   }
   
   .top-chefs-list,
