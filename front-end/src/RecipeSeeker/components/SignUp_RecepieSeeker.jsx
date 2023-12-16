@@ -105,7 +105,7 @@ const RecipeSeekerSignUp = () => {
           Profile Picture:
           <input className='Profile-Picture' type="file" onChange={(e) => setProfilePicture(e.target.files[0])}  />
         </label>
-        <button type="button" onClick={handleSignUp} disabled={loading} className="form-button">
+        <button className="signup-button" type="button" onClick={handleSignUp} disabled={loading} >
           {loading ? 'Signing Up...' : 'Sign Up'}
         </button>
         
