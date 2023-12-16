@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const autheticateToken = require('../../TokenAuthentication/token_authentication');
+const authenticateToken = require('../../TokenAuthentication/token_authentication');
 const Recipe = require('../../models/Recipe Schema');
 const User_Notification = require('../../models/User_Notification Schema');
 const Chef = require('../../models/Chef Schema'); 
@@ -13,7 +13,7 @@ const upload = multer({ storage: storage });
 
 
 //create new recipe
-router.post('/newRecipe', autheticateToken, upload.single('recipeImage'),  async (req, res) =>{
+router.post('/newRecipe', authenticateToken, upload.single('recipeImage'),  async (req, res) =>{
     
     try{
         const { title, calories, servingSize, difficulty, totalTime, ingredients, allergens, notDelivered, utensils, category, instructions } = req.body;
@@ -83,20 +83,54 @@ router.post('/newRecipe', autheticateToken, upload.single('recipeImage'),  async
 
 
 //update a recipe
+router.put('update/:id', authenticateToken, async (req, res) => {
 
+    const { id } = req.params;
+    try {
+      const updatedRecipe  = await Recipe.findByIdAndUpdate(id, req.body, { new: true });
+    
+      return res.status(200).json('Profile updated successfully');
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({ message: 'Failed to update recipe' });
+    }
+});
 
 
 //delete a recipe
+router.delete('delete/:id', authenticateToken, async (req, res) => {
 
+    const { id } = req.params;
+    try {
+        await Recipe.findByIdAndDelete(id);
+        res.json({ message: 'Recipe deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Failed to delete recipe' });
+    }
+}); 
 
 //get a recipe by id
-
-
-//get all recipes with pagination and filtering 
-
+router.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+      const recipe = await Recipe.findById(id);
+      res.json(recipe);
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to fetch recipe' });
+    }
+});
 
 //get all my recipes (person who is logged in)
-
+router.get('/myrecipes', authenticateToken,  async (req, res) => {
+    const loggedInUserId = req.user.id; 
+    try {
+      const userRecipes = await Recipe.find({ chef: loggedInUserId });
+      res.json(userRecipes);
+    } catch (error) {
+      res.status(500).json({ message: 'Failed to fetch user recipes' });
+    }
+});
 
 
 module.exports = router;
