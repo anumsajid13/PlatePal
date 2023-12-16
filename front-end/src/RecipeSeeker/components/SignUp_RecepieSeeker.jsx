@@ -83,7 +83,7 @@ const RecipeSeekerSignUp = () => {
      
       <div className="recipe-seeker-signup-container">
       <div className='for-flex'>
-      <form className="card-container">
+      <form className="card-container1">
       <h2 className='l1'>Recipe Seeker Sign Up</h2>
         <label className="form-label ">
           Name:

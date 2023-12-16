@@ -11,6 +11,7 @@
   
   .card-container {
     display: flex;
+    flex-direction: row;
     max-width: 75%;
     width: 90%;
     background-color: #ECDCC9;
@@ -81,7 +82,7 @@
   }
   
   
-  .image-side {
+  .image-side1 {
     flex: 1;
     background-image: url('../public/signin.svg'); 
     background-size: cover;

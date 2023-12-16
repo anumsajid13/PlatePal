@@ -7,6 +7,7 @@ import Adminmain from './Admin/pages/main_admin';
 import SignUpPage from './SignUp'; 
 import SignInPage from './SignIn'; 
 import RecipeSeekerSignUp from './RecipeSeeker/components/SignUp_RecepieSeeker';
+import DiscoverPage from './RecipeSeeker/components/Discover';
 function App() {
   return (
     <div className="App">
@@ -16,8 +17,8 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/signup/recipe-seeker" element={<RecipeSeekerSignUp />} />
         <Route path="/signin" element={<SignInPage />} />
+        <Route path="/recipe-seeker/Discover" element={<DiscoverPage />} />
 
-        {/* Add more routes as needed */}
       </Routes>
     </div>
   );
