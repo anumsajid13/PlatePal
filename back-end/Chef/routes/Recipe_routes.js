@@ -16,9 +16,14 @@ const upload = multer({ storage: storage });
 router.post('/newRecipe', autheticateToken, upload.single('recipeImage'),  async (req, res) =>{
     
     try{
-        const { title, calories, servingSize, difficulty, totalTime, ingredients, allergens, notDelivered, utensils, category} = req.body;
-        const chefId = req.user._id;
-        const { recipeImage } = req.files;
+        const { title, calories, servingSize, difficulty, totalTime, ingredients, allergens, notDelivered, utensils, category, instructions } = req.body;
+        const chefId = req.user.id;
+
+        console.log(chefId)
+        //handle the uploaded file
+        if (!req.file) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
 
         //create a new recipe
         const newRecipe = new Recipe({
@@ -32,12 +37,14 @@ router.post('/newRecipe', autheticateToken, upload.single('recipeImage'),  async
             notDelivered,
             utensils,
             category,
+            instructions,
             recipeImage: {
-                data: recipeImage[0].buffer,
-                contentType: recipeImage[0].mimetype
+            data: req.file.buffer,
+            contentType: req.file.mimetype,
             },
             chef: chefId
         });
+
 
         const savedRecipe = await newRecipe.save();
         
@@ -48,6 +55,7 @@ router.post('/newRecipe', autheticateToken, upload.single('recipeImage'),  async
         const creatorChef = await Chef.findById(chefId).populate('followers');
         const followers = creatorChef.followers;
 
+        if (followers.length > 0){
         //create notifications for all followers 
         const notificationPromises = followers.map(async (follower) =>{
 
@@ -62,7 +70,7 @@ router.post('/newRecipe', autheticateToken, upload.single('recipeImage'),  async
         });
 
         await Promise.all(notificationPromises);
-
+        }
         res.status(201).json(savedRecipe);
 
     }
@@ -91,6 +99,6 @@ router.post('/newRecipe', autheticateToken, upload.single('recipeImage'),  async
 
 
 
-
+module.exports = router;
 
 

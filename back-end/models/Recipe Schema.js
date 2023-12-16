@@ -19,12 +19,7 @@ const recipeSchema = new mongoose.Schema({
       quantity: String,
     },
   ],
-  instructions: [
-    {
-      stepNumber: Number,
-      instructionContent: String,
-    }
-  ],
+  instructions: [String],
   allergens: [String],
   notDelivered: [String],
   utensils: [String],

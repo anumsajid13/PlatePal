@@ -34,7 +34,7 @@ app.use(express.json());
 
 
 // Connecting to MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/PlatePal', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://anumsajid13:6grTh91EsFrpMXSl@cluster0.lzdbmp9.mongodb.net/PlatePal', { useNewUrlParser: true });
 const con = mongoose.connection;
 con.on('open', () => {
     console.log('Connected to MongoDB');
@@ -43,11 +43,14 @@ con.on('open', () => {
 const chefLoginSignUp = require('./Chef/routes/ChefModule_routes')
 const User_Signin = require('./RecipeSeeker/routes/signin_route')
 const User_SignUp = require('./RecipeSeeker/routes/signup_route')
+const Reipe_routes = require('./Chef/routes/Recipe_routes');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 //recepie seeker routes
 app.use('/recepieSeeker', User_Signin); 
 app.use('/recepieSeeker', User_SignUp);
+//recipe routes
+app.use('/recipes', Reipe_routes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
