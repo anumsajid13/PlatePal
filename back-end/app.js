@@ -35,7 +35,7 @@ app.use(express.json());
 
 
 // Connecting to MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/PlatePal', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://anumsajid13:6grTh91EsFrpMXSl@cluster0.lzdbmp9.mongodb.net/PlatePal', { useNewUrlParser: true });
 const con = mongoose.connection;
 con.on('open', () => {
     console.log('Connected to MongoDB');

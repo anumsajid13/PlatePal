@@ -18,6 +18,16 @@ router.post('/nutritionist-login', async (req, res) => {
       if (!nutritionist) {
         return res.status(404).json({ error: 'Nutritionist not found' });
       }
+
+      // Check if nutritionist signup is allowed
+    const allowSignup = await Nutritionist.findOne({ allowSignup: true });
+
+    if (!allowSignup) {
+      return res.status(403).json({ error: 'Nutritionist signup is currently not allowed' });
+    }
+
+    
+
   
       // Check if the nutritionist is blocked and unblock time has passed
       if (nutritionist.isBlocked && nutritionist.unblockTime && nutritionist.unblockTime <= new Date()) {
@@ -46,19 +56,10 @@ router.post('/nutritionist-login', async (req, res) => {
 // Endpoint to sign up as a nutritionist
 router.post('/nutritionist-signup', async (req, res) => {
   try {
-    const { name, username, email, password, profilePicture, address, certificationPictures } = req.body;
-
-    // Assuming you have validation and sanitation logic here
-
-    // Check if nutritionist signup is allowed
-    const allowSignup = await Nutritionist.findOne({ allowSignup: true });
-
-    if (!allowSignup) {
-      return res.status(403).json({ error: 'Nutritionist signup is currently not allowed' });
-    }
+    const { name, username, email, password, profilePicture, certificationPictures } = req.body;
 
      //check if all fields are not filled
-     if (!(name && username && email && password && address)) {
+     if (!(name && username && email && password )) {
       return res.status(400).json({ message:'All fields are not provided'});
       }
 
@@ -78,7 +79,6 @@ const hashedPassword = await bcrypt.hash(password, 10);
       email,
       password:hashedPassword,
       profilePicture,
-      address,
       certificationPictures,
       // Add other fields as needed
     });

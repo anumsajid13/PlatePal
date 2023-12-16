@@ -1,0 +1,65 @@
+.admin-content-container {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color:#E5ECE9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  }
+  
+  .navigation-buttons {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+  }
+  
+  .nav-button {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid rgb(252, 130, 178);
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #ffffff;
+    transition: background-color 0.3s;
+    font-family: "Quattrocento";
+    font-weight: bold;
+  }
+  
+  .nav-button:hover {
+    background-color: rgb(252, 130, 178);
+  }
+  
+  .top-lists {
+    display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the lists horizontally */
+  margin-right: 30%;
+  gap: 50px;
+  }
+  
+  .top-chefs-list,
+  .top-nutritionists-list {
+    text-align: center;
+  }
+  
+  .top-chefs-list .list-item,
+  .top-nutritionists-list .list-item {
+    background-color: #bb94a6;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    width: 500px;
+  }
+  
+  .top-chefs-list h2,
+.top-nutritionists-list h2 {
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: Chonburi;}
+
+.top-chefs-list p,
+.top-nutritionists-list p {
+    font-family: "Quattrocento";
+    font-weight: bold;}
+
+  /* Add more styles as needed */
+  

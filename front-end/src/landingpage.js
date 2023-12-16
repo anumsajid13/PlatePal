@@ -50,7 +50,7 @@ const LandingPage = () => {
         {/* You can replace the placeholder with the actual image source */}
         <div className="image">
           <img
-            src="https://mir-s3-cdn-cf.behance.net/project_modules/hd/a435a9109828313.5fdc920d903a4.gif"
+            src="https://i.pinimg.com/originals/de/f8/c3/def8c32218ff550de986ca3dfe09cac8.gif"
             alt="Best Food"
             className="best-food-image"
           />

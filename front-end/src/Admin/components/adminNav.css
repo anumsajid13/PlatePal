@@ -1,0 +1,62 @@
+/* adminNav.css */
+
+.admin-navbar {
+    background-color:  #C4E0F9;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: Chonburi;
+    margin-left: 2%;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input {
+    width: 500px;
+    padding: 8px;
+    margin-right: 10px;
+    border: 2px solid rgb(90, 127, 237);
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .search-button {
+    color: rgb(90, 127, 237) !important;
+    border: none;
+    padding: 5px;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: white;
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    font-family: "Quattrocento";
+    font-weight: bold;
+  }
+  
+  .nav-links div {
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .icon-link {
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .material-icons {
+    font-size: 24px;
+    vertical-align: middle;
+  }
+  

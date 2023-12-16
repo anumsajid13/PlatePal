@@ -5,14 +5,14 @@
 .body {
   font-family: "Quattrocento";
   font-weight: bold;
+  background-color: #ECDCC9;
 }
 .navbar {
-  background-color: white;
+  background-color: #C4E0F9;
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.2%;
 }
 
 .logo {
@@ -32,12 +32,12 @@
   width: 500px; /* Set your desired width */
   padding: 8px;
   margin-right: 10px;
-  border: 2px solid rgb(90, 127, 237);
+  border: 2px solid #C4E0F9;
   border-radius: 5px;
   font-size: 14px;
 }
 .search-button {
-  color: rgb(90, 127, 237) !important; /* Set your desired color */
+  color: #C4E0F9 !important; /* Set your desired color */
   border: none;
   padding: 5px;
   border-radius: 2px;
@@ -59,7 +59,9 @@
 
 /* Best Food container styles */
 .best-food-container {
-  background-color: rgb(252, 130, 178);
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  
+
   margin: 20px;
   padding: 20px;
   display: flex;
@@ -94,7 +96,7 @@
 }
 /* Discover menu button styles */
 .discover-menu-button {
-  background-color: rgb(90, 127, 237); /* Green background color */
+  background-color: #B95F89; /* Green background color */
   color: white; /* White text color */
   border: none; /* Remove border */
   padding: 15px 60px; /* Add padding */
@@ -116,6 +118,8 @@
   display: flex;
   margin-top: 20px;
   justify-content: center;
+  background-color: #E5ECE9;
+
 }
 
 .category {
@@ -132,7 +136,7 @@
 
 /* Change color on hover */
 .category:hover {
-  background-color: rgb(90, 127, 237);
+  background-color: #B95F89;
   color: white;
 }
 
@@ -142,13 +146,14 @@
   margin-top: 20px;
   border-radius: 10px; /* Add rounded edges */
   overflow: hidden; /* Hide overflow content */
+  background-color: #ECDCC9;
 }
 
 .food-info {
   flex: 0 0 20%; /* Adjust the width of the food info */
   text-align: center;
   margin: 0 10px;
-  border: 2px solid rgb(90, 127, 237); /* Add border color */
+  border: 2px solid #B95F89; /* Add border color */
 }
 
 .food-info img {
