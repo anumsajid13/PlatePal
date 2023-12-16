@@ -17,6 +17,6 @@ notification_text:
 }
 });
 
-const Chef_Notification = mongoose.model('Notification', chef_notificationSchema);
+const Chef_Notification = mongoose.model('Chef_Notification', chef_notificationSchema);
 
 module.exports = Chef_Notification;

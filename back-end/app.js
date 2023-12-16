@@ -28,7 +28,9 @@ const port = 9000;
 const cors = require('cors');
 //const DB= require('./models')
 app.use(cors());
-
+const bodyParser = require('body-parser');
+app.use(bodyParser.json()); // Parse JSON bodies
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 app.use(express.json());
 
@@ -48,6 +50,9 @@ const admin_signin = require('./Admin/routes/login');
 
 const vendor_block_report = require('./Admin/routes/block');
 
+const vendor_Routes = require('./Vendor/routes/profileRoute');
+const ingredientRoutes = require('./Vendor/routes/ingredientsroutes');
+const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 //recepie seeker routes
@@ -57,6 +62,12 @@ app.use('/recepieSeeker', User_SignUp);
 app.use('/recipes', Reipe_routes);
 app.use('/admin', admin_signin);
 app.use('/admin', vendor_block_report);
+//vendor routes
+app.use('/vendor', vendor_Routes);
+//ingredient routes
+//app.use('/ingredients', ingredientRoutes);
+//block report by chef
+app.use('/chef', blockreportroVendorRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
