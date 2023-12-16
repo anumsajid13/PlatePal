@@ -2,21 +2,24 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useNavbarStore from './navbarStore';
+import useTokenStore from './tokenStore';
 import './SignIn.css';
 
-const SignInPage = () => {
+const SignInPage =  () => {
+  const { setToken } = useTokenStore();
   const { showDropdown, toggleDropdown, activeLink, setActiveLink, searchInput, setSearchInput } = useNavbarStore();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('recipeSeeker');
 
-  const handleSignIn = () => {
+  const handleSignIn = async() => {
     console.log('Username:', username);
     console.log('Password:', password);
     console.log('User Type:', userType);
 
     switch (userType) {
       case 'recipeSeeker':
+        await signInRecipeSeeker();
         break;
       case 'admin':
         // Redirect to Admin route
@@ -33,6 +36,34 @@ const SignInPage = () => {
       default:
         // Handle invalid user type
     }
+  };
+
+  const signInRecipeSeeker = async () => {
+    try {
+        const response = await fetch('http://localhost:9000/recepieSeeker/recipeSeeker_signin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password }),
+        });
+  
+        if (!response.ok) {
+          const data = await response.json();
+          console.error('Sign In failed:', data.message);
+        
+          return;
+        }
+  
+        const data = await response.json();
+        console.log('Sign In successful:', data.message);
+        alert('Sign In successful')
+        // Store the token using the token store
+        setToken(data.token);
+      } catch (error) {
+        console.error('Error during Sign In:', error.message);
+        alert('Could not sign in')
+      }
   };
 
   return (
