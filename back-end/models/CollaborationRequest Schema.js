@@ -12,7 +12,15 @@ const collaborationRequestSchema = new mongoose.Schema({
     {
       name: { type: String, required: true },
     }
-  ]
+  ],
+  isAccepted: {
+    type: String,
+    default: "pending",//accepted rejected
+  },
+  Time: {
+    type: Date,
+    default: Date.now,
+}
 });
 
 const CollaborationRequest = mongoose.model('CollaborationRequest', collaborationRequestSchema);

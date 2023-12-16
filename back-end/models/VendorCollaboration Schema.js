@@ -12,11 +12,7 @@ const vendorCollaborationSchema = new mongoose.Schema({
   Time: {
     type: Date,
     default: Date.now,
-},
-isAccepted: {
-  type: String,
-  default: "pending",//accepted rejected
-},
+}
 });
 
 const VendorCollaboration = mongoose.model('VendorCollaboration', vendorCollaborationSchema);
