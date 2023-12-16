@@ -8,6 +8,12 @@ const collaborationRequestSchema = new mongoose.Schema({
   vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
   chef: { type: mongoose.Schema.Types.ObjectId, ref: 'Chef' },
   recipe: { type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' },
+  ingredients: [
+    {
+      name: { type: String, required: true },
+      quantity: { type: Number, required: true },
+    }
+  ]
 });
 
 const CollaborationRequest = mongoose.model('CollaborationRequest', collaborationRequestSchema);
