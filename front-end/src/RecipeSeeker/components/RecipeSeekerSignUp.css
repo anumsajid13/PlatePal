@@ -1,31 +1,42 @@
-/* SignInPage.css */
+/* RecipeSeekerSignUp.css */
 
-.page-container {
+.recipe-seeker-signup-container {
     font-family: 'Quattrocento', sans-serif;
     font-weight: bold;
     display: flex;
     justify-content: center;
     align-items: center;
-
+    height: 100vh;
   }
   
-  .card-container {
+  .for-flex{
     display: flex;
     flex-direction: row;
-    max-width: 75%;
-    width: 90%;
-    background-color: #ECDCC9;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background-color: #ECDCC9;
+    width: 70%;
+    
     border-radius: 15px;
     overflow: hidden;
-    margin-top: 5%;
     margin-bottom: 10%;
+    
+    margin-left: 5%;
+    margin-top: 13%;
+    height: 90%;
+  }
+  .card-container1 {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 90%;
+    margin-left: 5%;
   }
   
-  .heading1{
+  .heading1 {
     margin-left: 10%;
-    color:#a34f76;
+    color: #a34f76;
   }
+  
   .form-side {
     flex: 1;
     padding: 40px;
@@ -39,65 +50,59 @@
     color: #333;
   }
   
+  .form-label {
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    width:90%;
+    margin-left: 5%;
+  }
 
-  label {
-    font-size: 1rem;
-    display: block;
+  .l1{
+    margin-top: 8%;
+    margin-left: 10%;
+    color:#a34f76
   }
   
-  input {
-    width: 60%;
+  input,
+  button {
     padding: 10px;
     border: 2px solid #C4E0F9;
     border-radius: 10px;
-    height:10px;
-    margin-top: 3px;
     font-size: 14px;
-    margin-left: 7px;
   }
   
-  input[type="radio"] {
-    margin-right: 5px;
-    margin-left: 16%;
+  input[type="file"] {
+    border: none;
   }
- 
-  .radio-button{
-    width:10px;
-  }
-  .button-signin {
+  
+  button {
     background-color: #B95F89;
     color: white;
+    margin-left: 25%;
     border: none;
-    padding: 10px;
-    border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
     transition: background-color 0.3s;
-    width:30%;
-    margin-left: 35%;
+    
+    width: 30%;
+    margin-bottom: 5%;
   }
   
-  .button-signin:hover {
+  button:hover {
     background-color: #944c6f;
   }
   
-  
-  .image-side1 {
+  .image-side {
     flex: 1;
-    background-image: url('../public/signin.svg'); 
+    background-image: url('../assets/images/recepie_signUp.svg'); 
     background-size: cover;
     background-position: center;
     position: relative;
     margin-right: 10%;
-    
   }
-  
-  .overlay-text {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
+
+  .Profile-Picture{
+    height:50%;
   }
   
