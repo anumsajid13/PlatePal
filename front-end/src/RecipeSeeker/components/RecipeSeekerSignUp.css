@@ -1,0 +1,107 @@
+/* RecipeSeekerSignUp.css */
+
+.recipe-seeker-signup-container {
+    font-family: 'Quattrocento', sans-serif;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .for-flex{
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    background-color: #ECDCC9;
+    width: 70%;
+    
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 10%;
+    
+    margin-left: 5%;
+    margin-top: 13%;
+    height: 90%;
+  }
+  .card-container {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: 90%;
+    margin-left: 5%;
+  }
+  
+  .heading1 {
+    margin-left: 10%;
+    color: #a34f76;
+  }
+  
+  .form-side {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .form-side h2 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .form-label {
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    width:90%;
+    margin-left: 5%;
+  }
+
+  .l1{
+    margin-top: 3%;
+    margin-left: 10%;
+  }
+  
+  input,
+  button {
+    padding: 10px;
+    border: 2px solid #C4E0F9;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  
+  input[type="file"] {
+    border: none;
+  }
+  
+  button {
+    background-color: #B95F89;
+    color: white;
+    margin-left: 25%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+    width: 30%;
+    margin-bottom: 5%;
+  }
+  
+  button:hover {
+    background-color: #944c6f;
+  }
+  
+  .image-side {
+    flex: 1;
+    background-image: url('../assets/images/recepie_signUp.svg'); 
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    margin-right: 10%;
+  }
+
+  .Profile-Picture{
+    height:50%;
+  }
+  

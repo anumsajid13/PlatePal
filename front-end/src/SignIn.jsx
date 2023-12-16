@@ -58,7 +58,7 @@ const SignInPage =  () => {
         const data = await response.json();
         console.log('Sign In successful:', data.message);
         alert('Sign In successful')
-        // Store the token using the token store
+        
         setToken(data.token);
       } catch (error) {
         console.error('Error during Sign In:', error.message);
