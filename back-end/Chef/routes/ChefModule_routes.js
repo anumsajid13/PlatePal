@@ -58,13 +58,13 @@ router.post('/signup', upload.fields([ { name: 'certificationImage', maxCount: 1
   });
 
 router.post('/login', async (req,res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     try{
 
       
         //find chef by email
-        const chef = await Chef.findOne({email});
+        const chef = await Chef.findOne({username});
 
         if(!chef){
             return res.status(404).json({ message: 'Chef not found' });
