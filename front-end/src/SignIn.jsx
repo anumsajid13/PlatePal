@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import useNavbarStore from './navbarStore';
 import useTokenStore from './tokenStore';
 import './SignIn.css';
+import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SignInPage =  () => {
   const { setToken } = useTokenStore();
@@ -67,6 +69,8 @@ const SignInPage =  () => {
   };
 
   const signInAdmin = async () => {
+    const history = useHistory();
+
     try {
       const response = await fetch('http://localhost:9000/admin/login', {
         method: 'POST',
@@ -86,8 +90,11 @@ const SignInPage =  () => {
       const data = await response.json();
       console.log('Admin Sign In successful:', data.token);
       alert('Admin Sign In successful');
+
       // Store the admin token using the token store (if needed)
       setToken(data.token);
+      navigate('/admin');
+
     } catch (error) {
       console.error('Error during Admin Sign In:', error.message);
       alert('Could not sign in as admin');
