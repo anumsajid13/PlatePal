@@ -74,10 +74,7 @@ router.post("/register", upload.fields([ { name: 'certificationImage', maxCount:
           // Create token
           const token = jwt.sign(
             {id:user.id,email:user.email, name:user.name},
-            process.env.SECRET_KEY,
-            {
-              expiresIn: "2h",
-            }
+            process.env.SECRET_KEY
           );
           // Assign token to the user and save back to the database
           user.token = token;
@@ -99,7 +96,7 @@ router.post("/register", upload.fields([ { name: 'certificationImage', maxCount:
   //edit profile
   router.put('/editprofile', authenticateToken, async (req, res) => {
     try {
-      const updatedUser = await Vendor.findByIdAndUpdate(req.user.id, req.body, { new: true });
+      const updatedUser = await Vendor.findByIdAndUpdate(req.user.id,  { $set: req.body }, { new: true });
       if(!updatedUser){
         return res.status(401).send("Invalid email.");
       }
@@ -155,5 +152,8 @@ router.post('/forgotpassword', async (req,res) => {
       return res.status(500).send("Internal Server Error");
     }
   });
+
+  //signout
+  
   module.exports = router;
   

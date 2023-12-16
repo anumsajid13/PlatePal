@@ -47,7 +47,7 @@ const User_Signin = require('./RecipeSeeker/routes/signin_route')
 const User_SignUp = require('./RecipeSeeker/routes/signup_route')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
 const vendor_Routes = require('./Vendor/routes/profileRoute');
-const ingredientRoutes = require('./Vendor/routes/ingredientsroutes');
+const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
@@ -59,7 +59,7 @@ app.use('/recipes', Reipe_routes);
 //vendor routes
 app.use('/vendor', vendor_Routes);
 //ingredient routes
-//app.use('/ingredients', ingredientRoutes);
+app.use('/ingredients', ingredient_Routes);
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);
 
