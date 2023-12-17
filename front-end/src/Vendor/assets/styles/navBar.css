@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Calistoga&family=Chonburi&family=EB+Garamond:ital,wght@1,500&family=Elsie:wght@400;900&family=IBM+Plex+Sans:wght@600&family=Marcellus&family=Montserrat:wght@100;500&family=Outfit&family=Poppins:ital@1&family=Quattrocento&display=swap");
+
+.body {
+    font-family: "Quattrocento";
+    font-weight: bold;
+    background-color: #ECDCC9;
+    
+  }
+nav {
+  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #C4E0F9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: "Quattrocento";
+  }
+  
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  li {
+    margin-right: 20px; 
+  }
+  
+  a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease; 
+    font-family: "Quattrocento";
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  a:hover {
+    color: #66ccff; 
+  }
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-left: 2%;
+   
+  }
+  .active-link-1 {
+    color: #ff0000; 
+  }

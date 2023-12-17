@@ -29,7 +29,7 @@ const SignInPage =  () => {
         // Redirect to Chef route
         break;
       case 'vendor':
-        // Redirect to Vendor route
+      await signInVendor();
         break;
       case 'nutritionist':
         // Redirect to Nutritionist route
@@ -99,6 +99,40 @@ const SignInPage =  () => {
       alert('Could not sign in as admin');
     }
   };
+
+  
+  const signInVendor = async () => {
+    try {
+      const response = await fetch('http://localhost:9000/vendor/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+  
+      let data; // Declare 'data' outside of the if block
+  
+      if (!response.ok) {
+        data = await response.json();
+        console.error('Vendor failed to login:', data.error);
+        alert('Vendor Sign In failed');
+        return;
+      }
+  
+      data = await response.json();
+      console.log('Vendor Sign In successful:', data.token);
+      alert('Vendor Sign In successful');
+  console.log('Token:', data.token);
+      setToken(data.token);
+  
+      navigate('/Vendor/Mainpage');
+    } catch (error) {
+      console.error('Error during vendor Sign In:', error.message);
+      alert('Could not sign in as vendor');
+    }
+  };
+  
 
   return (
     <div>

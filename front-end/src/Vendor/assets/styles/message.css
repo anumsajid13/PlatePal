@@ -1,0 +1,47 @@
+.message {
+    position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+    width: 300px;
+/* 
+    position: fixed; /* Make the popup position independent of the page content 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+   background-color: hsla(180, 37%, 85%, 0.589); 
+   backdrop-filter: blur(20px);
+   */
+   
+ 
+   
+  }
+  
+  .message p {
+    margin-bottom: 10px;
+  }
+  
+  .message button {
+    padding: 8px 12px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .message button:hover {
+    background-color: #2980b9;
+  }
+  
