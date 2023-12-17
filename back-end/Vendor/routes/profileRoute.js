@@ -125,30 +125,33 @@ router.post("/register", upload.fields([ { name: 'certificationImage', maxCount:
     try {
       const updatedUser = await Vendor.findByIdAndUpdate(req.user.id,  { $set: req.body }, { new: true });
       if(!updatedUser){
-        return res.status(401).send("Invalid email.");
+        return res.status(401).json({message:"Invalid email."});
       }
       await updatedUser.save();
-      return res.status(200).send('Profile updated successfully');
+      return res.status(200).json({message:'Profile updated successfully',data:updatedUser});
     } catch (error) {
       console.error(error);
-      return res.status(500).send("Internal Server Error");
+      return res.status(500).json({message:"Internal Server Error",error});
     }
   });
 
 //ForgetPassword
 router.post('/forgotpassword', async (req,res) => {
 
-  const { email, newPassword } = req.body;
+  const { email, newPassword,oldPassword } = req.body;
 
   try{
 
       //find chef by email
       const vendor = await Vendor.findOne({ email });
-
+   
       if (!vendor) {
           return res.status(404).json({ message: 'Vendor not found' });
       }
-
+      const validpass=await bcrypt.compare(oldPassword, vendor.password);
+      if(!validpass){
+        return res.status(401).send("You have entered the wrong password.");
+      }
       //generate new hashed password
       const hashedPassword = await bcrypt.hash(newPassword, 10);
 

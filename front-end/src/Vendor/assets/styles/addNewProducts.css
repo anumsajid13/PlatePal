@@ -1,4 +1,4 @@
-.editProfileContainer {
+.addIngredientContainer {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
@@ -8,54 +8,33 @@
     background-color: #fff;
   }
   
-  .editProfileContainer.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .editProfileContainer .backButton {
-    text-decoration: none;
-    color: #333;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .editProfileContainer  .backButton svg {
-    margin-right: 5px;
-  }
-  
-  .editProfileContainer h2 {
+  .addIngredientContainer h2 {
     margin-top: 20px;
     color: #333;
   }
   
-  .editProfileContainer .formContainer {
+  .addIngredientContainer .formContainer {
     margin-top: 20px;
   }
   
-  .editProfileContainer label {
+  .addIngredientContainer label {
     display: block;
     margin-bottom: 8px;
     color: #333;
     font-weight: bold;
   }
-  .file{
-    height: 30px;
-  }
-  .editProfileContainer input,
+  
+  .addIngredientContainer input,
   textarea {
-    width: 95%;
+    width: 100%;
     padding: 8px;
     margin-bottom: 16px;
     border: 1px solid #ddd;
     border-radius: 4px;
-
-  
+    box-sizing: border-box;
   }
   
-  .editProfileContainer button {
+  .addIngredientContainer button {
     background-color: #4caf50;
     color: #fff;
     padding: 10px 15px;
@@ -65,7 +44,7 @@
     font-size: 16px;
   }
   
-  .editProfileContainer button:hover {
+  .addIngredientContainer button:hover {
     background-color: #45a049;
   }
   
