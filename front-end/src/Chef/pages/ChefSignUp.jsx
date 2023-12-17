@@ -131,7 +131,7 @@ const ChefSignUp = () =>{
                                 Certificate PDF:
                             <input className='Profile-Picture' type="file" onChange={(e) => setCertificationImage(e.target.files[0])}  />
                             </label>
-                            <button type="button" onClick={handleSignUp} disabled={loading} className="form-button">
+                            <button type="button" onClick={handleSignUp} disabled={loading} className="chef-form-button">
                             {loading ? 'Signing Up...' : 'Sign Up'}
                             </button>
                     

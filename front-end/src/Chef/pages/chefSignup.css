@@ -76,7 +76,7 @@
     border: none;
   }
   
-  button {
+  .chef-form-button {
     background-color: #B95F89;
     color: white;
     margin-left: 25%;
@@ -88,7 +88,7 @@
     margin-bottom: 5%;
   }
   
-  button:hover {
+  .chef-form-button:hover {
     background-color: #944c6f;
   }
   
