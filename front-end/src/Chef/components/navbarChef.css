@@ -19,16 +19,20 @@
   .chef-search-bar {
     display: flex;
     align-items: center;
+    
   }
   
-  .chef-search-bar input {
+  .chef-search-bar .chef-search-bar-input {
     width: 500px;
     padding: 8px;
     margin-right: 10px;
     border: 2px solid #D5CFE1;
     border-radius: 5px;
     font-size: 14px;
+    margin-top:16px;
   }
+
+  
   
   .chef-search-button {
     color: black !important;
@@ -36,6 +40,11 @@
     padding: 5px;
     border-radius: 2px;
     cursor: pointer;
+    background-color: #D5CFE1;
+  }
+
+  .chef-search-button:hover{
+    
     background-color: #D5CFE1;
   }
   

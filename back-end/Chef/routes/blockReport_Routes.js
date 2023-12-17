@@ -31,6 +31,8 @@ router.post('/createVendorReport/:vendorId', authenticateToken, upload.single('p
       //send notification to admin
       const adminNotification = new AdminNotification({
         user: '657dab6364bd105aeb65e8c7',
+        sender: req.user.id, 
+        senderType: 'Chef',
         type: 'Vendor Block Report',
         notification_text: `A vendor block report has been submitted by Chef ${req.user.name}.`
       });
