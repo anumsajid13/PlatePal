@@ -9,7 +9,7 @@ router.post('/addComment/:recipeId', authenticateToken, async (req, res) => {
   try {
     const { commentText } = req.body;
     const { recipeId } = req.params;
-    const userId = req.user.userId; // Assuming the user ID is stored in the token during authentication
+    const userId = req.user.id; 
 
     // Check if the recipe exists
     const recipe = await Recipe.findById(recipeId);

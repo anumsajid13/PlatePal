@@ -1,15 +1,19 @@
 /* RecipeCard.css */
 
+.outer-recipe{
+  display: flex;
+  flex-direction: row;
+}
 .recipe-card {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 16px;
     margin: 16px;
     cursor: pointer;
-    width:50%;
-    margin-left: 25%;
+    width:70%;
+    margin-left: 15%;
     transition: transform 0.2s ease-in-out;
-    background-color: #f9f9f9;
+    background-color: #EDDFEF;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: row;
@@ -116,4 +120,21 @@
   /* Add this class to show the popup */
   .popup-open {
     display: block;
+  }
+
+  .Rating-class{
+    border-style: solid;
+    border-color: #ddd;
+    border-radius: 10px;
+  }
+
+  .Rating-class2{
+   
+    margin-left: 10px;
+  }
+
+
+  .recipe-rating{
+    margin-top: 8px;
+    margin-left: 10px;
   }

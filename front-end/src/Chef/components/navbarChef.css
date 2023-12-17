@@ -1,17 +1,19 @@
 
 .chef-navbar {
-    background-color: #94958B;
+    background-color: #D5CFE1;
     padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+   
+   
   }
   
-  .logo {
+  .chef-navbar-logo {
     font-size: 1rem;
     font-weight: bold;
     font-family: Chonburi;
-    margin-left: 2%;
+   
   }
   
   .chef-search-bar {
@@ -23,7 +25,7 @@
     width: 500px;
     padding: 8px;
     margin-right: 10px;
-    border: 2px solid #94958B;
+    border: 2px solid #D5CFE1;
     border-radius: 5px;
     font-size: 14px;
   }
@@ -34,22 +36,30 @@
     padding: 5px;
     border-radius: 2px;
     cursor: pointer;
-    background-color: #94958B;
+    background-color: #D5CFE1;
   }
   
   .chef-nav-links {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     font-family: "Quattrocento";
     font-weight: bold;
+    
   }
   
   .chef-nav-links div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap:20px;
     margin: 0 10px;
     cursor: pointer;
   }
   
+  
   .chef-icon-link {
+    
     margin: 0 10px;
     cursor: pointer;
   }
@@ -58,6 +68,17 @@
     font-size: 24px;
     vertical-align: middle;
   }
-  .chef-sidebar.open {
+.chef-sidebar.open {
   width: 250px;
+}
+
+.chef-linkss{
+    color:black;
+    text-decoration: none;
+}
+
+.chef-linkss:hover{
+
+    color: black;
+
 }

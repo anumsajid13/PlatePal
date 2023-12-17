@@ -10,6 +10,33 @@ const multer = require('multer');
 const storage = multer.memoryStorage(); // Store the image in memory
 const upload = multer({ storage: storage });
 
+
+ // Endpoint to get vendor information by ID
+ router.get('/profile', authenticateToken, async (req, res) => {
+  console.log("im in profile",req.user.id);
+  
+
+  try {
+    const vendor = await Vendor.findById(req.user.id);
+
+    if (!vendor) {
+      console.log("im in profile",vendor);
+      return res.status(404).json({ message: 'Vendor not found' });
+     
+    }
+/* const name=vendor.name;
+const email=vendor.email;
+const username=vendor.username; */
+const { name, username, email, profilePicture, certificationImage } = vendor;
+console.log("this is vendir",vendor);
+    console.log("im in profile", name, username, email);
+    return res.json({name, username, email,profilePicture, certificationImage });
+  
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 //register as new vendor
 router.post("/register", upload.fields([ { name: 'certificationImage', maxCount: 1 }, { name: 'profilePicture', maxCount: 1 }]), async (req, res) => {
     try {
@@ -153,7 +180,6 @@ router.post('/forgotpassword', async (req,res) => {
     }
   });
 
-  //signout
-  
+ 
   module.exports = router;
   

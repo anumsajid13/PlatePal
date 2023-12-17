@@ -4,7 +4,7 @@
     width: 0;
     position: fixed;
     top: 0;
-    left: 0;
+    right: 0;
     background-color:#EDDFEF;
     overflow-x: hidden;
     transition: 0.5s;
@@ -13,7 +13,7 @@
   }
   
   .chef-sidebar a {
-    padding: 8px 8px 8px 32px;
+    padding: 8px 8px 40px 32px;
     text-decoration: none;
     font-size: 18px;
     color: black;

@@ -28,7 +28,8 @@ const recipeSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String
   },
-  vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' }
+  vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
+  description: String
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);

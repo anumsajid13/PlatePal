@@ -30,16 +30,16 @@ const Discover = () => {
 
       <div className='home'>
       <div className="discover-container-1">
-        <div className="search-card-1">
+        <div className="search-card-11">
           <input className='searchRecepie' type="text" placeholder="Search..." />
           <select className="search-dropdown-1">
             <option value="recipeName">Search by Recipe Name</option>
             <option value="chef">Search by Chef</option>
           </select>
-          <span className="search-icon-1">&#128269;</span>
+          <span className="material-icons google-icon">search</span>
           
         </div>
-        <div className="category-card-1">
+        <div className="category-card-11">
           <label>Category 1</label>
           <label>Category 2</label>
           <label>Category 3</label>
