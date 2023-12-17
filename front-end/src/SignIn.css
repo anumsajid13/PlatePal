@@ -14,7 +14,7 @@
     flex-direction: row;
     max-width: 75%;
     width: 90%;
-    background-color: #ECDCC9;
+    background-color: #D5CFE1;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
     overflow: hidden;
@@ -65,7 +65,7 @@
     width:10px;
   }
   .button-signin {
-    background-color: #B95F89;
+    background-color: #464655;
     color: white;
     border: none;
     padding: 10px;
@@ -84,7 +84,7 @@
   
   .image-side1 {
     flex: 1;
-    background-image: url('../public/signin.svg'); 
+    background-image: url('../public/lol.svg'); 
     background-size: cover;
     background-position: center;
     position: relative;

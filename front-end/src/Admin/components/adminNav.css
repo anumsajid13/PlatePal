@@ -1,7 +1,7 @@
 /* adminNav.css */
 
 .admin-navbar {
-    background-color:  #C4E0F9;
+    background-color:   #94958B;
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -30,12 +30,12 @@
   }
   
   .search-button {
-    color: rgb(90, 127, 237) !important;
+    color:  black;
     border: none;
     padding: 5px;
     border-radius: 2px;
     cursor: pointer;
-    background-color: #C4E0F9;
+    background-color:  #94958B;
   }
   
   .nav-links {
