@@ -1,0 +1,63 @@
+
+.chef-navbar {
+    background-color: #94958B;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 1rem;
+    font-weight: bold;
+    font-family: Chonburi;
+    margin-left: 2%;
+  }
+  
+  .chef-search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .chef-search-bar input {
+    width: 500px;
+    padding: 8px;
+    margin-right: 10px;
+    border: 2px solid #94958B;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .chef-search-button {
+    color: black !important;
+    border: none;
+    padding: 5px;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: #94958B;
+  }
+  
+  .chef-nav-links {
+    display: flex;
+    align-items: center;
+    font-family: "Quattrocento";
+    font-weight: bold;
+  }
+  
+  .chef-nav-links div {
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .chef-icon-link {
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .material-icons {
+    font-size: 24px;
+    vertical-align: middle;
+  }
+  .chef-sidebar.open {
+  width: 250px;
+}

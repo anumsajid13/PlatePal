@@ -73,7 +73,9 @@
     border-radius: 10px;
     font-size: 14px;
   }
-  
+  .chef-form-input{
+    border: 2px solid #D5CFE1;
+  }
   input[type="file"] {
     border: none;
   }
