@@ -1,0 +1,119 @@
+/* RecipeCard.css */
+
+.recipe-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px;
+    cursor: pointer;
+    width:50%;
+    margin-left: 25%;
+    transition: transform 0.2s ease-in-out;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+  }
+
+  .recepie-category{
+    background-color: #b4e2d8;
+  }
+  
+  .recipe-card:hover {
+    transform: scale(1.05);
+  }
+
+  .Rating-class{
+    margin-top: 60px;
+  }
+  .flexxx{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    row-gap: 0px;
+  }
+  .recipe-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: 3%;
+    width: 70%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 24px;
+    z-index: 10000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  
+  .recipe-popup h3 {
+    font-size: 24px;
+    margin-bottom: 16px;
+    color: #333;
+  }
+  
+  .recipe-popup p {
+    margin-bottom: 8px;
+    color: #555;
+  }
+  
+  .recipe-popup .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #888;
+  }
+  
+  .recipe-popup ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .recipe-popup li {
+    margin-bottom: 8px;
+  }
+  
+  /* Style adjustments for better readability and layout */
+  .recipe-popup .recipe-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .recipe-popup .recipe-details-left {
+    flex: 1;
+    max-width: 50%;
+  }
+  
+  .recipe-popup .recipe-details-right {
+    flex: 1;
+    max-width: 40%;
+  }
+  
+  .recipe-popup .recipe-details img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .recipe-popup .recipe-details ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .recipe-popup .recipe-details ul li {
+    list-style: none;
+    margin-bottom: 8px;
+  }
+  
+  /* Add this class to show the popup */
+  .popup-open {
+    display: block;
+  }

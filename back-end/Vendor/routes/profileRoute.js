@@ -16,16 +16,16 @@ router.post("/register", upload.fields([ { name: 'certificationImage', maxCount:
       const { name,username, email, password } = req.body;
       const { profilePicture, certificationImage } = req.files;
       if (!(email && password && name && username && profilePicture && certificationImage)) {
-        return res.status(400).send({ error: "All input is required" });
+        return res.status(400).send({ message: "All fields should be filled." });
       }
      //checking if user already exists
       const oldUser = await Vendor.findOne({ email });
       if (oldUser) {
-        return res.status(409).send({ error: "Email already in use." });
+        return res.status(409).send({ message: "Email already in use." });
       }
       const User = await Vendor.findOne({username });
       if (User) {
-        return res.status(409).send({ error: "Username already in use." });
+        return res.status(409).send({ message: "Username already in use." });
       }
 
       //encrypting password
@@ -50,19 +50,19 @@ router.post("/register", upload.fields([ { name: 'certificationImage', maxCount:
  
  // login route
  router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
     console.log(req.body);
 
-    if (!email || !password) {
-      res.status(400).send("Email and password are required");
+    if (!username || !password) {
+      res.status(400).send("Username and password are required");
       return;
   }
   
     try {
     //checking if user exists
-      const user = await Vendor.findOne({ email });
+      const user = await Vendor.findOne({ username });
       if(!user){
-        return res.status(401).send("Invalid email.");
+        return res.status(401).send("Invalid username.");
       }
       //checking if password is correct
       const validpass=await bcrypt.compare(password, user.password);
@@ -73,7 +73,7 @@ router.post("/register", upload.fields([ { name: 'certificationImage', maxCount:
         if (!user.isBlocked) {
           // Create token
           const token = jwt.sign(
-            {id:user.id,email:user.email, name:user.name},
+            {id:user.id,email:user.email, name:user.name,username:user.username},
             process.env.SECRET_KEY
           );
           // Assign token to the user and save back to the database

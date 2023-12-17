@@ -5,9 +5,8 @@ const Recipe = require('../../models/Recipe Schema');
 
 router.get('/allRecipes', async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1; // Default to page 1
-    const pageSize = parseInt(req.query.pageSize) || 10; // Default page size to 10
-
+    const page = parseInt(req.query.page) || 1; 
+    const pageSize = parseInt(req.query.pageSize) || 10; 
     console.log("page size: "+ pageSize)
     const skip = (page - 1) * pageSize;
 

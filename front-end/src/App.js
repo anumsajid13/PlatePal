@@ -9,6 +9,11 @@ import SignInPage from './SignIn';
 import RecipeSeekerSignUp from './RecipeSeeker/components/SignUp_RecepieSeeker';
 import DiscoverPage from './RecipeSeeker/components/Discover';
 import BlockReports from './Admin/pages/BlockReports';
+import ChefSignUp from './Chef/pages/ChefSignUp';
+import VendorSignUp from './Vendor/pages/SignUp_vendor';
+import VendorMainpage from './Vendor/pages/VendorMainpage';
+import ChefMainPage from './Chef/pages/ChefMainPage';
+
 function App() {
   return (
     <div className="App">
@@ -20,6 +25,11 @@ function App() {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/recipe-seeker/Discover" element={<DiscoverPage />} />
         <Route path="/admin/blockreport" element={<BlockReports />} />
+        <Route path="/signup/chef" element={<ChefSignUp/>}/>
+        <Route path="/signup/vendor" element={<VendorSignUp/>}/>
+        <Route path="/Vendor/Mainpage" element={<VendorMainpage />} />
+        <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
+     
 
       </Routes>
     </div>

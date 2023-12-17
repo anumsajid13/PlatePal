@@ -13,7 +13,7 @@ const Navbar = ({ activeLink }) => {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar1">
       <div className="logo">Plate Pal</div>
       <div className="nav-links1">
         <Link

@@ -58,13 +58,13 @@ router.post('/signup', upload.fields([ { name: 'certificationImage', maxCount: 1
   });
 
 router.post('/login', async (req,res) => {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
 
     try{
 
       
         //find chef by email
-        const chef = await Chef.findOne({email});
+        const chef = await Chef.findOne({username});
 
         if(!chef){
             return res.status(404).json({ message: 'Chef not found' });
@@ -81,7 +81,7 @@ router.post('/login', async (req,res) => {
         }
 
         if (chef.isBlocked) {
-            return res.status(403).send('Access denied - you were blocked by the admin');
+            return res.status(403).json({ message:'Access denied - you were blocked by the admin'});
         }
 
         //getting token using jwt

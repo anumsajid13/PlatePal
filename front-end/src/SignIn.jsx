@@ -12,6 +12,12 @@ const SignInPage =  () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('recipeSeeker');
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleCloseError = () => {
+    setShowError(false);
+  };  
 
   const handleSignIn = async() => {
     console.log('Username:', username);
@@ -26,10 +32,10 @@ const SignInPage =  () => {
         await signInAdmin();        
         break;
       case 'chef':
-        // Redirect to Chef route
+        await signInChef();
         break;
       case 'vendor':
-        // Redirect to Vendor route
+      await signInVendor();
         break;
       case 'nutritionist':
         // Redirect to Nutritionist route
@@ -98,6 +104,77 @@ const SignInPage =  () => {
       console.error('Error during Admin Sign In:', error.message);
       alert('Could not sign in as admin');
     }
+  };
+
+  
+  const signInVendor = async () => {
+    try {
+      const response = await fetch('http://localhost:9000/vendor/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+  
+      let data; // Declare 'data' outside of the if block
+  
+      if (!response.ok) {
+        data = await response.json();
+        console.error('Vendor failed to login:', data.error);
+        alert('Vendor Sign In failed');
+        return;
+      }
+  
+      data = await response.json();
+      console.log('Vendor Sign In successful:', data.token);
+      alert('Vendor Sign In successful');
+  console.log('Token:', data.token);
+      setToken(data.token);
+  
+      navigate('/Vendor/Mainpage');
+    } catch (error) {
+      console.error('Error during vendor Sign In:', error.message);
+      alert('Could not sign in as vendor');
+    }
+  };
+  
+  const signInChef = async () => {
+   
+      try{
+
+        const response = await fetch('http://localhost:9000/chef/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+        });
+
+        
+      
+
+            const data = await response.json();
+
+            console.log(data.message)
+
+            if (!response.ok) {
+                setErrorMessage(data.message);
+                setShowError(true);
+                return;
+            }
+
+            console.log('Token:', data.token);
+            setToken(data.token);
+            alert('Chef log in successful');
+            navigate('/Chef/Mainpage');
+      }
+      catch(error){
+        console.error('Error during Sign In:', error.message);
+        setShowError(true);
+        setErrorMessage('Server Error');
+      }
+
   };
 
   return (
@@ -204,6 +281,16 @@ const SignInPage =  () => {
           
         </div>
       </div>
+
+      {showError && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h2>Message</h2>
+                        <p>{errorMessage}</p>
+                        <button onClick={handleCloseError}>Close</button>
+                    </div>
+                </div>
+       )}
     </div>
   );
 };

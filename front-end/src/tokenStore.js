@@ -1,5 +1,5 @@
 // tokenStore.js
-import create from 'zustand';
+import { create } from 'zustand';
 
 const useTokenStore = create((set) => ({
   token: null,
@@ -7,3 +7,4 @@ const useTokenStore = create((set) => ({
 }));
 
 export default useTokenStore;
+

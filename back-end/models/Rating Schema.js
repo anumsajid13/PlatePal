@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const RecipeSeeker = require('./RecipeSeekerSchema');
-const Recipe = require('./Recipe Schema');
+const RecipeSeeker = require('../models/RecipeSeekerSchema');
+const Recipe = require('../models/Recipe Schema');
 
 const ratingSchema = new mongoose.Schema({
   ratingNumber: Number,

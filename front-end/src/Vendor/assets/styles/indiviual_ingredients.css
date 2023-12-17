@@ -1,0 +1,29 @@
+.ingredientsContainer {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  position: relative; /* Ensure the icons are positioned relative to this container */
+}
+
+.iconContainer {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: flex;
+}
+
+.iconContainer svg {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.deleteIcon {
+  color: red;
+}
+
+.editIcon {
+  color: blue;
+}

@@ -6,7 +6,7 @@ const authenticateToken = require('../../TokenAuthentication/token_authenticatio
  
 
 //get all ingredients with filtering ,sorting and pagination
-router.get('/',authenticateToken, async (req, res) => {
+router.get('/All',authenticateToken, async (req, res) => {
   try {
     // Extract query parameters
     const { sortBy, sortOrder, filterType, filterValue, page=1, pageSize=30 } = req.query;
