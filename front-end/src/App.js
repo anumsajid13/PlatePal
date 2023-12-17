@@ -13,6 +13,8 @@ import ChefSignUp from './Chef/pages/ChefSignUp';
 import VendorSignUp from './Vendor/pages/SignUp_vendor';
 import VendorMainpage from './Vendor/pages/VendorMainpage';
 import ChefMainPage from './Chef/pages/ChefMainPage';
+import CreateRecipe from './Chef/pages/CreateRecipe';
+import DisplayVendors from './Chef/pages/DisplayVendors';
 
 function App() {
   return (
@@ -29,7 +31,8 @@ function App() {
         <Route path="/signup/vendor" element={<VendorSignUp/>}/>
         <Route path="/Vendor/Mainpage" element={<VendorMainpage />} />
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
-     
+        <Route path="/Chef/CreateRecipe" element={<CreateRecipe/>} />
+        <Route path="/Chef/AllVendors" element={<DisplayVendors/>} />
 
       </Routes>
     </div>

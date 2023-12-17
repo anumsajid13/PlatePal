@@ -1,14 +1,14 @@
 import  {React, useEffect, useState } from 'react';
 import ChefNav from '../components/NavBarChef';
 
-const ChefMainPage = () => {
+const DisplayVendors = () => {
 
     return (
 
         <>
             <ChefNav/>
 
-            
+            <div>vendorsss?</div>
 
         </>
     
@@ -17,4 +17,4 @@ const ChefMainPage = () => {
 };
 
 
-export default ChefMainPage;
+export default DisplayVendors;
