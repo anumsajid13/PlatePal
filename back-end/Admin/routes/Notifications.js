@@ -1,18 +1,38 @@
 
-const admin_Notification = require('../../models/Admin_Notification Schema');
-
-// Endpoint to retrieve all admin notifications
-app.get('/admin/notifications', autheticateToken, async (req, res) => {
-    try {
-      const notifications = await admin_Notification.find({ user: req.user._id });
-  
-      return res.json({ notifications });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  });
-  
+const AdminNotification = require('../../models/Admin_Notification Schema');
+const express = require('express');
+const router = express.Router();
+const authenticateToken = require('../../TokenAuthentication/token_authentication');
 
 
-  module.exports = router;
+// Endpoint to retrieve notifications with sender details
+router.get('/notifications',authenticateToken, async (req, res) => {
+  try {
+    const notifications = await AdminNotification.find()
+      .populate({
+        path: 'sender',
+        model: function(doc) {
+          // Determine the model dynamically based on senderType
+          switch (doc.senderType) {
+            case 'Vendor':
+              return '';
+            case 'Nutritionist':
+              return 'Nutritionist';
+            case 'Chef':
+              return 'Chef';
+            default:
+              return 'User'; // Replace with the default user model name
+          }
+        },
+        select: 'username', // Replace with the field you want to select
+      })
+      .exec();
+
+    res.json(notifications);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+module.exports = router;

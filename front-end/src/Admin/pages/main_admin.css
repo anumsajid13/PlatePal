@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color:#E5ECE9;
+    background-color:#B7B6C1;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  }
   
   .navigation-buttons {
@@ -41,7 +41,7 @@
   
   .top-chefs-list .list-item,
   .top-nutritionists-list .list-item {
-    background-color: #bb94a6;
+    background-color:  #D5CFE1;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;

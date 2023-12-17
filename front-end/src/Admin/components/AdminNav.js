@@ -1,17 +1,17 @@
 // AdminNav.js
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './adminNav.css'; // Import the CSS file
 import NotificationPopup from './NotificationPopup';
 import './sidebar.css';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
+import useNotificationStore from './NotificationStore'; // Import the Zustand store
+import useTokenStore from '../../tokenStore';
 
 const AdminNav = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const handleNotificationsClick = () => {
-    setShowNotifications(true);
-  };
+  const token = useTokenStore((state) => state.token);
 
   const handleCloseNotifications = () => {
     setShowNotifications(false);
@@ -20,50 +20,48 @@ const AdminNav = () => {
   const handleSidebarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+  const handleNotificationsClick = () => {
+    setShowNotifications(true);
+  };
+
+ 
 
   return (
     <div>
-    <nav className="admin-navbar">
-      {/* Plate Pal logo on the left */}
+      <nav className="admin-navbar">
+        {/* Plate Pal logo on the left */}
+        <div className="logo">Plate Pal</div>
 
-      <div className="icon-link" title="Toggle Sidebar" onClick={handleSidebarToggle}>
+        {/* Clickable components on the right */}
+        <div className="nav-links">
+          <div>Home</div>
+          <div>Recipes</div>
+          <div>Reviews</div>
+          <div>Nutritionist</div>
+          <div className="icon-link" title="Cart" onClick={handleNotificationsClick}>
+            <span className="material-icons google-icon">notifications</span>
+          </div>
+          <div className="icon-link" title="Profile">
+            <span className="material-icons google-icon">person</span>
+          </div>
+          <div className="icon-link" title="Toggle Sidebar" onClick={handleSidebarToggle}>
           <span className="material-icons">menu</span>
         </div>
-
-      {/* Search bar with search icon */}
-      <div className="search-bar">
-        <input type="text" placeholder="Search" />
-        <button className="search-button">
-          <span className="material-icons google-icon">search</span>
-        </button>
-      </div>
-
-      {/* Clickable components on the right */}
-      <div className="nav-links">
-        <div>Home</div>
-        <div>Recipes</div>
-        <div>Reviews</div>
-        <div>Nutritionist</div>
-        <div className="icon-link" title="Profile">
-          <span className="material-icons google-icon">person</span>
         </div>
-        <div className="icon-link" title="Cart" onClick={handleNotificationsClick}>
-        <span className="material-icons google-icon">notifications</span>
-      </div>
-      </div>
-      {showNotifications && <NotificationPopup onClose={handleCloseNotifications} />}
-
-    </nav>
+        {showNotifications && <NotificationPopup onClose={handleCloseNotifications} />}
+      </nav>
 
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <a href="#" onClick={handleSidebarToggle} className="close-btn">×</a>
         <a href="#">View All users</a>
-        <Link to="/admin/blockreport" onClick={handleSidebarToggle}>View Block Reports</Link> {/* Use Link for navigation */}
+        <Link to="/admin/blockreport" onClick={handleSidebarToggle}>
+          View Block Reports
+        </Link>
+        {/* Use Link for navigation */}
         <a href="#">Blocked users</a>
         <a href="#">Registered Users</a>
       </div>
-      </div>
-
+    </div>
   );
 };
 
