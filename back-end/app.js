@@ -62,8 +62,9 @@ app.use('/recepieSeeker', User_SignUp);
 app.use('/recepieSeeker', Dicover_recepies);
 //recipe routes
 app.use('/recipes', Reipe_routes);
-app.use('/admin', admin_signin);
 
+//admin routes
+app.use('/admin', admin_signin);
 app.use('/admin', block);
 
 //vendor routes

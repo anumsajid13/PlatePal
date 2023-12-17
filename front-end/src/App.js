@@ -8,6 +8,7 @@ import SignUpPage from './SignUp';
 import SignInPage from './SignIn'; 
 import RecipeSeekerSignUp from './RecipeSeeker/components/SignUp_RecepieSeeker';
 import DiscoverPage from './RecipeSeeker/components/Discover';
+import BlockReports from './Admin/pages/BlockReports';
 function App() {
   return (
     <div className="App">
@@ -18,6 +19,7 @@ function App() {
         <Route path="/signup/recipe-seeker" element={<RecipeSeekerSignUp />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/recipe-seeker/Discover" element={<DiscoverPage />} />
+        <Route path="/admin/blockreport" element={<BlockReports />} />
 
       </Routes>
     </div>

@@ -1,14 +1,14 @@
 /*landingpage.css*/
 @import url("https://fonts.googleapis.com/css2?family=Calistoga&family=Chonburi&family=EB+Garamond:ital,wght@1,500&family=Elsie:wght@400;900&family=IBM+Plex+Sans:wght@600&family=Marcellus&family=Montserrat:wght@100;500&family=Outfit&family=Poppins:ital@1&family=Quattrocento&display=swap");
 
-.body {
+body {
   font-family: "Quattrocento";
   font-weight: bold;
-  background-color: #ECDCC9;
+  background-color:  rgb(218,218,218);
   
 }
 .navbar {
-  background-color: #C4E0F9;
+  background-color: rgb(163,8,26);
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -106,7 +106,7 @@
 
 /* Discover menu button styles */
 .discover-menu-button {
-  background-color: #B95F89; /* Green background color */
+  background-color: rgb(163,8,26); /* Green background color */
   color: white; /* White text color */
   border: none; /* Remove border */
   padding: 15px 60px; /* Add padding */
@@ -131,7 +131,7 @@
   display: flex;
   margin-top: 20px;
   justify-content: center;
-  background-color: #E5ECE9;
+  background-color: rgb(218,218,218);
 
 }
 
@@ -159,7 +159,7 @@
   margin-top: 20px;
   border-radius: 10px; /* Add rounded edges */
   overflow: hidden; /* Hide overflow content */
-  /*background-color: #ECDCC9;*/
+background-color:  rgb(218,218,218);
 }
 
 .food-info {
