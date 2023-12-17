@@ -12,6 +12,12 @@ const SignInPage =  () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('recipeSeeker');
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleCloseError = () => {
+    setShowError(false);
+  };  
 
   const handleSignIn = async() => {
     console.log('Username:', username);
@@ -26,7 +32,7 @@ const SignInPage =  () => {
         await signInAdmin();        
         break;
       case 'chef':
-        // Redirect to Chef route
+        await signInChef();
         break;
       case 'vendor':
       await signInVendor();
@@ -133,6 +139,43 @@ const SignInPage =  () => {
     }
   };
   
+  const signInChef = async () => {
+   
+      try{
+
+        const response = await fetch('http://localhost:9000/chef/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+        });
+
+        
+      
+
+            const data = await response.json();
+
+            console.log(data.message)
+
+            if (!response.ok) {
+                setErrorMessage(data.message);
+                setShowError(true);
+                return;
+            }
+
+            console.log('Token:', data.token);
+            setToken(data.token);
+            alert('Chef log in successful');
+            navigate('/Chef/Mainpage');
+      }
+      catch(error){
+        console.error('Error during Sign In:', error.message);
+        setShowError(true);
+        setErrorMessage('Server Error');
+      }
+
+  };
 
   return (
     <div>
@@ -238,6 +281,16 @@ const SignInPage =  () => {
           
         </div>
       </div>
+
+      {showError && (
+                <div className="modal-overlay">
+                    <div className="modal">
+                        <h2>Message</h2>
+                        <p>{errorMessage}</p>
+                        <button onClick={handleCloseError}>Close</button>
+                    </div>
+                </div>
+       )}
     </div>
   );
 };

@@ -81,7 +81,7 @@ router.post('/login', async (req,res) => {
         }
 
         if (chef.isBlocked) {
-            return res.status(403).send('Access denied - you were blocked by the admin');
+            return res.status(403).json({ message:'Access denied - you were blocked by the admin'});
         }
 
         //getting token using jwt

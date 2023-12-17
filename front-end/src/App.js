@@ -11,6 +11,7 @@ import DiscoverPage from './RecipeSeeker/components/Discover';
 import ChefSignUp from './Chef/pages/ChefSignUp';
 import VendorSignUp from './Vendor/pages/SignUp_vendor';
 import VendorMainpage from './Vendor/pages/VendorMainpage';
+import ChefMainPage from './Chef/pages/ChefMainPage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/signup/chef" element={<ChefSignUp/>}/>
         <Route path="/signup/vendor" element={<VendorSignUp/>}/>
         <Route path="/Vendor/Mainpage" element={<VendorMainpage />} />
+        <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
      
 
       </Routes>
