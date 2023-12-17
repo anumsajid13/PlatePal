@@ -4,82 +4,83 @@ const authenticateToken = require('../../TokenAuthentication/token_authenticatio
 const Recipe = require('../../models/Recipe Schema');
 const User_Notification = require('../../models/User_Notification Schema');
 const Chef = require('../../models/Chef Schema'); 
-const multer = require('multer');
+  const multer = require('multer');
 
 
-// Multer configuration
-const storage = multer.memoryStorage(); // Store the image in memory
-const upload = multer({ storage: storage });
+  // Multer configuration
+  const storage = multer.memoryStorage(); // Store the image in memory
+  const upload = multer({ storage: storage });
 
 
-//create new recipe
-router.post('/newRecipe', authenticateToken, upload.single('recipeImage'),  async (req, res) =>{
-    
-    try{
-        const { title, calories, servingSize, difficulty, totalTime, ingredients, allergens, notDelivered, utensils, category, instructions } = req.body;
-        const chefId = req.user.id;
-
-        console.log(chefId)
-        //handle the uploaded file
-        if (!req.file) {
-            return res.status(400).json({ message: 'No file uploaded' });
-        }
-
-        //create a new recipe
-        const newRecipe = new Recipe({
-            title,
-            calories,
-            servingSize,
-            difficulty,
-            totalTime,
-            ingredients,
-            allergens, 
-            notDelivered,
-            utensils,
-            category,
-            instructions,
-            recipeImage: {
-            data: req.file.buffer,
-            contentType: req.file.mimetype,
-            },
-            chef: chefId
-        });
+  //create new recipe
+  router.post('/newRecipe', authenticateToken, upload.single('recipeImage'),  async (req, res) =>{
+      
+      try{
+          const { title, calories, servingSize, difficulty, totalTime, ingredients, allergens, notDelivered, utensils, category, instructions, description } = req.body;
+          const chefId = req.user.id;
 
 
-        const savedRecipe = await newRecipe.save();
-        
+          //handle the uploaded file
+          if (!req.file) {
+              return res.status(400).json({ message: 'No file uploaded' });
+          }
 
-        //make and add a notification to the followers of this chef that a new recipe is added
+          //create a new recipe
+          const newRecipe = new Recipe({
+              title:title.replace(/\D/g, ''),
+              calories:parseInt(calories.replace(/\D/g, ''), 10),
+              servingSize:parseInt(servingSize.replace(/\D/g, ''), 10),
+              difficulty:difficulty.replace(/\D/g, ''),
+              totalTime:parseInt(totalTime.replace(/\D/g, ''), 10),
+              ingredients:ingredients.replace(/\D/g, ''),
+              allergens:allergens.replace(/\D/g, ''), 
+              notDelivered:notDelivered.replace(/\D/g, ''),
+              utensils:utensils.replace(/\D/g, ''),
+              category:category.replace(/\D/g, ''),
+              instructions:instructions.replace(/\D/g, ''),
+              recipeImage: {
+              data: req.file.buffer,
+              contentType: req.file.mimetype,
+              },
+              chef: chefId,
+              description:description.replace(/\D/g, ''),
+          });
 
-        //getting the followers of that chef
-        const creatorChef = await Chef.findById(chefId).populate('followers');
-        const followers = creatorChef.followers;
 
-        if (followers.length > 0){
-        //create notifications for all followers 
-        const notificationPromises = followers.map(async (follower) =>{
+          const savedRecipe = await newRecipe.save();
+          
 
-            const follower_notification = new User_Notification({
-                user: follower._id,
-                type: 'New Recipe Added',
-                notification_text: `Chef ${creatorChef.name} added a new recipe: ${savedRecipe.title}`,
-                Time: Date.now(),
+          //make and add a notification to the followers of this chef that a new recipe is added
 
-            });
-            await follower_notification.save();
-        });
+          //getting the followers of that chef
+          const creatorChef = await Chef.findById(chefId).populate('followers');
+          const followers = creatorChef.followers;
 
-        await Promise.all(notificationPromises);
-        }
-        res.status(201).json(savedRecipe);
+          if (followers.length > 0){
+          //create notifications for all followers 
+          const notificationPromises = followers.map(async (follower) =>{
 
-    }
-    catch(error){
-        console.error(error);
-        res.status(500).json({ message: 'Server Error' });
-    }
+              const follower_notification = new User_Notification({
+                  user: follower._id,
+                  type: 'New Recipe Added',
+                  notification_text: `Chef ${creatorChef.name} added a new recipe: ${savedRecipe.title}`,
+                  Time: Date.now(),
 
-});
+              });
+              await follower_notification.save();
+          });
+
+          await Promise.all(notificationPromises);
+          }
+          res.status(201).json(savedRecipe);
+
+      }
+      catch(error){
+          console.error(error);
+          res.status(500).json({ message: 'Server Error' });
+      }
+
+  });
 
 
 //update a recipe

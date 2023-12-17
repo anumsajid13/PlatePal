@@ -16,6 +16,8 @@ import ChefMainPage from './Chef/pages/ChefMainPage';
 import IngredientDetails from './Vendor/pages/ProductDetails';
 import EditIngredient from './Vendor/pages/EditProductInformation';
 import VendorProfile from './Vendor/pages/Profile';
+import CreateRecipe from './Chef/pages/CreateRecipe';
+import DisplayVendors from './Chef/pages/DisplayVendors';
 
 function App() {
   return (
@@ -35,8 +37,8 @@ function App() {
         <Route path="/ingredients/:id" element={<IngredientDetails />} />
         <Route path="/ingredients/editInfromation/:id" element={<EditIngredient/>} />
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
-      
-     
+        <Route path="/Chef/CreateRecipe" element={<CreateRecipe/>} />
+        <Route path="/Chef/AllVendors" element={<DisplayVendors/>} />
 
       </Routes>
     </div>

@@ -1,25 +1,28 @@
 /* Navbar.css */
 .navbar-1 {
     display: flex;
+    
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color: #C4E0F9;
+    background-color: #D5CFE1;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   .logo {
     font-size: 1.5rem;
     font-weight: bold;
+   
   }
   
-  .nav-links1 {
+  .nav-links-1 {
     display: flex;
-    gap: 23px;
-    margin-left: 60%;
+    gap: 30px;
+    
+    
   }
   
-  .nav-links1 a {
+  .nav-links-1 a {
     text-decoration: none;
     color: #333;
     font-weight: bold;
@@ -27,11 +30,16 @@
   
   .icon-link-1 {
     cursor: pointer;
-    background-image: url('../assets/images/menu.svg'); 
+    
+
+  }
+  .icon-link-2 {
+    cursor: pointer;
+    background-image: url('../assets/images/notifications.svg'); 
     background-size: cover;
     background-position: center;
-    width:3%;
-    height:3%;
+    width:2%;
+    height:2%;
 
   }
 
@@ -46,7 +54,7 @@
     top: 0;
     margin-top: 3.5%;
     right: -200px; 
-    background-color:#C4E0F9; 
+    background-color:#94958B; 
     padding-top: 50px;
     transition: right 0.3s ease; 
   }
@@ -61,7 +69,7 @@
   }
   
   .sidebar1 a:hover {
-    background-color: #5c858f; /* Hover background color for links */
+    background-color: #D5CFE1; /* Hover background color for links */
   }
   
   /* Open the sidebar when it's toggled */

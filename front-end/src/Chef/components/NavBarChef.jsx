@@ -17,10 +17,8 @@ const ChefNav = () => {
     <div>
     <nav className="chef-navbar">
      
-      <div className="chef-icon-link" title="Toggle Sidebar" onClick={handleSidebarToggle}>
-          <span className="material-icons">menu</span>
-        </div>
-
+    
+        <div className="chef-navbar-logo">Plate Pal</div>
       {/* Search bar with search icon */}
       <div className="chef-search-bar">
         <input type="text" placeholder="Search" />
@@ -31,13 +29,19 @@ const ChefNav = () => {
 
       {/* Clickable components on the right */}
       <div className="chef-nav-links">
-        <div>Home</div>
-        <div>Create Recipe</div>
+        <div><Link className='chef-linkss' to="/Chef/Mainpage">Home</Link></div>
+        <div><Link className='chef-linkss' to="/Chef/CreateRecipe">Create Recipe</Link></div>
         <div className="chef-icon-link" title="Profile">
           <span className="material-icons google-icon">person</span>
+          <span className="material-icons google-icon">notifications</span>
+          <span className="material-icons google-icon">logout</span>
+        </div>
+
+        <div className="chef-icon-link" title="Toggle Sidebar" onClick={handleSidebarToggle}>
+          <span className="material-icons">menu</span>
         </div>
        
-        <span className="material-icons google-icon">notifications</span>
+        
     
       </div>
 
@@ -45,10 +49,10 @@ const ChefNav = () => {
 
       <div className={`chef-sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <a href="#" onClick={handleSidebarToggle} className="chef-close-btn"><span className="material-icons">close</span></a>
-        <a href="#">My Recipes</a>
         <a href="#">Collab Requests</a>
-        <a href="#">My Vendors</a>
-        {/*<Link to="/admin/blockreport" onClick={handleSidebarToggle}>View Block Reports</Link> */}
+        <Link className='chef-linkss' to="/Chef/allVendors">Vendors</Link>
+        <a href="#">Followers</a>
+        <a href="#">Block Reports</a>
         
       </div>
       </div>

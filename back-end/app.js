@@ -47,6 +47,9 @@ const User_Signin = require('./RecipeSeeker/routes/signin_route')
 const User_SignUp = require('./RecipeSeeker/routes/signup_route')
 const Dicover_recepies = require('./RecipeSeeker/routes/Discover_Recepies')
 const Rate_recepies = require('./RecipeSeeker/routes/Rate_Recepie')
+const DisplayRatings = require('./RecipeSeeker/routes/DisplayRatings')
+const Comment_Recipie = require('./RecipeSeeker/routes/Comment')
+const Comment_Display = require('./RecipeSeeker/routes/Display_comments')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
 const admin_signin = require('./Admin/routes/login');
 
@@ -62,6 +65,9 @@ app.use('/recepieSeeker', User_Signin);
 app.use('/recepieSeeker', User_SignUp);
 app.use('/recepieSeeker', Dicover_recepies);
 app.use('/recepieSeeker', Rate_recepies);
+app.use('/recepieSeeker', DisplayRatings);
+app.use('/recepieSeeker', Comment_Recipie);
+app.use('/recepieSeeker', Comment_Display);
 //recipe routes
 app.use('/recipes', Reipe_routes);
 
