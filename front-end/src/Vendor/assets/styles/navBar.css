@@ -6,7 +6,7 @@
     background-color: #ECDCC9;
     
   }
-nav {
+.navbar {
   
     display: flex;
     justify-content: space-between;
@@ -17,18 +17,18 @@ nav {
     font-family: "Quattrocento";
   }
   
-  ul {
+  .navbar ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
   }
   
-  li {
+ .navbar li {
     margin-right: 20px; 
   }
   
-  a {
+ .navbar a {
     text-decoration: none;
     color: white;
     font-weight: bold;
@@ -39,8 +39,8 @@ nav {
     border-radius: 5px;
   }
   
-  a:hover {
-    color: #66ccff; 
+  .navbar a:hover {
+    color: #8f1f4e; 
   }
   .logo {
     font-size: 1.5rem;

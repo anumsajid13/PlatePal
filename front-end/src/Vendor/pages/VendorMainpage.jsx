@@ -32,6 +32,30 @@ const MainPage = () => {
 
     fetchAllIngredients();
   }, []);
+
+
+  const handleDelete = async (ingredientId) => {
+    try {
+      const response=await fetch(`http://localhost:9000/Ingredients/delete/${ingredientId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        //throw new Error('Failed to delete the ingredient!', response.message);
+      }
+          const data = await response.json();
+          console.log('Ingredient deleted successfully:', data.message);
+      setIngredients((prevIngredients) =>
+        prevIngredients.filter((ingredient) => ingredient._id !== ingredientId)
+      );
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   return (
     <>
   <NavigationBar />
@@ -50,7 +74,7 @@ const MainPage = () => {
       <div >
           {Ingredients.map((indiviual) => (
             console.log("in mainpage",indiviual),
-            <Indiviual key={indiviual._id} ingredients={indiviual} />
+            <Indiviual key={indiviual._id} ingredients={indiviual} handleDelete={handleDelete} />
           ))}
         </div>
         </div>

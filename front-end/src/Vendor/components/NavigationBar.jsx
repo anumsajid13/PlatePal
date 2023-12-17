@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/styles/navBar.css';
-import Sidebar from '../components/sidebar';
+import Sidebar from './vendor_sidebar';
 
 const NavigationBar = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);

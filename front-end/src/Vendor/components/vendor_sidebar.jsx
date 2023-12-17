@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../assets/styles/sidebar.css';
+import '../assets/styles/vendor_sidebar.css';
 
 const Sidebar = ({ isOpen, onClose }) => {
   return (
-    <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+    <div className={`vendor_sidebar ${isOpen ? 'open' : ''}`}>
       <div className="close-icon" onClick={onClose}>
         &times;
       </div>

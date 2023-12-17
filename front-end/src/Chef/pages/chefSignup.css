@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: row;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    background-color: #E5ECE9;
+    background-color: #D5CFE1;
     width: 70%;
     
     border-radius: 15px;
@@ -33,7 +33,7 @@
   
   .heading1 {
     margin-left: 10%;
-    color: #a34f76;
+   
   }
   
   .form-side {
@@ -61,23 +61,27 @@
   .chl1{
     margin-top: 8%;
     margin-left: 10%;
-    color:#a34f76
+    color: black;
+    font-weight: bold;
+    font-family: Chonburi;
   }
   
   input,
   button {
     padding: 10px;
-    border: 2px solid #C4E0F9;
+    border: 2px solid #94958B;
     border-radius: 10px;
     font-size: 14px;
   }
-  
+  .chef-form-input{
+    border: 2px solid #D5CFE1;
+  }
   input[type="file"] {
     border: none;
   }
   
   .chef-form-button {
-    background-color: #B95F89;
+    background-color: #464655;
     color: white;
     margin-left: 25%;
     border: none;
@@ -89,12 +93,12 @@
   }
   
   .chef-form-button:hover {
-    background-color: #944c6f;
+    background-color:#EDDFEF;
   }
   
   .chef-image-side {
     flex: 1;
-    background-image: url('../assets/images/20547281_6310532.svg'); 
+    background-image: url('../assets/images/lol2.svg'); 
     background-size: cover;
     background-position: center;
     position: relative;

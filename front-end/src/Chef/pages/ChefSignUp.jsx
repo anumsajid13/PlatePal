@@ -109,19 +109,19 @@ const ChefSignUp = () =>{
                         <h2 className='chl1'>Chef Sign Up</h2>
                             <label className="chef-form-label">
                                  Name:
-                            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-input" />
+                            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="chef-form-input" />
                             </label>
                             <label className="chef-form-label">
                                 Username:
-                            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="form-input" />
+                            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className="chef-form-input" />
                             </label>
                             <label className="chef-form-label">
                                 Email:
-                            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-input" />
+                            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="chef-form-input" />
                             </label>
                             <label className="chef-form-label">
                                 Password:
-                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-input" />
+                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="chef-form-input" />
                             </label>
                             <label className="chef-form-label">
                                 Profile Picture:
