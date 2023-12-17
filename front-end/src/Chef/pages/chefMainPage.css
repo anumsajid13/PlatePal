@@ -1,0 +1,82 @@
+.chef-recipe-card-with-vc-heading{
+    padding:10px;
+    color: #333;
+    font-weight: bold;
+    font-family: Chonburi;
+    text-align: center;
+}
+
+.chef-recipe-card-without-vc-heading{
+    padding:10px;
+    color: #333;
+    font-weight: bold;
+    font-family: Chonburi;
+    text-align: center;
+}
+
+.recipe-cards-chef {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    justify-content: center; 
+   
+    gap: 20px;
+   
+}
+
+.recipe-card-chef {
+    width: 400px; /* Adjust the width as desired */
+    height: 400px; 
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #EDDFEF;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+   
+    padding: 0; /* Removed the padding for this div */
+
+    /* Added a position:relative for the card container */
+    position: relative; 
+}
+
+
+
+.recipe-card-chef:hover{
+    transform: scale(1.05);
+}
+
+
+.recipe-image-chef {
+    width: 100%; /* Adjusted width to take full width */
+    height: 50%; /* Set the height to 50% */
+    object-fit: cover;
+    border-radius: 8px 8px 0 0; /* Rounded corners only on top */
+}
+
+.recipe-details-chef {
+    padding: 15px;
+    text-align: justify;
+    text-justify: inter-word;
+    height: 50%; /* Set the height to 50% for the details */
+    overflow-y: auto; /* Add overflow-y for scrolling if needed */
+}
+
+.recipe-details-chef h3 {
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.recipe-details-chef p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.textt{
+    padding:20px;
+    text-align: center;
+    font-size: 20px;
+}
