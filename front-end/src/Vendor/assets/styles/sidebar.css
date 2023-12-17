@@ -33,11 +33,11 @@
     flex-direction: column;
   }
   
-  li {
+  .sidebar li {
     margin-bottom: 10px;
   }
   
-  a {
+  .sidebar a {
     text-decoration: none;
     color: white;
     font-size: 16px;
@@ -45,7 +45,7 @@
     transition: color 0.3s ease;
   }
   
-  a:hover {
-    color: #66ccff;
+  .sidebar a:hover {
+    color: #ff66b3;
   }
   
