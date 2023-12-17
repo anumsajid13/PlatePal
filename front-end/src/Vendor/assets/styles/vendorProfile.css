@@ -1,0 +1,33 @@
+.profilePageContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .profileHeader {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .profileContent {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profilePictureContainer {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .profilePicture {
+    width: 100%;
+    max-width: 200px;
+    border-radius: 50%;
+  }
+  
+  .profileDetails {
+    flex: 2;
+  }
+  
+
+  

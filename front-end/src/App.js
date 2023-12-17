@@ -13,6 +13,9 @@ import ChefSignUp from './Chef/pages/ChefSignUp';
 import VendorSignUp from './Vendor/pages/SignUp_vendor';
 import VendorMainpage from './Vendor/pages/VendorMainpage';
 import ChefMainPage from './Chef/pages/ChefMainPage';
+import IngredientDetails from './Vendor/pages/ProductDetails';
+import EditIngredient from './Vendor/pages/EditProductInformation';
+import VendorProfile from './Vendor/pages/Profile';
 
 function App() {
   return (
@@ -28,7 +31,11 @@ function App() {
         <Route path="/signup/chef" element={<ChefSignUp/>}/>
         <Route path="/signup/vendor" element={<VendorSignUp/>}/>
         <Route path="/Vendor/Mainpage" element={<VendorMainpage />} />
+        <Route path="/Vendor/Profile" element={<VendorProfile />} />
+        <Route path="/ingredients/:id" element={<IngredientDetails />} />
+        <Route path="/ingredients/editInfromation/:id" element={<EditIngredient/>} />
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
+      
      
 
       </Routes>
