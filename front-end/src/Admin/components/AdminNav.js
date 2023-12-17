@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './adminNav.css'; // Import the CSS file
 import NotificationPopup from './NotificationPopup';
 import './sidebar.css';
-
+import { Link } from 'react-router-dom'; 
 
 const AdminNav = () => {
   const [showNotifications, setShowNotifications] = useState(false);
@@ -58,7 +58,7 @@ const AdminNav = () => {
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <a href="#" onClick={handleSidebarToggle} className="close-btn">×</a>
         <a href="#">View All users</a>
-        <a href="#">View Block Reports</a>
+        <Link to="/admin/blockreport" onClick={handleSidebarToggle}>View Block Reports</Link> {/* Use Link for navigation */}
         <a href="#">Blocked users</a>
         <a href="#">Registered Users</a>
       </div>

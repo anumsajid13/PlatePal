@@ -34,7 +34,7 @@ const LandingPage = () => {
         <div className="nav-links">
           <div onClick={() => setActiveLink('/')} className={activeLink === 'Home' ? 'active-link' : ''} 
           style={{
-            color: activeLink === 'Home' ? 'red' : 'black', 
+            color: activeLink === 'Home' ? 'white' : 'black', 
             textDecoration: 'none', 
             cursor: 'pointer', 
           }}

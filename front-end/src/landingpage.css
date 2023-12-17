@@ -1,14 +1,13 @@
 /*landingpage.css*/
 @import url("https://fonts.googleapis.com/css2?family=Calistoga&family=Chonburi&family=EB+Garamond:ital,wght@1,500&family=Elsie:wght@400;900&family=IBM+Plex+Sans:wght@600&family=Marcellus&family=Montserrat:wght@100;500&family=Outfit&family=Poppins:ital@1&family=Quattrocento&display=swap");
-
-.body {
+body {
   font-family: "Quattrocento";
   font-weight: bold;
-  background-color: #ECDCC9;
+  background-color:  rgb(218,218,218);
   
 }
 .navbar {
-  background-color: red;
+  background-color: #94958B;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -43,6 +42,7 @@
   cursor: pointer;
   width: 30px;
   height: 30px;
+  background-color: #94958B ;
 }
 
 /* Style the image to fill the button */
@@ -106,8 +106,8 @@
 
 /* Discover menu button styles */
 .discover-menu-button {
-  background-color: #B95F89; /* Green background color */
-  color: white; /* White text color */
+  background-color: #EDDFEF; /* Green background color */
+  color: black; /* White text color */
   border: none; /* Remove border */
   padding: 15px 60px; /* Add padding */
   text-align: center;
@@ -117,6 +117,9 @@
   cursor: pointer;
   margin-top: 80px; /* Add margin from the text */
   white-space: nowrap;
+  font-weight: bold;
+  font-family: "Quattrocento";
+
 }
 .additional-text {
   font-family: "Quattrocento";
@@ -131,7 +134,7 @@
   display: flex;
   margin-top: 20px;
   justify-content: center;
-  background-color: #E5ECE9;
+  background-color: #D5CFE1;
 
 }
 
@@ -159,7 +162,7 @@
   margin-top: 20px;
   border-radius: 10px; /* Add rounded edges */
   overflow: hidden; /* Hide overflow content */
-  /*background-color: #ECDCC9;*/
+background-color:  #D5CFE1;
 }
 
 .food-info {
@@ -190,8 +193,6 @@
 .dropdown {
   position: relative;
 }
-
-
 
 .dropdown-menu {
   position: absolute;

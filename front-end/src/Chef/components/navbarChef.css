@@ -1,7 +1,6 @@
-/* adminNav.css */
 
-.admin-navbar {
-    background-color:   #94958B;
+.chef-navbar {
+    background-color: #94958B;
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -15,42 +14,42 @@
     margin-left: 2%;
   }
   
-  .search-bar {
+  .chef-search-bar {
     display: flex;
     align-items: center;
   }
   
-  .search-bar input {
+  .chef-search-bar input {
     width: 500px;
     padding: 8px;
     margin-right: 10px;
-    border: 2px solid rgb(90, 127, 237);
+    border: 2px solid #94958B;
     border-radius: 5px;
     font-size: 14px;
   }
   
-  .search-button {
-    color:  black;
+  .chef-search-button {
+    color: black !important;
     border: none;
     padding: 5px;
     border-radius: 2px;
     cursor: pointer;
-    background-color:  #94958B;
+    background-color: #94958B;
   }
   
-  .nav-links {
+  .chef-nav-links {
     display: flex;
     align-items: center;
     font-family: "Quattrocento";
     font-weight: bold;
   }
   
-  .nav-links div {
+  .chef-nav-links div {
     margin: 0 10px;
     cursor: pointer;
   }
   
-  .icon-link {
+  .chef-icon-link {
     margin: 0 10px;
     cursor: pointer;
   }
@@ -59,6 +58,6 @@
     font-size: 24px;
     vertical-align: middle;
   }
-  .sidebar.open {
+  .chef-sidebar.open {
   width: 250px;
 }

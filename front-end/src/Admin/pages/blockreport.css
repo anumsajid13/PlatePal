@@ -1,0 +1,50 @@
+/* blockreport.css */
+
+body {
+  
+  background-color: #f7f7f7;
+  margin: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  font-weight: bold;
+  font-family: Chonburi;
+}
+
+.block-report {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.block-report h3 {
+  color: #333;
+  font-family: "Quattrocento";
+    font-weight: bold;
+
+}
+
+.block-report p {
+  color: #555;
+  font-family: "Quattrocento";
+}
+
+.block-report img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+/* Add more styling as needed */
