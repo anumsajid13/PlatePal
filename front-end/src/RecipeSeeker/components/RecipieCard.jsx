@@ -120,16 +120,18 @@ const RecipeCard = ({ recipe }) => {
 
   return (
     <>
-      <div className="recipe-card">
-        <>
-          <img src="/pasta.jpg" alt="image here" style={{ width: '300px', height: '180px' }}></img>
-        </>
-        <div className="flexxx">
-          <h3 onClick={handleCardClick}>{recipe.title} by Chef {recipe.chef.name}</h3>
-          <p>{recipe.description}</p>
+       
+      <div className="outer-recipe">
+        <div className="recipe-card">
+          <>
+            <img src="/pasta.jpg" alt="image here" style={{ width: '300px', height: '180px' }}></img>
+          </>
+          <div className="flexxx">
+            <h3 onClick={handleCardClick}>{recipe.title} by Chef {recipe.chef.name}</h3>
+            <p>{recipe.description}</p>
+          </div>
         </div>
       </div>
-
       <div className={`recipe-popup ${isPopupOpen ? 'popup-open' : ''}`}>
         <span className="close-btn" onClick={handleClosePopup}>
           &times;

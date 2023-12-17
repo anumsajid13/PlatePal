@@ -10,7 +10,7 @@
    
   }
   
-  .search-card-1 {
+  .search-card-11{
 
     border-radius: 10px;
     margin-top: 3%;
@@ -19,7 +19,7 @@
     border: 1px solid #ccc;
     padding: 10px;
     margin-right: 20px;
-    background-color: #E5ECE9; 
+    background-color: #D5CFE1; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
     width:90%;
     margin-left: 5%;
@@ -31,11 +31,12 @@
     font-size: 1.5rem; 
   }
   
-  .category-card-1 {
+  .category-card-11 {
     display: flex;
-    gap: 3%;
-    margin-left: 30%; 
+    gap: 25%;
+    margin-left: 25%; 
     margin-top: 1.5%;
+    width:15%;
   }
   .contains{
     
@@ -44,14 +45,14 @@
  .searchRecepie{
     margin-left: 100px;
  }
-  .category-card-1 label {
+  .category-card-11 label {
     margin: 5px 0;
     cursor: pointer;
     padding: 8px;
     border-radius: 8px;
-    background-color: #b4e2d8; /* Light green background color */
-    color: #333; /* Darker text color */
-    font-family: 'Arial', sans-serif; /* Use a common font family */
+    background-color: #D5CFE1; 
+    color: #333; 
+    font-family: 'Arial', sans-serif; 
     font-size: 14px;
     font-weight: bold;
     
@@ -64,4 +65,5 @@
     margin-right: 10px;
     font-size: 14px;
     margin-left: 2%;
+
   }
