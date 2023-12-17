@@ -117,3 +117,20 @@
   .popup-open {
     display: block;
   }
+
+  .Rating-class{
+    border-style: solid;
+    border-color: #ddd;
+    border-radius: 10px;
+  }
+
+  .Rating-class2{
+   
+    margin-left: 10px;
+  }
+
+
+  .recipe-rating{
+    margin-top: 8px;
+    margin-left: 10px;
+  }
