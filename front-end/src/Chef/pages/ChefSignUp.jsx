@@ -2,11 +2,12 @@
 import React, { useState } from 'react'; 
 import './chefSignup.css'; 
 import useNavbarStore from '../../navbarStore';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate   } from 'react-router-dom';
 
 
 const ChefSignUp = () =>{
 
+    const navigate = useNavigate();
     const { showDropdown, toggleDropdown, activeLink, setActiveLink } = useNavbarStore();
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
@@ -15,6 +16,18 @@ const ChefSignUp = () =>{
     const [profilePicture, setProfilePicture] = useState(null);
     const [certificationImage, setCertificationImage] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleClose = () => {
+        setShowSuccess(false);
+        setShowError(false);
+        if(showSuccess){
+            navigate('/signin');
+        }
+        
+      };
 
     const handleSignUp = async () => {
         setLoading(true);
@@ -35,20 +48,23 @@ const ChefSignUp = () =>{
     
           if (!response.ok) {
             const data = await response.json();
-            console.error('Sign Up failed:', data.message);
-
+            setErrorMessage(data.message);
+            setShowError(true);
             return;
           }
     
           const data = await response.json();
           console.log(data.message);
-          //will have a message in a pop up ..
+          setErrorMessage(data.message);
+          setShowSuccess(true);
         
           //then redirect to the login page
+          
          
         } catch (error) {
           console.error('Error during Sign Up:', error.message);
-          
+          setShowError(true);
+          setErrorMessage('Server Error');
 
         } finally {
           setLoading(false);
@@ -124,6 +140,26 @@ const ChefSignUp = () =>{
                     <div className='chef-image-side'></div>
                 </div>
             </div>
+
+            {showSuccess && (
+                <div className="modal-overlay">
+                <div className="modal">
+                    <h2>Sign Up Successful!</h2>
+                    <p>{errorMessage}</p>
+                    <button onClick={handleClose}  style={{ paddingLeft: '5px' }}>Close</button>
+                </div>
+                </div>
+            )}
+
+            {showError && (
+                    <div className="modal-overlay">
+                    <div className="modal">
+                        <h2>Error</h2>
+                        <p>{errorMessage}</p>
+                        <button onClick={handleClose} style={{ paddingLeft: '5px' }}>Close</button>
+                    </div>
+                    </div>
+                )}
 
         </>
 
