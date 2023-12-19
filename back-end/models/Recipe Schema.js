@@ -11,7 +11,7 @@ const recipeSchema = new mongoose.Schema({
   calories: Number,
   servingSize: Number,
   chef: { type: mongoose.Schema.Types.ObjectId, ref: 'Chef' },
-  difficluty: String,
+  difficulty: String,
   totalTime: Number,
   category: [String],
   ingredients: [

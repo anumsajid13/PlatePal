@@ -20,8 +20,9 @@
     flex-wrap: wrap;
     justify-content: space-between;
     justify-content: center; 
-   
+    cursor: pointer;
     gap: 20px;
+    
    
 }
 
@@ -35,11 +36,12 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-   
+    cursor:pointer;
     padding: 0; /* Removed the padding for this div */
 
     /* Added a position:relative for the card container */
     position: relative; 
+   
 }
 
 
@@ -54,6 +56,7 @@
     height: 50%; /* Set the height to 50% */
     object-fit: cover;
     border-radius: 8px 8px 0 0; /* Rounded corners only on top */
+    cursor:pointer;
 }
 
 .recipe-details-chef {
@@ -62,6 +65,7 @@
     text-justify: inter-word;
     height: 50%; /* Set the height to 50% for the details */
     overflow-y: auto; /* Add overflow-y for scrolling if needed */
+    cursor:pointer;
 }
 
 .recipe-details-chef h3 {

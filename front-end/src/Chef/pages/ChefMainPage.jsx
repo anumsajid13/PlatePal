@@ -107,12 +107,12 @@ const ChefMainPage = () => {
                 )}
             </div>
 
-            {/*  {selectedRecipe && (
+             {selectedRecipe && (
                 <RecipePopUpChef
                     selectedRecipe={selectedRecipe}
                     setSelectedRecipe={setSelectedRecipe}
                 />
-            )}*/}
+            )}
 
         </>
     
