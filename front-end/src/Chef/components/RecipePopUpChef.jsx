@@ -85,6 +85,8 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe }) => {
             </ul>
             </div>
 
+            {/* need to nutritional table , instructions, comments, ratingss*/}
+
   </div>
 </div>
     </>
