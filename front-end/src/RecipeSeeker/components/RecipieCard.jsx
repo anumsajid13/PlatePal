@@ -158,16 +158,7 @@ const RecipeCard = ({ recipe }) => {
   return '';
   }
 
-  const getImageSrc = () => {
-    if (recipe.recipeImage && recipe.recipeImage.data) {
-      const arrayBufferView = new Uint8Array(recipe.recipeImage.data);
-      const blob = new Blob([arrayBufferView], { type: recipe.recipeImage.contentType });
-      const imageUrl = URL.createObjectURL(blob);
-      return imageUrl;
-    }
-    // Default image source or placeholder if no image is available
-    return '/pasta.jpg';
-  };
+  
 
   return (
     <>
