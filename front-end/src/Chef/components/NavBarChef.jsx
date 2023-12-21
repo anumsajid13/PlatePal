@@ -2,26 +2,48 @@
 import React, { useState } from 'react';
 import './navbarChef.css'; 
 import './chefsidebar.css';
-import { Link } from 'react-router-dom'; 
+import { Link, useNavigate  } from 'react-router-dom'; 
 
 const ChefNav = () => {
   
+  const navigate= useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
  
   const handleSidebarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const handleLogoutClick = () => {
+    setIsLoading(true);
+
+    
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate('/signin');
+    }, 1000); 
+
+
+
+    
+  };
+
   return (
     <div>
+        {isLoading && (
+        <div className="chef-overlay">
+        <div className="chef-spinner"></div>
+          <span className="loading-text">Logging out...</span>
+        </div>
+      )}
     <nav className="chef-navbar">
      
     
         <div className="chef-navbar-logo">Plate Pal</div>
       {/* Search bar with search icon */}
       <div className="chef-search-bar">
-        <input type="text" placeholder="Search" />
+        <input className="chef-search-bar-input" type="text" placeholder="Search" />
         <button className="chef-search-button">
           <span className="material-icons google-icon">search</span>
         </button>
@@ -34,7 +56,13 @@ const ChefNav = () => {
         <div className="chef-icon-link" title="Profile">
           <span className="material-icons google-icon">person</span>
           <span className="material-icons google-icon">notifications</span>
-          <span className="material-icons google-icon">logout</span>
+          
+                {isLoading ? (
+                <span>Logging out...</span>
+            ) : (
+                <span className="material-icons google-icon" onClick={handleLogoutClick}>logout</span>
+            )}
+         
         </div>
 
         <div className="chef-icon-link" title="Toggle Sidebar" onClick={handleSidebarToggle}>

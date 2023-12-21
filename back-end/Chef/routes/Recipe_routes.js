@@ -27,23 +27,23 @@ const Chef = require('../../models/Chef Schema');
 
           //create a new recipe
           const newRecipe = new Recipe({
-              title:title.replace(/\D/g, ''),
+              title,
               calories:parseInt(calories.replace(/\D/g, ''), 10),
               servingSize:parseInt(servingSize.replace(/\D/g, ''), 10),
-              difficulty:difficulty.replace(/\D/g, ''),
+              difficulty,
               totalTime:parseInt(totalTime.replace(/\D/g, ''), 10),
-              ingredients:ingredients.replace(/\D/g, ''),
-              allergens:allergens.replace(/\D/g, ''), 
-              notDelivered:notDelivered.replace(/\D/g, ''),
-              utensils:utensils.replace(/\D/g, ''),
-              category:category.replace(/\D/g, ''),
-              instructions:instructions.replace(/\D/g, ''),
+              ingredients,
+              allergens,
+              notDelivered,
+              utensils,
+              category,
+              instructions,
               recipeImage: {
               data: req.file.buffer,
               contentType: req.file.mimetype,
               },
               chef: chefId,
-              description:description.replace(/\D/g, ''),
+              description
           });
 
 
@@ -123,28 +123,44 @@ router.get('/:id', async (req, res) => {
 });
 
 //get all my recipes where there is a vendor collab like its postedd (person who is logged in)
-router.get('/myrecipes', authenticateToken,  async (req, res) => {
+router.get('/myrecipes/vendors', authenticateToken,  async (req, res) => {
     const loggedInUserId = req.user.id; 
     try {
         const userRecipesWithVendor = await Recipe.find({
             chef: loggedInUserId,
             vendor: { $exists: true, $ne: null } //filtering for recipes with a vendor
-          });
-          res.json(userRecipesWithVendor);
+          }).populate('chef', 'name');
+
+           //Map over the recipes and append the chef's name from req.user
+           const recipesWithChefName = userRecipesWithVendor.map(recipe => ({
+                ...recipe.toObject(),
+                chefName: req.user.name
+            }));
+        
+
+          res.json(recipesWithChefName);
     } catch (error) {
       res.status(500).json({ message: 'Failed to fetch user recipes' });
     }
 });
 
 //get all my recipes where there is no vendor collab like its not postedd yett (person who is logged in)
-router.get('/myrecipes', authenticateToken,  async (req, res) => {
+router.get('/myrecipes/noVendor', authenticateToken,  async (req, res) => {
     const loggedInUserId = req.user.id; 
+    
     try {
         const userRecipesWithoutVendor = await Recipe.find({
             chef: loggedInUserId,
-            vendor: { $exists: true, $eq: null } //filtering for recipes without a vendor
-          });
-          res.json(userRecipesWithoutVendor);
+            $or: [{ vendor: { $exists: false } }, { vendor: null }], //filtering for recipes without a vendor
+          }).populate('chef', 'name');
+
+          //Map over the recipes and append the chef's name from req.user
+          const recipesWithChefName = userRecipesWithoutVendor.map(recipe => ({
+              ...recipe.toObject(),
+              chefName: req.user.name
+          }));
+          
+          res.json(recipesWithChefName);
     } catch (error) {
       res.status(500).json({ message: 'Failed to fetch user recipes' });
     }

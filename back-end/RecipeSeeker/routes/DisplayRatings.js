@@ -29,6 +29,7 @@ router.get('/ratings/:recipeId', async (req, res) => {
     const ratingsWithUsernames = populatedRecipe.ratings.map((rating) => ({
       ratingNumber: rating.ratingNumber,
       user: rating.user.name, 
+      user_id: rating.user._id, 
     }));
 
     res.status(200).json({ ratings: ratingsWithUsernames });

@@ -43,7 +43,7 @@ const VendorProfile = () => {
     fetchVendorDetails();
   }, [ token]);
   const HandleEdit = () => {
-    navigate('/Vendor/Mainpage');
+    navigate('/Vendor/editProfile');
       };
   return (
     <>

@@ -19,21 +19,23 @@ router.post('/rateRecipe/:recipeId', authenticateToken, async (req, res) => {
       const existingRating = await Rating.findOne({ user: userId, recipe: recipeId });
   
       if (existingRating) {
-        
+        // Update existing rating
         existingRating.ratingNumber = ratingNumber;
         await existingRating.save();
       } else {
-       
+        // Create a new rating
         const newRating = new Rating({
           ratingNumber,
           user: userId,
           recipe: recipeId,
         });
   
-       
         await newRating.save();
         recipe.ratings.push(newRating);
         await recipe.save();
+
+        // Remove any old ratings associated with the user and recipe
+        await Rating.deleteMany({ user: userId, recipe: recipeId, _id: { $ne: newRating._id } });
       }
   
       res.status(201).json({ message: 'Recipe rated successfully' });
@@ -41,6 +43,6 @@ router.post('/rateRecipe/:recipeId', authenticateToken, async (req, res) => {
       console.error('Error rating recipe:', error.message);
       res.status(500).json({ message: 'Internal server error', error: error.message });
     }
-  });
-  
-  module.exports = router;
+});
+
+module.exports = router;

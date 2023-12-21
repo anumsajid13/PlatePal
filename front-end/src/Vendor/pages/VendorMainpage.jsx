@@ -3,14 +3,15 @@ import '../assets/styles/mainpage.css';
 import { React, useEffect, useState } from 'react';
 import useTokenStore from '../../tokenStore';
 import NavigationBar from '../components/NavigationBar';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight,FaPlusCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
   const [ingredients, setIngredients] = useState([]);
   const { token } = useTokenStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchAllIngredients = async () => {
       try {
@@ -56,7 +57,7 @@ const MainPage = () => {
       }
       const data = await response.json();
       console.log('Ingredient deleted successfully:', data.message);
-      // Refresh the ingredients list after deletion
+    setIngredients(ingredients.filter((ingredient) => ingredient._id !== ingredientId));
       setCurrentPage(1);
     } catch (error) {
       console.error(error.message);
@@ -66,7 +67,9 @@ const MainPage = () => {
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
-
+const handleAddNewIngredient = async () => {
+navigate('/ingredients/newProduct');
+}
   return (
     <>
       <NavigationBar />
@@ -82,6 +85,9 @@ const MainPage = () => {
           </div>
         </div>
         <div>
+        <button className="add-ingredient-button" onClick={handleAddNewIngredient}>
+          Add New Ingredient <FaPlusCircle />
+        </button>
           {ingredients.map((individual) => (
             console.log('in mainpage', individual),
             <Indiviual

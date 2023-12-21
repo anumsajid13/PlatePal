@@ -30,6 +30,7 @@ router.get('/comments/:recipeId', async (req, res) => {
     const commentsData = populatedRecipe.comments.map(comment => ({
       commentText: comment.comment,
       user: comment.user.name, 
+      user_id: comment.user._id, 
       time: comment.Time,
     }));
 
