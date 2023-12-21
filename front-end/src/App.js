@@ -47,7 +47,10 @@ function App() {
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
         <Route path="/Chef/CreateRecipe" element={<CreateRecipe/>} />
         <Route path="/Chef/AllVendors" element={<DisplayVendors/>} />
-        
+        <Route path="/Chef/myFollowers" element={<ChefDisplayFollowers/>} />
+        <Route path="/Chef/myProfile" element={<ChefProfile/>} />
+        <Route path="/Chef/usersInbox" element={<ChefUserInboxx/>} />
+        <Route path="/Chef/vendorsInbox" element={<ChefVendorInboxx/>} />
 
       </Routes>
     </div>
