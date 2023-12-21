@@ -52,11 +52,12 @@ const DisplayRatings = require('./RecipeSeeker/routes/DisplayRatings')
 const Comment_Recipie = require('./RecipeSeeker/routes/Comment')
 const Comment_Display = require('./RecipeSeeker/routes/Display_comments')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
-const admin_signin = require('./Admin/routes/login');
-const getAllVendors = require('./Chef/routes/vendor_Routes');
 
+const admin_signin = require('./Admin/routes/login');
 const block = require('./Admin/routes/block');
 const admin_Notification = require('./Admin/routes/Notifications');
+const top = require('./Admin/routes/top');
+
 
 const vendor_Routes = require('./Vendor/routes/profileRoute');
 const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
@@ -78,6 +79,7 @@ app.use('/recipes', Reipe_routes);
 app.use('/admin', admin_signin);
 app.use('/admin', block);
 app.use('/admin', admin_Notification);
+app.use('/admin', top);
 
 //vendor routes
 app.use('/vendor', vendor_Routes);

@@ -52,24 +52,6 @@ router.delete('/delete-chef/:chefId', isAdmin, async (req, res) => {
     }
   });
   
-  // Endpoint to block a chef
-  router.post('/block-chef/:chefId', isAdmin, async (req, res) => {
-    try {
-      const chef = await Chef.findById(req.params.chefId);
-      
-      if (!chef) {
-        return res.status(404).json({ error: 'Chef not found' });
-      }
-  
-      // Block the chef
-      chef.isBlocked = true;
-      await chef.save();
-      return res.json({ message: 'Chef blocked successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  });
 
   // Endpoint to delete a vendor
 router.delete('/delete-vendor/:vendorId', isAdmin, async (req, res) => {
@@ -92,25 +74,6 @@ router.delete('/delete-vendor/:vendorId', isAdmin, async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
-  
-  // Endpoint to block a vendor
-  router.post('/block-vendor/:vendorId', isAdmin, async (req, res) => {
-    try {
-      const vendor = await Vendor.findById(req.params.vendorId);
-      
-      if (!vendor) {
-        return res.status(404).json({ error: 'Vendor not found' });
-      }
-  
-      // Block the vendor
-      vendor.isBlocked = true;
-      await vendor.save();
-  
-      return res.json({ message: 'Vendor blocked successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  });
+
 
   module.exports = router;

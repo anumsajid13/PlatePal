@@ -62,11 +62,12 @@ const VendorProfile = () => {
         </div>
         <div className="profileContent">
           <div className="profilePictureContainer">
-            <img
-              src={vendor.profilePicture || defaultProfilePicture}
-              alt="Profile"
-              className="profilePicture"
-            />
+          {vendor.profilePicture && (
+            <img src={`data:image/jpeg;base64,${vendor.profilePicture.data}`}  className="profilePicture"  /> 
+          )}
+          {!vendor.profilePicture && (
+            <img src={defaultProfilePicture} className="profilePicture" /> 
+          )}
           </div>
           <div className="profileDetails">
             <p>
