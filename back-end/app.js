@@ -53,6 +53,7 @@ const Comment_Recipie = require('./RecipeSeeker/routes/Comment')
 const Comment_Display = require('./RecipeSeeker/routes/Display_comments')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
 const admin_signin = require('./Admin/routes/login');
+const getAllVendors = require('./Chef/routes/vendor_Routes');
 
 const block = require('./Admin/routes/block');
 const admin_Notification = require('./Admin/routes/Notifications');
@@ -84,7 +85,8 @@ app.use('/vendor', vendor_Routes);
 app.use('/ingredients', ingredient_Routes);
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);
-
+//get all vendors (chef)
+app.use('/vendors_chef', getAllVendors);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

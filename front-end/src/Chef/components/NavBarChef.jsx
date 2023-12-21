@@ -81,6 +81,8 @@ const ChefNav = () => {
         <Link className='chef-linkss' to="/Chef/allVendors">Vendors</Link>
         <a href="#">Followers</a>
         <a href="#">Block Reports</a>
+        <a href="#">Recipe Seekers Inbox</a>
+        <a href="#">Vendors Seekers Inbox</a>
         
       </div>
       </div>

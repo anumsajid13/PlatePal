@@ -70,6 +70,14 @@ router.post('/login', async (req,res) => {
             return res.status(404).json({ message: 'Chef not found' });
         }
 
+        
+        if(chef.allowSignup && !chef.isBlocked){
+          //getting token using jwt
+        const token = jwt.sign({ id: chef._id, username: chef.username, email: chef.email, name: chef.name}, process.env.SECRET_KEY);
+
+        res.status(200).json({ token });
+      }
+
         if (!chef.allowSignup) {
           return res.status(403).json({ message: 'Admin is reviewing your certificate' });
         }
@@ -84,10 +92,7 @@ router.post('/login', async (req,res) => {
             return res.status(403).json({ message:'Access denied - you were blocked by the admin'});
         }
 
-        //getting token using jwt
-        const token = jwt.sign({ id: chef._id, username: chef.username, email: chef.email, name: chef.name}, process.env.SECRET_KEY);
-
-        res.status(200).json({ token });
+        
 
     }
     catch (error) {

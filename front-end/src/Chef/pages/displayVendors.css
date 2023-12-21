@@ -1,0 +1,50 @@
+.vendors-list {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+   
+  }
+  
+  h1 {
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  
+  .vendor-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-around;
+   
+  }
+  
+  .vendor-item {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    background-color:#eff5f2;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+    cursor:pointer;
+    margin-bottom: 50px;
+  }
+
+  .vendor-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .vendor-chef-displayVendors{
+    padding: 8px 16px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #D5CFE1;  
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .vendor-chef-displayVendors:hover {
+    background-color: #EDDFEF; 
+  }

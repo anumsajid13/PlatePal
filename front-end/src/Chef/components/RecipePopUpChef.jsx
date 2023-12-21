@@ -1,6 +1,7 @@
 import  {React, useEffect, useState } from 'react';
 import useTokenStore from '../../tokenStore';
 import '../components/RecipePopUpChef.css';
+import RatingStars from './RatingStars';
 
 
 const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe }) => {
@@ -13,19 +14,19 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe }) => {
      <>
            
            <div className="chef-recipe-popup-container">
-  <div className="chef-recipe-popup">
-    <div className="chef-recipe-image-container">
-      <img src={`data:image/jpeg;base64,${selectedRecipe.recipeImage.data}`} className="chef-recipe-image" alt="Recipe" />
-      <div className="chef-recipe-details">
-        <h2 className="chef-recipe-title">{selectedRecipe.title}</h2>
-        <p className="chef-recipe-chef">By Chef {selectedRecipe.chefName}</p>
-      </div>
-      <button className="chef-pop-close-btn" onClick={() => setSelectedRecipe(null)}>
-        <span className="material-icons">close</span>
-      </button>
+            <div className="chef-recipe-popup">
+                <div className="chef-recipe-image-container">
+                    <img src={`data:image/jpeg;base64,${selectedRecipe.recipeImage.data}`} className="chef-recipe-image" alt="Recipe" />
+                    <div className="chef-recipe-details">
+                        <h2 className="chef-recipe-title">{selectedRecipe.title.replace(/"/g, '')}</h2>
+                        <p className="chef-recipe-chef">By Chef {selectedRecipe.chefName}</p>
+                    </div>
+                    <button className="chef-pop-close-btn" onClick={() => setSelectedRecipe(null)}>
+                        <span className="material-icons">close</span>
+                    </button>
 
          
-    </div>
+            </div>
             <div className='chef-popup-three-content'>
                     <div className='chef-popup-content-item'>
                         <p>Total Time: {selectedRecipe.totalTime}</p>
@@ -39,7 +40,7 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe }) => {
                 </div>
             <div className="top-chef-recipe-description">
                 <h2>Description:</h2>
-                <p className='chef-recipe-description'>{selectedRecipe.description}</p>  
+                <p className='chef-recipe-description'>{selectedRecipe.description.replace(/"/g, '')}</p>  
             </div>
 
             <div className="top-chef-recipe-description">
@@ -84,8 +85,58 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe }) => {
                 ))}
             </ul>
             </div>
-
-            {/* need to nutritional table , instructions, comments, ratingss*/}
+            <div className="chef-recipe-instructions">
+                    <h2>Instructions:</h2>
+                    <div className='chef-recipe-description'>
+                        {selectedRecipe.instructions.map((instruction, index) => (
+                            <p key={index}>
+                                {instruction.replace(/"/g, '')}
+                            </p>
+                        ))}
+                    </div>
+            </div>
+            <div className="chef-recipe-comments">
+                    <h2>Comments:</h2>
+                     <ul>
+                        {selectedRecipe.comments.map((comment, index) => (
+                            <li key={index} className="chef-comment-item">
+                                <div className="chef-comment-header">
+                                    {comment.user && comment.user.profilePicture && ( 
+                                        <img src={comment.user.profilePicture} alt="User" className="user-image" />
+                                    )}
+                                    <div className="chef-user-details">
+                                        <p className="chef-user-name">{comment.user ? comment.user.name : 'Unknown'}</p>
+                                        <p className="chef-comment-time">{comment.Time}</p>
+                                       
+                                    </div>
+                                </div>
+                                <p className="chef-comment-text">{comment.comment}</p>
+                            </li>
+                        ))}
+                    </ul>
+            </div>
+            <div className="chef-recipe-ratings">
+                    <h2>Ratings:</h2>
+                    <ul>
+                        {selectedRecipe.ratings.map((rating, index) => (
+                            <li key={index} className="chef-comment-item">
+                                <div className="chef-comment-header">
+                                    {rating.user && rating.user.profilePicture && ( 
+                                        <img src={rating.user.profilePicture} alt="User" className="user-image" />
+                                    )}
+                                    <div className="chef-user-details">
+                                        <p className="chef-user-name">{rating.user ? rating.user.name : 'Unknown'}</p>
+                                        <p className="chef-comment-time">{rating.Time}</p>
+                                       
+                                    </div>
+                                </div>
+                                <p className="chef-comment-text"> <RatingStars ratingNumber={rating.ratingNumber} /></p>
+                            </li>
+                        ))}
+                    </ul>
+                   
+            </div>
+            {/* need to nutritional table */}
 
   </div>
 </div>

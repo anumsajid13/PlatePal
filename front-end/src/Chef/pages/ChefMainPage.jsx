@@ -50,7 +50,13 @@ const ChefMainPage = () => {
                 }
                 const dataWithoutVendor = await responseWithoutVendor.json();
                 setRecipesWithoutVendor(dataWithoutVendor);
-                console.log(dataWithoutVendor);
+                dataWithoutVendor.forEach(item => {
+                    item.comments.forEach(comment => {
+                        
+                            console.log(comment.user.name);
+                        
+                    });
+                });
             } catch (error) {
                 // Handle error
                 console.error('Error:', error.message);
@@ -59,6 +65,17 @@ const ChefMainPage = () => {
 
         fetchData();
     }, []);
+
+    function truncateText(text, limit) {
+        if (text) {
+        const words = text.split(' ');
+        if (words.length > limit) {
+          return words.slice(0, limit).join(' ') + '...';
+        }
+        return text;
+      }
+      return '';
+      }
 
     return (
 
@@ -76,7 +93,7 @@ const ChefMainPage = () => {
                                 <div className="recipe-details-chef">
                                     <h3>{recipe.title}</h3>
                                     <p>by Chef {recipe.chefName}</p>
-                                    <p className='recipe-card-chef-description'>{recipe.description}</p>
+                                    <p className='recipe-card-chef-description'>{truncateText(recipe.description, 20 )}</p>
                                 </div>
                             </div>
                         ))}
@@ -97,7 +114,7 @@ const ChefMainPage = () => {
                                 <div className="recipe-details-chef">
                                     <h3>{recipe.title}</h3>
                                     <p>by Chef {recipe.chefName}</p>
-                                    <p>{recipe.description}</p>
+                                    <p className='recipe-card-chef-description'>{truncateText(recipe.description, 20 )}</p>
                                 </div>
                             </div>
                         ))}
