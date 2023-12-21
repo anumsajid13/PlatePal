@@ -20,6 +20,10 @@ import CreateRecipe from './Chef/pages/CreateRecipe';
 import DisplayVendors from './Chef/pages/DisplayVendors';
 import EditVendorProfile from './Vendor/pages/EditProfile';
 import AddNewProduct from './Vendor/pages/AddNewProducts';
+import ChefDisplayFollowers from './Chef/pages/ChefFollowers';
+import ChefProfile from './Chef/pages/ChefProfile';
+import ChefUserInboxx from './Chef/pages/ChefUserInboxx';
+import ChefVendorInboxx from './Chef/pages/ChefVendorInboxx';
 
 function App() {
   return (
@@ -43,6 +47,7 @@ function App() {
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
         <Route path="/Chef/CreateRecipe" element={<CreateRecipe/>} />
         <Route path="/Chef/AllVendors" element={<DisplayVendors/>} />
+        
 
       </Routes>
     </div>

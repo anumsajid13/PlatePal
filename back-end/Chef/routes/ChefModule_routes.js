@@ -103,6 +103,24 @@ router.post('/login', async (req,res) => {
 
 });
 
+//get a chef by id
+router.get('get/:id', authenticateToken, async (req, res) => {
+
+  const { id } = req.params;
+  try {
+    const chef = await Chef.findById(id);
+  
+    if (!chef) {
+      return res.status(404).json({ message: 'Chef not found' });
+    }
+
+    return res.status(200).json(chef);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ message: 'Failed to fetch  chef' });
+  }
+});
+
 //update profile
 router.put('update/:id', authenticateToken, async (req, res) => {
 

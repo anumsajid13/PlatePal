@@ -218,7 +218,7 @@ router.get('/myrecipes/noVendor', authenticateToken,  async (req, res) => {
             
             });
             
-            console.log(recipesWithChefs)
+          
           
           res.json(recipesWithChefs);
     } catch (error) {
