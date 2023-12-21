@@ -62,6 +62,7 @@ const top = require('./Admin/routes/top');
 const vendor_Routes = require('./Vendor/routes/profileRoute');
 const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
+const getAllVendors = require('./Chef/routes/vendor_Routes_Chef');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 //recepie seeker routes
