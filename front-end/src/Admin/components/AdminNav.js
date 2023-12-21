@@ -38,13 +38,13 @@ const AdminNav = () => {
           <div>Recipes</div>
           <div>Reviews</div>
           <div>Nutritionist</div>
-          <div className="icon-link" title="Cart" onClick={handleNotificationsClick}>
+          <div className="icon-link" title="notifications" onClick={handleNotificationsClick}>
             <span className="material-icons google-icon">notifications</span>
           </div>
           <div className="icon-link" title="Profile">
             <span className="material-icons google-icon">person</span>
           </div>
-          <div className="icon-link" title="Toggle Sidebar" onClick={handleSidebarToggle}>
+          <div className="icon-link" title="Menu" onClick={handleSidebarToggle}>
           <span className="material-icons">menu</span>
         </div>
         </div>
@@ -60,6 +60,11 @@ const AdminNav = () => {
         {/* Use Link for navigation */}
         <a href="#">Blocked users</a>
         <a href="#">Registered Users</a>
+        <Link to="/admin/delete" onClick={handleSidebarToggle}>
+        <a href="#">Delete Users</a>
+        </Link>
+
+
       </div>
     </div>
   );
