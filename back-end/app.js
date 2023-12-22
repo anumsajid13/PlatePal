@@ -61,6 +61,7 @@ const top = require('./Admin/routes/top');
 
 const vendor_Routes = require('./Vendor/routes/profileRoute');
 const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
+const collaboration_Routes = require('./Vendor/routes/collaborationroute');
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
@@ -81,10 +82,11 @@ app.use('/admin', block);
 app.use('/admin', admin_Notification);
 app.use('/admin', top);
 
-//vendor routes
+//Vendor routes
 app.use('/vendor', vendor_Routes);
-//ingredient routes
 app.use('/ingredients', ingredient_Routes);
+app.use('/collaboration',collaboration_Routes);
+
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);
 

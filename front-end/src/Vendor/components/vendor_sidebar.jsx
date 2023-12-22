@@ -13,7 +13,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         <Link to="/Vendor/Profile">profile</Link>
         </li>
         <li>
-          <Link to="/about">About</Link>
+          <Link to="/vendor/Collaboration">Collaboration</Link>
         </li>
         <li>
           <Link to="/contact">Contact</Link>

@@ -1,13 +1,29 @@
-.container {
+.mainContainer {
     display: flex;
+    flex-wrap: wrap; 
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 10px;
     padding-bottom: 20px;
-    background-color: #eff5f2; 
+    background-color: #f0f0f0;
+    margin-bottom: 20px;
    
   }
-  
-  .search-card-1 {
+  .BigClass{
+    margin-left: 2%;
+    margin-right: 2%;
+    margin: 3%;
+ /*    background-color: #E5ECE9; */
+    border-radius: 10px;
+  }
+
+  .IngredientsContainer{
+    display: flex;
+    flex-wrap: wrap; 
+    flex-direction: row;
+  }
+  .productSearch1 {
 
     border-radius: 10px;
     margin-top: 3%;
@@ -35,7 +51,7 @@
     margin-top: 1.5%;
   }
   
- .searchRecepie{
+ .searchProducts{
     margin-left: 100px;
  }
   .category-card-1 label {
@@ -51,7 +67,7 @@
     
   }
   
-  .search-dropdown-1 {
+  .searchDropdown {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -66,9 +82,36 @@
     color: #fff;
     border: none;
     cursor: pointer;
-    margin-left: 70%;
+    margin-left:86% ;
+/*     margin: 2% 2% 2% 84%; */
+    margin-bottom: 2%;
+    border-radius: 5px;
+    cursor: pointer;
   }
   
   .add-ingredient-button button:hover {
     background-color: #6345a0;
   }
+
+
+  
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 40px;
+}
+
+.pagination span {
+  font-size: 14px;
+}

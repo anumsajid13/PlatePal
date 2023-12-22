@@ -9,7 +9,7 @@ const authenticateToken = require('../../TokenAuthentication/token_authenticatio
 router.get('/All',authenticateToken, async (req, res) => {
   try {
     // Extract query parameters
-    const { sortBy, sortOrder, filterType, filterValue, page=1, pageSize=30 } = req.query;
+    const { sortBy, sortOrder, filterType, filterValue, page=1, pageSize=4 } = req.query;
     const vendorId = req.user.id;
 
     // Build the query object

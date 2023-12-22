@@ -1,27 +1,31 @@
 import React from 'react';
 import { FaTrash, FaEdit } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
 import '../assets/styles/indiviual_ingredients.css';
 import { useNavigate } from 'react-router-dom';
-
+import image from '../assets/images/vendor_signup_image.jpg';
 const Indiviual = ({ ingredients, handleDelete, handleEdit }) => {
-  const handleDeleteClick = async () => {
+  const handleDeleteClick = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     await handleDelete(ingredients._id);
   };
-  const navigate = useNavigate(`/ingredients/${ingredients._id}`);
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/ingredients/${ingredients._id}`);
+  };
+
   return (
-    <Link  to={`/ingredients/${ingredients._id}`} className="incontainer" >
-      <div className="ingredientsContainer">
-        <div className="iconContainer">
-          <FaTrash className="deleteIcon" onClick={handleDeleteClick}  />
-        </div>
+    <div className="ingredientsContainer" onClick={handleClick}>
+       <img src={image} alt="ingredients" className="Image" />
+      <div className="iconContainer">
         <h3>{ingredients.name}</h3>
-        <p>{ingredients.description}</p>
-        <p>Type: {ingredients.type}</p>
-        <p>Price: {ingredients.price}</p>
-        <p>Quantity: {ingredients.quantity}</p>
+        <FaTrash className="deleteIcon" onClick={handleDeleteClick} />
       </div>
-    </Link>
+      <p className="description">{ingredients.description}</p>
+      <p className="type">Category: {ingredients.type}</p>
+      <p className="price">Price: {ingredients.price}</p>
+      <p className="quantity">Quantity: {ingredients.quantity}</p>
+    </div>
   );
 };
 

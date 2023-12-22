@@ -16,7 +16,7 @@ const MainPage = () => {
     const fetchAllIngredients = async () => {
       try {
         const response = await fetch(
-          `http://localhost:9000/Ingredients/All?page=${currentPage}&pageSize=30`,
+          `http://localhost:9000/Ingredients/All?page=${currentPage}&pageSize=3`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -33,7 +33,7 @@ const MainPage = () => {
         console.error('Error fetching Ingredients:', error.message);
       }
     };
-
+setTotalPages(20);
     fetchAllIngredients();
   }, [currentPage, token]);
 
@@ -73,29 +73,30 @@ navigate('/ingredients/newProduct');
   return (
     <>
       <NavigationBar />
-      <div>
-        <div className="container">
-          <div className="search-card-1">
-            <input className="searchRecepie" type="text" placeholder="Search..." />
-            <select className="search-dropdown-1">
+      <div >
+        <div className="mainContainer" >
+          <div className="productSearch1">
+            <input className="searchProducts" type="text" placeholder="Search..." />
+            <select className="searchDropdown">
               <option value="recipeName">Search by Recipe Name</option>
               <option value="chef">Search by Chef</option>
             </select>
             <span className="search-icon-1">&#128269;</span>
           </div>
         </div>
-        <div>
+        <div className='BigClass'>
         <button className="add-ingredient-button" onClick={handleAddNewIngredient}>
           Add New Ingredient <FaPlusCircle />
         </button>
+        <div className="IngredientsContainer">
           {ingredients.map((individual) => (
-            console.log('in mainpage', individual),
             <Indiviual
               key={individual._id}
               ingredients={individual}
               handleDelete={handleDelete}
             />
           ))}
+          </div>
         </div>
         <div className="pagination">
           <button
