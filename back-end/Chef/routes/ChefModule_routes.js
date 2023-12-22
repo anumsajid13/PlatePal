@@ -170,7 +170,7 @@ router.put('/update', upload.single('profilePicture'), authenticateToken, async 
 });
 
 //delete profile
-router.delete('delete', authenticateToken, async (req, res) => {
+router.delete('/delete', authenticateToken, async (req, res) => {
 
   const  id  = req.user.id;
   try {

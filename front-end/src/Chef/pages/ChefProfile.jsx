@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './chefProfile.css'
 import ChefNav from '../components/NavBarChef';
 import useTokenStore from '../../tokenStore';
+import ChefGenericPopup from '../components/ChefGenericPopup';
 
 const ChefProfile = () => {
 
+    const navigate = useNavigate();
     const [chef, setChef] = useState({});
     const [editMode, setEditMode] = useState(false);
     const [profilePictureFile, setProfilePictureFile] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMessage, setPopupMessage] = useState('');
 
     const { token, setToken } = useTokenStore(); 
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+        navigate('/');
+    };
+
+    
 
     //function to handle profile picture change
     const handleProfilePictureChange = (event) => {
@@ -95,7 +107,10 @@ const ChefProfile = () => {
           if (!response.ok) {
             throw new Error('Failed to delete Chef data');
           }
-    
+          
+          setPopupMessage('Tour Account deleted successfully !');
+          setShowPopup(true);
+          
          
         } catch (error) {
           console.error(error);
@@ -203,6 +218,9 @@ const ChefProfile = () => {
                 )}
             </div>
             
+            {showPopup && (
+                <ChefGenericPopup message={popupMessage} onClose={handleClosePopup} />
+            )}
 
         </>
 
