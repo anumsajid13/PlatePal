@@ -215,3 +215,16 @@
   .chef-comment-text {
     margin-top: 10px;
   }
+
+  .update-delete-collab-chef{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;   
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 40px;
+  }

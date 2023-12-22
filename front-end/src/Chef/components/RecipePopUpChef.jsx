@@ -25,7 +25,7 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe }) => {
                         <span className="material-icons">close</span>
                     </button>
 
-         
+
             </div>
             <div className='chef-popup-three-content'>
                     <div className='chef-popup-content-item'>
@@ -38,11 +38,26 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe }) => {
                         <p>Difficulty: {selectedRecipe.difficulty}</p>
                     </div>
                 </div>
+
+                <div className='chef-popup-three-content'>
+                    <button className='update-delete-collab-chef'>
+                        <span className="material-icons">update</span>
+                    </button>
+                    <button  className='update-delete-collab-chef'>
+                        <span className="material-icons">delete</span>
+                    </button>
+                    <button  className='update-delete-collab-chef'>
+                        <span className="material-icons">groups</span>
+                    </button>
+                 </div>
+
+
             <div className="top-chef-recipe-description">
                 <h2>Description:</h2>
                 <p className='chef-recipe-description'>{selectedRecipe.description.replace(/"/g, '')}</p>  
             </div>
 
+            
             <div className="top-chef-recipe-description">
                 <h2>Allergens:</h2>
                 <ul className='chef-recipe-description'>
@@ -51,6 +66,8 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe }) => {
                     ))}
                 </ul>
             </div>
+
+          
 
             <div className="chef-recipe-ingredients">
             <h2>Ingredients:</h2>

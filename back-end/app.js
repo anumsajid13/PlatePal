@@ -63,6 +63,7 @@ const vendor_Routes = require('./Vendor/routes/profileRoute');
 const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 const getAllVendors = require('./Chef/routes/vendor_Routes_Chef');
+const collabVendorsChef = require('./Chef/routes/CollabVendors_routes');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 //recepie seeker routes
@@ -90,6 +91,9 @@ app.use('/ingredients', ingredient_Routes);
 app.use('/chef', blockreportroVendorRoutes);
 //get all vendors (chef)
 app.use('/vendors_chef', getAllVendors);
+//collab routes
+app.use('/chefVendors', collabVendorsChef);
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

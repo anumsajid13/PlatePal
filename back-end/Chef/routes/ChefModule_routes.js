@@ -104,9 +104,9 @@ router.post('/login', async (req,res) => {
 });
 
 //get a chef by id
-router.get('get/:id', authenticateToken, async (req, res) => {
+router.get('/get', authenticateToken, async (req, res) => {
 
-  const { id } = req.params;
+  const id  = req.user.id;
   try {
     const chef = await Chef.findById(id);
   
@@ -122,9 +122,9 @@ router.get('get/:id', authenticateToken, async (req, res) => {
 });
 
 //update profile
-router.put('update/:id', authenticateToken, async (req, res) => {
+router.put('/update', authenticateToken, async (req, res) => {
 
-  const { id } = req.params;
+  const id = req.user.id;;
   try {
     const updateChef  = await Chef.findByIdAndUpdate(id, req.body, { new: true });
   
@@ -136,9 +136,9 @@ router.put('update/:id', authenticateToken, async (req, res) => {
 });
 
 //delete profile
-router.delete('delete/:id', authenticateToken, async (req, res) => {
+router.delete('delete', authenticateToken, async (req, res) => {
 
-  const { id } = req.params;
+  const  id  = req.user.id;
   try {
       await Chef.findByIdAndDelete(id);
       res.json({ message: 'Profile deleted successfully' });
