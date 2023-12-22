@@ -68,9 +68,11 @@ const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 const getAllVendors = require('./Chef/routes/vendor_Routes_Chef');
 const collabVendorsChef = require('./Chef/routes/CollabVendors_routes');
 const chefnotifications = require('./Chef/routes/Notification_routes');
+const cheffollowerss = require('./Chef/routes/DisplayFollowers_routes');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 app.use('/chef', chefnotifications);
+app.use('/chef', cheffollowerss);
 //recepie seeker routes
 app.use('/recepieSeeker', User_Signin); 
 app.use('/recepieSeeker', User_SignUp);
