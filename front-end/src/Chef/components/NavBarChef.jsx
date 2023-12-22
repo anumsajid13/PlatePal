@@ -54,7 +54,9 @@ const ChefNav = () => {
         <div><Link className='chef-linkss' to="/Chef/Mainpage">Home</Link></div>
         <div><Link className='chef-linkss' to="/Chef/CreateRecipe">Create Recipe</Link></div>
         <div className="chef-icon-link" title="Profile">
+          <Link className='chef-linkss' to="/Chef/myProfile">
           <span className="material-icons google-icon">person</span>
+          </Link>
           <span className="material-icons google-icon">notifications</span>
           
                 {isLoading ? (
@@ -81,6 +83,8 @@ const ChefNav = () => {
         <Link className='chef-linkss' to="/Chef/allVendors">Vendors</Link>
         <a href="#">Followers</a>
         <a href="#">Block Reports</a>
+        <a href="#">Recipe Seekers Inbox</a>
+        <a href="#">Vendors Seekers Inbox</a>
         
       </div>
       </div>

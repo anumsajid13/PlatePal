@@ -1,4 +1,4 @@
-.recipe-popup-container {
+.chef-recipe-popup-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,48 +8,223 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 9999; 
 }
 
-.recipe-popup {
+.chef-recipe-popup {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    max-width: 80%;
-    max-height: 80%;
+    max-width: 50%;
+    max-height: 95%;
     overflow-y: auto;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 10000; 
 }
 
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+.chef-recipe-popup::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
 }
 
-.recipe-title {
+.chef-recipe-popup::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+.chef-recipe-popup::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 5px;
+}
+
+
+.chef-recipe-popup::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+
+.chef-recipe-title {
     font-size: 24px;
     margin-bottom: 10px;
 }
 
-.recipe-chef {
+.chef-recipe-chef {
     font-style: italic;
     color: #888;
     margin-bottom: 10px;
 }
 
-.recipe-image {
+.chef-recipe-image-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .chef-recipe-image {
     width: 100%;
-    border-radius: 8px;
-    margin-bottom: 10px;
-}
+    height: 30%;
+    object-fit: cover;
+    object-position: center top;
+  }
+  
+  .chef-recipe-details {
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  
+  .chef-pop-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;   
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.recipe-description {
+  .top-chef-recipe-description{
+    border-bottom: 1px solid #ccc;
+  }
+.chef-recipe-description {
     font-size: 16px;
     line-height: 1.5;
     color: #333;
+   
 }
-/* Add more styling as needed */
+
+.chef-popup-three-content {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .chef-popup-content-item {
+    padding: 10px;
+    flex: 1;
+    text-align: center;
+  }
+
+  .chef-recipe-ingredients {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .ingredient-columns {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .ingredient-column {
+    flex: 1;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+  
+
+  .ingredient-column li {
+    margin-bottom: 10px;
+  }
+
+  .chef-recipe-not-delivered{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .chef-recipe-utensils  {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .chef-recipe-utensils ul {
+    padding-left: 0;
+    margin-top: 10px;
+  }
+  
+  .chef-recipe-utensils li {
+    display: inline;
+    list-style-position: inside;
+    margin-right: 10px;
+  }
+
+  .chef-recipe-instructions{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .chef-recipe-comments{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .chef-recipe-ratings{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .chef-comment-header {
+    display: flex;
+    align-items: center;
+  }
+  
+ 
+  .chef-user-image {
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    margin-right: 15px;
+  }
+  
+
+  .chef-user-details {
+    flex-grow: 1;
+  }
+
+  .chef-user-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .chef-comment-time {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  .star {
+    width: 20px; 
+    height: 20px; 
+    margin-right: 2px; 
+  }
+
+  .chef-comment-text {
+    margin-top: 10px;
+  }
+
+  .update-delete-collab-chef{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;   
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 40px;
+  }

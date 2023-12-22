@@ -55,14 +55,18 @@ const Follow_chef = require('./RecipeSeeker/routes/FollowChef')
 const UnFollow_chef = require('./RecipeSeeker/routes/UnFollow_Chef')
 const Display_followings = require('./RecipeSeeker/routes/DisplayFollowings')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
-const admin_signin = require('./Admin/routes/login');
 
+const admin_signin = require('./Admin/routes/login');
 const block = require('./Admin/routes/block');
 const admin_Notification = require('./Admin/routes/Notifications');
+const top = require('./Admin/routes/top');
+
 
 const vendor_Routes = require('./Vendor/routes/profileRoute');
 const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
+const getAllVendors = require('./Chef/routes/vendor_Routes_Chef');
+const collabVendorsChef = require('./Chef/routes/CollabVendors_routes');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 //recepie seeker routes
@@ -83,6 +87,7 @@ app.use('/recipes', Reipe_routes);
 app.use('/admin', admin_signin);
 app.use('/admin', block);
 app.use('/admin', admin_Notification);
+app.use('/admin', top);
 
 //vendor routes
 app.use('/vendor', vendor_Routes);
@@ -90,6 +95,10 @@ app.use('/vendor', vendor_Routes);
 app.use('/ingredients', ingredient_Routes);
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);
+//get all vendors (chef)
+app.use('/vendors_chef', getAllVendors);
+//collab routes
+app.use('/chefVendors', collabVendorsChef);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

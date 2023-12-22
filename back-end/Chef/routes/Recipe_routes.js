@@ -84,11 +84,11 @@ const Chef = require('../../models/Chef Schema');
 
 
 //update a recipe
-router.put('update/:id', authenticateToken, async (req, res) => {
+router.put('/update/:id', authenticateToken, async (req, res) => {
 
     const { id } = req.params;
     try {
-      const updatedRecipe  = await Recipe.findByIdAndUpdate(id, req.body, { new: true });
+      const updatedRecipe  = await Recipe.findByIdAndUpdate(id, { $set: req.body }, { new: true });
     
       return res.status(200).json('Profile updated successfully');
     } catch (error) {
@@ -99,7 +99,7 @@ router.put('update/:id', authenticateToken, async (req, res) => {
 
 
 //delete a recipe
-router.delete('delete/:id', authenticateToken, async (req, res) => {
+router.delete('/delete/:id', authenticateToken, async (req, res) => {
 
     const { id } = req.params;
     try {
@@ -129,13 +129,41 @@ router.get('/myrecipes/vendors', authenticateToken,  async (req, res) => {
         const userRecipesWithVendor = await Recipe.find({
             chef: loggedInUserId,
             vendor: { $exists: true, $ne: null } //filtering for recipes with a vendor
-          }).populate('chef', 'name');
+          }).populate('chef', 'name').populate({
+            path: 'comments', 
+            populate: {
+                path: 'user', 
+                select: 'name profilePicture', 
+            },
+            select: 'comment Time user', 
+          }).populate({
+            path: 'ratings',
+            populate: {
+              path: 'user', 
+              select: 'name profilePicture', 
+            },
+            select: 'ratingNumber Time user',
+           });
 
-           //Map over the recipes and append the chef's name from req.user
-           const recipesWithChefName = userRecipesWithVendor.map(recipe => ({
-                ...recipe.toObject(),
-                chefName: req.user.name
+           //map over the recipes and append the chef's name from req.user and comments and user details
+           const recipesWithChefName = userRecipesWithVendor.map(recipe => {
+            const updatedRecipe = recipe.toObject();
+            updatedRecipe.chefName = req.user.name; //append chefName to the recipe object
+        
+            //map comments and include comment, Time, and user fields within each comment
+            updatedRecipe.comments = updatedRecipe.comments.map(comment => ({
+                comment: comment.comment,
+                Time: comment.Time,
+                user: comment.user ? { name: comment.user.name} : null,
             }));
+        
+            updatedRecipe.ratings = updatedRecipe.ratings.map(rating => ({
+              ratingNumber: rating.ratingNumber,
+              Time: rating.Time,
+              user: rating.user ? { name: rating.user.name} : null,
+            }));
+            return updatedRecipe;
+        });
         
 
           res.json(recipesWithChefName);
@@ -152,15 +180,47 @@ router.get('/myrecipes/noVendor', authenticateToken,  async (req, res) => {
         const userRecipesWithoutVendor = await Recipe.find({
             chef: loggedInUserId,
             $or: [{ vendor: { $exists: false } }, { vendor: null }], //filtering for recipes without a vendor
-          }).populate('chef', 'name');
+          }).populate('chef', 'name').populate('chef', 'name').populate({
+            path: 'comments', 
+            populate: {
+                path: 'user', 
+                select: 'name profilePicture', 
+            },
+            select: 'comment Time user', 
+          }).populate({
+            path: 'ratings',
+            populate: {
+              path: 'user', 
+              select: 'name profilePicture', 
+            },
+            select: 'ratingNumber Time user',
+           });
 
-          //Map over the recipes and append the chef's name from req.user
-          const recipesWithChefName = userRecipesWithoutVendor.map(recipe => ({
-              ...recipe.toObject(),
-              chefName: req.user.name
-          }));
+           //map over the recipes and append the chef's name from req.user and comments and user details
+           const recipesWithChefs = userRecipesWithoutVendor.map(recipe => {
+            const updatedRecipe = recipe.toObject();
+            updatedRecipe.chefName = req.user.name; //append chefName to the recipe object
+        
+            //map comments and include comment, Time, and user fields within each comment
+            updatedRecipe.comments = updatedRecipe.comments.map(comment => ({
+                comment: comment.comment,
+                Time: comment.Time,
+                user: comment.user ? { name: comment.user.name} : null,
+            }));
+
+            updatedRecipe.ratings = updatedRecipe.ratings.map(rating => ({
+              ratingNumber: rating.ratingNumber,
+              Time: rating.Time,
+              user: rating.user ? { name: rating.user.name} : null,
+            }));
+
+            return updatedRecipe;
+            
+            });
+            
           
-          res.json(recipesWithChefName);
+          
+          res.json(recipesWithChefs);
     } catch (error) {
       res.status(500).json({ message: 'Failed to fetch user recipes' });
     }

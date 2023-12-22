@@ -12,23 +12,31 @@ const NotificationPopup = ({ onClose }) => {
     const fetchNotifications = async () => {
       try {
         // Simulate loading delay (remove in production)
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+  
         setLoading(true);
         const response = await fetch('/admin/notifications', {
           headers: {
             Authorization: `Bearer ${token}`, // Replace with your authentication token
           },
         });
-        const { notifications } = await response.json();
-        useNotificationStore.setState({ notifications });
+  
+        // Log the raw response for debugging
+        console.log('Raw Response:', response);
+  
+        const data = await response.json();
+  
+        // Log the parsed data for debugging
+        console.log('Parsed Data:', data);
+  
+        useNotificationStore.setState({ notifications: data.notifications });
         setLoading(false);
       } catch (error) {
         console.error(error);
         setLoading(false);
       }
     };
-
+  
     fetchNotifications();
   }, []);
 
@@ -48,9 +56,10 @@ const NotificationPopup = ({ onClose }) => {
         ) : (
           notifications.map((notification) => (
             <div key={notification._id} className="notification-item">
-              <strong>{notification.user.name}</strong>: {notification.notification_text}
+              <strong>{notification.sender.username}</strong>: {notification.notification_text}
             </div>
           ))
+          
         )}
       </div>
     </div>

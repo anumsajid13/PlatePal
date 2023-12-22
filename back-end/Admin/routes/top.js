@@ -1,9 +1,11 @@
 const Chef = require('../../models/Chef Schema');
 const Nutritionist = require('../../models/Nutritionist Schema');
+const express = require('express');
+
 const router = express.Router();
 
   // Endpoint to get the top chefs based on followers
-  router.get('/admin/top-chefs', isAdmin, async (req, res) => {
+  router.get('/top-chefs',  async (req, res) => {
     try {
       // Fetch top chefs based on followers (you can adjust the sorting criteria as needed)
       const topChefs = await Chef.find({ isBlocked: false }).sort({ followers: -1 }).limit(10);
@@ -16,7 +18,7 @@ const router = express.Router();
   });
 
   // Endpoint to get the top nutritionists based on followers
-router.get('/admin/top-nutritionists', isAdmin, async (req, res) => {
+router.get('/top-nutritionists',  async (req, res) => {
     try {
       // Fetch top nutritionists based on followers (you can adjust the sorting criteria as needed)
       const topNutritionists = await Nutritionist.find({ isBlocked: false }).sort({ followers: -1 }).limit(10);

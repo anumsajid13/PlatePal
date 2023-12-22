@@ -70,6 +70,14 @@ router.post('/login', async (req,res) => {
             return res.status(404).json({ message: 'Chef not found' });
         }
 
+        
+        if(chef.allowSignup && !chef.isBlocked){
+          //getting token using jwt
+        const token = jwt.sign({ id: chef._id, username: chef.username, email: chef.email, name: chef.name}, process.env.SECRET_KEY);
+
+        res.status(200).json({ token });
+      }
+
         if (!chef.allowSignup) {
           return res.status(403).json({ message: 'Admin is reviewing your certificate' });
         }
@@ -84,10 +92,7 @@ router.post('/login', async (req,res) => {
             return res.status(403).json({ message:'Access denied - you were blocked by the admin'});
         }
 
-        //getting token using jwt
-        const token = jwt.sign({ id: chef._id, username: chef.username, email: chef.email, name: chef.name}, process.env.SECRET_KEY);
-
-        res.status(200).json({ token });
+        
 
     }
     catch (error) {
@@ -98,10 +103,28 @@ router.post('/login', async (req,res) => {
 
 });
 
-//update profile
-router.put('update/:id', authenticateToken, async (req, res) => {
+//get a chef by id
+router.get('/get', authenticateToken, async (req, res) => {
 
-  const { id } = req.params;
+  const id  = req.user.id;
+  try {
+    const chef = await Chef.findById(id);
+  
+    if (!chef) {
+      return res.status(404).json({ message: 'Chef not found' });
+    }
+
+    return res.status(200).json(chef);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ message: 'Failed to fetch  chef' });
+  }
+});
+
+//update profile
+router.put('/update', authenticateToken, async (req, res) => {
+
+  const id = req.user.id;;
   try {
     const updateChef  = await Chef.findByIdAndUpdate(id, req.body, { new: true });
   
@@ -113,9 +136,9 @@ router.put('update/:id', authenticateToken, async (req, res) => {
 });
 
 //delete profile
-router.delete('delete/:id', authenticateToken, async (req, res) => {
+router.delete('delete', authenticateToken, async (req, res) => {
 
-  const { id } = req.params;
+  const  id  = req.user.id;
   try {
       await Chef.findByIdAndDelete(id);
       res.json({ message: 'Profile deleted successfully' });
