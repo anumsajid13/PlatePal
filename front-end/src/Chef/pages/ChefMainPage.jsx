@@ -60,6 +60,16 @@ const ChefMainPage = () => {
         fetchData();
     }, []);
 
+    const handleRecipeDeletion = (deletedRecipeId) => {
+        //filter out the deleted recipe from both recipe lists
+        const updatedRecipesWithVendor = recipesWithVendor.filter(recipe => recipe._id !== deletedRecipeId);
+        const updatedRecipesWithoutVendor = recipesWithoutVendor.filter(recipe => recipe._id !== deletedRecipeId);
+
+        setRecipesWithVendor(updatedRecipesWithVendor);
+        setRecipesWithoutVendor(updatedRecipesWithoutVendor);
+    };
+
+
     function truncateText(text, limit) {
         if (text) {
         const words = text.split(' ');
@@ -122,6 +132,7 @@ const ChefMainPage = () => {
                 <RecipePopUpChef
                     selectedRecipe={selectedRecipe}
                     setSelectedRecipe={setSelectedRecipe}
+                    onDelete={handleRecipeDeletion} 
                 />
             )}
 

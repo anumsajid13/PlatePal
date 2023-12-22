@@ -84,11 +84,11 @@ const Chef = require('../../models/Chef Schema');
 
 
 //update a recipe
-router.put('update/:id', authenticateToken, async (req, res) => {
+router.put('/update/:id', authenticateToken, async (req, res) => {
 
     const { id } = req.params;
     try {
-      const updatedRecipe  = await Recipe.findByIdAndUpdate(id, req.body, { new: true });
+      const updatedRecipe  = await Recipe.findByIdAndUpdate(id, { $set: req.body }, { new: true });
     
       return res.status(200).json('Profile updated successfully');
     } catch (error) {
@@ -99,7 +99,7 @@ router.put('update/:id', authenticateToken, async (req, res) => {
 
 
 //delete a recipe
-router.delete('delete/:id', authenticateToken, async (req, res) => {
+router.delete('/delete/:id', authenticateToken, async (req, res) => {
 
     const { id } = req.params;
     try {

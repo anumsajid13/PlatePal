@@ -4,9 +4,31 @@ import '../components/RecipePopUpChef.css';
 import RatingStars from './RatingStars';
 
 
-const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe }) => {
+const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
     
+    const { token, setToken } = useTokenStore(); 
+
     if (!selectedRecipe) return null;
+
+    const handleDelete = async () => {
+        try {
+           
+            await fetch(`http://localhost:9000/recipes/delete/${selectedRecipe._id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`, 
+                },
+            });
+
+            //invoke onDelete function to update recipes state in main page
+            onDelete(selectedRecipe._id);
+            setSelectedRecipe(null);
+        } catch (error) {
+            console.error('Error deleting recipe:', error);
+            
+        }
+    };
 
     console.log(selectedRecipe);
     return(
@@ -43,7 +65,7 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe }) => {
                     <button className='update-delete-collab-chef'>
                         <span className="material-icons">update</span>
                     </button>
-                    <button  className='update-delete-collab-chef'>
+                    <button  className='update-delete-collab-chef' onClick={handleDelete}>
                         <span className="material-icons">delete</span>
                     </button>
                     <button  className='update-delete-collab-chef'>
