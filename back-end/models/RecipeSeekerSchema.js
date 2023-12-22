@@ -23,7 +23,8 @@ const recipeSeekerSchema = new mongoose.Schema({
       required: true,
   },
   profilePicture: {
-      type: String, //  type to String to store the image path
+    data: Buffer,
+    contentType: String
   },
   address: String,
   creditCardInfo: String,

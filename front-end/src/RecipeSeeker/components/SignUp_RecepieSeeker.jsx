@@ -16,9 +16,10 @@ const RecipeSeekerSignUp = () => {
 
     const handleSignUp = async () => {
         setLoading(true);
-    
+        
         try {
           const formData = new FormData();
+          
           formData.append('name', name);
           formData.append('username', username);
           formData.append('email', email);
@@ -33,17 +34,17 @@ const RecipeSeekerSignUp = () => {
           if (!response.ok) {
             const data = await response.json();
             console.error('Sign Up failed:', data.message);
-            // Handle the error (e.g., show an error message to the user)
+            alert("Sign up failed")
             return;
           }
     
           const data = await response.json();
           console.log('Sign Up successful:', data.message);
-          // Optionally, you can redirect the user to another page, show a success message, etc.
+          
     
         } catch (error) {
           console.error('Error during Sign Up:', error.message);
-          // Handle the error (e.g., show an error message to the user)
+         
         } finally {
           setLoading(false);
         }

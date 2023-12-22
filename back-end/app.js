@@ -30,7 +30,7 @@ app.use(express.json({ limit: '50mb' }));
 //const DB= require('./models')
 app.use(cors());
 const bodyParser = require('body-parser');
-app.use(bodyParser.json()); // Parse JSON bodies
+app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true })); 
 
 app.use(express.json());
@@ -51,6 +51,9 @@ const Rate_recepies = require('./RecipeSeeker/routes/Rate_Recepie')
 const DisplayRatings = require('./RecipeSeeker/routes/DisplayRatings')
 const Comment_Recipie = require('./RecipeSeeker/routes/Comment')
 const Comment_Display = require('./RecipeSeeker/routes/Display_comments')
+const Follow_chef = require('./RecipeSeeker/routes/FollowChef')
+const UnFollow_chef = require('./RecipeSeeker/routes/UnFollow_Chef')
+const Display_followings = require('./RecipeSeeker/routes/DisplayFollowings')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
 const admin_signin = require('./Admin/routes/login');
 
@@ -70,6 +73,9 @@ app.use('/recepieSeeker', Rate_recepies);
 app.use('/recepieSeeker', DisplayRatings);
 app.use('/recepieSeeker', Comment_Recipie);
 app.use('/recepieSeeker', Comment_Display);
+app.use('/recepieSeeker', Follow_chef);
+app.use('/recepieSeeker', UnFollow_chef);
+app.use('/recepieSeeker', Display_followings);
 //recipe routes
 app.use('/recipes', Reipe_routes);
 

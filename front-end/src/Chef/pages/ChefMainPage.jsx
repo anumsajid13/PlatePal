@@ -12,10 +12,11 @@ const ChefMainPage = () => {
 
     console.log(token);
 
+
     const [recipesWithVendor, setRecipesWithVendor] = useState([]);
     const [recipesWithoutVendor, setRecipesWithoutVendor] = useState([]);
     const [selectedRecipe, setSelectedRecipe] = useState(null);
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -50,7 +51,10 @@ const ChefMainPage = () => {
                 }
                 const dataWithoutVendor = await responseWithoutVendor.json();
                 setRecipesWithoutVendor(dataWithoutVendor);
-                console.log(dataWithoutVendor);
+                console.log("data without vendor: ",dataWithoutVendor);
+                console.log('Recipe Image Data:', recipesWithoutVendor[0].recipeImage.data)
+                
+    
             } catch (error) {
                 // Handle error
                 console.error('Error:', error.message);
@@ -73,6 +77,7 @@ const ChefMainPage = () => {
                         {recipesWithVendor.map(recipe => (
                             <div className="recipe-card-chef" key={recipe._id} onClick={() => setSelectedRecipe(recipe)}>
                                 <img src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}  className="recipe-image-chef" />
+                               
                                 <div className="recipe-details-chef">
                                     <h3>{recipe.title}</h3>
                                     <p>by Chef {recipe.chefName}</p>
