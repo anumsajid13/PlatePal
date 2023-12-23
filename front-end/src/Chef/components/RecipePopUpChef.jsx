@@ -134,6 +134,29 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
                         ))}
                     </div>
             </div>
+
+            <div className="chef-recipe-nutrients">
+                <h2>Nutrients:</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nutrient</th>
+                            <th>Value</th>
+                            <th>Unit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {selectedRecipe.Nutrients.filter((nutrient) => nutrient.value !== 0).map((nutrient, index) => (
+                            <tr key={index}>
+                                <td>{nutrient.nutrientName}</td>
+                                <td>{parseFloat(nutrient.value).toFixed(1)}</td>
+                                <td>{nutrient.unitName}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
             <div className="chef-recipe-comments">
                     <h2>Comments:</h2>
                      <ul>
