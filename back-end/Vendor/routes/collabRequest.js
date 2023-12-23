@@ -4,6 +4,7 @@ const authenticateToken = require('../../TokenAuthentication/token_authenticatio
 const VendorCollaboration =require('../../models/VendorCollaboration Schema');
 const CollaborationRequest = require('../../models/CollaborationRequest Schema');
 const Chef=require('../../models/Chef Schema');
+const Recipe=require('../../models/Recipe Schema');
 
 
 //Endpoint to see all collaboration request of a vendor with a chef 
@@ -12,11 +13,8 @@ router.get('/', authenticateToken, async (req, res) => {
     console.log("inside collaboration request",req.body,req.user._id);
      const { chefId, sortBy, sortOrder, page=1, pageSize=30 } = req.query; //pagesize = number of collaborations per page
 //filtering
-    const query = { vendor:req.user.id};
-    if (chefId) {
-      query.chef = chefId;
-    }
- 
+ /*    //const query = { vendor:req.user.id}; */
+   
 
     //sorting
     const sort = {};
@@ -32,16 +30,30 @@ router.get('/', authenticateToken, async (req, res) => {
     const skip = (page - 1) * pageSize;
 
     // Find collaborations for the specified vendor and chef
-    const collaborationReq = await CollaborationRequest.find()
+    const collaborationReq = await CollaborationRequest.find({vendor:req.user.id})
       .sort(sort)
       .skip(skip)
       .limit(parseInt(pageSize))
+   
+      const processedCollaborationRequests = [];
+    for (const request of collaborationReq) {
+      
+      const chef = await Chef.findOne({ _id: request.chef });
+      const recipename=await Recipe.findOne({_id:request.recipe});
+ 
+      processedCollaborationRequests.push({
+        chefName: chef ? chef.name : null, 
+        isAccepted: request.isAccepted,
+        time: request.Time,
+        recipeName: recipename? recipename.title:null,
+      });
 
-    const chef=await Chef.findOne({_id:collaborationReq.chef});
-
-    return res.json(chef.name,collaborationReq.time); 
+   
    // return res.json(collaborationReq); 
-  } catch (error) {
+  }
+  return res.json(processedCollaborationRequests ); 
+}
+   catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
@@ -54,10 +66,7 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
       const collaborationReqId = req.params.collaborationRequestId;
    
       const request = await CollaborationRequest.findOne({_id: collaborationReqId,vendor: vendorId})
-       /*  .populate('chef') // Populate the 'chef' field with chef details
-        .populate('recipe') // Populate the 'recipe' field with recipe details
-        .populate('ingredients'); // Populate the 'ingredients' field with ingredient details */
-  
+
       if (!request) {
         return res.status(404).json({ message: 'Collaboration request not found' });
       }

@@ -14,7 +14,7 @@ const CollaborationsRequestsList = () => {
     const fetchRequests = async () => {
       try {
         
-        
+        console.log('Effect triggered');
         const response = await fetch('http://localhost:9000/collaboration-request', {
             method: 'GET',
             headers: {
@@ -66,7 +66,7 @@ const handleClick = () => {
         <p>Loading...</p>
       ) : (
         <div className="mainRequestContainer">
-           console.log("im here");
+
           {collaborationRequests.map(collaboration => (
           
             <CollaborationRequestCard key={collaboration._id} request={collaboration} />
