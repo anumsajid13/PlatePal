@@ -1,15 +1,54 @@
 const express = require('express');
 const router = express.Router();
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
-const VendorCollaboration = require('../models/VendorCollaboration');
-const CollaborationRequest = require('../models/CollaborationRequest');
+const VendorCollaboration =require('../../models/VendorCollaboration Schema');
+const CollaborationRequest = require('../../models/CollaborationRequest Schema');
+const Chef=require('../../models/Chef Schema');
 
-// Endpoint to create a new vendor collaboration request
 
+//Endpoint to see all collaboration request of a vendor with a chef 
+router.get('/', authenticateToken, async (req, res) => {
+  try {
+    console.log("inside collaboration request",req.body,req.user._id);
+     const { chefId, sortBy, sortOrder, page=1, pageSize=30 } = req.query; //pagesize = number of collaborations per page
+//filtering
+    const query = { vendor:req.user.id};
+    if (chefId) {
+      query.chef = chefId;
+    }
+ 
 
+    //sorting
+    const sort = {};
+    if(!sortBy)
+    {
+      sort[sortBy]=1;
+    }
+    if (sortBy && sortOrder) {
+      sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
+    }
+
+    //skippvalue
+    const skip = (page - 1) * pageSize;
+
+    // Find collaborations for the specified vendor and chef
+    const collaborationReq = await CollaborationRequest.find()
+      .sort(sort)
+      .skip(skip)
+      .limit(parseInt(pageSize))
+
+    const chef=await Chef.findOne({_id:collaborationReq.chef});
+
+    return res.json(chef.name,collaborationReq.time); 
+   // return res.json(collaborationReq); 
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
   
 //Endpoint to see  a specific collaboration request of a chef
-router.get('/vendor/collaboration-request/:collaborationRequestId', authenticateToken, async (req, res) => {
+router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
     try {
       const vendorId = req.user._id;
       const collaborationReqId = req.params.collaborationRequestId;
@@ -30,52 +69,11 @@ router.get('/vendor/collaboration-request/:collaborationRequestId', authenticate
     }
   });
 
-//Endpoint to see all collaboration request of a vendor with a chef 
-router.get('/vendor/collaborations-request', authenticateToken, async (req, res) => {
-    try {
-      const vendorId = req.user._id;
-  
-      // Extract query parameters for filtering, sorting, and pagination
-      const { chefId, sortBy, sortOrder, page=1, pageSize=30 } = req.query; //pagesize = number of collaborations per page
-  //filtering
-      const query = { vendor: vendorId };
-      if (chefId) {
-        query.chef = chefId;
-      }
-      query.isAccepted = false;
-  
-      //sorting
-      const sort = {};
-      if(!sortBy)
-      {
-        sort[sortBy]=1;
-      }
-      if (sortBy && sortOrder) {
-        sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
-      }
-  
-      //skippvalue
-      const skip = (page - 1) * pageSize;
-  
-      // Find collaborations for the specified vendor and chef
-      const collaborations = await CollaborationRequest.find(query)
-        .sort(sort)
-        .skip(skip)
-        .limit(parseInt(pageSize))
-    /*     .populate('chef') // Populate the 'chef' field with chef details
-        .populate('recipe') // Populate the 'recipe' field with recipe details
-        .populate('ingredients'); // Populate the 'ingredients' field with ingredient details */
-  
-      return res.json(collaborations);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Internal Server Error' });
-    }
-  });
+
   
 
 // Endpoint to accept a collaboration request
-router.put('/vendor/collaboration/:collaborationId/accept', authMiddleware, async (req, res) => {
+router.put('/:icollaborationRequestId/accept', authenticateToken, async (req, res) => {
     try {
       const vendorId = req.user._id; 
       const collaborationId = req.params.collaborationId;
@@ -95,7 +93,7 @@ router.put('/vendor/collaboration/:collaborationId/accept', authMiddleware, asyn
   });
 
   // Endpoint to delete a collaboration request
-router.delete('/vendor/collaboration/:collaborationId', authMiddleware, async (req, res) => {
+router.delete('/delete/:collaborationId', authenticateToken, async (req, res) => {
     try {
       const vendorId = req.user._id;
 
@@ -114,3 +112,4 @@ router.delete('/vendor/collaboration/:collaborationId', authMiddleware, async (r
     }
   });
   
+  module.exports = router;

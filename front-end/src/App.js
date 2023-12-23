@@ -21,6 +21,7 @@ import DisplayVendors from './Chef/pages/DisplayVendors';
 import EditVendorProfile from './Vendor/pages/EditProfile';
 import AddNewProduct from './Vendor/pages/AddNewProducts';
 import DisplayCollaboration from './Vendor/pages/Collaborations';
+import DisplayCollaborationRequest from './Vendor/pages/CollaborationRequest';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
         <Route path="/ingredients/editInfromation/:id" element={<EditIngredient/>} />
         <Route path="/ingredients/newProduct" element={<AddNewProduct/>} />
         <Route path="/vendor/Collaboration" element={<DisplayCollaboration/>} />
+        <Route path="/vendor/CollaborationRequest" element={<DisplayCollaborationRequest/>} />
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
         <Route path="/Chef/CreateRecipe" element={<CreateRecipe/>} />
         <Route path="/Chef/AllVendors" element={<DisplayVendors/>} />

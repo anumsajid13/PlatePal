@@ -1,0 +1,48 @@
+/* request.css */
+
+.mainContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    background-color: #eff5f2; 
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+
+  .backButton {
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .backButton:hover {
+    background-color: #6345a0;
+  }
+  
+  .Requestheader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .mainContainer h1 {
+    margin-bottom: 10px;
+  }
+  
+ 
+  
+  .request {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Add more styling as needed */
+  

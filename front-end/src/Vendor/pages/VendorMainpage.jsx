@@ -6,7 +6,11 @@ import NavigationBar from '../components/NavigationBar';
 import { FaArrowLeft, FaArrowRight,FaPlusCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
+import axios from 'axios';
+
 const MainPage = () => {
+
+  
   const [ingredients, setIngredients] = useState([]);
   const { token } = useTokenStore();
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,7 +20,7 @@ const MainPage = () => {
     const fetchAllIngredients = async () => {
       try {
         const response = await fetch(
-          `http://localhost:9000/Ingredients/All?page=${currentPage}&pageSize=3`,
+          `http://localhost:9000/Ingredients/All?page=${currentPage}&pageSize=4`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -31,7 +35,9 @@ const MainPage = () => {
         setIngredients(data);
       } catch (error) {
         console.error('Error fetching Ingredients:', error.message);
-      }
+      } 
+ 
+
     };
 setTotalPages(20);
     fetchAllIngredients();

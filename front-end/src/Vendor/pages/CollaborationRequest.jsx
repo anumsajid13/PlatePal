@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import useTokenStore from '../../tokenStore';
-import CollaborationCard  from '../components/CollaborationCard';
-import { useParams, Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
-
-
-const CollaborationsList = () => {
-  const [collaborations, setCollaborations] = useState([]);
+import CollaborationRequestCard  from '../components/RequetsCard';
+import "../assets/styles/request.css";
+const CollaborationsRequestsList = () => {
+  const [collaborationRequests, setCollaborationRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const { token } = useTokenStore();
   const navigate = useNavigate();
   useEffect(() => {
-    const fetchCollaborations = async () => {
+    const fetchRequests = async () => {
       try {
         
         
-        const response = await fetch('http://localhost:9000/collaboration', {
+        const response = await fetch('http://localhost:9000/collaboration-request', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`, 
@@ -28,8 +26,8 @@ const CollaborationsList = () => {
             throw new Error('Failed to fetch collaborations');
           }
         const data = await response.json();
-       
-        setCollaborations(data);
+        console.log("data",data);
+        setCollaborationRequests(data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching collaborations:', error);
@@ -37,28 +35,41 @@ const CollaborationsList = () => {
       }
     };
 
-    fetchCollaborations();
-  }, []);
+    fetchRequests();
+  }, [token]);
 const handleClick = () => {
 
     navigate('/Vendor/Mainpage');
 };
   return (
     <>
-     <NavigationBar />
-     <div className="header">
+    <NavigationBar />
+        <div className="mainContainer" >
+          <div className="productSearch1">
+            <input className="searchProducts" type="text" placeholder="Search..." />
+            <select className="searchDropdown">
+              <option value="recipeName">Search by Recipe Name</option>
+              <option value="chef">Search by Chef</option>
+            </select>
+            <span className="search-icon-1">&#128269;</span>
+          </div>
+          </div>
+      
+     <div className="Requestheader">
         <button onClick={handleClick} className="backButton">
           <FaArrowLeft /> Back
         </button>
         </div>
      <div>
-      <h1>Collaborations List</h1>
+      <h1>Collaboration Requests List</h1>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div>
-          {collaborations.map(collaboration => (
-            <CollaborationCard key={collaboration._id} collaboration={collaboration} />
+        <div className="mainRequestContainer">
+           console.log("im here");
+          {collaborationRequests.map(collaboration => (
+          
+            <CollaborationRequestCard key={collaboration._id} request={collaboration} />
           ))}
         </div>
       )}
@@ -69,4 +80,4 @@ const handleClick = () => {
   );
 };
 
-export default CollaborationsList;
+export default CollaborationsRequestsList;
