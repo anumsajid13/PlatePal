@@ -22,6 +22,11 @@ import EditVendorProfile from './Vendor/pages/EditProfile';
 import AddNewProduct from './Vendor/pages/AddNewProducts';
 import DisplayCollaboration from './Vendor/pages/Collaborations';
 import DisplayCollaborationRequest from './Vendor/pages/CollaborationRequest';
+import ChefDisplayFollowers from './Chef/pages/ChefFollowers';
+import ChefProfile from './Chef/pages/ChefProfile';
+import ChefUserInboxx from './Chef/pages/ChefUserInboxx';
+import ChefVendorInboxx from './Chef/pages/ChefVendorInboxx';
+import BlockReportsList from './Chef/pages/ChefVendorBlockReport';
 
 function App() {
   return (
@@ -47,7 +52,6 @@ function App() {
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
         <Route path="/Chef/CreateRecipe" element={<CreateRecipe/>} />
         <Route path="/Chef/AllVendors" element={<DisplayVendors/>} />
-        
 
       </Routes>
     </div>

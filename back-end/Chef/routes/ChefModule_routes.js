@@ -70,6 +70,14 @@ router.post('/login', async (req,res) => {
             return res.status(404).json({ message: 'Chef not found' });
         }
 
+        
+        if(chef.allowSignup && !chef.isBlocked){
+          //getting token using jwt
+        const token = jwt.sign({ id: chef._id, username: chef.username, email: chef.email, name: chef.name}, process.env.SECRET_KEY);
+
+         return res.status(200).json({ token });
+       }
+
         if (!chef.allowSignup) {
           return res.status(403).json({ message: 'Admin is reviewing your certificate' });
         }
@@ -84,10 +92,7 @@ router.post('/login', async (req,res) => {
             return res.status(403).json({ message:'Access denied - you were blocked by the admin'});
         }
 
-        //getting token using jwt
-        const token = jwt.sign({ id: chef._id, username: chef.username, email: chef.email, name: chef.name}, process.env.SECRET_KEY);
-
-        res.status(200).json({ token });
+        
 
     }
     catch (error) {
@@ -98,24 +103,76 @@ router.post('/login', async (req,res) => {
 
 });
 
-//update profile
-router.put('update/:id', authenticateToken, async (req, res) => {
+//get a chef by id
+router.get('/get', authenticateToken, async (req, res) => {
 
-  const { id } = req.params;
+  const id  = req.user.id;
   try {
-    const updateChef  = await Chef.findByIdAndUpdate(id, req.body, { new: true });
+    const chef = await Chef.findById(id);
   
-    return res.status(200).json('Profile updated successfully');
+    if (!chef) {
+      return res.status(404).json({ message: 'Chef not found' });
+    }
+
+    // Convert the image buffer to a Base64 string
+    const unit8Array = new Uint8Array(chef.profilePicture.data);
+    const base64string = Buffer.from(unit8Array).toString('base64');
+    
+    const chefDataWithBase64Image = { ...chef._doc, profilePicture: base64string };
+
+    return res.status(200).json(chefDataWithBase64Image);
+   
   } catch (error) {
     console.error(error);
-    return res.status(500).send({ message: 'Failed to update profile' });
+    return res.status(500).send({ message: 'Failed to fetch  chef' });
+  }
+});
+
+//update profile
+router.put('/update', upload.single('profilePicture'), authenticateToken, async (req, res) => {
+  const id = req.user.id;
+  const { password, newPassword, ...otherUpdates } = req.body;
+  const profilePicture = req.file; 
+  try {
+    const chef = await Chef.findById(id);
+
+    if (!chef) {
+      return res.status(404).json({ message: 'Chef not found' });
+    }
+
+
+  if (profilePicture) {
+      
+      chef.profilePicture.data = profilePicture.buffer; 
+      chef.profilePicture.contentType = profilePicture.mimetype;
+  }
+
+  if(password && newPassword){
+
+    const passwordMatch = await bcrypt.compare(password, chef.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    chef.password = hashedNewPassword;
+    
+  }
+    Object.assign(chef, otherUpdates);
+
+    const updatedChef = await chef.save();
+
+    return res.status(200).json({ message: 'Profile updated successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Failed to update profile' });
   }
 });
 
 //delete profile
-router.delete('delete/:id', authenticateToken, async (req, res) => {
+router.delete('/delete', authenticateToken, async (req, res) => {
 
-  const { id } = req.params;
+  const  id  = req.user.id;
   try {
       await Chef.findByIdAndDelete(id);
       res.json({ message: 'Profile deleted successfully' });

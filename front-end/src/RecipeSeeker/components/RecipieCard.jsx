@@ -8,7 +8,7 @@ import './Comments.css'
 import { jwtDecode } from 'jwt-decode';
 
 
-const RecipeCard = ({ recipe }) => {
+const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
 
   const token = useTokenStore.getState().token;
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -19,8 +19,24 @@ const RecipeCard = ({ recipe }) => {
   const decodedToken = jwtDecode(token); 
   const currentUserId = decodedToken.id;
   const [isRatingsVisible, setIsRatingsVisible] = useState(false);
+  //const [isFollowing, setIsFollowing] = useState(false);
 
-  console.log('Recipe Image Data:', recipe.recipeImage.data);
+ /* useEffect(() => {
+   
+    const isUserFollowingChef = recipe.chef.followers.includes(currentUserId);
+    console.log("isUserFollowingChef", isUserFollowingChef);
+    setIsFollowing(isUserFollowingChef);
+  }, [recipe.chef.followers, currentUserId]);*/
+
+
+  const imageData = new Uint8Array(recipe.recipeImage.data).reduce(
+    (data, byte) => data + String.fromCharCode(byte),
+    ''
+  );
+
+   
+
+  console.log('Recipe Image Data:', imageData);
 
   console.log('Current decoded token:', decodedToken);
   console.log("recipe id: ",recipe._id )
@@ -71,11 +87,35 @@ const RecipeCard = ({ recipe }) => {
     }
   };
 
-
+  
   const handleClosePopup = () => {
     setIsPopupOpen(false);
   };
+/*
+  const handleFollowChef = async () => {
+    try {
 
+      console.log("Value of isFollowing: ", isFollowing)
+      const response = await fetch(`http://localhost:9000/recepieSeeker/${isFollowing ? 'unfollowChef' : 'followChef'}/${recipe.chef._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+       // console.log("isUserFollowingChef", isUserFollowingChef);
+      
+        console.log(`RecipeSeeker is now ${isFollowing ? 'unfollowing' : 'following'} the Chef`);
+        setIsFollowing(!isFollowing);
+      } else {
+        console.error(`${isFollowing ? 'Unfollow' : 'Follow'} Chef failed:`, response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error(`${isFollowing ? 'Unfollow' : 'Follow'} Chef error:`, error.message);
+    }
+  };*/
   const handleCommentSubmit = async () => {
     try {
       const response = await fetch(`http://localhost:9000/recepieSeeker/addComment/${recipe._id}`, {
@@ -89,7 +129,7 @@ const RecipeCard = ({ recipe }) => {
 
       if (response.ok) {
         console.log('Comment added successfully');
-        // Update local state with the new comment
+        
         setComments([...comments, { commentText, user: 'You', time: new Date() }]);
         setCommentText('');
       } else {
@@ -158,21 +198,22 @@ const RecipeCard = ({ recipe }) => {
   return '';
   }
 
-  
-
+ 
   return (
     <>
        
       <div className="outer-recipe">
         <div className="recipe-card">
-          <>
-          <div className="pagal-image">
-            <img src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}></img>
-          </div>
-            
+          <div className='relative-container'>
           
-            {/* <img src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}  className="recipe-image-chef" />*/}
-          </>
+          <img   className="pagal-image " src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}  / >
+          <button className="follow-chef-button" onClick={onToggleFollow}>
+            {isFollowingChef && 'Following'}
+            {!isFollowingChef && 'Follow Chef'}
+          </button>
+         
+           
+          </div>
           <div className="flexxx">
             <h3 onClick={handleCardClick}>{recipe.title} by Chef {recipe.chef.name}</h3>
             <p className='desc-para'>{truncateText(recipe.description, 20 )}</p>
@@ -183,8 +224,9 @@ const RecipeCard = ({ recipe }) => {
         <span className="material-icons google-icon close-btn" onClick={handleClosePopup} style={{cursor:"pointer"}}>close</span>
 
         <div className="recipe-details">
+        
             <div className="recipe-details-left">
-            <img src="/pasta.jpg" alt="image here" />
+            <img   className="" src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}   />
             <p>Ingredients:</p>
             <ul>
                 {recipe.ingredients.map((ingredient, index) => (

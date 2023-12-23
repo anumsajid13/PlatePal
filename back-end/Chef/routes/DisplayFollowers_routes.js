@@ -20,7 +20,7 @@ router.get('/myfollowers', authenticateToken, async (req, res) => {
       await chef.populate({
         path: 'followers',
         select: 'name', //select the 'name' field of the Recipe Seeker documents
-      }).execPopulate();
+      });
   
       const followersWithNames = chef.followers;
   
@@ -29,3 +29,5 @@ router.get('/myfollowers', authenticateToken, async (req, res) => {
       res.status(500).json({ message: 'Internal server error', error: error.message });
     }
   });
+
+  module.exports = router;

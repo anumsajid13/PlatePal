@@ -15,11 +15,31 @@
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    max-width: 60%;
+    max-width: 50%;
     max-height: 95%;
     overflow-y: auto;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     z-index: 10000; 
+}
+
+.chef-recipe-popup::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.chef-recipe-popup::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+.chef-recipe-popup::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 5px;
+}
+
+
+.chef-recipe-popup::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }
 
 
@@ -138,3 +158,99 @@
     list-style-position: inside;
     margin-right: 10px;
   }
+
+  .chef-recipe-instructions{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .chef-recipe-comments{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .chef-recipe-ratings{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .chef-comment-header {
+    display: flex;
+    align-items: center;
+  }
+  
+ 
+  .chef-user-image {
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    margin-right: 15px;
+  }
+  
+
+  .chef-user-details {
+    flex-grow: 1;
+  }
+
+  .chef-user-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .chef-comment-time {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  .star {
+    width: 20px; 
+    height: 20px; 
+    margin-right: 2px; 
+  }
+
+  .chef-comment-text {
+    margin-top: 10px;
+  }
+
+  .update-delete-collab-chef{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;   
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 40px;
+  }
+
+.chef-recipe-nutrients {
+    margin-top: 20px;
+}
+
+.chef-recipe-nutrients table {
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+.chef-recipe-nutrients th,
+.chef-recipe-nutrients td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  
+}
+
+.chef-recipe-nutrients tbody tr:nth-child(odd) {
+  background-color: #ffffff; 
+}
+
+.chef-recipe-nutrients tbody tr:nth-child(even) {
+  background-color: #f2f2f2; 
+}

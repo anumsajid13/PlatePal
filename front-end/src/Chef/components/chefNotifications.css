@@ -1,0 +1,47 @@
+.notification-box {
+    position: absolute;
+    top: 50px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    width: 300px;
+    max-height: 300px; /* Limit height if needed */
+    overflow-y: auto; /* Enable vertical scrolling if needed */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+  }
+
+  .notification-box::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.notification-box::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+.notification-box::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 5px;
+}
+
+
+.notification-box::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+
+  
+  .notification-box p {
+    margin: 5px 0;
+    padding: 5px;
+    border-bottom: 1px solid #eee; 
+  }
+  
+  .notification-box p:last-child {
+    border-bottom: none; 
+  }
+  
