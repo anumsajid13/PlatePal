@@ -24,6 +24,7 @@ import ChefDisplayFollowers from './Chef/pages/ChefFollowers';
 import ChefProfile from './Chef/pages/ChefProfile';
 import ChefUserInboxx from './Chef/pages/ChefUserInboxx';
 import ChefVendorInboxx from './Chef/pages/ChefVendorInboxx';
+import BlockReportsList from './Chef/pages/ChefVendorBlockReport';
 
 function App() {
   return (
@@ -51,7 +52,8 @@ function App() {
         <Route path="/Chef/myProfile" element={<ChefProfile/>} />
         <Route path="/Chef/usersInbox" element={<ChefUserInboxx/>} />
         <Route path="/Chef/vendorsInbox" element={<ChefVendorInboxx/>} />
-
+        <Route path="/Chef/BlockReports" element={<BlockReportsList/>} />
+        
       </Routes>
     </div>
   );
