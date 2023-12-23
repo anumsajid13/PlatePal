@@ -107,6 +107,28 @@ const CreateRecipe = () => {
         }));
       };
 
+      const handleFetchNutrition = async (recipeId) => {
+        try {
+          const response = await fetch(`http://localhost:9000/recipes/${recipeId}/fetch-nutrition`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+            },
+          });
+    
+          if (!response.ok) {
+            throw new Error('Failed to fetch nutrition data');
+          }
+    
+          const data = await response.json();
+         
+    
+        } catch (error) {
+          console.error('Error fetching nutrition data:', error.message);
+          
+        }
+      };
+
       const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('Token:', token);
@@ -150,6 +172,9 @@ const CreateRecipe = () => {
             console.log('Recipe created:', data);
             
             setShowSuccessPopup(true);
+            console.log(data._id)
+            //fetch nutrition data for the newly created recipe
+            handleFetchNutrition(data._id);
 
             //reset form data to initial state after successful creation
             setFormData({

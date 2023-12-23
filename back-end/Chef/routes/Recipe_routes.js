@@ -4,7 +4,7 @@ const authenticateToken = require('../../TokenAuthentication/token_authenticatio
 const Recipe = require('../../models/Recipe Schema');
 const User_Notification = require('../../models/User_Notification Schema');
 const Chef = require('../../models/Chef Schema'); 
-  const multer = require('multer');
+const multer = require('multer');
 
 
   // Multer configuration
@@ -224,6 +224,102 @@ router.get('/myrecipes/noVendor', authenticateToken,  async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: 'Failed to fetch user recipes' });
     }
+});
+
+const apiUrl = 'https://food-nutrition-information.p.rapidapi.com/foods/search?query=';
+const rapidApiKey = '5e1c3f2495msh77b53e70c808cc8p18cfc7jsn052ace546c72';
+
+router.get('/:recipeId/fetch-nutrition', authenticateToken,  async (req, res) => {
+  const { recipeId } = req.params;
+
+  try {
+    const recipe = await Recipe.findById(recipeId);
+
+  if (!recipe) {
+      return res.status(404).json({ error: 'Recipe not found' });
+  }
+
+  if (recipe.Nutrients.length === 0) {
+          const { ingredients } = recipe; 
+
+          //fetch nutrition data for each ingredient
+          const nutritionDataPromises = ingredients.map(async (ingredient) => {
+
+            const ingredientName = encodeURIComponent(ingredient.name);
+            const response = await fetch(apiUrl + ingredientName, {
+              method: 'GET',
+              headers: {
+                'X-RapidAPI-Key': rapidApiKey,
+                'X-RapidAPI-Host': 'food-nutrition-information.p.rapidapi.com',
+              },
+            });
+
+            if (!response.ok) {
+              throw new Error('Failed to fetch nutrition data');
+            }
+
+            const result = await response.json();
+
+            if (result && result.status && result.status === 'failure') {
+              
+              console.log(`Ingredient '${ingredient.name}' not found in the API`);
+              return null; //skipping this ingredient
+            }
+
+            return result; 
+          });
+
+          const nutritionData = await Promise.all(nutritionDataPromises);
+          const totalNutrients = {};
+          
+         
+
+      //loop through nutritionData to access foodNutrients for each ingredient
+      nutritionData.filter((data) => data !== null).forEach((ingredientNutrition) => {
+        if (ingredientNutrition.foods && ingredientNutrition.foods.length > 0) {
+          const firstFood = ingredientNutrition.foods[0];
+          if (firstFood && firstFood.foodNutrients) {
+            const foodNutrients = firstFood.foodNutrients;
+
+            //get top 7
+            const sortedNutrients = foodNutrients.sort((a, b) => b.value - a.value).slice(0, 7);
+
+            //add nutrient values for the entire recipe
+            sortedNutrients.forEach((nutrient) => {
+              const { nutrientName, value, unitName } = nutrient;
+
+              //if we get the nutrient for the first time, initialize the total
+              if (!totalNutrients[nutrientName]) {
+                totalNutrients[nutrientName] = {
+                  totalValue: 0,
+                  unit: unitName, 
+                };
+              }
+
+              //add the value to the total for that nutrient
+              totalNutrients[nutrientName].totalValue += value;
+            });
+          }
+        }
+      });
+
+      recipe.Nutrients = Object.keys(totalNutrients).map((nutrientName) => ({
+        nutrientName,
+        value: totalNutrients[nutrientName].totalValue,
+        unitName: totalNutrients[nutrientName].unit,
+      }));
+
+      await recipe.save();
+          
+      res.status(200).json({ recipe });
+  }
+  else{
+        res.status(200).json({ message: 'already has nutrients' });
+  }
+  } catch (error) {
+    console.error('Error fetching and saving nutrition data:', error);
+    res.status(500).json({ error: 'Error fetching and saving nutrition data' });
+  }
 });
 
 
