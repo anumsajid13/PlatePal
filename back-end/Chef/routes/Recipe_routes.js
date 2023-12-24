@@ -16,7 +16,7 @@ const multer = require('multer');
   router.post('/newRecipe', authenticateToken, upload.single('recipeImage'),  async (req, res) =>{
       
       try{
-          const { title, calories, servingSize, difficulty, totalTime, ingredients, allergens, notDelivered, utensils, category, instructions, description } = req.body;
+          const { title, calories, servingSize, difficulty, totalTime, ingredients, allergens, notDelivered, utensils, category, instructions, description, price } = req.body;
           const chefId = req.user.id;
 
 
@@ -43,7 +43,8 @@ const multer = require('multer');
               contentType: req.file.mimetype,
               },
               chef: chefId,
-              description
+              description,
+              price:parseInt(totalTime.replace(/\D/g, ''), 10),
           });
 
 

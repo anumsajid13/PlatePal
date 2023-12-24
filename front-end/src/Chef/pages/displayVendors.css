@@ -24,7 +24,7 @@
     margin: 10px;
     border-radius: 8px;
     background-color:#eff5f2;
-    text-align: center;
+    text-align: left;
     transition: transform 0.3s ease-in-out;
     cursor:pointer;
     margin-bottom: 50px;
@@ -43,6 +43,7 @@
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
+    margin-left:20px;
   }
   
   .vendor-chef-displayVendors:hover {

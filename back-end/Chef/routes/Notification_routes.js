@@ -8,7 +8,7 @@ router.get('/notifications', autheticateToken,  async(req,res) => {
     try{
         const notifications = await Chef_Notification.find({ user: req.user.id })
             .sort({ createdAt: -1 }) //sort in descending order
-
+          
             res.status(200).json(notifications);
     }
     catch(error){
