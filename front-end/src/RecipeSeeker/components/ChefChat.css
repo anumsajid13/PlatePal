@@ -1,0 +1,190 @@
+
+.no-scroll {
+    overflow: hidden;
+  }
+
+.chef-chat-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .chef-text-sidebar {
+    width: 20%;
+    background-color: #B7B6C1;
+    padding: 20px;
+    margin-top: 1.5%;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+     scrollbar-color: #6b6b6b #B7B6C1;
+  }
+
+  .chef-text-sidebar::-webkit-scrollbar {
+    width: 8px; 
+  }
+  
+  .chef-text-sidebar::-webkit-scrollbar-thumb {
+    background-color: #6b6b6b; 
+  }
+  
+  .chef-text-sidebar::-webkit-scrollbar-track {
+    background-color: #B7B6C1; 
+  }
+  
+  .chef-options {
+    display: flex;
+    flex-direction: column;
+   
+  }
+  
+  .chef-option {
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .chef-option:hover {
+    background-color: #ddd;
+  }
+  
+  .chef-option.selected {
+    background-color: purple;
+    color: white;
+  }
+  
+  .chef-main {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .chat-box {
+    border: 1px solid #ddd;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  
+  .chat-box::-webkit-scrollbar {
+    width: 8px; 
+  }
+  
+  .chat-box::-webkit-scrollbar-thumb {
+    background-color: #6b6b6b; 
+  }
+  
+  .chat-box::-webkit-scrollbar-track {
+    background-color: #B7B6C1; 
+  }
+  
+  
+  .chat-header {
+    background-color: #B7B6C1;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    width: 72.5%;
+    z-index: 1;
+  }
+ 
+
+.chat-messages-between-chefanduser {
+    max-height: calc(80% - 25%); 
+    overflow-y: scroll;
+    padding: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #6b6b6b ;
+    margin-top: 10%;
+  }
+
+  .chat-messages-between-chefanduser::-webkit-scrollbar {
+    width: 8px; 
+  }
+  
+  .chat-messages-between-chefanduser::-webkit-scrollbar-thumb {
+    background-color: #6b6b6b; 
+  }
+  
+  .chat-messages-between-chefanduser::-webkit-scrollbar-track {
+    background-color: #B7B6C1; 
+  }
+  .message-to-chef.other-user {
+    margin-left: 44%;
+  }
+  
+  .message-to-chef {
+    max-width: 55%;
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 8px;
+    position: relative;
+    background-color: #ddd;
+  }
+  .author-textmsg{
+    display: flex;
+    gap:10px;
+  }
+  
+  .author {
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #128c7e; 
+  }
+  
+  
+  .message-text {
+    font-size: 1em;
+  }
+  
+  
+  .time {
+    font-size: 0.8em;
+    color: #777;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+  }
+  
+  
+  .chat-messages-between-chefanduser p {
+    text-align: center;
+    color: #777;
+  }
+
+  .messageToChef-byuser-input {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 71.5%;
+    height: 40px; 
+    padding: 10px;
+    margin-left: 24.5%;
+    margin-top: 5%;
+    background-color: #fff;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 2; 
+  }
+  
+  .messageToChef-byuser-input input {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc; 
+    border-radius: 4px;
+  }
+  
+  .messageToChef-byuser-input button {
+    padding: 8px 16px;
+    background-color: #4caf50; 
+    color: #fff; 
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Optional: Style the button on hover */
+  .messageToChef-byuser-input button:hover {
+    background-color: #45a049; /* Set your desired button background color on hover */
+  }

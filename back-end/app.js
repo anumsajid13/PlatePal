@@ -54,10 +54,17 @@ const Comment_Display = require('./RecipeSeeker/routes/Display_comments')
 const Follow_chef = require('./RecipeSeeker/routes/FollowChef')
 const UnFollow_chef = require('./RecipeSeeker/routes/UnFollow_Chef')
 const Display_followings = require('./RecipeSeeker/routes/DisplayFollowings')
+const Display_Chefs = require('./RecipeSeeker/routes/Display_chefs')
+const Display_Nutritionists = require('./RecipeSeeker/routes/Display_Nutritionists')
+const Text_Chef = require('./RecipeSeeker/routes/Send_msgToChef')
+const Display_TextwithChef = require('./RecipeSeeker/routes/Display_chef_chats')
+const Send_notification_to_nutritionist = require('./RecipeSeeker/routes/Send_noti_to_Nutri')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
 
 const admin_signin = require('./Admin/routes/login');
 const block = require('./Admin/routes/block');
+const list_chef = require('./Admin/routes/list');
+
 const admin_Notification = require('./Admin/routes/Notifications');
 const top = require('./Admin/routes/top');
 
@@ -68,8 +75,21 @@ const collaboration_Routes = require('./Vendor/routes/collaborationroute');
 const collaboration_Request= require('./Vendor/routes/collabRequest');
 
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
+
+
+
+const Nutritionist_Signin = require('./Nutrionist/routes/login-n')
+const Nutritionist_Plan = require('./Nutrionist/routes/plan')
+
 const getAllVendors = require('./Chef/routes/vendor_Routes_Chef');
 const collabVendorsChef = require('./Chef/routes/CollabVendors_routes');
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  });
 const chefnotifications = require('./Chef/routes/Notification_routes');
 const cheffollowerss = require('./Chef/routes/DisplayFollowers_routes');
 //chefModule Routes
@@ -87,6 +107,11 @@ app.use('/recepieSeeker', Comment_Display);
 app.use('/recepieSeeker', Follow_chef);
 app.use('/recepieSeeker', UnFollow_chef);
 app.use('/recepieSeeker', Display_followings);
+app.use('/recepieSeeker', Display_Chefs);
+app.use('/recepieSeeker', Text_Chef);
+app.use('/recepieSeeker', Display_TextwithChef);
+app.use('/recepieSeeker', Display_Nutritionists);
+app.use('/recepieSeeker', Send_notification_to_nutritionist);
 //recipe routes
 app.use('/recipes', Reipe_routes);
 
@@ -95,6 +120,8 @@ app.use('/admin', admin_signin);
 app.use('/admin', block);
 app.use('/admin', admin_Notification);
 app.use('/admin', top);
+app.use('/admin', list_chef);
+
 
 //Vendor routes
 app.use('/vendor', vendor_Routes);
@@ -108,6 +135,11 @@ app.use('/chef', blockreportroVendorRoutes);
 app.use('/vendors_chef', getAllVendors);
 //collab routes
 app.use('/chefVendors', collabVendorsChef);
+
+//nutri routes
+app.use('/n', Nutritionist_Signin); 
+app.use('/n', Nutritionist_Plan); 
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

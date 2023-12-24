@@ -32,7 +32,7 @@ const BlockReportsList  = () => {
     
       const handleDelete = async (reportId) => {
         try {
-          await fetch(`http://localhost:9000/deleteVendorReport/${reportId}`, {
+          await fetch(`http://localhost:9000/chef/deleteVendorReport/${reportId}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
@@ -49,17 +49,25 @@ const BlockReportsList  = () => {
         <>
              <ChefNav/>
 
-             <div>
-                <h1>Vendor Block Reports</h1>
-                {reports.map((report) => (
-                    <div key={report._id}>
-                    <p>Reason: {report.reason}</p>      
-                    <p>Proof: {report.reason}</p>
-                    <img style={{hight: '100px', width: '100px'}}src={`data:image/jpeg;base64,${report.proof.data}`} />
-                    <button onClick={() => handleDelete(report._id)}>Delete</button>
+             <div className="vendorbr-list">
+                    <h1>Vendor Block Reports</h1>
                     
-                    </div>
-                ))}
+                <div className="vendor-br-item">
+                {reports.length > 0 ? (
+                    reports.map((report) => (
+            
+                        <div className="vendor-br-alignment" key={report._id}>
+                        <h1>Reason:</h1> <p> {report.reason}</p>
+                        <h1>Proof:</h1>
+                        <img className='vendor-chef-br-image' src={`data:image/jpeg;base64,${report.proof.data}`} alt={`Proof for report ${report._id}`} />
+                        <button className='vendor-chef-br' onClick={() => handleDelete(report._id)}>Delete</button>
+                        </div>
+                       
+                    ))
+                    ) : (
+                    <p>No reports</p>
+                )}
+                </div>
             </div>  
 
         </>

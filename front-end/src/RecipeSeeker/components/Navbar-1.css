@@ -46,6 +46,7 @@
   .active-link-1 {
     color: #ff0000; 
   }
+
   .sidebar1 {
 
     width: 200px; 
@@ -57,6 +58,7 @@
     background-color:#94958B; 
     padding-top: 50px;
     transition: right 0.3s ease; 
+    z-index: 1000;
   }
   
   .sidebar1 a {

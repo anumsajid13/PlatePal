@@ -122,7 +122,7 @@ const Discover = () => {
                 key={recipe._id}
                 recipe={recipe}
                 isFollowingChef={recipe.chef && followingChefIds && followingChefIds.includes(recipe.chef._id)}
-                onToggleFollow={() => toggleFollowChef(recipe.chef._id)}
+                onToggleFollow={() => recipe && recipe.chef && toggleFollowChef(recipe.chef._id)}
               />
             </div>
           ))}

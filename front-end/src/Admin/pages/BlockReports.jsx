@@ -74,7 +74,7 @@ const BlockReports = () => {
             <p>Reason: {report.reason}</p>
             {report.proof && (
               <img
-                src={`data:${report.proof.contentType};base64,${report.proof.data.toString('base64')}`}
+             src={`data:image/jpeg;base64,${report.proof.data}`} 
                 alt="Proof"
               />
             )}

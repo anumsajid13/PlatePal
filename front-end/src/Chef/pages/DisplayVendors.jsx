@@ -41,6 +41,7 @@ const DisplayVendors = () => {
                                 ))}
                             </ul>
                             <button className='vendor-chef-displayVendors' onClick={() => handleButtonClick()}>Collaborate</button>
+                            <button className='vendor-chef-displayVendors'>Report</button>
                         </div>
                     ))}
                 </div>
