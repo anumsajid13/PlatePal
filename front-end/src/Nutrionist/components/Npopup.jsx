@@ -16,7 +16,7 @@ const NotificationPopup = ({ onClose }) => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
   
         setLoading(true);
-        const response = await fetch('/admin/notifications', {
+        const response = await fetch('/notifications', {
           headers: {
             Authorization: `Bearer ${token}`, // Replace with your authentication token
           },

@@ -20,7 +20,10 @@ notification_text:
 bmi :
 {
   type: Number
-}
+},seen: {
+  type: Boolean,
+  default: false,
+},
 });
 
 const nutritionist_Notification = mongoose.model('nutritionist_Notification', nutritionist_notificationSchema);
