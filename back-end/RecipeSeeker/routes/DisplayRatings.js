@@ -26,11 +26,13 @@ router.get('/ratings/:recipeId', async (req, res) => {
       return res.status(404).json({ message: 'No ratings found for the recipe' });
     }
 
-    const ratingsWithUsernames = populatedRecipe.ratings.map((rating) => ({
+    const ratingsWithUsernames = populatedRecipe.ratings
+    .filter((rating) => rating.user !== null)
+    .map((rating) => ({
       ratingNumber: rating.ratingNumber,
-      user: rating.user.name, 
-      user_id: rating.user._id, 
-    }));
+      user: rating.user.name,
+      user_id: rating.user._id,
+  }));
 
     res.status(200).json({ ratings: ratingsWithUsernames });
   } catch (error) {

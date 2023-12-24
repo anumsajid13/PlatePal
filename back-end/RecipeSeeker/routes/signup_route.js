@@ -21,12 +21,14 @@ router.post('/recipeSeeker_signup', upload.single('profilePicture'), async (req,
       username: req.body.username,
       email: req.body.email,
       password: hashedPassword,
-      profilePicture: req.file ?`/uploads/${req.file.filename}` : undefined //req.file.buffer.toString('base64') : undefined,  Convert image buffer to base64
+      profilePicture: {
+        data: req.file.buffer,
+        contentType: req.file.mimetype,
+      },
     });
 
-    
     const savedRecipeSeeker = await recipeSeeker.save();
-    console.log("Saved to the DB")
+    console.log("Saved to the DB");
     res.status(201).json({ message: 'Signup successful', data: savedRecipeSeeker });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });
@@ -34,5 +36,3 @@ router.post('/recipeSeeker_signup', upload.single('profilePicture'), async (req,
 });
 
 module.exports = router;
-
-

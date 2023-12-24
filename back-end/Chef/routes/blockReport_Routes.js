@@ -23,7 +23,8 @@ router.post('/createVendorReport/:vendorId', authenticateToken, upload.single('p
         proof: {
           data: buffer,
           contentType: mimetype
-        }
+        },
+        chef:req.user.id,
       });
   
       const savedReport = await newVendorReport.save();
@@ -72,10 +73,20 @@ router.delete('/deleteVendorReport/:reportId', authenticateToken, async (req, re
   router.get('/myVendorReports', authenticateToken, async (req, res) => {
     try {
       const loggedInChefId = req.user.id;
+    
+      const reports = await VendorBlockReport.find({ chef: loggedInChefId });
 
-      const reports = await VendorBlockReport.find({ vendor: loggedInChefId });
-
-      res.json(reports);
+      // Convert the image buffer to a Base64 string
+      const reportswithBasestring = reports.map(report => {
+        const unit8Array = new Uint8Array(report.proof.data);
+        const base64string = Buffer.from(unit8Array).toString('base64');
+        return{
+          ...report.toObject(),
+          proof: { data: base64string, contentType: report.proof.contentType }
+        };
+      });
+     
+      return res.status(200).json(reportswithBasestring);
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Server Error' });

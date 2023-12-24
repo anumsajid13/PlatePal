@@ -10,8 +10,8 @@ const RecipeSeeker = require('../../models/RecipeSeekerSchema');
 router.post('/followChef/:chefId', authenticateToken, async (req, res) => {
     try {
       const { chefId } = req.params;
-      const recipeSeekerId = req.user.userId; // Assuming the user ID is stored in the token during authentication
-  
+      const recipeSeekerId = req.user.id; 
+      console.log("inside follow routee")
       // Check if the Chef exists
       const chef = await Chef.findById(chefId);
       if (!chef) {

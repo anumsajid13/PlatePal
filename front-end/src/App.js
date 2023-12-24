@@ -26,6 +26,13 @@ import Blocked from './Admin/pages/Blocked';
 import RegisterN from './Nutrionist/pages/Register-N';
 import Main from './Nutrionist/pages/Main-N';
 
+import DisplayCollaboration from './Vendor/pages/Collaborations';
+import DisplayCollaborationRequest from './Vendor/pages/CollaborationRequest';
+import ChefDisplayFollowers from './Chef/pages/ChefFollowers';
+import ChefProfile from './Chef/pages/ChefProfile';
+import ChefUserInboxx from './Chef/pages/ChefUserInboxx';
+import ChefVendorInboxx from './Chef/pages/ChefVendorInboxx';
+import BlockReportsList from './Chef/pages/ChefVendorBlockReport';
 
 function App() {
   return (
@@ -51,6 +58,8 @@ function App() {
         <Route path="/ingredients/:id" element={<IngredientDetails />} />
         <Route path="/ingredients/editInfromation/:id" element={<EditIngredient/>} />
         <Route path="/ingredients/newProduct" element={<AddNewProduct/>} />
+        <Route path="/vendor/Collaboration" element={<DisplayCollaboration/>} />
+        <Route path="/vendor/CollaborationRequest" element={<DisplayCollaborationRequest/>} />
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
         <Route path="/Chef/CreateRecipe" element={<CreateRecipe/>} />
         <Route path="/Chef/AllVendors" element={<DisplayVendors/>} />

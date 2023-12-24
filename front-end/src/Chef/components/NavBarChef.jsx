@@ -3,14 +3,20 @@ import React, { useState } from 'react';
 import './navbarChef.css'; 
 import './chefsidebar.css';
 import { Link, useNavigate  } from 'react-router-dom'; 
+import ChefNotificationBox from '../components/ChefNotificationss';
 
 const ChefNav = () => {
   
   const navigate= useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
- 
+  const handleNotificationClick = () => {
+    
+    setShowNotifications(!showNotifications);
+  };
+
   const handleSidebarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -54,8 +60,13 @@ const ChefNav = () => {
         <div><Link className='chef-linkss' to="/Chef/Mainpage">Home</Link></div>
         <div><Link className='chef-linkss' to="/Chef/CreateRecipe">Create Recipe</Link></div>
         <div className="chef-icon-link" title="Profile">
+          <Link className='chef-linkss' to="/Chef/myProfile">
           <span className="material-icons google-icon">person</span>
-          <span className="material-icons google-icon">notifications</span>
+          </Link>
+          <span className="material-icons google-icon" onClick={handleNotificationClick}>
+            notifications
+            {showNotifications && <span className="arrow-up"></span>}
+          </span>
           
                 {isLoading ? (
                 <span>Logging out...</span>
@@ -79,10 +90,14 @@ const ChefNav = () => {
         <a href="#" onClick={handleSidebarToggle} className="chef-close-btn"><span className="material-icons">close</span></a>
         <a href="#">Collab Requests</a>
         <Link className='chef-linkss' to="/Chef/allVendors">Vendors</Link>
-        <a href="#">Followers</a>
-        <a href="#">Block Reports</a>
+        <Link className='chef-linkss' to="/Chef/myFollowers">Followers</Link>
+        <Link className='chef-linkss' to="/Chef/BlockReports">Block Reports</Link>
+        <a href="#">Recipe Seekers Inbox</a>
+        <a href="#">Vendors Seekers Inbox</a>
         
       </div>
+
+      {showNotifications && <ChefNotificationBox />}
       </div>
 
   );

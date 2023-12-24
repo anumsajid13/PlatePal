@@ -1,0 +1,30 @@
+.chef-g-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+  }
+  
+
+.chef-g-popup-content {
+    text-align: center;
+}
+
+.chef-g-close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color:  #D5CFE1;
+}
+  
+.chef-g-close-btn:hover {
+    color: #c7b3ee;
+}
+  

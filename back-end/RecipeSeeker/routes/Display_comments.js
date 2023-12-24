@@ -27,12 +27,19 @@ router.get('/comments/:recipeId', async (req, res) => {
       return res.status(404).json({ message: 'No comments found for the recipe' });
     }
 
-    const commentsData = populatedRecipe.comments.map(comment => ({
-      commentText: comment.comment,
-      user: comment.user.name, 
-      user_id: comment.user._id, 
-      time: comment.Time,
-    }));
+    const commentsData = populatedRecipe.comments
+      .filter((comment) => comment.user !== null)
+      .map((comment) => ({
+        commentText: comment.comment,
+        user: {
+          name: comment.user.name,
+          _id: comment.user._id,
+          profilePicture: comment.user.profilePicture
+            ? `data:${comment.user.profilePicture.contentType};base64,${comment.user.profilePicture.data.toString('base64')}`
+            : null,
+        },
+        time: comment.Time,
+      }));
 
     res.status(200).json({ comments: commentsData });
   } catch (error) {

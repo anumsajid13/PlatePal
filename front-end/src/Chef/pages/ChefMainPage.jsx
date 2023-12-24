@@ -12,10 +12,11 @@ const ChefMainPage = () => {
 
     console.log(token);
 
+
     const [recipesWithVendor, setRecipesWithVendor] = useState([]);
     const [recipesWithoutVendor, setRecipesWithoutVendor] = useState([]);
     const [selectedRecipe, setSelectedRecipe] = useState(null);
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -50,7 +51,7 @@ const ChefMainPage = () => {
                 }
                 const dataWithoutVendor = await responseWithoutVendor.json();
                 setRecipesWithoutVendor(dataWithoutVendor);
-                console.log(dataWithoutVendor);
+               
             } catch (error) {
                 // Handle error
                 console.error('Error:', error.message);
@@ -59,6 +60,27 @@ const ChefMainPage = () => {
 
         fetchData();
     }, []);
+
+    const handleRecipeDeletion = (deletedRecipeId) => {
+        //filter out the deleted recipe from both recipe lists
+        const updatedRecipesWithVendor = recipesWithVendor.filter(recipe => recipe._id !== deletedRecipeId);
+        const updatedRecipesWithoutVendor = recipesWithoutVendor.filter(recipe => recipe._id !== deletedRecipeId);
+
+        setRecipesWithVendor(updatedRecipesWithVendor);
+        setRecipesWithoutVendor(updatedRecipesWithoutVendor);
+    };
+
+
+    function truncateText(text, limit) {
+        if (text) {
+        const words = text.split(' ');
+        if (words.length > limit) {
+          return words.slice(0, limit).join(' ') + '...';
+        }
+        return text;
+      }
+      return '';
+      }
 
     return (
 
@@ -73,10 +95,11 @@ const ChefMainPage = () => {
                         {recipesWithVendor.map(recipe => (
                             <div className="recipe-card-chef" key={recipe._id} onClick={() => setSelectedRecipe(recipe)}>
                                 <img src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}  className="recipe-image-chef" />
+                               
                                 <div className="recipe-details-chef">
-                                    <h3>{recipe.title}</h3>
+                                    <h3>{recipe.title.replace(/"/g, '')}</h3>
                                     <p>by Chef {recipe.chefName}</p>
-                                    <p className='recipe-card-chef-description'>{recipe.description}</p>
+                                    <p className='recipe-card-chef-description'>{truncateText(recipe.description.replace(/"/g, ''), 20 )}</p>
                                 </div>
                             </div>
                         ))}
@@ -96,8 +119,8 @@ const ChefMainPage = () => {
                                 <img src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}  className="recipe-image-chef" />
                                 <div className="recipe-details-chef">
                                     <h3>{recipe.title}</h3>
-                                    <p>by Chef {recipe.chefName}</p>
-                                    <p>{recipe.description}</p>
+                                    <p>by Chef {recipe.chefName.replace(/"/g, '')}</p>
+                                    <p className='recipe-card-chef-description'>{truncateText(recipe.description.replace(/"/g, ''), 20 )}</p>
                                 </div>
                             </div>
                         ))}
@@ -111,6 +134,7 @@ const ChefMainPage = () => {
                 <RecipePopUpChef
                     selectedRecipe={selectedRecipe}
                     setSelectedRecipe={setSelectedRecipe}
+                    onDelete={handleRecipeDeletion} 
                 />
             )}
 

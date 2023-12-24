@@ -1,13 +1,45 @@
 
 .ingredientDetailsContainer {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 3% auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+   
   }
- 
+.ingredientDetailsContainer .backButton {
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+.ingredientDetailsContainer .editButton1 {
+
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    width:30%;
+    height: 3%;
+
+    
+
+  }
+  
+  .backButton:hover {
+    background-color: #6345a0;
+  }
+ .productimage{
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  align-items: center;
+  align-self: center;
+ }
   
