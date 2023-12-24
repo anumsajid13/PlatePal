@@ -8,6 +8,7 @@ import SignUpPage from './SignUp';
 import SignInPage from './SignIn'; 
 import RecipeSeekerSignUp from './RecipeSeeker/components/SignUp_RecepieSeeker';
 import RecipeSeeker_InboxPage from './RecipeSeeker/components/Inbox';
+import ConsultNutritionist from './RecipeSeeker/components/Refer_to_Nutritionist';
 import DiscoverPage from './RecipeSeeker/components/Discover';
 import BlockReports from './Admin/pages/BlockReports';
 import ChefSignUp from './Chef/pages/ChefSignUp';
@@ -46,6 +47,7 @@ function App() {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/recipe-seeker/Discover" element={<DiscoverPage />} />
         <Route path="/recipe-seeker/Inbox" element={<RecipeSeeker_InboxPage />} />
+        <Route path="/recipe-seeker/Consult_Nutritionist" element={<ConsultNutritionist />} />
         <Route path="/admin/blockreport" element={<BlockReports />} />
         <Route path="/admin/delete" element={<Delete />} />
         <Route path="/admin/registered-users" element={<AllUsers />} />
