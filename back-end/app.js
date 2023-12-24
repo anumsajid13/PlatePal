@@ -54,6 +54,9 @@ const Comment_Display = require('./RecipeSeeker/routes/Display_comments')
 const Follow_chef = require('./RecipeSeeker/routes/FollowChef')
 const UnFollow_chef = require('./RecipeSeeker/routes/UnFollow_Chef')
 const Display_followings = require('./RecipeSeeker/routes/DisplayFollowings')
+const Display_Chefs = require('./RecipeSeeker/routes/Display_chefs')
+const Text_Chef = require('./RecipeSeeker/routes/Send_msgToChef')
+const Display_TextwithChef = require('./RecipeSeeker/routes/Display_chef_chats')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
 
 const admin_signin = require('./Admin/routes/login');
@@ -78,6 +81,13 @@ const Nutritionist_Plan = require('./Nutrionist/routes/plan')
 
 const getAllVendors = require('./Chef/routes/vendor_Routes_Chef');
 const collabVendorsChef = require('./Chef/routes/CollabVendors_routes');
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  });
 const chefnotifications = require('./Chef/routes/Notification_routes');
 const cheffollowerss = require('./Chef/routes/DisplayFollowers_routes');
 //chefModule Routes
@@ -95,6 +105,9 @@ app.use('/recepieSeeker', Comment_Display);
 app.use('/recepieSeeker', Follow_chef);
 app.use('/recepieSeeker', UnFollow_chef);
 app.use('/recepieSeeker', Display_followings);
+app.use('/recepieSeeker', Display_Chefs);
+app.use('/recepieSeeker', Text_Chef);
+app.use('/recepieSeeker', Display_TextwithChef);
 //recipe routes
 app.use('/recipes', Reipe_routes);
 

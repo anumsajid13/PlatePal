@@ -19,16 +19,8 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
   const decodedToken = jwtDecode(token); 
   const currentUserId = decodedToken.id;
   const [isRatingsVisible, setIsRatingsVisible] = useState(false);
-  //const [isFollowing, setIsFollowing] = useState(false);
-
- /* useEffect(() => {
-   
-    const isUserFollowingChef = recipe.chef.followers.includes(currentUserId);
-    console.log("isUserFollowingChef", isUserFollowingChef);
-    setIsFollowing(isUserFollowingChef);
-  }, [recipe.chef.followers, currentUserId]);*/
-
-
+  
+  
   const imageData = new Uint8Array(recipe.recipeImage.data).reduce(
     (data, byte) => data + String.fromCharCode(byte),
     ''
@@ -215,7 +207,9 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
            
           </div>
           <div className="flexxx">
-            <h3 onClick={handleCardClick}>{recipe.title} by Chef {recipe.chef.name}</h3>
+          <h3 onClick={handleCardClick}>
+            {recipe.title} by Chef {recipe.chef ? recipe.chef.name : 'Unknown Chef'}
+          </h3>
             <p className='desc-para'>{truncateText(recipe.description, 20 )}</p>
           </div>
         </div>
@@ -264,7 +258,9 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
             </div>
             <div className="recipe-details-right">
             <h3 >{recipe.title}</h3>
-            <p className='recepie-category' style={{color:"purple"}}>Chef: {recipe.chef.name}</p>
+            <p className='recepie-category' style={{ color: "purple" }}>
+              Chef: {recipe.chef ? recipe.chef.name : 'Unknown Chef'}
+            </p>
             <p className='recepie-category' style={{color:"purple"}}>Serving size: {recipe.servingSize}</p>
             <p className='recepie-category' style={{color:"purple"}}>Calories: {recipe.calories}</p>
             <p className='recepie-category' style={{color:"purple"}}>Total Time: {recipe.totalTime}</p>
