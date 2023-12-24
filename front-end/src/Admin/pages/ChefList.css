@@ -1,0 +1,17 @@
+/* ChefList.css */
+
+.chef-list-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .chef-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .error {
+    color: red;
+  }
+  

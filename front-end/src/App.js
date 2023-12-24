@@ -20,6 +20,12 @@ import CreateRecipe from './Chef/pages/CreateRecipe';
 import DisplayVendors from './Chef/pages/DisplayVendors';
 import EditVendorProfile from './Vendor/pages/EditProfile';
 import AddNewProduct from './Vendor/pages/AddNewProducts';
+import Delete from './Admin/pages/Delete';
+import AllUsers from './Admin/pages/AllUsers';
+import Blocked from './Admin/pages/Blocked';
+import RegisterN from './Nutrionist/pages/Register-N';
+import Main from './Nutrionist/pages/Main-N';
+
 
 function App() {
   return (
@@ -32,6 +38,11 @@ function App() {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/recipe-seeker/Discover" element={<DiscoverPage />} />
         <Route path="/admin/blockreport" element={<BlockReports />} />
+        <Route path="/admin/delete" element={<Delete />} />
+        <Route path="/admin/registered-users" element={<AllUsers />} />
+        <Route path="/admin/blocked-users" element={<Blocked />} />
+
+
         <Route path="/signup/chef" element={<ChefSignUp/>}/>
         <Route path="/signup/vendor" element={<VendorSignUp/>}/>
         <Route path="/Vendor/Mainpage" element={<VendorMainpage />} />
@@ -43,6 +54,13 @@ function App() {
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
         <Route path="/Chef/CreateRecipe" element={<CreateRecipe/>} />
         <Route path="/Chef/AllVendors" element={<DisplayVendors/>} />
+
+       <Route path="/n/mainpage" element={<Main/>} /> 
+        <Route path="/signup/nutritionist" element={<RegisterN />} />
+
+
+
+
 
       </Routes>
     </div>

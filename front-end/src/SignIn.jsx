@@ -38,8 +38,8 @@ const SignInPage =  () => {
       await signInVendor();
         break;
       case 'nutritionist':
-        // Redirect to Nutritionist route
-        break;
+        signInNutritionist();
+                break;
       default:
         // Handle invalid user type
     }
@@ -150,10 +150,6 @@ const SignInPage =  () => {
                 },
                 body: JSON.stringify({ username, password }),
         });
-
-        
-      
-
             const data = await response.json();
 
             console.log(data.message)
@@ -175,6 +171,39 @@ const SignInPage =  () => {
         setErrorMessage('Server Error');
       }
 
+  };
+
+
+  const signInNutritionist = async () => {
+    try {
+      const response = await fetch('http://localhost:9000/n/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        console.error('Nutritionist Sign In failed:', data.error);
+        alert('Nutritionist Sign In failed');
+        return;
+      }
+
+      const data = await response.json();
+      console.log('Nutritionist Sign In successful:', data.token);
+      alert('Nutritionist Sign In successful');
+
+      // Store the nutritionist token using the token store (if needed)
+      setToken(data.token);
+      navigate('/n/mainpage');
+
+      // Redirect to the nutritionist route or any other page as needed
+    } catch (error) {
+      console.error('Error during Nutritionist Sign In:', error.message);
+      alert('Could not sign in as nutritionist');
+    }
   };
 
   return (

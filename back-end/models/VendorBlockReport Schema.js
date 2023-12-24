@@ -7,7 +7,7 @@ const vendorBlockReportSchema = new mongoose.Schema({
   proof:{
     data: Buffer,
     contentType: String
-  }
+  } 
 });
 
 const VendorBlockReport = mongoose.model('VendorBlockReport', vendorBlockReportSchema);

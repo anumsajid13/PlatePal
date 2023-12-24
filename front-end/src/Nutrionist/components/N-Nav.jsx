@@ -1,10 +1,10 @@
 // AdminNav.js
 import React, { useState,useEffect } from 'react';
-import './adminNav.css'; // Import the CSS file
-import NotificationPopup from './NotificationPopup';
-import './sidebar.css';
+import '../../Admin/components/AdminNav'; // Import the CSS file
+import NotificationPopup from './Npopup';
+import '../../Admin/components/sidebar.css';
 import { Link } from 'react-router-dom';
-import useNotificationStore from './NotificationStore'; // Import the Zustand store
+import useNotificationStore from './Nstore'; // Import the Zustand store
 import useTokenStore from '../../tokenStore';
 
 const AdminNav = () => {
@@ -35,9 +35,7 @@ const AdminNav = () => {
         {/* Clickable components on the right */}
         <div className="nav-links">
           <div>Home</div>
-          <div>Recipes</div>
           <div>Reviews</div>
-          <div>Nutritionist</div>
           <div className="icon-link" title="notifications" onClick={handleNotificationsClick}>
             <span className="material-icons google-icon">notifications</span>
           </div>
@@ -54,22 +52,12 @@ const AdminNav = () => {
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <a href="#" onClick={handleSidebarToggle} className="close-btn">×</a>
        
-        <Link to="/admin/block-report" onClick={handleSidebarToggle}>
-          View Block Reports
+        <Link to="/n/makePlan" onClick={handleSidebarToggle}>
+          Make Plan
         </Link>
-        {/* Use Link for navigation */}
-        <Link to="/admin/blocked-users" onClick={handleSidebarToggle}>
-
-        <a href="#">Blocked users</a>
+        <Link to="/n/PlanMade" onClick={handleSidebarToggle}>
+        <a href="#">View Plan</a>
         </Link>
-        <Link to="/admin/registered-users" onClick={handleSidebarToggle}>
-
-        <a href="#">Registered Users</a>
-        </Link>
-        <Link to="/admin/delete" onClick={handleSidebarToggle}>
-        <a href="#">Delete Users</a>
-        </Link>
-
 
       </div>
     </div>

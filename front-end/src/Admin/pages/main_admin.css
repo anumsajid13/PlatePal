@@ -60,4 +60,9 @@
     font-weight: bold;}
 
   /* Add more styles as needed */
-  
+  .profile-image {
+    width: 100px; /* Adjust the width as needed */
+    height: 100px; /* Adjust the height as needed */
+    border-radius: 50%; /* Make the image round */
+    margin-right: 10px; /* Add margin for spacing */
+  }
