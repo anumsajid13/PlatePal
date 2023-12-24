@@ -8,7 +8,7 @@ require('dotenv').config();
 const router = express.Router();
 
 // Endpoint to handle nutritionist login
-router.post('/nutritionist-login', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
       const { username, password } = req.body;
   
@@ -26,24 +26,33 @@ router.post('/nutritionist-login', async (req, res) => {
       return res.status(403).json({ error: 'Nutritionist signup is currently not allowed' });
     }
 
-    
+     // Check if the chef is blocked
+     if (nutritionist.isBlocked) {
+      // Check if the unblock time is set
+      if (nutritionist.unblockTime) {
+        // Check if the unblock time has passed
+        if (new Date() >= nutritionist.unblockTime) {
+          // Unblock the chef
+          nutritionist.isBlocked = false;
+          nutritionist.unblockTime = null;
+          await nutritionist.save();
+        } else {
+          // is still blocked
+          return res.status(403).json({ error: ' nutritionist is blocked' });
+        }
+      } else {
+        //  is blocked indefinitely
+        return res.status(403).json({ error: 'nutritionist is blocked indefinitely' });
+      }
+    }
+     
+       // Check if the password is correct using bcrypt.compare
+       const isPasswordValid = await bcrypt.compare(password, nutritionist.password);
 
-  
-      // Check if the nutritionist is blocked and unblock time has passed
-      if (nutritionist.isBlocked && nutritionist.unblockTime && nutritionist.unblockTime <= new Date()) {
-        // Unblock the nutritionist
-        nutritionist.isBlocked = false;
-        nutritionist.unblockTime = null;
-        await nutritionist.save();
-  
-        console.log('Nutritionist unblocked successfully.');
-      }
-  
-      // Check if the password is correct
-      if (password !== nutritionist.password) {
-        return res.status(401).json({ error: 'Invalid password' });
-      }
- 
+       if (!isPasswordValid) {
+         return res.status(401).json({ error: 'Invalid password' });
+       }
+   
     const token = jwt.sign({ id: nutritionist._id, username: nutritionist.username, email: nutritionist.email}, process.env.SECRET_KEY);
 
       return res.json({ message: 'Login successful', token });
@@ -54,7 +63,7 @@ router.post('/nutritionist-login', async (req, res) => {
   });
   
 // Endpoint to sign up as a nutritionist
-router.post('/nutritionist-signup', async (req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     const { name, username, email, password, profilePicture, certificationPictures } = req.body;
 

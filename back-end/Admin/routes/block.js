@@ -22,10 +22,14 @@ router.post('/block-chef/:chefId', authenticateToken, async (req, res) => {
           return res.status(404).json({ error: 'Chef not found' });
       }
 
+      // Set unblock time 30 seconds later than the current time
+        const unblockTime = new Date();
+        unblockTime.setSeconds(unblockTime.getSeconds() + 30);
+
           // Block the chef
           chef.isBlocked = true;
           chef.blockCount += 1;
-          chef.unblockTime = null; // Reset unblock time
+          chef.unblockTime = unblockTime; // Reset unblock time
           await chef.save();
 
           // Create a notification message for the blocked chef
@@ -38,6 +42,7 @@ router.post('/block-chef/:chefId', authenticateToken, async (req, res) => {
 
           return res.json({
               message: 'Chef blocked successfully',
+                unblockTime: chef.unblockTime,          
               proof: proof, // Include proof in the response
           });
     
@@ -88,10 +93,15 @@ router.post('/block-vendor/:vendorId', authenticateToken, async (req, res) => {
       return res.status(404).json({ error: 'Vendor not found' });
     }
 
+    
+      // Set unblock time 30 seconds later than the current time
+      const unblockTime = new Date();
+      unblockTime.setSeconds(unblockTime.getSeconds() + 30);
+
     // Block the vendor
     vendor.isBlocked = true;
     vendor.blockCount += 1;
-    vendor.unblockTime = null; // Reset unblock time
+    vendor.unblockTime = unblockTime; 
     await vendor.save();
 
     // Create a notification message for the blocked vendor

@@ -4,6 +4,8 @@ import { FaArrowLeft, FaEdit } from 'react-icons/fa';
 import useTokenStore from '../../tokenStore';
 import '../assets/styles/productDetails.css';
 import NavigationBar from '../components/NavigationBar';
+import image from '../assets/images/vendor_signup_image.jpg';
+import { useNavigate } from 'react-router-dom';
 
 const IngredientDetails = () => {
   const { id } = useParams();
@@ -35,24 +37,34 @@ const IngredientDetails = () => {
     fetchIngredientDetails();
   }, [id, token]);
 
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/Vendor/Mainpage`);
+  };
+  const handleNext = () => {
+    navigate(`/ingredients/editInfromation/${id}`);
+  };
   return (
     <> 
     <NavigationBar/>
     <div className="ingredientDetailsContainer">
       <div className="header">
-        <Link to="/Vendor/Mainpage" className="backButton">
+        <button className="backButton" onClick={handleClick}>
           <FaArrowLeft /> Back
-        </Link>
+        </button>
         {ingredient && (
           <>
-            <h2>
-              {ingredient.name}
-              <Link to={`/ingredients/editInfromation/${id}`} className="editButton">
+            <img src={image} alt="ingredient" className="productimage" />
+            
+            <div className="iconContainer">
+            <h2>{ingredient.name}</h2>
+            <button className="editButton1" onClick={handleNext}>
                 <FaEdit /> Edit Information
-              </Link>
-            </h2>
+              </button>
+            </div>
+           
             <p>Description: {ingredient.description}</p>
-            <p>Type: {ingredient.type}</p>
+            <p>Category: {ingredient.type}</p>
             <p>Price: {ingredient.price}</p>
             <p>Quantity: {ingredient.quantity}</p>
           </>

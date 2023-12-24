@@ -3,6 +3,8 @@ const router = express.Router();
 const Nutritionist = require('../models/Nutritionist');
 const MealPlan = require('../models/MealPlan');
 
+
+
 // Endpoint to create a new meal plan
 router.post('/create-meal-plan', async (req, res) => {
     try {

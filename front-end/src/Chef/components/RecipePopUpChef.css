@@ -228,3 +228,29 @@
     background-color: white;
     padding: 40px;
   }
+
+.chef-recipe-nutrients {
+    margin-top: 20px;
+}
+
+.chef-recipe-nutrients table {
+  border-collapse: collapse;
+  width: 100%;
+
+}
+
+.chef-recipe-nutrients th,
+.chef-recipe-nutrients td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  
+}
+
+.chef-recipe-nutrients tbody tr:nth-child(odd) {
+  background-color: #ffffff; 
+}
+
+.chef-recipe-nutrients tbody tr:nth-child(even) {
+  background-color: #f2f2f2; 
+}

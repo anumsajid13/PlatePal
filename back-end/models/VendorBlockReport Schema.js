@@ -7,7 +7,8 @@ const vendorBlockReportSchema = new mongoose.Schema({
   proof:{
     data: Buffer,
     contentType: String
-  }
+  },
+  chef: { type: mongoose.Schema.Types.ObjectId, ref: 'Chef' },
 });
 
 const VendorBlockReport = mongoose.model('VendorBlockReport', vendorBlockReportSchema);

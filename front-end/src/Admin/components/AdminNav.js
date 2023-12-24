@@ -53,13 +53,19 @@ const AdminNav = () => {
 
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <a href="#" onClick={handleSidebarToggle} className="close-btn">×</a>
-        <a href="#">View All users</a>
-        <Link to="/admin/blockreport" onClick={handleSidebarToggle}>
+       
+        <Link to="/admin/block-report" onClick={handleSidebarToggle}>
           View Block Reports
         </Link>
         {/* Use Link for navigation */}
+        <Link to="/admin/blocked-users" onClick={handleSidebarToggle}>
+
         <a href="#">Blocked users</a>
+        </Link>
+        <Link to="/admin/registered-users" onClick={handleSidebarToggle}>
+
         <a href="#">Registered Users</a>
+        </Link>
         <Link to="/admin/delete" onClick={handleSidebarToggle}>
         <a href="#">Delete Users</a>
         </Link>

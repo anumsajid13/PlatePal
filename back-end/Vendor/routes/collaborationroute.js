@@ -1,10 +1,51 @@
 const express = require('express');
 const router = express.Router();
-const VendorCollaboration = require('../models/VendorCollaboration');
+const VendorCollaboration = require('../../models/VendorCollaboration Schema');
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
+const vendor = require('../../models/Vendor Schema');
+  
+//Endpoint to see all collaborations of a vendor with a chef 
+router.get('/', authenticateToken, async (req, res) => {
+  try {
+    const vendorId = req.user._id;
+
+    // Extract query parameters for filtering, sorting, and pagination
+    const { chefId, sortBy, sortOrder, page=1, pageSize=30 } = req.query; //pagesize = number of collaborations per page
+//filtering
+    const query = { vendor: vendorId };
+    if (chefId) {
+      query.chef = chefId;
+    }
+ 
+    //sorting
+    const sort = {};
+    if(!sortBy)
+    {
+      sort[sortBy]=1;
+    }
+    if (sortBy && sortOrder) {
+      sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
+    }
+
+    //skippvalue
+    const skip = (page - 1) * pageSize;
+
+    // Find collaborations for the specified vendor and chef
+    const collaborations = await VendorCollaboration.find(query)
+      .sort(sort)
+      .skip(skip)
+      .limit(parseInt(pageSize))
+  
+
+    return res.json(collaborations);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 //Endpoint to see  a specific collaboration with a chef
-router.get('/vendor/collaboration/:collaborationId', authenticateToken, async (req, res) => {
+router.get('/:collaborationId', authenticateToken, async (req, res) => {
     try {
       // Extract vendor ID from the authenticated user
       const vendorId = req.user._id;
@@ -29,45 +70,4 @@ router.get('/vendor/collaboration/:collaborationId', authenticateToken, async (r
     }
   });
 
-  
-//Endpoint to see all collaborations of a vendor with a chef 
-router.get('/vendor/collaborations', authenticateToken, async (req, res) => {
-    try {
-      const vendorId = req.user._id;
-  
-      // Extract query parameters for filtering, sorting, and pagination
-      const { chefId, sortBy, sortOrder, page=1, pageSize=30 } = req.query; //pagesize = number of collaborations per page
-  //filtering
-      const query = { vendor: vendorId };
-      if (chefId) {
-        query.chef = chefId;
-      }
-   
-      //sorting
-      const sort = {};
-      if(!sortBy)
-      {
-        sort[sortBy]=1;
-      }
-      if (sortBy && sortOrder) {
-        sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
-      }
-  
-      //skippvalue
-      const skip = (page - 1) * pageSize;
-  
-      // Find collaborations for the specified vendor and chef
-      const collaborations = await VendorCollaboration.find(query)
-        .sort(sort)
-        .skip(skip)
-        .limit(parseInt(pageSize))
-    /*     .populate('chef') // Populate the 'chef' field with chef details
-        .populate('recipe') // Populate the 'recipe' field with recipe details
-        .populate('ingredients'); // Populate the 'ingredients' field with ingredient details */
-  
-      return res.json(collaborations);
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: 'Internal Server Error' });
-    }
-  });
+  module.exports = router;

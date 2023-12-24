@@ -1,49 +1,55 @@
-.incontainer{
 
-}
-.ingredientsContainer{
-  border: 1px solid #141414;
+.ingredientsContainer {
+
+  border: 1px solid #ddd;
   padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  position: relative; 
-  color:black;
-}
-
-.incontainer :hover {
-  background-color: #f5f5f5; 
-}
-
-.incontainer a {
+  margin: 10px;
+  border-radius: 5px;
   cursor: pointer;
-  text-decoration: none;
-  text-decoration-style: none;
-  color: black;
-  transition: color 0.3s ease, margin-right 0.3s ease;
+  transition: box-shadow 0.3s ease-in-out;
+  width: calc(20% - 20px);
+
+
 }
 
-.incontainer a:hover {
-  color: red;
-  margin-right: 5px; 
+.ingredientsContainer:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 .iconContainer {
- 
   display: flex;
-}
-
-.iconContainer svg {
-  margin-left: 5px;
-  cursor: pointer;
+  justify-content: space-between;
 }
 
 .deleteIcon {
-  color: rgb(22, 17, 149);
-  size: 24px;
+  color: red;
+  cursor: pointer;
+  width: 18px;
+  height: 28px;
+  margin-right: 1%;
 }
 
-.editIcon {
-  color: blue;
+.Image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
+
+.iconContainer h3 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+
+
+.description {
+  max-height: 4.8em; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+

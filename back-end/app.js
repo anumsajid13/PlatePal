@@ -61,13 +61,23 @@ const Reipe_routes = require('./Chef/routes/Recipe_routes');
 
 const admin_signin = require('./Admin/routes/login');
 const block = require('./Admin/routes/block');
+const list_chef = require('./Admin/routes/list');
+
 const admin_Notification = require('./Admin/routes/Notifications');
 const top = require('./Admin/routes/top');
 
 
 const vendor_Routes = require('./Vendor/routes/profileRoute');
 const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
+const collaboration_Routes = require('./Vendor/routes/collaborationroute');
+const collaboration_Request= require('./Vendor/routes/collabRequest');
+
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
+
+
+
+const Nutritionist_Signin = require('./Nutrionist/routes/login-n')
+
 const getAllVendors = require('./Chef/routes/vendor_Routes_Chef');
 const collabVendorsChef = require('./Chef/routes/CollabVendors_routes');
 
@@ -77,8 +87,12 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     next();
   });
+const chefnotifications = require('./Chef/routes/Notification_routes');
+const cheffollowerss = require('./Chef/routes/DisplayFollowers_routes');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
+app.use('/chef', chefnotifications);
+app.use('/chef', cheffollowerss);
 //recepie seeker routes
 app.use('/recepieSeeker', User_Signin); 
 app.use('/recepieSeeker', User_SignUp);
@@ -101,17 +115,24 @@ app.use('/admin', admin_signin);
 app.use('/admin', block);
 app.use('/admin', admin_Notification);
 app.use('/admin', top);
+app.use('/admin', list_chef);
 
-//vendor routes
+
+//Vendor routes
 app.use('/vendor', vendor_Routes);
-//ingredient routes
 app.use('/ingredients', ingredient_Routes);
+app.use('/collaboration',collaboration_Routes);
+app.use('/collaboration-request',collaboration_Request);
+
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);
 //get all vendors (chef)
 app.use('/vendors_chef', getAllVendors);
 //collab routes
 app.use('/chefVendors', collabVendorsChef);
+
+//nutri routes
+app.use('/n', Nutritionist_Signin); 
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

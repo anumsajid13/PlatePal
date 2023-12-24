@@ -1,10 +1,11 @@
-const router = express.Router();
 const Nutritionist = require('../../models/Nutritionist Schema');
 const Chef = require('../../models/Chef Schema');
 const Vendor = require('../../models/Vendor Schema');
-
+const autheticateToken = require('../../TokenAuthentication/token_authentication');
+const express = require('express');
+const router = express.Router();
 // Endpoint to delete a nutritionist
-router.delete('/delete-nutritionist/:nutritionistId', isAdmin, async (req, res) => {
+router.delete('/delete-nutritionist/:nutritionistId',  autheticateToken, async (req, res) => {
     try {
       const nutritionist = await Nutritionist.findById(req.params.nutritionistId);
   
@@ -31,7 +32,7 @@ router.delete('/delete-nutritionist/:nutritionistId', isAdmin, async (req, res) 
 
 
   // Endpoint to delete a chef
-router.delete('/delete-chef/:chefId', isAdmin, async (req, res) => {
+router.delete('/delete-chef/:chefId',  autheticateToken, async (req, res) => {
     try {
       const chef = await Chef.findById(req.params.chefId);
       
@@ -39,11 +40,14 @@ router.delete('/delete-chef/:chefId', isAdmin, async (req, res) => {
         return res.status(404).json({ error: 'Chef not found' });
       }
   
+      if (chef.blockCount > 3) {
+
       // Delete chef's notifications (optional)
       await ChefNotification.deleteMany({ user: chef._id });
   
       // Delete the chef
       await chef.remove();
+      }
   
       return res.json({ message: 'Chef deleted successfully' });
     } catch (error) {
@@ -54,7 +58,7 @@ router.delete('/delete-chef/:chefId', isAdmin, async (req, res) => {
   
 
   // Endpoint to delete a vendor
-router.delete('/delete-vendor/:vendorId', isAdmin, async (req, res) => {
+router.delete('/delete-vendor/:vendorId',  autheticateToken, async (req, res) => {
     try {
       const vendor = await Vendor.findById(req.params.vendorId);
       

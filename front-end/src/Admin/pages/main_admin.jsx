@@ -1,8 +1,19 @@
-import React from 'react';
 import AdminNav from '../components/AdminNav';
 import './main_admin.css';
+import { useStore } from './TopStore';
+import React, { useEffect } from 'react';
 
 const Adminmain = () => {
+
+
+  const { topChefs, topNutritionists, fetchTopChefs, fetchTopNutritionists } = useStore();
+
+  useEffect(() => {
+    fetchTopChefs();
+   // fetchTopNutritionists();
+  }, [fetchTopChefs]);
+
+
   return (
     <>
       <AdminNav />
@@ -14,27 +25,15 @@ const Adminmain = () => {
         <div className="top-lists">
           <div className="top-chefs-list">
             <h2>Top Chefs</h2>
-            <div className="list-item">
-              <span>Chef 1</span>
-              <p>Total Followers: 20</p>
+            {topChefs.map((chef) => {
+              
+              <div key={chef._id} className="list-item">
+                <span>{chef.name}</span>
+                <p>Total Followers: {chef.followers}</p>
+              
+              </div>
+          })}
             </div>
-            <div className="list-item">
-              <span>Chef 2</span>
-              <p>Total Followers: 20</p>
-            </div>
-            <div className="list-item">
-              <span>Chef 3</span>
-              <p>Total Followers: 20</p>
-            </div>
-            <div className="list-item">
-              <span>Chef 4</span>
-              <p>Total Followers: 20</p>
-            </div>
-            <div className="list-item">
-              <span>Chef 5</span>
-              <p>Total Followers: 20</p>
-            </div>
-          </div>
 
           <div className="top-nutritionists-list">
             <h2>Top Nutritionists</h2>
