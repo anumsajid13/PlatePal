@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
-import './ConsultNutritionist.css'; 
+import './ConsultNutritionist.css';
 
 const ConsultNutritionist = () => {
   const [weight, setWeight] = useState('');
   const [height, setHeight] = useState('');
   const [bmi, setBMI] = useState(null);
+  const [showBMI, setShowBMI] = useState(false);
 
   const calculateBMI = () => {
     const weightValue = parseFloat(weight);
@@ -14,8 +15,10 @@ const ConsultNutritionist = () => {
     if (!isNaN(weightValue) && !isNaN(heightValue) && heightValue > 0) {
       const bmiValue = weightValue / Math.pow(heightValue, 2);
       setBMI(bmiValue.toFixed(2));
+      setShowBMI(true);
     } else {
       setBMI(null);
+      setShowBMI(false);
     }
   };
 
@@ -25,7 +28,9 @@ const ConsultNutritionist = () => {
       <div className="bmi-calculator-card">
         <h2>BMI Calculator</h2>
         <div className="input-container">
-          <label className="input-container-label" htmlFor="weight">Weight (kg):</label>
+          <label className="input-container-label" htmlFor="weight">
+            Weight (kg):
+          </label>
           <input
             type="number"
             id="weight"
@@ -34,8 +39,11 @@ const ConsultNutritionist = () => {
           />
         </div>
         <div className="calculator-input-container">
-          <label className="input-container-label" htmlFor="height">Height (m):</label>
-          <input style={{marginLeft:'0px'}}
+          <label className="input-container-label" htmlFor="height">
+            Height (m):
+          </label>
+          <input
+            style={{ marginLeft: '0px' }}
             type="number"
             id="height"
             value={height}
@@ -45,7 +53,7 @@ const ConsultNutritionist = () => {
         <button className="calculate-button" onClick={calculateBMI}>
           Calculate BMI
         </button>
-        {bmi !== null && (
+        {showBMI && (
           <div className="result-container">
             <p>Your BMI: {bmi}</p>
           </div>
