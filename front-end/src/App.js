@@ -7,6 +7,7 @@ import Adminmain from './Admin/pages/main_admin';
 import SignUpPage from './SignUp'; 
 import SignInPage from './SignIn'; 
 import RecipeSeekerSignUp from './RecipeSeeker/components/SignUp_RecepieSeeker';
+import RecipeSeeker_InboxPage from './RecipeSeeker/components/Inbox';
 import DiscoverPage from './RecipeSeeker/components/Discover';
 import BlockReports from './Admin/pages/BlockReports';
 import ChefSignUp from './Chef/pages/ChefSignUp';
@@ -35,6 +36,7 @@ function App() {
         <Route path="/signup/recipe-seeker" element={<RecipeSeekerSignUp />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/recipe-seeker/Discover" element={<DiscoverPage />} />
+        <Route path="/recipe-seeker/Inbox" element={<RecipeSeeker_InboxPage />} />
         <Route path="/admin/blockreport" element={<BlockReports />} />
         <Route path="/signup/chef" element={<ChefSignUp/>}/>
         <Route path="/signup/vendor" element={<VendorSignUp/>}/>

@@ -6,16 +6,16 @@ const chef_notificationSchema = new mongoose.Schema({
   Time: {
     type: Date,
     default: Date.now,
-},
-type: {
-  type: String, 
-  required: true,
-},
-notification_text:
-{
-  type :String
-}
-});
+    },
+    type: {
+      type: String, 
+      required: true,
+    },
+    notification_text:
+    {
+      type :String
+    }
+    });
 
 const Chef_Notification = mongoose.model('Chef_Notification', chef_notificationSchema);
 

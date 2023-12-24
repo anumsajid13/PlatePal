@@ -1,10 +1,12 @@
 // Navbar.js
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { React, useState } from 'react';
 import './Navbar-1.css';
+//import Inbox from './Inbox';
 
 const Navbar = ({ activeLink }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -12,6 +14,7 @@ const Navbar = ({ activeLink }) => {
     console.log(activeLink);
   };
 
+  
   return (
     <nav className="navbar-1">
       <div className="logo">Plate Pal</div>
@@ -25,8 +28,7 @@ const Navbar = ({ activeLink }) => {
         <Link to="/my-feed" className={activeLink === 'My Feed' ? 'active-link-1' : ''}>
           My Feed
         </Link>
-       
-        
+            
           <span className="material-icons google-icon" style={{cursor:"pointer"}}>notifications</span>
           <span className="material-icons google-icon" style={{cursor:"pointer"}}>logout</span>
           <span class="material-icons google-icon icon-link-1"  onClick={toggleSidebar}>menu</span>
@@ -35,7 +37,7 @@ const Navbar = ({ activeLink }) => {
       
       <div className={`sidebar1 ${isSidebarOpen ? 'sidebar-open' : ''}`}>
         <Link to="">Consult Nutritionists</Link>
-        <Link to="">Inbox</Link>
+        <Link to="/recipe-seeker/Inbox" >Inbox</Link>
         <Link to="">My Bookmark</Link>
         <Link to="">My Followings</Link>
         <Link to="">Edit Profile</Link>
