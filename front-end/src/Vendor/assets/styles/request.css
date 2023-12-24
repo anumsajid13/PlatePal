@@ -25,24 +25,59 @@
   
   .Requestheader{
     display: flex;
-    justify-content: space-between;
+    gap: 50px;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 2%;
+    margin-left:5%;
   }
   
   .mainContainer h1 {
     margin-bottom: 10px;
   }
-  
  
+  .request label {
+    flex-shrink: 0;
+    margin-right: 10px; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+ 
+.status {
+  display: flex;
+  align-items: center;
+}
+
+.status label {
+  margin-right: 10px; 
+}
   
   .request {
-    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid #afaeae;
     padding: 10px;
-    border-radius: 5px;
-    width: 300px;
+    gap:20px;
+    width:95%;
+    margin: 0 auto; /* Center the element on the page */
+
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+.mainRequestContainer{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-direction: column;
+}
   
-  /* Add more styling as needed */
+  .time{
+    display: flex;
+    justify-content:flex-end;
+    align-items: flex-end;
+
+
+  }
+
   

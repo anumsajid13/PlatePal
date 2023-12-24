@@ -35,7 +35,7 @@ router.get('/', authenticateToken, async (req, res) => {
       .skip(skip)
       .limit(parseInt(pageSize))
    
-      const processedCollaborationRequests = [];
+  /*     const processedCollaborationRequests = [];
     for (const request of collaborationReq) {
       
       const chef = await Chef.findOne({ _id: request.chef });
@@ -46,12 +46,12 @@ router.get('/', authenticateToken, async (req, res) => {
         isAccepted: request.isAccepted,
         time: request.Time,
         recipeName: recipename? recipename.title:null,
-      });
+      }); */
 
    
-   // return res.json(collaborationReq); 
-  }
-  return res.json(processedCollaborationRequests ); 
+   return res.json(collaborationReq); 
+  //}
+  //return res.json(processedCollaborationRequests ); 
 }
    catch (error) {
     console.error(error);
@@ -120,5 +120,43 @@ router.delete('/delete/:collaborationId', authenticateToken, async (req, res) =>
       return res.status(500).json({ message: 'Internal Server Error' });
     }
   });
+  router.get('/chef/:chefId', async (req, res) => {
+    try {
+      const { chefId } = req.params;
   
+      // Find chef by ID
+      const chef = await Chef.findById(chefId);
+  
+      if (!chef) {
+        return res.status(404).json({ message: 'Chef not found' });
+      }
+  
+      // Send chef name in the response
+      return res.json({ chefName: chef.name });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+
+  // Endpoint to get recipe name by ID
+router.get('/recipe/:recipeId', async (req, res) => {
+  try {
+    const { recipeId } = req.params;
+
+    // Find recipe by ID
+    const recipe = await Recipe.findById(recipeId);
+
+    if (!recipe) {
+      return res.status(404).json({ message: 'Recipe not found' });
+    }
+
+    // Send recipe name in the response
+    return res.json({ recipeName: recipe.title });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
   module.exports = router;
