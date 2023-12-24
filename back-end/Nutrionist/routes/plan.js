@@ -3,6 +3,7 @@ const router = express.Router();
 const Nutritionist = require('../../models/Nutritionist Schema');
 const MealPlan = require('../../models/MealPlanSchema');
 const Recipe = require('../../models/Recipe Schema');
+const NutritionistNotification = require('../../models/Nutritionist_Notification Schema');
 
 //show all recipes
 router.get('/recipes', async (req, res) => {
@@ -56,7 +57,7 @@ router.get('/recipes', async (req, res) => {
   }
 });
 
-
+//create meal plan
 router.post('/create-meal-plan', async (req, res) => {
   try {
     const { user, recipes, bmi } = req.body;
@@ -99,6 +100,18 @@ router.post('/create-meal-plan', async (req, res) => {
     return res.json({ message: 'Meal plan created successfully', mealPlan: newMealPlan });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+// Endpoint to get nutritionist notifications
+router.get('/notifications', async (req, res) => {
+  try {
+    const notifications = await NutritionistNotification.find().populate('user sender');
+    res.json(notifications);
+  } catch (error) {
+    console.error('Error fetching nutritionist notifications:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
