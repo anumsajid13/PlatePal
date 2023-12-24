@@ -27,6 +27,7 @@ import AllUsers from './Admin/pages/AllUsers';
 import Blocked from './Admin/pages/Blocked';
 import RegisterN from './Nutrionist/pages/Register-N';
 import Main from './Nutrionist/pages/Main-N';
+import Discover from '././Nutrionist/pages/MakePlan';
 
 import DisplayCollaboration from './Vendor/pages/Collaborations';
 import DisplayCollaborationRequest from './Vendor/pages/CollaborationRequest';
@@ -35,6 +36,7 @@ import ChefProfile from './Chef/pages/ChefProfile';
 import ChefUserInboxx from './Chef/pages/ChefUserInboxx';
 import ChefVendorInboxx from './Chef/pages/ChefVendorInboxx';
 import BlockReportsList from './Chef/pages/ChefVendorBlockReport';
+
 
 function App() {
   return (
@@ -71,6 +73,7 @@ function App() {
        <Route path="/n/mainpage" element={<Main/>} /> 
         <Route path="/signup/nutritionist" element={<RegisterN />} />
 
+        <Route path="/n/makePlan" element={<Discover/>} />
 
 
 
