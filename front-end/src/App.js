@@ -79,6 +79,16 @@ function App() {
         <Route path="/n/makeplan/:bmi/:userId" element={<Discover/>} />
         <Route path="/n/planmade/:nutritionistId" element={<MealPlansPage/>} />
 
+        <Route path="/Chef/myProfile" element={<ChefProfile/>} />
+        <Route path="/Chef/usersInbox" element={<ChefUserInboxx/>} />
+        <Route path="/Chef/vendorsInbox" element={<ChefVendorInboxx/>} />
+        <Route path="/Chef/myFollowers" element={<ChefDisplayFollowers/>} />
+        <Route path="/Chef/BlockReports" element={<BlockReportsList/>} />
+
+        
+
+
+
 
 
 
