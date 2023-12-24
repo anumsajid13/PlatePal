@@ -57,7 +57,7 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
                         <p>Calories: {selectedRecipe.calories}</p>
                     </div>
                     <div className='chef-popup-content-item'>
-                        <p>Difficulty: {selectedRecipe.difficulty}</p>
+                        <p>Difficulty: {selectedRecipe.difficulty.replace(/"/g, '')}</p>
                     </div>
                 </div>
 
@@ -77,6 +77,13 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
             <div className="top-chef-recipe-description">
                 <h2>Description:</h2>
                 <p className='chef-recipe-description'>{selectedRecipe.description.replace(/"/g, '')}</p>  
+            </div>
+
+
+            
+            <div className="top-chef-recipe-description">
+                <h2>Price:</h2>
+                <p className='chef-recipe-description'>{selectedRecipe.price}</p>  
             </div>
 
             

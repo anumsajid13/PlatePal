@@ -43,7 +43,7 @@ const ChefNotificationBox = () => {
         <p key={index}>
             {notification.type === 'follow' && '👥 '}
             {notification.type === 'unfollow' && '👥 '}
-            {notification.type === 'comment' && '💬 '}
+            {notification.type === 'message from recipe seeker' && '💬 '}
             {notification.notification_text}
         </p>
         
