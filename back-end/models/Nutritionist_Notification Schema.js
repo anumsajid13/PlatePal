@@ -8,22 +8,22 @@ const nutritionist_notificationSchema = new mongoose.Schema({
   Time: {
     type: Date,
     default: Date.now,
-},
-type: {
-  type: String, 
-  required: true,
-},
-notification_text:
-{
-  type :String
-},
-bmi :
-{
-  type: Number
-},seen: {
-  type: Boolean,
-  default: false,
-},
+  },
+  type: {
+    type: String, 
+    required: true,
+  },
+  notification_text:
+  {
+    type :String
+  },
+  bmi :
+  {
+    type: Number
+  },seen: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const nutritionist_Notification = mongoose.model('nutritionist_Notification', nutritionist_notificationSchema);

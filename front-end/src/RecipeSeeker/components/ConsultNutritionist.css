@@ -1,7 +1,7 @@
 /* ConsultNutritionist.css */
 
 .bmi-calculator-card {
-    max-width: 35%;
+    width: 30%;
     margin: 20px 20px;
     padding: 20px;
     border-radius: 10px;
@@ -18,7 +18,10 @@
     margin-bottom: 5px;
   }
   
-  
+  .bmi-nutritionist-container{
+    display: flex;
+    
+  }
   
   .calculate-button {
     background-color: #4caf50;
@@ -36,4 +39,46 @@
   .result-container {
     margin-top: 15px;
   }
+  .nutritionist-list-container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width:60%;
+    height:40%;
+  }
   
+  .nutritionist-list {
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling */
+  }
+  
+  .nutritionist-item {
+    margin-right: 20px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #f4f4f4;
+    }
+  
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+  
+    p {
+      margin: 0;
+      font-size: 14px;
+      text-align: center;
+    }
+  }
+
+  .nutritionist-item.selected {
+    background-color: #f4f4f4;
+  }
