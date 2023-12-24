@@ -1,19 +1,42 @@
 //landngpage.js
-import React from 'react';
-import './landingpage.css'; 
-import  { useState } from 'react';
+import './landingpage.css';
+
 import { Link } from 'react-router-dom';
 import useNavbarStore from './navbarStore'; 
+import RecipeCard from './New_recipecard';
+import  {React, useEffect, useState } from 'react';
 
 // Create the functional component for the landing page
 const LandingPage = () => {
 
   const { showDropdown, toggleDropdown, activeLink, setActiveLink, searchInput, setSearchInput } = useNavbarStore();
+  const [recipes, setRecipes] = useState([]);
+
+  const fetchRecipes = async () => {
+    try {
+      const response = await fetch('http://localhost:9000/recepieSeeker/allRecipes?page=$1&pageSize=$3');
+ 
+      if (!response.ok) {
+        throw new Error('Failed to fetch recipes');
+      }
+
+      const data = await response.json();     
+      setRecipes(data || []);
+    } catch (error) {
+      console.error('Error fetching recipes:', error.message);
+    }
+  };
+
+  useEffect(() => {
+    console.log("fetching...")
+    fetchRecipes();
+    
+  }, []);
  
   return (
-    <div>
+    <div className='The-most-outer-part'>
       {/* White navigation bar */}
-      <nav className="navbar">
+      <nav className="navbar-landingpage">
         {/* Plate Pal logo on the left */}
         <div className="logo">Plate Pal</div>
 
@@ -80,17 +103,12 @@ const LandingPage = () => {
         </div>
 
         {/* You can replace the placeholder with the actual image source */}
-        <div className="image">
-          <img
-            src="https://i.pinimg.com/originals/de/f8/c3/def8c32218ff550de986ca3dfe09cac8.gif"
-            alt="Best Food"
-            className="best-food-image"
-          />
+        <div className="image-landingpage">
+         
         </div>
       </div>
 
-    <div className="outer-container">
-      {/* Clickable text divs row */}
+    <div className="outer-container-landingpage">
       <div className="category-container">
         <div className="category" >
           Salads
@@ -107,27 +125,19 @@ const LandingPage = () => {
       </div>
 
       {/* Food information divs */}
-      <div className="food-info-container">
-        {/* Food info div 1 */}
-        <div className="food-info">
-          <img src="https://img.hellofresh.com/w_1920,q_auto,f_auto,c_limit,fl_lossy/c_fill,f_auto,fl_lossy,h_432,q_auto/hellofresh_s3/image/654a60e0cfbffe92530de215-7053eecf.jpeg" alt="Food 1" />
-          <p>Cheesy Smoked Burgers</p>
-          <p>$9.99</p>
+      <div className="LALALALA">
+      <div className="recipe-list">
+          {recipes.map((recipe) => (
+            <div key={recipe._id}>
+              <RecipeCard
+                key={recipe._id}
+                recipe={recipe}
+               
+              />
+            </div>
+          ))}
         </div>
-
-        {/* Food info div 2 */}
-        <div className="food-info">
-          <img src="https://img.hellofresh.com/w_1920,q_auto,f_auto,c_limit,fl_lossy/c_fill,f_auto,fl_lossy,h_432,q_auto/hellofresh_s3/image/645122e8c0c78ab72707df23-0084c382.jpg" alt="Food 2" />
-          <p>Pork Noodle Stir Fry</p>
-          <p>$12.99</p>
-        </div>
-
-        {/* Food info div 3 */}
-        <div className="food-info">
-          <img src="https://img.hellofresh.com/w_1920,q_auto,f_auto,c_limit,fl_lossy/c_fill,f_auto,fl_lossy,h_432,q_auto/hellofresh_s3/image/654a63cacfbffe92530de278-e7ed2431.jpeg" alt="Food 3" />
-          <p>Lemony Shrimp Bowl</p>
-          <p>$14.99</p>
-        </div>
+        
       </div>
 
       </div>
