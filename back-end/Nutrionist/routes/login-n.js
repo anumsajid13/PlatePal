@@ -1,6 +1,8 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const multer = require('multer'); 
+const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Nutritionist = require('../../models/Nutritionist Schema');
@@ -61,44 +63,53 @@ router.post('/login', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
-  
-// Endpoint to sign up as a nutritionist
-router.post('/signup', async (req, res) => {
-  try {
-    const { name, username, email, password, profilePicture, certificationPictures } = req.body;
 
-     //check if all fields are not filled
-     if (!(name && username && email && password )) {
-      return res.status(400).json({ message:'All fields are not provided'});
+
+
+
+// Multer configuration
+const storage = multer.memoryStorage(); // Store the image in memory
+const upload = multer({ storage: storage });
+
+router.post('/signup', upload.fields([ { name: 'certificationImage', maxCount: 1 }, { name: 'profilePicture', maxCount: 1 }]), async (req, res) => {
+    const { name, username, email, password } = req.body;
+    const { profilePicture, certificationImage } = req.files;
+  
+    try {
+      // Check if all fields are provided
+      if (!(name && username && email && password)) {
+            return res.status(400).json({ message: 'All fields are not provided' });
       }
 
-  //check if the username or email already exists
-  const existingN = await Nutritionist.findOne({ $or: [{ username }, { email }] });
-  if (existingN) {
-    return res.status(400).json({ message: 'Username or email already exists' });
-  }
+      // Check if the username or email already exists
+      const existingNutritionist = await Nutritionist.findOne({ $or: [{ username }, { email }] });
+      if (existingNutritionist) {
+        return res.status(400).json({ message: 'Username or email already exists' });
+      }
+  
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-//hash the password
-const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create a new nutritionist
-    const newNutritionist = new Nutritionist({
-      name,
-      username,
-      email,
-      password:hashedPassword,
-      profilePicture,
-      certificationPictures,
-      // Add other fields as needed
-    });
-
-    await newNutritionist.save();
-
-    return res.json({ message: 'Nutritionist signed up successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
+      const newNutritionist = new Nutritionist({
+        name,
+        username,
+        email,
+        password: hashedPassword,
+        profilePicture: {
+          data: profilePicture[0].buffer,
+          contentType: profilePicture[0].mimetype
+        },
+       
+      });
+  
+      // Save the new Nutritionist 
+      await newNutritionist.save();
+  
+      res.status(201).json({ message: 'Nutritionist sign up successful!' });
+    } catch (error) {
+      console.error('Error during Nutritionist Sign Up:', error);
+      res.status(500).json({ message: 'Server Error' });
+    }
 });
 
 

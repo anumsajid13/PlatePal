@@ -6,8 +6,16 @@ body {
   background-color:  rgb(218,218,218);
   
 }
-.navbar {
-  background-color: #94958B;
+
+.The-most-outer-part{
+  background-color: #D5CFE1;
+}
+
+.outer-container-landingpage{
+  background-color: #D5CFE1;
+}
+.navbar-landingpage {
+  background-color: #9c91b3;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -67,7 +75,7 @@ body {
 
 /* Best Food container styles */
 .best-food-container {
-  background-color: white;
+  background-color: rgb(245, 245, 245);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  
 
   margin: 20px;
@@ -86,16 +94,21 @@ body {
   font-weight: bold;
   margin-bottom: 10px; /* Add margin between text and image */
 }
-.image {
+.image-landingpage {
   height: auto;
-  width: 50%; /* Adjust the width of the image container */
+  width: 50%;
+  background-image: url(./output-onlinegiftools.gif);
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
 }
 
 .best-food-image {
-  max-width: 100%;
-  max-height: 300px; /* Set a maximum height for the image */
+  max-width: 80%;
+  max-height: 200px; /* Set a maximum height for the image */
   border-radius: 10px; /* Add rounded edges to the image */
   align-self: flex-end; /* Align the image to the start (left side) */
+ 
 }
 
 .inline-text {
@@ -223,4 +236,46 @@ background-color:  #D5CFE1;
 
 .dropdown:hover .dropdown-menu {
   display: flex; 
+}
+
+/* food*/
+
+.recipe-card-landingpage {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  
+  margin: 16px;
+  cursor: pointer;
+  width:380px;
+  margin-left: 14%;
+  height:auto;
+  transition: transform 0.2s ease-in-out;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding-top: 0;
+  
+}
+
+.recipe-card-landingpage:hover {
+  transform: scale(1.05);
+}
+
+
+.relative-container-landingpage {
+  position: relative;
+}
+.flexxx-landingpage{
+  display: flex;
+  flex-direction: column;
+  margin-left: 2%;
+  row-gap: 0px;
+}
+
+.food-image-landingpage{
+     
+  margin-top: 0px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+  width: 100%; 
+  height:250px;
 }

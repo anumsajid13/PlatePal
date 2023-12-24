@@ -118,7 +118,7 @@ const ChefMainPage = () => {
                             <div className="recipe-card-chef" key={recipe._id} onClick={() => setSelectedRecipe(recipe)}>
                                 <img src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}  className="recipe-image-chef" />
                                 <div className="recipe-details-chef">
-                                    <h3>{recipe.title}</h3>
+                                    <h3>{recipe.title.replace(/"/g, '')}</h3>
                                     <p>by Chef {recipe.chefName.replace(/"/g, '')}</p>
                                     <p className='recipe-card-chef-description'>{truncateText(recipe.description.replace(/"/g, ''), 20 )}</p>
                                 </div>

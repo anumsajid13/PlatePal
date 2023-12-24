@@ -23,6 +23,7 @@ const CreateRecipe = () => {
         category: [],
         instructions: [],
         recipeImage: null,
+        price: '',
       });
 
       const [showSuccessPopup, setShowSuccessPopup] = useState(false);
@@ -191,6 +192,7 @@ const CreateRecipe = () => {
                 category: [],
                 instructions: [],
                 recipeImage: null,
+                price:'',
             });
           }
         } catch (error) {
@@ -235,6 +237,11 @@ const CreateRecipe = () => {
                     <div className='create-recipe-inputlabel'>
                         <label className='create-recipe-label' htmlFor="totalTime">Total Time</label>
                         <input className='create-recipe-input' type="text" id="totalTime" name="totalTime" value={formData.totalTime} onChange={handleChange} placeholder="enter total cooking time" />
+                    </div>
+
+                    <div className='create-recipe-inputlabel'>
+                        <label className='create-recipe-label' htmlFor="price">Price</label>
+                        <input className='create-recipe-input' type="text" id="price" name="price" value={formData.price} onChange={handleChange} placeholder="enter price " />
                     </div>
 
                     <div className='create-recipe-inputlabel'>

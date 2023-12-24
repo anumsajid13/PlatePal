@@ -35,6 +35,7 @@ const recipeSchema = new mongoose.Schema({
     value: Number,
     unitName: String,
   }],
+  price:Number,
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);
