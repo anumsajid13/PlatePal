@@ -93,7 +93,7 @@ const CreateRecipe = () => {
 
       const handleChange = (e) => {
         const { name, value } = e.target;
-            const numericValue = name === 'calories' || name === 'servingSize' || name === 'totalTime' ? parseInt(value, 10) : value;
+            const numericValue = name === 'calories' || name === 'servingSize' || name === 'totalTime' ||  name === 'price' ? parseInt(value, 10) : value;
             setFormData(prevState => ({
                 ...prevState,
                 [name]: numericValue,
@@ -156,6 +156,8 @@ const CreateRecipe = () => {
     });
 
     formDataToSend.append('recipeImage', formData.recipeImage);
+
+    console.log('lala', formDataToSend)
           const response = await fetch('http://localhost:9000/recipes/newRecipe', {
             method: 'POST',
             headers: {

@@ -44,7 +44,7 @@ const multer = require('multer');
               },
               chef: chefId,
               description,
-              price:parseInt(totalTime.replace(/\D/g, ''), 10),
+              price:parseInt(price.replace(/\D/g, ''), 10),
           });
 
 

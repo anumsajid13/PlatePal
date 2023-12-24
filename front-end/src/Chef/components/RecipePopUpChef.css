@@ -89,7 +89,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
+    color: black;
+    padding: 0px 0px;
   }
+
+  .chef-pop-close-btn:hover{
+    background-color: white;
+  }
+  
 
   .top-chef-recipe-description{
     border-bottom: 1px solid #ccc;
@@ -225,8 +233,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
-    padding: 40px;
+    background-color: #464655;
+    padding: 30px;
   }
 
 .chef-recipe-nutrients {
