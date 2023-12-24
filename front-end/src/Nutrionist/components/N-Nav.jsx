@@ -10,6 +10,7 @@ import useTokenStore from '../../tokenStore';
 const AdminNav = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [searchInput, setSearchInput] = useState(''); 
 
   const token = useTokenStore((state) => state.token);
 
@@ -31,6 +32,8 @@ const AdminNav = () => {
       <nav className="admin-navbar">
         {/* Plate Pal logo on the left */}
         <div className="logo">Plate Pal</div>
+
+        
 
         {/* Clickable components on the right */}
         <div className="nav-links">

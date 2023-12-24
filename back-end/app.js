@@ -74,6 +74,7 @@ const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 
 
 const Nutritionist_Signin = require('./Nutrionist/routes/login-n')
+const Nutritionist_Plan = require('./Nutrionist/routes/plan')
 
 const getAllVendors = require('./Chef/routes/vendor_Routes_Chef');
 const collabVendorsChef = require('./Chef/routes/CollabVendors_routes');
@@ -120,6 +121,8 @@ app.use('/chefVendors', collabVendorsChef);
 
 //nutri routes
 app.use('/n', Nutritionist_Signin); 
+app.use('/n', Nutritionist_Plan); 
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

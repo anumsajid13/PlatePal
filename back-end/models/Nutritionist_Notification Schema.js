@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 
 const nutritionist_notificationSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'Nutritionist' },
+  sender: { type: mongoose.Schema.Types.ObjectId, ref: 'RecipeSeeker', required: true },
+
   Time: {
     type: Date,
     default: Date.now,
@@ -14,6 +16,10 @@ type: {
 notification_text:
 {
   type :String
+},
+bmi :
+{
+  type: Number
 }
 });
 

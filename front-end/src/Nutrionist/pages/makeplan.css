@@ -1,0 +1,97 @@
+/* discover14.css */
+.main-container14 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .search-container14 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .search-card14 {
+    border-radius: 10px;
+    margin-top: 3%;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-right: 20px;
+    background-color: #D5CFE1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 95%; /* Make the search bar a little longer */
+  }
+  
+  .search-recipe14 {
+    margin-left: 10px;
+    width: 70%; /* Adjust the width of the search input */
+  }
+  
+  .search-icon14 {
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+  }
+  
+  .recipe-list14 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 3%;
+  }
+  
+  .recipe-item14 {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recipe-name14 {
+    font-size: 1.5rem; /* Change the font size for recipe heading */
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: Chonburi  }
+  
+  .recipe-description14 {
+    margin-bottom: 10px;
+    font-size: 1rem; /* Change the font size for recipe content */
+    font-weight: 200;
+  }
+  
+  .recipe-ingredients14,
+  .recipe-allergens14,
+  .recipe-calories14 {
+    margin-bottom: 10px;
+  }
+  
+  .recipe-ingredients14 ul,
+  .recipe-allergens14 ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .recipe-ingredients14 li,
+  .recipe-allergens14 li {
+    margin-bottom: 5px;
+  }
+  
+  .recipe-image14 img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  .plus-icon14 {
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #34c759; /* You can change the color as needed */
+    background-color: #ffffff; /* Background color for the plus button */
+    padding: 3px; /* Add padding for a better appearance */
+    border-radius: 80%; /* Make it a circle */
+    /* Add additional styling for the plus icon if desired */
+  }

@@ -10,7 +10,7 @@ import { jwtDecode } from 'jwt-decode';
 
 const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
 
-  const token = useTokenStore.getState().token;
+  const token = useTokenStore((state) => state.token);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [ratings, setRatings] = useState([]);
   const [commentText, setCommentText] = useState('');

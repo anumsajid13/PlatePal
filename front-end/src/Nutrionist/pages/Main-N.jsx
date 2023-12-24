@@ -13,6 +13,8 @@ const Main = ()=>
 
         <NutNav/>
 
+        
+
     );
 
 
