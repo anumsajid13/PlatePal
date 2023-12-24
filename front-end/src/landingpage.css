@@ -8,14 +8,14 @@ body {
 }
 
 .The-most-outer-part{
-  background-color: #D5CFE1;
+  background-color: #C8C7D7;
 }
 
 .outer-container-landingpage{
-  background-color: #D5CFE1;
+  background-color:  #C8C7D7;
 }
 .navbar-landingpage {
-  background-color: #9c91b3;
+  background-color: #9EBECB;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -75,7 +75,7 @@ body {
 
 /* Best Food container styles */
 .best-food-container {
-  background-color: rgb(245, 245, 245);
+  background-color: #D8E2EB;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  
 
   margin: 20px;
@@ -119,7 +119,7 @@ body {
 
 /* Discover menu button styles */
 .discover-menu-button {
-  background-color: #EDDFEF; /* Green background color */
+  background-color: #BCA4CB; /* Green background color */
   color: black; /* White text color */
   border: none; /* Remove border */
   padding: 15px 60px; /* Add padding */
@@ -147,7 +147,7 @@ body {
   display: flex;
   margin-top: 20px;
   justify-content: center;
-  background-color: #D5CFE1;
+  background-color:  #C8C7D7;
 
 }
 

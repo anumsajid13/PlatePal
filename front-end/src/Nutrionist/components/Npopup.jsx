@@ -1,45 +1,65 @@
 import React, { useEffect, useState } from 'react';
 import '../../Admin/components/notificationPopup.css';
 import useNotificationStore from './Nstore'; // Import the Zustand store
- // Import the Zustand store
 import useTokenStore from '../../tokenStore';
+import { useHistory, useNavigate,useParams } from 'react-router-dom';
 
 const NotificationPopup = ({ onClose }) => {
   const [loading, setLoading] = useState(true);
   const notifications = useNotificationStore((state) => state.notifications);
   const token = useTokenStore((state) => state.token);
+  const navigate = useNavigate();
+
+  const fetchNotifications = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('http://localhost:9000/n/unseen-notifications', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch notifications');
+      }
+
+      const data = await response.json();
+console.log("woo", data)
+      useNotificationStore.setState({ notifications: data });
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        // Simulate loading delay (remove in production)
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-  
-        setLoading(true);
-        const response = await fetch('/notifications', {
-          headers: {
-            Authorization: `Bearer ${token}`, // Replace with your authentication token
-          },
-        });
-  
-        // Log the raw response for debugging
-        console.log('Raw Response:', response);
-  
-        const data = await response.json();
-  
-        // Log the parsed data for debugging
-        console.log('Parsed Data:', data);
-  
-        useNotificationStore.setState({ notifications: data.notifications });
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
-  
     fetchNotifications();
-  }, []);
+  }, [token]);
+
+  const handleCreatePlan = async (notificationId,senderId,bmi) => {
+    try {
+      const response = await fetch(`http://localhost:9000/n/n-createplan/${notificationId}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create plan');
+      }
+      const data = await response.json();
+      console.log( "boo",data); // Handle the response as needed
+    console.log("bmi",data.bmi)
+      // Navigate to /n/makeplan/:bmi/:id
+      navigate(`/n/makeplan/${bmi}/${senderId}`);
+      // Refetch notifications
+      fetchNotifications();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="notification-popup">
@@ -57,10 +77,12 @@ const NotificationPopup = ({ onClose }) => {
         ) : (
           notifications.map((notification) => (
             <div key={notification._id} className="notification-item">
-              <strong>{notification.sender.username}</strong>: {notification.notification_text}
+              <strong>{notification.sender.username}</strong>: {notification.notification_text} (BMI: {notification.bmi})
+              {!notification.seen && (
+                <button onClick={() => handleCreatePlan( notification._id, notification.sender._id,notification.bmi)}>Create Plan</button>
+              )}
             </div>
           ))
-          
         )}
       </div>
     </div>
