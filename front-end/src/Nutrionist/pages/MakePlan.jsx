@@ -1,25 +1,30 @@
 // Discover.js
 import NutNav from '../components/N-Nav';
 import './makeplan.css'; // Updated CSS file name
-import { React, useEffect, useState,useParams } from 'react';
+import React, { useEffect, useState } from 'react';
 import useTokenStore from '../../tokenStore.js';
+import { useParams } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 const Discover = () => {
+    
   const [recipes, setRecipes] = useState([]);
-  const [followingChefIds, setFollowingChefIds] = useState([]);
+  const [selectedRecipes, setSelectedRecipes] = useState([]);
   const token = useTokenStore((state) => state.token);
   const { userId, bmi } = useParams();
+
   const fetchRecipes = async () => {
+    console.log("nicee");
     try {
-      const response = await fetch('http://localhost:9000/n/recipes?page=$1&pageSize=$3', {});
+      const response = await fetch(`http://localhost:9000/n/recipes?page=$1&pageSize=$3`, {});
+      console.log("nicee1");
 
       if (!response.ok) {
         throw new Error('Failed to fetch recipes');
       }
 
       const data = await response.json();
-
+      console.log(data, "Whatt");
       setRecipes(data || []);
     } catch (error) {
       console.error('Error fetching recipes:', error.message);
@@ -30,28 +35,35 @@ const Discover = () => {
     fetchRecipes();
   }, []);
 
-  const handleAddToMealPlan = async (recipeId) => {
+  const handleAddToMealPlan = (recipeId) => {
+    setSelectedRecipes((prevSelectedRecipes) => [...prevSelectedRecipes, recipeId]);
+  };
+
+  const handleCreateMealPlan = async () => {
     try {
-      const response = await fetch('http://localhost:9000/n/create-meal-plan', {
+      const response = await fetch(`http://localhost:9000/n/create-meal-plan`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           user: userId,
-          recipes: [recipeId],
+          recipes: selectedRecipes,
           bmi: bmi,
         }),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to add recipe to meal plan');
+        throw new Error('Failed to add recipes to meal plan');
       }
 
       const data = await response.json();
-      console.log(data); // Handle the response as needed
+      console.log("food", data); // Handle the response as needed
+      // Clear the selected recipes after creating the meal plan
+      setSelectedRecipes([]);
     } catch (error) {
-      console.error('Error adding recipe to meal plan:', error.message);
+      console.error('Error adding recipes to meal plan:', error.message);
     }
   };
 
@@ -72,11 +84,13 @@ const Discover = () => {
         <div className="recipe-list14">
           {recipes.map((recipe) => (
             <div key={recipe._id} className="recipe-item14">
-              <div className="recipe-name14">{recipe.title}
-              <span className="plus-icon14" onClick={() => handleAddToMealPlan(recipe._id)}>
-                    +
-             </span>
+              <div className="recipe-name14">
+                {recipe.title}
+                <span className="plus-icon14" onClick={() => handleAddToMealPlan(recipe._id)}>
+                  +
+                </span>
               </div>
+              {/* Include other recipe details here */}
               <div className="recipe-description14">{recipe.description}</div>
               <div className="recipe-ingredients14">
                 <ul>
@@ -99,6 +113,11 @@ const Discover = () => {
             </div>
           ))}
         </div>
+        {selectedRecipes.length > 0 && (
+          <div>
+            <button onClick={handleCreateMealPlan}>Create Meal Plan</button>
+          </div>
+        )}
       </div>
     </>
   );

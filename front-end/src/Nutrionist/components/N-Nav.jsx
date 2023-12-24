@@ -55,12 +55,12 @@ const AdminNav = () => {
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <a href="#" onClick={handleSidebarToggle} className="close-btn">×</a>
        
-        <Link to="/n/makePlan" onClick={handleSidebarToggle}>
-          Make Plan
+        <Link to="/n/planmade/:nutritionistId" onClick={handleSidebarToggle}>
+        <a href="#">View Plans</a>
         </Link>
-        <Link to="/n/PlanMade" onClick={handleSidebarToggle}>
-        <a href="#">View Plan</a>
-        </Link>
+        <a href="#">Edit Plan</a>
+        <a href="#">Update Profile</a>
+        <a href="#">Chat</a>
 
       </div>
     </div>

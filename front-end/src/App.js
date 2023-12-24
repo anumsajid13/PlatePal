@@ -27,7 +27,8 @@ import AllUsers from './Admin/pages/AllUsers';
 import Blocked from './Admin/pages/Blocked';
 import RegisterN from './Nutrionist/pages/Register-N';
 import Main from './Nutrionist/pages/Main-N';
-import Discover from '././Nutrionist/pages/MakePlan';
+import Discover from './Nutrionist/pages/MakePlan';
+import MealPlansPage from './Nutrionist/pages/ViewPlan';
 
 import DisplayCollaboration from './Vendor/pages/Collaborations';
 import DisplayCollaborationRequest from './Vendor/pages/CollaborationRequest';
@@ -73,7 +74,9 @@ function App() {
        <Route path="/n/mainpage" element={<Main/>} /> 
         <Route path="/signup/nutritionist" element={<RegisterN />} />
 
-        <Route path="/n/makePlan" element={<Discover/>} />
+        <Route path="/n/makeplan/:bmi/:userId" element={<Discover/>} />
+        <Route path="/n/planmade/:nutritionistId" element={<MealPlansPage/>} />
+
 
 
 

@@ -4,6 +4,8 @@ const Nutritionist = require('../../models/Nutritionist Schema');
 const MealPlan = require('../../models/MealPlanSchema');
 const Recipe = require('../../models/Recipe Schema');
 const NutritionistNotification = require('../../models/Nutritionist_Notification Schema');
+const authenticateToken = require('../../TokenAuthentication/token_authentication');
+const User_Notification= require('../../models/User_Notification Schema');
 
 //show all recipes
 router.get('/recipes', async (req, res) => {
@@ -41,6 +43,7 @@ router.get('/recipes', async (req, res) => {
       const uint8Array = new Uint8Array(recipe.recipeImage.data);
       const base64ImageData = Buffer.from(uint8Array).toString('base64');
       return {
+        _id: recipe._id,
         title: recipe.title,
         description: recipe.description,
         ingredients: recipe.ingredients,
@@ -58,7 +61,7 @@ router.get('/recipes', async (req, res) => {
 });
 
 //create meal plan
-router.post('/create-meal-plan', async (req, res) => {
+router.post('/create-meal-plan',authenticateToken, async (req, res) => {
   try {
     const { user, recipes, bmi } = req.body;
 
@@ -95,6 +98,10 @@ router.post('/create-meal-plan', async (req, res) => {
       },
     });
 
+    
+    // Populate the 'user' field with the 'username' field from the User model
+    await newMealPlan.populate('user', 'username').execPopulate();
+
     await newMealPlan.save();
 
     return res.json({ message: 'Meal plan created successfully', mealPlan: newMealPlan });
@@ -105,26 +112,63 @@ router.post('/create-meal-plan', async (req, res) => {
 });
 
 
-// Endpoint to get nutritionist notifications
-router.get('/notifications', async (req, res) => {
+// Endpoint to get unseen nutritionist notifications
+router.get('/unseen-notifications',authenticateToken, async (req, res) => {
   try {
-    const notifications = await NutritionistNotification.find().populate('user sender');
-    res.json(notifications);
+    const unseenNotifications = await NutritionistNotification.find({ seen: false }).populate('user sender');
+    res.json(unseenNotifications);
   } catch (error) {
-    console.error('Error fetching nutritionist notifications:', error.message);
+    console.error('Error fetching unseen nutritionist notifications:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-  
+
+// to change bool to seen 
+router.post('/n-createplan/:notificationId', async (req, res) => {
+  const { notificationId } = req.params;
+
+  try {
+    // Update the seen status in MongoDB
+    await NutritionistNotification.findByIdAndUpdate(notificationId, { seen: true });
+    res.status(200).json({ success: true, message: 'Plan created successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+
+// Endpoint to send a notification
+router.post('/send-notification', async (req, res) => {
+  try {
+    const { userId, type, notification_text } = req.body;
+
+    // Create a new notification
+    const newNotification = new User_Notification({
+      user: userId,
+      type,
+      notification_text,
+    });
+
+    // Save the notification to the database
+    await newNotification.save();
+
+    res.status(200).json({ message: 'Notification sent successfully', notification: newNotification });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Endpoint to get all meal plans created by a specific nutritionist
-router.get('/nutritionist-meal-plans/:nutritionistId', async (req, res) => {
+router.get('/planmade/:nutritionistId', async (req, res) => {
     try {
       const nutritionistId = req.params.nutritionistId;
 
       // Get all meal plans created by the specific nutritionist
       const mealPlans = await MealPlan.find({ nutritionist: nutritionistId });
 
-      return res.json({ mealPlans });
+      return res.json( mealPlans );
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: 'Internal Server Error' });
