@@ -120,9 +120,11 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
         Time: collaborationRequest.Time,
       });
   
-     
-      await vendorCollaboration.save();
   
+      await vendorCollaboration.save();
+      const recipe=await Recipe.findOne({_id:collaborationRequest.recipe});
+      recipe.vendor=vendorId;
+      await recipe.save();
       // Update collaboration request status
       collaborationRequest.isAccepted = 'accepted';
       await collaborationRequest.save();
