@@ -64,7 +64,7 @@ const ChefVendorInboxx = () => {
       const handleSendMessage = () => {
         if (selectedUser && messageInput.trim() !== '') {
         
-          fetch(`http://localhost:9000/chef/sendMessageToVendor/${selectedUser}`, {
+          fetch(`http://localhost:9000/chef/sendMessageToVendor//${selectedUser}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

@@ -254,7 +254,7 @@ const CreateRecipe = () => {
           }
         } catch (error) {
           console.error('Error:', error.message);
-          // Handle any other error scenarios in UI
+         
         }
       };
 

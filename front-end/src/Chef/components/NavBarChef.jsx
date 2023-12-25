@@ -93,7 +93,7 @@ const ChefNav = () => {
         <Link className='chef-linkss' to="/Chef/myFollowers">Followers</Link>
         <Link className='chef-linkss' to="/Chef/BlockReports">Block Reports</Link>
         <Link className='chef-linkss' to="/Chef/usersInbox">Recipe Seekers Inbox</Link>
-        <Link className='chef-linkss' to="/Chef/vendorsInbox">Vendors Seekers Inbox</Link>
+        <Link className='chef-linkss' to="/Chef/vendorsInbox">Vendors Inbox</Link>
       </div>
 
       {showNotifications && <ChefNotificationBox />}

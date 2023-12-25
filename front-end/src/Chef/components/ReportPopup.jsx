@@ -2,7 +2,7 @@ import {React, useState} from 'react';
 import useTokenStore from '../../tokenStore';
 import './reportPopup.css';
 
-const ReportPopUp = ({ vendorId }) => {
+const ReportPopUp = ({ vendorId, onClose  }) => {
 
     const [reason, setReason] = useState('');
     const [proof, setProof] = useState(null);
@@ -37,40 +37,43 @@ const ReportPopUp = ({ vendorId }) => {
             }
     
             console.log(response)
-            // Handle success response or any UI updates
-            //onClose(); // Close the pop-up
+            onClose();
         } catch (error) {
             console.error('Error creating vendor report:', error);
-            // Handle error cases
+            
         }
     };
     
     return(
 
         <>
+            <div class="report-popup-overlay">
             <div className="reprort-popup-container">
             <div className="report-popup-inner">
-                <h2>Report Vendor</h2>
+                    <button className="report-chef-pop-close-btn" onClick={onClose} >
+                        <span className="material-icons">close</span>
+                    </button>
+                <h2 className='reportt-heading'>Report Vendor</h2>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="reason">Reason:</label>
-                    <input
+                    <label className='create-recipe-label' htmlFor="reason">Reason:</label>
+                    <input className='reportt-input'
                         type="text"
                         id="reason"
                         value={reason}
                         onChange={(e) => setReason(e.target.value)}
                     />
-                    <label htmlFor="reason">Proof:</label>
+                    <label className='create-recipe-label' htmlFor="reason">Proof:</label>
                     <input 
                         type="file"
                         accept="image/*"
                         onChange={handleProofChange}
                     />
-                    <button type="submit">Submit</button>
+                    <button className='create-recipe-button' type="submit">Submit</button>
                 </form>
                 
             </div>
             </div>
-
+            </div>
         </>
 
     );
