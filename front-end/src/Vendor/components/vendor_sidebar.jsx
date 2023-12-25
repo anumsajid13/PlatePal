@@ -22,9 +22,14 @@ const Sidebar = ({ isOpen, onClose }) => {
      
           <Link to="/Vendor/Mainpage">Products</Link>
         </li>
+        <li>
+     
+          <Link to="/vendor/inbox">Chat</Link>
+        </li>
       </ul>
     </div>
   );
 };
+
 
 export default Sidebar;

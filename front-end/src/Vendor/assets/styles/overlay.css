@@ -1,0 +1,65 @@
+.requestoverlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    max-width: 400px;
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .requestoverlay.closeicon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
+  .requestoverlay.label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+.requestoverlay ul{
+    padding: 10px;
+}
+  
+ .requestoverlay li {
+    margin-bottom: 5px;
+  }
+  
+.requestoverlay .status {
+    margin-top: 10px;
+  }
+  
+  .requestoverlay .accepted {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #861616;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+    .requestoverlay .declined {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #07691b;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  .requestoverlay button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  .buttonarea{
+    display: flex;
+    justify-content: center;
+  gap:10%;
+  }

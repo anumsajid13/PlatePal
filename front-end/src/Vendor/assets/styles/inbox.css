@@ -1,0 +1,58 @@
+/* Main Inbox Container */
+div {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  /* Chef List */
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  ul li {
+    margin-bottom: 10px;
+  }
+  
+  ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Chat Container */
+  div {
+    width: 60%;
+  }
+  
+  /* Message List */
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  ul li {
+    margin-bottom: 10px;
+  }
+  
+  /* Message Input and Send Button */
+  div {
+    margin-top: 20px;
+  }
+  
+  input {
+    padding: 8px;
+    width: 70%;
+  }
+  
+  button {
+    padding: 8px;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
