@@ -53,6 +53,10 @@ Collaboration: [{
     default: 0,
   },
 }],
+collabNum:{
+  type:Number,
+  default:0,
+},
 balance:
 {
   type:Number,
