@@ -1,0 +1,28 @@
+.success-container {
+    text-align: center;
+  }
+  
+  .success-gif {
+    width: 150px;
+  }
+  
+  .success-message {
+    font-size: 18px;
+    font-weight: bold;
+    color: green;
+  }
+
+  .cancel-container {
+    text-align: center;
+  }
+  
+  .cancel-gif {
+    width: 300px;
+    height:300px;
+  }
+  
+  .cancel-message {
+    font-size: 18px;
+    font-weight: bold;
+    color: red;
+  }

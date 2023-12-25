@@ -24,9 +24,64 @@ const CreateRecipe = () => {
         instructions: [],
         recipeImage: null,
         price: '',
+        generateDescription: false,
       });
 
       const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
+      const handleGenerateDescriptionChange = async (e) => {
+        const isChecked = e.target.checked;
+    
+        if (isChecked) {
+          try {
+            const shortDescription = formData.description; 
+            const prompt = `Short description of ${formData.title}`; 
+    
+            const url = 'https://chatgpt-42.p.rapidapi.com/conversationgpt4';
+            const options = {
+              method: 'POST',
+              headers: {
+                'content-type': 'application/json',
+                'X-RapidAPI-Key': '5e1c3f2495msh77b53e70c808cc8p18cfc7jsn052ace546c72',
+                'X-RapidAPI-Host': 'chatgpt-42.p.rapidapi.com',
+              },
+              body: JSON.stringify({
+                messages: [
+                  {
+                    role: 'user',
+                    content: shortDescription,
+                  },
+                ],
+                system_prompt: prompt,
+                temperature: 0.5,
+                top_k: 50,
+                top_p: 0.9,
+                max_tokens: 200,
+                web_access: false,
+              }),
+            };
+    
+            const response = await fetch(url, options);
+            console.log(response)
+            if (!response.ok) {
+              throw new Error('Failed to generate description');
+            }
+    
+            const resultt = await response.json();
+            console.log(resultt.result)
+            setFormData({
+              ...formData,
+              description: resultt.result, 
+            });
+          } catch (error) {
+            console.error('Error generating description:', error.message);
+            
+          }
+        } else {
+          
+        }
+      };
+
 
       const handleArrayFieldChange = (field, index, e) => {
         const { value } = e.target;
@@ -215,9 +270,29 @@ const CreateRecipe = () => {
                         <input className='create-recipe-input' type="text" id="title" name="title" value={formData.title} onChange={handleChange} placeholder="enter recipe name" />
                     </div>
 
+                    <div  className='create-recipe-inputlabel'>
+                      <label className='create-recipe-label'>
+                        Generate Description:
+                        </label>
+                        <input className='create-recipe-input'
+                          type="checkbox"
+                          checked={formData.generateDescription}
+                          onChange={handleGenerateDescriptionChange}
+                        />
+                     
+                    </div>
                     <div className='create-recipe-inputlabel'>
-                        <label className='create-recipe-label' htmlFor="description">Description</label>
-                        <input className='create-recipe-input' type="text" id="description" name="description" value={formData.description} onChange={handleChange} placeholder="enter description" />
+                      <label className='create-recipe-label' htmlFor="description">
+                        Description:
+                        </label>
+                        <textarea className='create-recipe-input-textarea'
+                           type="text"
+                          id="description" 
+                          name="description"
+                          value={formData.description}
+                          onChange={handleChange}
+                        />
+                    
                     </div>
 
 

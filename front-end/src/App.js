@@ -10,19 +10,14 @@ import RecipeSeekerSignUp from './RecipeSeeker/components/SignUp_RecepieSeeker';
 import RecipeSeeker_InboxPage from './RecipeSeeker/components/Inbox';
 import ConsultNutritionist from './RecipeSeeker/components/Refer_to_Nutritionist';
 import DiscoverPage from './RecipeSeeker/components/Discover';
+import SuccessComponent from './RecipeSeeker/components/SuccessComponent';
+import CancelComponent from './RecipeSeeker/components/CancelComponent';
 import Edit_profil_user from './RecipeSeeker/components/edit_profile';
 import BlockReports from './Admin/pages/BlockReports';
 import ChefSignUp from './Chef/pages/ChefSignUp';
-import VendorSignUp from './Vendor/pages/SignUp_vendor';
-import VendorMainpage from './Vendor/pages/VendorMainpage';
 import ChefMainPage from './Chef/pages/ChefMainPage';
-import IngredientDetails from './Vendor/pages/ProductDetails';
-import EditIngredient from './Vendor/pages/EditProductInformation';
-import VendorProfile from './Vendor/pages/Profile';
 import CreateRecipe from './Chef/pages/CreateRecipe';
-import DisplayVendors from './Chef/pages/DisplayVendors';
-import EditVendorProfile from './Vendor/pages/EditProfile';
-import AddNewProduct from './Vendor/pages/AddNewProducts';
+
 import Delete from './Admin/pages/Delete';
 import AllUsers from './Admin/pages/AllUsers';
 import Blocked from './Admin/pages/Blocked';
@@ -40,6 +35,17 @@ import ChefVendorInboxx from './Chef/pages/ChefVendorInboxx';
 import BlockReportsList from './Chef/pages/ChefVendorBlockReport';
 
 import ChefProfile1 from './Nutrionist/pages/Edit-Profile';
+
+import VendorSignUp from './Vendor/pages/SignUp_vendor';
+import VendorMainpage from './Vendor/pages/VendorMainpage';
+import IngredientDetails from './Vendor/pages/ProductDetails';
+import EditIngredient from './Vendor/pages/EditProductInformation';
+import VendorProfile from './Vendor/pages/Profile';
+import DisplayVendors from './Chef/pages/DisplayVendors';
+import EditVendorProfile from './Vendor/pages/EditProfile';
+import AddNewProduct from './Vendor/pages/AddNewProducts';
+import Inbox from './Vendor/pages/chatwithchef';
+
 function App() {
   return (
     <div className="App">
@@ -53,6 +59,8 @@ function App() {
         <Route path="/recipe-seeker/UpdateProfile" element={<Edit_profil_user />} />
         <Route path="/recipe-seeker/Inbox" element={<RecipeSeeker_InboxPage />} />
         <Route path="/recipe-seeker/Consult_Nutritionist" element={<ConsultNutritionist />} />
+        <Route path="/Pyement/Success" element={<SuccessComponent />} />
+        <Route path="/Pyement/Failure" element={<CancelComponent />} />
         <Route path="/admin/blockreport" element={<BlockReports />} />
         <Route path="/admin/delete" element={<Delete />} />
         <Route path="/admin/registered-users" element={<AllUsers />} />
@@ -60,15 +68,6 @@ function App() {
 
 
         <Route path="/signup/chef" element={<ChefSignUp/>}/>
-        <Route path="/signup/vendor" element={<VendorSignUp/>}/>
-        <Route path="/Vendor/Mainpage" element={<VendorMainpage />} />
-        <Route path="/Vendor/Profile" element={<VendorProfile />} />
-        <Route path="/Vendor/editProfile" element={<EditVendorProfile />} />
-        <Route path="/ingredients/:id" element={<IngredientDetails />} />
-        <Route path="/ingredients/editInfromation/:id" element={<EditIngredient/>} />
-        <Route path="/ingredients/newProduct" element={<AddNewProduct/>} />
-        <Route path="/vendor/Collaboration" element={<DisplayCollaboration/>} />
-        <Route path="/vendor/CollaborationRequest" element={<DisplayCollaborationRequest/>} />
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
         <Route path="/Chef/CreateRecipe" element={<CreateRecipe/>} />
         <Route path="/Chef/AllVendors" element={<DisplayVendors/>} />
@@ -86,7 +85,17 @@ function App() {
         <Route path="/Chef/myFollowers" element={<ChefDisplayFollowers/>} />
         <Route path="/Chef/BlockReports" element={<BlockReportsList/>} />
 
-        
+        <Route path="/signup/vendor" element={<VendorSignUp/>}/>
+        <Route path="/Vendor/Mainpage" element={<VendorMainpage />} />
+        <Route path="/Vendor/Profile" element={<VendorProfile />} />
+        <Route path="/Vendor/editProfile" element={<EditVendorProfile />} />
+        <Route path="/vendor/Collaboration" element={<DisplayCollaboration/>} />
+        <Route path="/vendor/CollaborationRequest" element={<DisplayCollaborationRequest/>} />
+        <Route path="/ingredients/:id" element={<IngredientDetails />} />
+        <Route path="/ingredients/editInfromation/:id" element={<EditIngredient/>} />
+        <Route path="/ingredients/newProduct" element={<AddNewProduct/>} />
+        <Route path="/vendor/inbox" element={<Inbox/>} />
+    
 
 
 

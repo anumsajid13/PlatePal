@@ -3,11 +3,12 @@ const router = express.Router();
 const VendorCollaboration = require('../../models/VendorCollaboration Schema');
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
 const vendor = require('../../models/Vendor Schema');
+const Ingredient = require('../../models/Ingredient Schema');
   
 //Endpoint to see all collaborations of a vendor with a chef 
 router.get('/', authenticateToken, async (req, res) => {
   try {
-    const vendorId = req.user._id;
+    const vendorId = req.user.id;
 
     // Extract query parameters for filtering, sorting, and pagination
     const { chefId, sortBy, sortOrder, page=1, pageSize=30 } = req.query; //pagesize = number of collaborations per page
@@ -36,6 +37,7 @@ router.get('/', authenticateToken, async (req, res) => {
       .skip(skip)
       .limit(parseInt(pageSize))
   
+      
 
     return res.json(collaborations);
   } catch (error) {
@@ -47,6 +49,7 @@ router.get('/', authenticateToken, async (req, res) => {
 //Endpoint to see  a specific collaboration with a chef
 router.get('/:collaborationId', authenticateToken, async (req, res) => {
     try {
+     console.log("im here");
       // Extract vendor ID from the authenticated user
       const vendorId = req.user._id;
   
@@ -55,19 +58,39 @@ router.get('/:collaborationId', authenticateToken, async (req, res) => {
   
       // Find the specific collaboration request for the specified vendor
       const collaboration = await VendorCollaboration.findOne({_id: collaborationId,vendor: vendorId})
-       /*  .populate('chef') // Populate the 'chef' field with chef details
-        .populate('recipe') // Populate the 'recipe' field with recipe details
-        .populate('ingredients'); // Populate the 'ingredients' field with ingredient details */
+       
   
       if (!collaboration ) {
         return res.status(404).json({ message: 'Collaboration not found' });
       }
-  
-      return res.json(collaboration);
+      const ingredientIds = collaboration.ingredients;
+
+    const vendorIngredients = await Ingredient.find({ _id: { $in: ingredientIds } });
+    const collaborationWithIngredients = { ...collaboration.toObject(), ingredients: vendorIngredients };
+    console.log("nsdjans")
+    console.log("x",collaborationWithIngredients);
+      return res.json(collaborationWithIngredients);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Internal Server Error' });
     }
   });
+
+  // Endpoint to get ingredient names by IDs
+router.post('/names', async (req, res) => {
+  try {
+    const { ingredientIds } = req.body;
+
+    // Fetch ingredient names based on IDs
+    const ingredients = await Ingredient.find({ _id: { $in: ingredientIds } }, 'name');
+
+    const ingredientNames = ingredients.map((ingredient) => ingredient.name);
+
+    res.json({ names: ingredientNames });
+  } catch (error) {
+    console.error('Error fetching ingredient names:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
   module.exports = router;

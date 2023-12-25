@@ -6,6 +6,7 @@ import  useTokenStore  from  '../../tokenStore.js'
 import Comments from './Comments';
 import './Comments.css'
 import { jwtDecode } from 'jwt-decode';
+import useCartStore from './cartStore'; 
 
 
 const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
@@ -19,7 +20,8 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
   const decodedToken = jwtDecode(token); 
   const currentUserId = decodedToken.id;
   const [isRatingsVisible, setIsRatingsVisible] = useState(false);
-  
+  const [quantity, setQuantity] = useState(1);
+  localStorage.setItem('token', token);
   
   const imageData = new Uint8Array(recipe.recipeImage.data).reduce(
     (data, byte) => data + String.fromCharCode(byte),
@@ -78,36 +80,16 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
       console.error('Error fetching ratings or comments:', error.message);
     }
   };
-
+ 
+  const handleQuantityChange = (event) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    setQuantity(newQuantity);
+  };
   
   const handleClosePopup = () => {
     setIsPopupOpen(false);
   };
-/*
-  const handleFollowChef = async () => {
-    try {
 
-      console.log("Value of isFollowing: ", isFollowing)
-      const response = await fetch(`http://localhost:9000/recepieSeeker/${isFollowing ? 'unfollowChef' : 'followChef'}/${recipe.chef._id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      if (response.ok) {
-       // console.log("isUserFollowingChef", isUserFollowingChef);
-      
-        console.log(`RecipeSeeker is now ${isFollowing ? 'unfollowing' : 'following'} the Chef`);
-        setIsFollowing(!isFollowing);
-      } else {
-        console.error(`${isFollowing ? 'Unfollow' : 'Follow'} Chef failed:`, response.status, response.statusText);
-      }
-    } catch (error) {
-      console.error(`${isFollowing ? 'Unfollow' : 'Follow'} Chef error:`, error.message);
-    }
-  };*/
   const handleCommentSubmit = async () => {
     try {
       const response = await fetch(`http://localhost:9000/recepieSeeker/addComment/${recipe._id}`, {
@@ -190,6 +172,41 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
   return '';
   }
 
+
+    const addToCart = async () => {
+      try {
+        const newItem = {
+          recipe: recipe._id,
+          name: recipe.title,
+          price: recipe.price,
+          quantity: quantity,
+          chefId:recipe.chef,
+          vendorId:recipe.vendor
+        };
+  
+        console.log("recipe id sending: ",recipe._id)
+        const response = await fetch('http://localhost:9000/recepieSeeker/addOrder', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ items: [newItem] }),
+        });
+  
+        if (response.ok) {
+          console.log('Order added successfully');
+          useCartStore.getState().addToCart(newItem);
+        } else {
+          console.error('Failed to add order:', response.status, response.statusText);
+        }
+
+      } catch (error) {
+        console.error('Error adding order:', error.message);
+      }
+    
+    
+  };
  
   return (
     <>
@@ -281,10 +298,22 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
                     </div>
             </div>
 
-            <button className="add-to-cart-button">
+            <button className="add-to-cart-button" onClick={addToCart}>
               <span className="icon material-icons google-icon">shopping_cart</span>
               Add to Cart
             </button>
+
+            <div className="quantity-counter">
+            <label htmlFor="quantity">Quantity:</label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="1"
+              value={quantity}
+              onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+            />
+             </div>
 
 
           <div className="Rating-class">

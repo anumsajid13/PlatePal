@@ -48,7 +48,10 @@ const chefSchema = new mongoose.Schema({
 
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'RecipeSeeker' }],
   notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chef_Notification' }],
-  balance: Number,
+  balance:{
+    type: Number,
+    default:0.0,
+  }
 });
 
 const Chef =   mongoose.model('Chef', chefSchema);

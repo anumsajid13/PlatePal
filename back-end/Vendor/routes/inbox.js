@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const VendorChefInbox = require('../models/Vendor-Chef_Inbox Schema');
-const authenticateToken = require('../TokenAuthentication/token_authenticate');
+const VendorChefInbox = require('../../models/Vendor-Chef_Inbox Schema');
+const authenticateToken = require('../../TokenAuthentication/token_authentication');
 const Chef_Notification = require('../../models/Chef_Notification Schema');
 
 // Endpoint to get all messages for a vendor
@@ -23,7 +23,7 @@ router.get('/', authenticateToken, async (req, res) => {
   }
 });
 // Endpoint to reply to messages in the inbox
-router.post('/reply', authenticateToken, async (req, res) => {
+router.post('/sendmessage', authenticateToken, async (req, res) => {
     try {
       const vendorId = req.user.vendorId; 
       const { chefId, message } = req.body;
@@ -62,7 +62,7 @@ router.post('/reply', authenticateToken, async (req, res) => {
   });
   
 // Endpoint to get messages from a specific chef in the inbox
-router.get('/messages/:chefId', authenticateToken, async (req, res) => {
+router.get('retreivemessage/:chefId', authenticateToken, async (req, res) => {
     try {
       const vendorId = req.user.vendorId;
       const chefId = req.params.chefId;

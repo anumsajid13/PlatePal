@@ -138,17 +138,19 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
   
 
   // Endpoint to delete a collaboration request
-router.delete('/delete/:collaborationId', authenticateToken, async (req, res) => {
+router.put('/decline/:collaborationId', authenticateToken, async (req, res) => {
     try {
       const vendorId = req.user._id;
 
       const collaborationId = req.params.collaborationId;
-      const collaboration = await CollaborationRequest.findOne({ _id: collaborationId, vendor: vendorId });
+      const collaborationRequest = await CollaborationRequest.findOne({ _id: collaborationId, vendor: vendorId });
   
-      if (!collaboration) {
+      if (!collaborationRequest) {
         return res.status(404).json({ message: 'Collaboration request not found' });
       }
-      await collaboration.remove();
+      collaborationRequest.isAccepted = 'declined';
+      await collaborationRequest.save();
+  
   
       return res.json({ message: 'Collaboration request deleted successfully' });
     } catch (error) {
@@ -194,5 +196,19 @@ router.get('/recipe/:recipeId', async (req, res) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+// Endpoint to delete collaboration requests by IDs
+router.post('/delete', async (req, res) => {
+  try {
+    // Extract collaboration request IDs from the request body
+    const collaborationRequestIds = req.body.collaborationRequestIds;
 
+    // Delete collaboration requests from the database
+    await CollaborationRequest.deleteMany({ _id: { $in: collaborationRequestIds } });
+
+    res.json({ success: true, message: 'Collaboration requests deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+});
   module.exports = router;
