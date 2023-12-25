@@ -136,18 +136,20 @@ app.post("/api/create-checkout-session",async(req,res)=>{
         const chefId = order.items[0].chefId;
         const vendorId = order.items[0].vendorId;
         const price = order.items[0].price * order.items[0].quantity;
-    
+        console.log("PRICE ", price)
         // Calculate 40% of the price
-        const chefAmount = (40 / 100) * price;
-        const vendorAmount = (40 / 100) * price;
+        const chefAmount = Math.round((40 / 100) * price);
+        const vendorAmount = Math.round((60 / 100) * price);
     
         // Update Chef and Vendor balances
         try {
-          const chef = await Chef.findById(chefId);
-          const vendor = await Vendor.findById(vendorId);
-    
-       //   await chef.balance(chefAmount);
-       //   await vendor.balance(vendorAmount);
+            const chef = await Chef.findById(chefId);
+            chef.balance += chefAmount;
+            await chef.save();
+      
+            const vendor = await Vendor.findById(vendorId);
+            vendor.balance += vendorAmount;
+            await vendor.save();
         } catch (error) {
           console.error('Error updating balances:', error.message);
           // Handle the error appropriately
