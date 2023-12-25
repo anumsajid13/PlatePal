@@ -23,9 +23,8 @@ const BlockReports = () => {
       }
 
       const data = await response.json();
-      
       console.log('Fetched data:', data);
-      setBlockReports(data.blockReports || []); // Set the state to an array, or an empty array if data.blockReports is falsy
+      setBlockReports(data.blockReports || []);
     } catch (error) {
       console.error(error);
     }
@@ -44,19 +43,17 @@ const BlockReports = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      // Update the blockReports state to reflect the blocked vendor
-    const updatedReports = blockReports.map((report) =>
-    report.vendor._id === vendorId ? { ...report, vendor: { ...report.vendor, isBlocked: true } } : report
-  );
+      const updatedReports = blockReports.map((report) =>
+        report.vendor._id === vendorId ? { ...report, vendor: { ...report.vendor, isBlocked: true } } : report
+      );
 
-  console.log('Updated Reports:', updatedReports);
+      console.log('Updated Reports:', updatedReports);
 
-  setBlockReports(updatedReports);
+      setBlockReports(updatedReports);
     } catch (error) {
       console.error(error);
     }
   };
-
 
   useEffect(() => {
     fetchBlockReports(token);
@@ -72,19 +69,24 @@ const BlockReports = () => {
             <h3>Block User:</h3>
             <p>{report.vendor.name}</p>
             <p>Reason: {report.reason}</p>
-            {report.proof && (
+            <div className="proof-image-container">
+
+            {report.proof && report.proof.contentType && (
               <img
-             src={`data:image/jpeg;base64,${report.proof.data}`} 
+                className="proof-image"
+                src={`data:${report.proof.contentType};base64,${report.proof.data}`}
                 alt="Proof"
               />
             )}
+            </div>
 
             {/* Block button */}
             {!report.vendor.isBlocked && (
-              <button onClick={() => blockVendor(report.vendor._id)}>Block</button>
+              <button className="block-button" onClick={() => blockVendor(report.vendor._id)}>
+                Block
+              </button>
             )}
-            {report.vendor.isBlocked && <p>Status: Blocked</p>}
-
+            {report.vendor.isBlocked && <p className="status-text">Status: Blocked</p>}
           </div>
         ))}
       </div>
