@@ -19,10 +19,10 @@ const Adminmain = () => {
         const nutritionistData = await nutritionistResponse.json();
         fetchTopNutritionists(nutritionistData.topNutritionists); // Set the topNutritionists array
 
-        // const vendorResponse = await fetch(`http://localhost:9000/admin/top-vendors`);
-        // const vendorData = await vendorResponse.json();
-        // console.log(vendorData);
-        // fetchTopVendors(vendorData.topVendors); // Set the topVendors array
+        const vendorResponse = await fetch(`http://localhost:9000/admin/top-vendors`);
+        const vendorData = await vendorResponse.json();
+        console.log(vendorData);
+        fetchTopVendors(vendorData.topVendors); // Set the topVendors array
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -73,6 +73,26 @@ const Adminmain = () => {
                   <span>{nutritionist.username}</span>
                 </div>
                 <p>Total Followers: {nutritionist.followers}</p>
+              </div>
+            ))}
+          </div>
+
+
+          <div className="top-nutritionists-list">
+            <h2>Top Vendors</h2>
+            {topVendors.map((nutritionist) => (
+              <div key={nutritionist._id} className="list-item">
+                <div className="nutritionist-profile">
+                {nutritionist.profilePicture && nutritionist.profilePicture.contentType && (
+                    <img
+                      src={`data:${nutritionist.profilePicture.contentType};base64,${nutritionist.profilePicture.data}`}
+                      alt={nutritionist.name}
+                      className="rounded-profile-image"
+                    />
+                  )}
+                  <span>{nutritionist.username}</span>
+                </div>
+                <p>Total Collabrators: {nutritionist.collabNum}</p>
               </div>
             ))}
           </div>

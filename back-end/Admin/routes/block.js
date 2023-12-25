@@ -13,45 +13,6 @@ const router = express.Router();
 const VendorNotification = require('../../models/Vendor_Notification Schema');
 
 
-// Endpoint to block a chef based on a report
-router.post('/block-chef/:chefId', authenticateToken, async (req, res) => {
-  try {
-      const chef = await Chef.findById(req.params.chefId);
-
-      if (!chef) {
-          return res.status(404).json({ error: 'Chef not found' });
-      }
-
-      // Set unblock time 30 seconds later than the current time
-        const unblockTime = new Date();
-        unblockTime.setSeconds(unblockTime.getSeconds() + 30);
-
-          // Block the chef
-          chef.isBlocked = true;
-          chef.blockCount += 1;
-          chef.unblockTime = unblockTime; // Reset unblock time
-          await chef.save();
-
-          // Create a notification message for the blocked chef
-          const notification = new ChefNotification({
-              user: chef._id,
-              type: 'chef block',
-              notification_text: 'You have been blocked by an admin due to inappropriate behavior.',
-          });
-          await notification.save();
-
-          return res.json({
-              message: 'Chef blocked successfully',
-                unblockTime: chef.unblockTime,          
-              proof: proof, // Include proof in the response
-          });
-    
-  } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
 // Endpoint to block a nutritionist based on a report
 router.post('/block-nutritionist/:nutritionistId', authenticateToken, async (req, res) => {
   try {
@@ -61,10 +22,14 @@ router.post('/block-nutritionist/:nutritionistId', authenticateToken, async (req
       return res.status(404).json({ error: 'Nutritionist not found' });
     }
 
+    // Set unblock time 30 seconds later than the current time
+    const unblockTime = new Date();
+    unblockTime.setSeconds(unblockTime.getSeconds() + 30);
+
     // Block the nutritionist
     nutritionist.isBlocked = true;
     nutritionist.blockCount += 1;
-    nutritionist.unblockTime = null; // Reset unblock time
+    nutritionist.unblockTime = unblockTime; // Reset unblock time
     await nutritionist.save();
 
     // Create a notification message for the blocked nutritionist
@@ -77,6 +42,44 @@ router.post('/block-nutritionist/:nutritionistId', authenticateToken, async (req
 
     return res.json({
       message: 'Nutritionist blocked successfully',
+      unblockTime: nutritionist.unblockTime,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Endpoint to block a chef based on a report
+router.post('/block-chef/:chefId', authenticateToken, async (req, res) => {
+  try {
+    const chef = await Chef.findById(req.params.chefId);
+
+    if (!chef) {
+      return res.status(404).json({ error: 'Chef not found' });
+    }
+
+    // Set unblock time 30 seconds later than the current time
+    const unblockTime = new Date();
+    unblockTime.setSeconds(unblockTime.getSeconds() + 30);
+
+    // Block the chef
+    chef.isBlocked = true;
+    chef.blockCount += 1;
+    chef.unblockTime = unblockTime; // Reset unblock time
+    await chef.save();
+
+    // Create a notification message for the blocked chef
+    const notification = new ChefNotification({
+      user: chef._id,
+      type: 'chef block',
+      notification_text: 'You have been blocked by an admin due to inappropriate behavior.',
+    });
+    await notification.save();
+
+    return res.json({
+      message: 'Chef blocked successfully',
+      unblockTime: chef.unblockTime,
     });
   } catch (error) {
     console.error(error);
