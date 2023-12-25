@@ -152,7 +152,7 @@ app.use('/n', Nutritionist_Plan);
 app.use('/chef', chatwithuserChef);
 
 //chef-vendor inbox route (chef)
-app.use('/chef', chatwithvendorChef);
+app.use('/Chef', chatwithvendorChef);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
