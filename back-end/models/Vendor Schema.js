@@ -40,7 +40,27 @@ const vendorSchema = new mongoose.Schema({
   default: 0,
 }, unblockTime: {
   type: Date,
-  default: null, // Initially set to null, indicating not blocked
+  default: null, 
+},
+Collaboration: [{
+  chefId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Chef', 
+    required: true,
+  },
+  recipesCollaborated: {
+    type: Number,
+    default: 0,
+  },
+}],
+collabNum:{
+  type:Number,
+  default:0,
+},
+balance:
+{
+  type:Number,
+  default:0.0,
 }
 });
 

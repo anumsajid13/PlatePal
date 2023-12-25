@@ -35,9 +35,7 @@ const AdminNav = () => {
         {/* Clickable components on the right */}
         <div className="nav-links">
           <div>Home</div>
-          <div>Recipes</div>
-          <div>Reviews</div>
-          <div>Nutritionist</div>
+      
           <div className="icon-link" title="notifications" onClick={handleNotificationsClick}>
             <span className="material-icons google-icon">notifications</span>
           </div>
@@ -54,7 +52,7 @@ const AdminNav = () => {
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <a href="#" onClick={handleSidebarToggle} className="close-btn">×</a>
        
-        <Link to="/admin/block-report" onClick={handleSidebarToggle}>
+        <Link to="/admin/blockreport" onClick={handleSidebarToggle}>
           View Block Reports
         </Link>
         {/* Use Link for navigation */}

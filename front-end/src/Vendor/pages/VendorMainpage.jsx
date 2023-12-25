@@ -20,7 +20,7 @@ const MainPage = () => {
     const fetchAllIngredients = async () => {
       try {
         const response = await fetch(
-          `http://localhost:9000/Ingredients/All?page=${currentPage}&pageSize=4`,
+          `http://localhost:9000/Ingredients/All?page=${currentPage}&pageSize=30`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

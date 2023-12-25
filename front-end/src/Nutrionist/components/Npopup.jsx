@@ -79,7 +79,7 @@ console.log("woo", data)
             <div key={notification._id} className="notification-item">
               <strong>{notification.sender.username}</strong>: {notification.notification_text} (BMI: {notification.bmi})
               {!notification.seen && (
-                <button onClick={() => handleCreatePlan( notification._id, notification.sender._id,notification.bmi)}>Create Plan</button>
+                <button className = "createPlan" onClick={() => handleCreatePlan( notification._id, notification.sender._id,notification.bmi)}>Create Plan</button>
               )}
             </div>
           ))

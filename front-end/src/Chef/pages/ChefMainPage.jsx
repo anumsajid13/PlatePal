@@ -124,7 +124,7 @@ const ChefMainPage = () => {
                                     <h3>{recipe.title.replace(/"/g, '')}</h3>
                                     <p>by Chef {recipe.chefName}</p>
                                     <p className='recipe-card-chef-description'>{truncateText(recipe.description.replace(/"/g, ''), 20 )}</p>
-                                    <button onClick={() => handleRecipeUpdate(recipe)}>Update</button>
+                                   
                                 </div>
                             </div>
                             <button className='recipe-update-buttonn' onClick={() => handleRecipeUpdate(recipe._id)}>Update</button>

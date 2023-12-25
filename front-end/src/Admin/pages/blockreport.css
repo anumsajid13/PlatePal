@@ -1,7 +1,6 @@
 /* blockreport.css */
 
 body {
-  
   background-color: #f7f7f7;
   margin: 0;
 }
@@ -26,25 +25,50 @@ h1 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin-bottom: 20px;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.block-report:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
 }
 
 .block-report h3 {
   color: #333;
   font-family: "Quattrocento";
-    font-weight: bold;
-
+  font-weight: bold;
 }
 
-.block-report p {
-  color: #555;
-  font-family: "Quattrocento";
+.proof-image-container {
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  margin-left:16%;
+}
+.proof-image {
+  width: 80%;
+  max-height: 700px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 15px;
 }
 
-.block-report img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 4px;
+.block-button {
+  background-color: #ff5e5e;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.block-button:hover {
+  background-color: #e14141;
+}
+
+.status-text {
+  font-weight: bold;
+  color: #ff5e5e;
   margin-top: 10px;
 }
-
-/* Add more styling as needed */

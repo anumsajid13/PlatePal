@@ -3,6 +3,7 @@ const router = express.Router();
 const authenticateToken = require('../../TokenAuthentication/token_authentication'); 
 const UserChefInbox = require('../../models/User-Chef_Inbox Schema');
 const Chef = require('../../models/Chef Schema');
+const RecipeSeeker = require('../../models/RecipeSeekerSchema');
 const UserNotification = require('../../models/User_Notification Schema');
 
 //route for a chef to send a message to a recipe seeker
@@ -51,7 +52,84 @@ router.post('/sendMessageToUser/:userId', authenticateToken, async (req, res) =>
     //save the UserNotification document
     const savedUserNotification = await userNotification.save();
 
-    res.status(201).json({ message: 'Message sent successfully', data: savedUserNotification });
+    res.status(201).json({ message: 'Message sent successfully', data: savedUserChefInbox });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+});
+
+/*router.get('/allUsers', async (req, res) => {
+  try {
+    const userss = await RecipeSeeker.find({}, 'name profilePicture');
+
+    const usersWithBase64Image = userss.map((users) => {
+      if (users.profilePicture !== undefined || users.profilePicture !== null) {
+        if (typeof users.profilePicture === 'object') {
+          const base64String = Buffer.from(users.profilePicture.data.buffer).toString('base64');
+          return {
+            _id: users._id,
+            name: users.name,
+            profilePicture: `data:${users.profilePicture.contentType};base64,${base64String}`,
+          };
+        } else {
+          return {
+            _id: users._id,
+            name: users.name,
+            profilePicture: users.profilePicture.toString('base64'),
+          };
+        }
+      } else {
+        console.log(`Profile picture is undefined or null for user with ID: ${users._id}`);
+        return {
+          _id: users._id,
+          name: users.name,
+          profilePicture: null,
+        };
+      }
+    });
+
+    res.status(200).json({ users: usersWithBase64Image });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+});*/
+
+router.get('/allUsers', async (req, res) => {
+  try {
+    const users = await RecipeSeeker.find({}, 'name _id'); 
+
+    res.status(200).json( users );
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+});
+
+
+router.get('/chatMessages/:userId', authenticateToken, async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const chef = await Chef.findById(req.user.id);
+    if (!userId) {
+      return res.status(404).json({ message: 'Chef not found' });
+    }
+
+    //find the User_Chef_Inbox document for the specified chef and user
+    const userChefInbox = await UserChefInbox.findOne({ user: userId, chef: chef._id });
+
+    if (!userChefInbox) {
+      return res.status(404).json({ message: 'UserChefInbox not found' });
+    }
+
+    //Extract messages, author names, and times
+    const chatMessages = userChefInbox.messages.map((message) => ({
+      _id: message._id,
+      message: message.message,
+      author: message.author,
+      time: message.time,
+    }));
+
+    res.status(200).json({ messages: chatMessages });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }

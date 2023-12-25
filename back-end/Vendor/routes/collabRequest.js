@@ -5,6 +5,7 @@ const VendorCollaboration =require('../../models/VendorCollaboration Schema');
 const CollaborationRequest = require('../../models/CollaborationRequest Schema');
 const Chef=require('../../models/Chef Schema');
 const Recipe=require('../../models/Recipe Schema');
+const Ingredient=require('../../models/Ingredient Schema');
 
 
 //Endpoint to see all collaboration request of a vendor with a chef 
@@ -80,39 +81,76 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
 
 
   
-
-// Endpoint to accept a collaboration request
-router.put('/:icollaborationRequestId/accept', authenticateToken, async (req, res) => {
+  router.put('/accept/:collaborationRequestId', authenticateToken, async (req, res) => {
     try {
-      const vendorId = req.user._id; 
-      const collaborationId = req.params.collaborationId;
-      const collaboration = await CollaborationRequest.findOne({ _id: collaborationId, vendor: vendorId });
+      const vendorId = req.user.id;
+      const collaborationRequestId = req.params.collaborationRequestId;
+  console.log("vendor",vendorId,"collab",collaborationRequestId);
+   
+      const collaborationRequest = await CollaborationRequest.findOne({
+        _id: collaborationRequestId,
+        vendor: vendorId,
+        isAccepted: 'pending',
+      });
   
-      if (!collaboration) {
-        return res.status(404).json({ message: 'Collaboration request not found' });
+      if (!collaborationRequest) {
+        return res.status(404).json({ message: 'Collaboration request not found or already accepted/rejected.' });
       }
-   const vendorCollaboration = new VendorCollaboration({recipe: collaboration.recipe, chef: collaboration.chef, vendor: collaboration.vendor, Time: collaboration.Time});
-      await vendorCollaboration.save();
   
-      return res.json({ message: 'Collaboration request accepted successfully', collaboration });
+
+      const ingredientIds = collaborationRequest.ingredients.map(ingredient => ingredient.name);
+      const vendorIngredients = await Ingredient.find({
+        name: { $in: ingredientIds },
+        vendor: vendorId,
+      });
+      console.log("names",ingredientIds );
+  console.log("vendor",vendorIngredients);
+  console.log("vendor",vendorIngredients.length);
+  console.log("collab",collaborationRequest.ingredients.length);
+      if (vendorIngredients.length !== collaborationRequest.ingredients.length) {
+        return res.status(400).json({ message: 'Invalid ingredients in the collaboration request.' });
+      }
+  
+      // Create a collaboration object
+      const vendorCollaboration = new VendorCollaboration({
+        vendor: collaborationRequest.vendor,
+        chef: collaborationRequest.chef,
+        recipe: collaborationRequest.recipe,
+        ingredients: vendorIngredients.map(ingredient => ingredient._id),
+        Time: collaborationRequest.Time,
+      });
+  
+  
+      await vendorCollaboration.save();
+      const recipe=await Recipe.findOne({_id:collaborationRequest.recipe});
+      recipe.vendor=vendorId;
+      await recipe.save();
+      // Update collaboration request status
+      collaborationRequest.isAccepted = 'accepted';
+      await collaborationRequest.save();
+  
+      return res.json({ message: 'Collaboration request accepted successfully', collaboration: vendorCollaboration });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Internal Server Error' });
     }
   });
+  
 
   // Endpoint to delete a collaboration request
-router.delete('/delete/:collaborationId', authenticateToken, async (req, res) => {
+router.put('/decline/:collaborationId', authenticateToken, async (req, res) => {
     try {
       const vendorId = req.user._id;
 
       const collaborationId = req.params.collaborationId;
-      const collaboration = await CollaborationRequest.findOne({ _id: collaborationId, vendor: vendorId });
+      const collaborationRequest = await CollaborationRequest.findOne({ _id: collaborationId, vendor: vendorId });
   
-      if (!collaboration) {
+      if (!collaborationRequest) {
         return res.status(404).json({ message: 'Collaboration request not found' });
       }
-      await collaboration.remove();
+      collaborationRequest.isAccepted = 'declined';
+      await collaborationRequest.save();
+  
   
       return res.json({ message: 'Collaboration request deleted successfully' });
     } catch (error) {
@@ -158,5 +196,19 @@ router.get('/recipe/:recipeId', async (req, res) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+// Endpoint to delete collaboration requests by IDs
+router.post('/delete', async (req, res) => {
+  try {
+    // Extract collaboration request IDs from the request body
+    const collaborationRequestIds = req.body.collaborationRequestIds;
 
+    // Delete collaboration requests from the database
+    await CollaborationRequest.deleteMany({ _id: { $in: collaborationRequestIds } });
+
+    res.json({ success: true, message: 'Collaboration requests deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+});
   module.exports = router;

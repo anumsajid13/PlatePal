@@ -21,6 +21,7 @@ const User_Nutritionist_Inbox = require('./models/User-Nutritionist_Inbox Schema
 const Vendor = require('./models/Vendor Schema');
 const VendorBlockReport = require('./models/VendorBlockReport Schema');
 const VendorCollaboration = require('./models/VendorCollaboration Schema');
+const vendorChat = require('./models/Vendor-Chef_Inbox Schema');
 //app.js
 const express = require('express');
 const mongoose = require('mongoose');
@@ -75,11 +76,12 @@ const list_chef = require('./Admin/routes/list');
 const admin_Notification = require('./Admin/routes/Notifications');
 const top = require('./Admin/routes/top');
 
-
+//vendor routes
 const vendor_Routes = require('./Vendor/routes/profileRoute');
 const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
 const collaboration_Routes = require('./Vendor/routes/collaborationroute');
 const collaboration_Request= require('./Vendor/routes/collabRequest');
+const vendorChatRoute = require('./Vendor/routes/inbox');
 
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 
@@ -99,6 +101,8 @@ app.use((req, res, next) => {
   });
 const chefnotifications = require('./Chef/routes/Notification_routes');
 const cheffollowerss = require('./Chef/routes/DisplayFollowers_routes');
+const chatwithuserChef = require('./Chef/routes/ChatUser_routes');
+const chatwithvendorChef = require('./Chef/routes/ChatVendor_Routes');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 app.use('/chef', chefnotifications);
@@ -197,6 +201,7 @@ app.use('/vendor', vendor_Routes);
 app.use('/ingredients', ingredient_Routes);
 app.use('/collaboration',collaboration_Routes);
 app.use('/collaboration-request',collaboration_Request);
+app.use('/chatWithchef',vendorChatRoute );
 
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);
@@ -209,6 +214,11 @@ app.use('/chefVendors', collabVendorsChef);
 app.use('/n', Nutritionist_Signin); 
 app.use('/n', Nutritionist_Plan); 
 
+//chef-user inbox route (chef)
+app.use('/chef', chatwithuserChef);
+
+//chef-vendor inbox route (chef)
+app.use('/Chef', chatwithvendorChef);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
