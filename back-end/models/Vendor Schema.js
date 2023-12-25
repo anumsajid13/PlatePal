@@ -40,7 +40,7 @@ const vendorSchema = new mongoose.Schema({
   default: 0,
 }, unblockTime: {
   type: Date,
-  default: null, // Initially set to null, indicating not blocked
+  default: null, 
 },
 Collaboration: [{
   chefId: {
@@ -52,7 +52,12 @@ Collaboration: [{
     type: Number,
     default: 0,
   },
-}]
+}],
+balance:
+{
+  type:Number,
+  default:0.0,
+}
 });
 
 const Vendor =   mongoose.model('Vendor', vendorSchema);
