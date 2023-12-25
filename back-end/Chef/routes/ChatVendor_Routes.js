@@ -85,7 +85,6 @@ router.get('/vendorchatMessages/:vendorId', authenticateToken, async (req, res) 
     //find the Vendor_Chef_Inbox document for the specified vendor and user
     const vendorChefInbox  = await VendorChefInbox.findOne({ vendor: vendorId, chef: chef._id });
 
-    console.log(vendorChefInbox)
     if (!vendorChefInbox) {
       return res.status(404).json({ message: 'VendorChefInbox not found' });
     }
