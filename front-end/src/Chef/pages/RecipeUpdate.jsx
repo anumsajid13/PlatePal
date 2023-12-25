@@ -1,34 +1,48 @@
-import  {React, useEffect, useState } from 'react';
-import ChefNav from '../components/NavBarChef';
-import './createRecipe.css'; 
+import {React , useState} from 'react';
+import '../components/RecipePopUpChef.css';
 import useTokenStore from '../../tokenStore';
 
-
-const CreateRecipe = () => {
+const RecipeUpdateModal = ({ selectedRecipe, onClose, onUpdate}) => {
+    console.log(selectedRecipe)
 
     const { token, setToken } = useTokenStore(); 
 
-    console.log(token)
     const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        calories: '',
-        servingSize: '',
-        difficulty: '',
-        totalTime: '',
-        ingredients: [],
-        allergens: [],
-        notDelivered: [],
-        utensils: [],
-        category: [],
-        instructions: [],
+        title: selectedRecipe.title, 
+        description: selectedRecipe.description, 
+        calories: selectedRecipe.calories, 
+        servingSize: selectedRecipe.servingSize,
+        difficulty: selectedRecipe.difficulty, 
+        totalTime: selectedRecipe.totalTime,
+        price: selectedRecipe.price, 
+        ingredients: selectedRecipe.ingredients,
+        allergens: selectedRecipe.allergens,
+        notDelivered: selectedRecipe.notDelivered,
+        utensils: selectedRecipe.utensils,
+        category: selectedRecipe.category,
+        instructions: selectedRecipe.instructions,
         recipeImage: null,
-        price: '',
-      });
+    });
 
-      const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
-      const handleArrayFieldChange = (field, index, e) => {
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setFormData((prevData) => ({
+            ...prevData,
+            recipeImage: file,
+        }));
+    };
+
+    const handleArrayFieldChange = (field, index, e) => {
         const { value } = e.target;
         const newArray = [...formData[field]];
         newArray[index] = value;
@@ -45,6 +59,7 @@ const CreateRecipe = () => {
           }));
       };
     
+
       const removeArrayField = (field, index) => {
         const newArray = [...formData[field]];
         newArray.splice(index, 1);
@@ -82,134 +97,75 @@ const CreateRecipe = () => {
           };
         });
       };
-      
-      const handleSuccessPopup = () => {
-        setShowSuccessPopup(true);
-      };
-    
-      const handlePopupClose = () => {
-        setShowSuccessPopup(false);
-      };
 
-      const handleChange = (e) => {
-        const { name, value } = e.target;
-            const numericValue = name === 'calories' || name === 'servingSize' || name === 'totalTime' ||  name === 'price' ? parseInt(value, 10) : value;
-            setFormData(prevState => ({
-                ...prevState,
-                [name]: numericValue,
-            }));
-      };
-
-      const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setFormData(prevState => ({
-            ...prevState,
-            recipeImage: file,
-        }));
-      };
-
-      const handleFetchNutrition = async (recipeId) => {
-        try {
-          const response = await fetch(`http://localhost:9000/recipes/${recipeId}/fetch-nutrition`, {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
-          });
-    
-          if (!response.ok) {
-            throw new Error('Failed to fetch nutrition data');
-          }
-    
-          const data = await response.json();
-         
-    
-        } catch (error) {
-          console.error('Error fetching nutrition data:', error.message);
-          
-        }
-      };
-
-      const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Token:', token);
 
         try {
             const formDataToSend = new FormData();
-
-    Object.entries(formData).forEach(([key, value]) => {
-      if (key !== 'recipeImage' && key !== 'ingredients') {
-        if (Array.isArray(value)) {
-          value.forEach((item) => {
-            formDataToSend.append(key, JSON.stringify(item));
-          });
-        } else {
-          formDataToSend.append(key, JSON.stringify(value));
-        }
-      }
-    });
-
-    // Append ingredients as an array of objects
-    formData.ingredients.forEach((ingredient, index) => {
-      formDataToSend.append(`ingredients[${index}][name]`, ingredient.name);
-      formDataToSend.append(`ingredients[${index}][quantity]`, ingredient.quantity);
-    });
-
-    formDataToSend.append('recipeImage', formData.recipeImage);
-
-    console.log('lala', formDataToSend)
-          const response = await fetch('http://localhost:9000/recipes/newRecipe', {
-            method: 'POST',
-            headers: {
-                
-                Authorization: `Bearer ${token}`, 
-              },
-              body: formDataToSend,
-          });
-          if (!response.ok) {
-            const data = await response.json();
-            console.error('Error:', data.message);
            
-          } else {
-            const data = await response.json();
-            console.log('Recipe created:', data);
-            
-            setShowSuccessPopup(true);
-            console.log(data._id)
-            //fetch nutrition data for the newly created recipe
-            handleFetchNutrition(data._id);
+            formDataToSend.append('title', formData.title);
+            formDataToSend.append('description', formData.description);
+            formDataToSend.append('calories', formData.calories);
+            formDataToSend.append('servingSize', formData.servingSize);
+            formDataToSend.append('difficulty', formData.difficulty);
+            formDataToSend.append('totalTime', formData.totalTime);
+            formDataToSend.append('price', formData.price);
+            formDataToSend.append('category', formData.category);
 
-            //reset form data to initial state after successful creation
-            setFormData({
-                title: '',
-                description: '',
-                calories: '',
-                servingSize: '',
-                difficulty: '',
-                totalTime: '',
-                ingredients: [],
-                allergens: [],
-                notDelivered: [],
-                utensils: [],
-                category: [],
-                instructions: [],
-                recipeImage: null,
-                price:'',
+            formData.ingredients.forEach((ingredient, index) => {
+                formDataToSend.append(`ingredients[${index}][name]`, ingredient.name);
+                formDataToSend.append(`ingredients[${index}][quantity]`, ingredient.quantity);
             });
-          }
+
+            formData.allergens.forEach((allergen, index) => {
+                formDataToSend.append(`allergens[${index}]`, allergen);
+            });
+
+            formData.notDelivered.forEach((item, index) => {
+                formDataToSend.append(`notDelivered[${index}]`, item);
+            });
+
+            formData.utensils.forEach((utensil, index) => {
+                formDataToSend.append(`utensils[${index}]`, utensil);
+            });
+
+            formData.instructions.forEach((instruction, index) => {
+                formDataToSend.append(`instructions[${index}]`, instruction);
+            });
+
+            formDataToSend.append('recipeImage', formData.recipeImage);
+
+            const response = await fetch(`http://localhost:9000/recipes/update/${selectedRecipe._id}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                body: formDataToSend,
+            });
+
+            if (!response.ok) {
+                const data = await response.json();
+                console.error('Error:', data.message);
+            } else {
+                console.log(response)
+                setShowSuccessPopup(true);
+                onUpdate();
+            }
         } catch (error) {
-          console.error('Error:', error.message);
-          // Handle any other error scenarios in UI
+            console.error('Error:', error.message);
+            
         }
-      };
-
+    };
     return (
-
         <>
-            <ChefNav/>
-            <div className="create-recipe-container">
-                <h2 className='create-recipe-heading2'>Create Recipe</h2>
-                <form className='create-recipe-form' >
+            <div className="chef-recipe-popup-container">
+            <div className="chef-recipe-popup">
+                <div className="chef-recipe-image-container">
+
+                    
+                    <h2>Update Recipe</h2>
+                    <form >
                     <div className='create-recipe-inputlabel'>
                         <label className='create-recipe-label' htmlFor="title">Title</label>
                         <input className='create-recipe-input' type="text" id="title" name="title" value={formData.title} onChange={handleChange} placeholder="enter recipe name" />
@@ -360,32 +316,19 @@ const CreateRecipe = () => {
                         ))}
                             <button className='create-recipe-button' onClick={() => addArrayField('instructions')} type="button">Add Instructions</button>
                     </div>
-                    
-                    <div className='create-recipe-inputlabel'>
-                        <label className='create-recipe-label' htmlFor="recipeImage">Recipe Image</label>
-                        <input className='create-recipe-input' type="file" id="recipeImage" name="recipeImage" onChange={handleImageChange} />
-                    </div>
-                    
-                    <button className='create-recipe-button'  onClick={handleSubmit} type="submit">Create Recipe</button>
-                </form>
 
-             </div>
-            
-            {/* Success Popup */}
-                {showSuccessPopup && (
-                    <div className="success-popup">
-                    <p>Recipe Created Successfully!</p>
-                    <button className="popup-button" onClick={handlePopupClose}>
-                        Directed to Vendors Page to Send Collab Request
-                    </button>
-                    </div>
-                )}
+                        <input type="file" name="recipeImage" onChange={handleImageChange} />
+                        <button onClick={handleSubmit} type="button">Update Recipe</button>
+                    </form>
+                    <button onClick={onClose}>Close</button>
 
+                </div>
+      
+            </div>
+            </div>
+        
         </>
-    
     );
-
 };
 
-
-export default CreateRecipe;
+export default RecipeUpdateModal;

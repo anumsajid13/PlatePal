@@ -14,11 +14,10 @@ const CollaborationsRequestsList = () => {
     const fetchRequests = async () => {
       try {
         
-        console.log('Effect triggered');
         const response = await fetch('http://localhost:9000/collaboration-request', {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`, 
+            'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
             });
@@ -59,9 +58,10 @@ const handleClick = () => {
         <button onClick={handleClick} className="backButton">
           <FaArrowLeft /> Back
         </button>
+        <h1>Collaboration Requests List</h1>
         </div>
      <div>
-      <h1>Collaboration Requests List</h1>
+     
       {loading ? (
         <p>Loading...</p>
       ) : (

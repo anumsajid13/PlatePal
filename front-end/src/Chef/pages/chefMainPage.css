@@ -44,8 +44,12 @@
     padding: 0; 
     transition: transform 0.3s ease-in-out;
     position: relative; 
-
+    
    
+}
+
+.recipe-update-buttonn{
+    margin-top: 30px;
 }
 
 

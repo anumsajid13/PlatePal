@@ -3,6 +3,7 @@ import ChefNav from '../components/NavBarChef';
 import useTokenStore from '../../tokenStore';
 import '../pages/chefMainPage.css';
 import RecipePopUpChef from '../components/RecipePopUpChef';
+import RecipeUpdateModal from './RecipeUpdate'
 
 
 const ChefMainPage = () => {
@@ -16,48 +17,63 @@ const ChefMainPage = () => {
     const [recipesWithVendor, setRecipesWithVendor] = useState([]);
     const [recipesWithoutVendor, setRecipesWithoutVendor] = useState([]);
     const [selectedRecipe, setSelectedRecipe] = useState(null);
+    const [updateselectedRecipe, setupdateselectedRecipe] = useState(null);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+
+    const handleRecipeUpdate = (recipe) => {
+       console.log(recipe)
+        setupdateselectedRecipe(recipe);
+        setShowUpdateModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setupdateselectedRecipe(null);
+        setShowUpdateModal(false);
+    };
+
+    const fetchData = async () => {
+        try {
+           
+            //fetch recipes with a vendor collaboration
+            const responseWithVendor = await fetch('http://localhost:9000/recipes/myrecipes/vendors',  {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`, 
+                  }
+                 
+              });
+            if (!responseWithVendor.ok) {
+                throw new Error('Failed to fetch recipes with vendor collaboration');
+            }
+            const dataWithVendor = await responseWithVendor.json();
+            console.log(dataWithVendor);
+            setRecipesWithVendor(dataWithVendor);
+
+            //fetch recipes without a vendor collaboration
+            const responseWithoutVendor = await fetch('http://localhost:9000/recipes/myrecipes/noVendor',  {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`, 
+                  }
+                 
+              });
+            if (!responseWithoutVendor.ok) {
+                throw new Error('Failed to fetch recipes without vendor collaboration');
+            }
+            const dataWithoutVendor = await responseWithoutVendor.json();
+            setRecipesWithoutVendor(dataWithoutVendor);
+           
+        } catch (error) {
+            // Handle error
+            console.error('Error:', error.message);
+        }
+    };
+
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-               
-                //fetch recipes with a vendor collaboration
-                const responseWithVendor = await fetch('http://localhost:9000/recipes/myrecipes/vendors',  {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`, 
-                      }
-                     
-                  });
-                if (!responseWithVendor.ok) {
-                    throw new Error('Failed to fetch recipes with vendor collaboration');
-                }
-                const dataWithVendor = await responseWithVendor.json();
-                console.log(dataWithVendor);
-                setRecipesWithVendor(dataWithVendor);
-
-                //fetch recipes without a vendor collaboration
-                const responseWithoutVendor = await fetch('http://localhost:9000/recipes/myrecipes/noVendor',  {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`, 
-                      }
-                     
-                  });
-                if (!responseWithoutVendor.ok) {
-                    throw new Error('Failed to fetch recipes without vendor collaboration');
-                }
-                const dataWithoutVendor = await responseWithoutVendor.json();
-                setRecipesWithoutVendor(dataWithoutVendor);
-               
-            } catch (error) {
-                // Handle error
-                console.error('Error:', error.message);
-            }
-        };
-
+        
         fetchData();
     }, []);
 
@@ -70,6 +86,13 @@ const ChefMainPage = () => {
         setRecipesWithoutVendor(updatedRecipesWithoutVendor);
     };
 
+    
+    const handleRecipeUpdateinmain = async () => {
+        
+        await fetchData();
+    };
+
+    
 
     function truncateText(text, limit) {
         if (text) {
@@ -93,6 +116,7 @@ const ChefMainPage = () => {
                 {recipesWithVendor.length > 0 ? (
                     <div className="recipe-cards-chef">
                         {recipesWithVendor.map(recipe => (
+                         <div>
                             <div className="recipe-card-chef" key={recipe._id} onClick={() => setSelectedRecipe(recipe)}>
                                 <img src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}  className="recipe-image-chef" />
                                
@@ -100,8 +124,11 @@ const ChefMainPage = () => {
                                     <h3>{recipe.title.replace(/"/g, '')}</h3>
                                     <p>by Chef {recipe.chefName}</p>
                                     <p className='recipe-card-chef-description'>{truncateText(recipe.description.replace(/"/g, ''), 20 )}</p>
+                                    <button onClick={() => handleRecipeUpdate(recipe)}>Update</button>
                                 </div>
                             </div>
+                            <button className='recipe-update-buttonn' onClick={() => handleRecipeUpdate(recipe._id)}>Update</button>
+                        </div>
                         ))}
                     </div>
                 ) : (
@@ -115,6 +142,7 @@ const ChefMainPage = () => {
                 {recipesWithoutVendor.length > 0 ? (
                     <div className="recipe-cards-chef">
                         {recipesWithoutVendor.map(recipe => (
+                        <div>
                             <div className="recipe-card-chef" key={recipe._id} onClick={() => setSelectedRecipe(recipe)}>
                                 <img src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}  className="recipe-image-chef" />
                                 <div className="recipe-details-chef">
@@ -123,6 +151,8 @@ const ChefMainPage = () => {
                                     <p className='recipe-card-chef-description'>{truncateText(recipe.description.replace(/"/g, ''), 20 )}</p>
                                 </div>
                             </div>
+                            <button className='recipe-update-buttonn' onClick={() => handleRecipeUpdate(recipe)}>Update</button>
+                        </div> 
                         ))}
                     </div>
                 ) : (
@@ -136,6 +166,10 @@ const ChefMainPage = () => {
                     setSelectedRecipe={setSelectedRecipe}
                     onDelete={handleRecipeDeletion} 
                 />
+            )}
+
+            {showUpdateModal && updateselectedRecipe && (
+                <RecipeUpdateModal selectedRecipe={updateselectedRecipe} onClose={handleCloseModal} onUpdate={handleRecipeUpdateinmain}  />
             )}
 
         </>

@@ -72,6 +72,14 @@ router.post('/login', async (req,res) => {
 
         
         if(chef.allowSignup && !chef.isBlocked){
+
+          const passwordMatch = await bcrypt.compare(password, chef.password);
+
+        if (!passwordMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        
           //getting token using jwt
         const token = jwt.sign({ id: chef._id, username: chef.username, email: chef.email, name: chef.name}, process.env.SECRET_KEY);
 
@@ -81,18 +89,10 @@ router.post('/login', async (req,res) => {
         if (!chef.allowSignup) {
           return res.status(403).json({ message: 'Admin is reviewing your certificate' });
         }
-        
-        const passwordMatch = await bcrypt.compare(password, chef.password);
-
-        if (!passwordMatch) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
+      
         if (chef.isBlocked) {
-            return res.status(403).json({ message:'Access denied - you were blocked by the admin'});
-        }
-
-        
+          return res.status(403).json({ message:'Access denied - you were blocked by the admin'});
+      }
 
     }
     catch (error) {
@@ -132,7 +132,7 @@ router.get('/get', authenticateToken, async (req, res) => {
 router.put('/update', upload.single('profilePicture'), authenticateToken, async (req, res) => {
   const id = req.user.id;
   const { password, newPassword, ...otherUpdates } = req.body;
-  const profilePicture = req.file; 
+  const ProfilePicture = req.file; 
   try {
     const chef = await Chef.findById(id);
 
@@ -141,10 +141,10 @@ router.put('/update', upload.single('profilePicture'), authenticateToken, async 
     }
 
 
-  if (profilePicture) {
+  if (ProfilePicture !== undefined || ProfilePicture !== null) {
       
-      chef.profilePicture.data = profilePicture.buffer; 
-      chef.profilePicture.contentType = profilePicture.mimetype;
+      chef.profilePicture.data = ProfilePicture.buffer; 
+      chef.profilePicture.contentType = ProfilePicture.mimetype;
   }
 
   if(password && newPassword){
@@ -158,7 +158,10 @@ router.put('/update', upload.single('profilePicture'), authenticateToken, async 
     chef.password = hashedNewPassword;
     
   }
-    Object.assign(chef, otherUpdates);
+     // Only update other fields if they exist in the request body
+     if (Object.keys(otherUpdates).length > 0) {
+      Object.assign(chef, otherUpdates);
+    }
 
     const updatedChef = await chef.save();
 
