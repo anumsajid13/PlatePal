@@ -83,24 +83,26 @@ const Edit_profil_user = () => {
       <Navbar activeLink="" />
 
       <div className="edit-profile-container">
-        <h2>Edit Profile</h2>
+        
 
         <form onSubmit={handleSubmit} className="edit-profile-form">
         <div className="profile-picture-container">
             <label className="editprofile-label" htmlFor="profilePicture">
-              Profile Picture:
+              
             </label>
             {profilePicture && (
-              <img className="profile-picture" src={profilePicture} alt="Profile" />
+              <img  style={{marginTop:"8%"}} className="profile-picture" src={profilePicture} alt="Profile" />
             )}
-            <input
+            <input style={{marginLeft:"20%"}}
               type="file"
               id="profilePicture"
               accept="image/*"
               onChange={handleProfilePictureChange}
             />
           </div>
-          <label className="editprofile-label" htmlFor="name">
+
+          <div className='recipeseeker-form' style={{marginLeft:"20%"}}>
+          <label style={{marginTop:"5%"}} className="editprofile-label" htmlFor="name">
             Name:
           </label>
           <input
@@ -111,7 +113,7 @@ const Edit_profil_user = () => {
             onChange={(e) => setName(e.target.value)}
           />
 
-          <label className="editprofile-label" htmlFor="email">
+          <label style={{marginTop:"5%"}} className="editprofile-label" htmlFor="email">
             Email:
           </label>
           <input
@@ -122,7 +124,7 @@ const Edit_profil_user = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <label className="editprofile-label" htmlFor="address">
+          <label style={{marginTop:"5%"}} className="editprofile-label" htmlFor="address">
             Address:
           </label>
           <input
@@ -133,7 +135,7 @@ const Edit_profil_user = () => {
             onChange={(e) => setAddress(e.target.value)}
           />
 
-          <label className="editprofile-label" htmlFor="creditCardInfo">
+          <label style={{marginTop:"5%"}} className="editprofile-label" htmlFor="creditCardInfo">
             Credit Card Info:
           </label>
           <input
@@ -145,11 +147,13 @@ const Edit_profil_user = () => {
           />
 
           
-
+        </div>
           <button className="editprofile-button" type="submit">
             Save Changes
           </button>
+          
         </form>
+       
       </div>
     </>
   );

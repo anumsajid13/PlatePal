@@ -12,6 +12,7 @@ const Vendor_Notification = require('./models/Vendor_Notification Schema');
 const Nutritionist = require('./models/Nutritionist Schema');
 const NutritionistBlockReport = require('./models/NutritionistBlockReport Schema');
 const Order = require('./models/Order Schema');
+const Cart = require('./models/Cart Schema');
 const Rating = require('./models/Rating Schema');
 const Recipe = require('./models/Recipe Schema');
 const RecipeSeeker = require('./models/RecipeSeekerSchema');
@@ -26,6 +27,8 @@ const mongoose = require('mongoose');
 const app = express();
 const port = 9000;
 const cors = require('cors');
+const stripe = require("stripe")("sk_test_51ORDf9SDTv76xgxgXFbuP3CsiX7La5PabbZ8CffsFv4hNp3U4mc6QdKm0IvY92nwq4MD5Y8to0YzGorqNA1J8Lsx00ubVur4u8");
+
 app.use(express.json({ limit: '50mb' }));
 //const DB= require('./models')
 app.use(cors());
@@ -62,6 +65,7 @@ const Edit_user_profile = require('./RecipeSeeker/routes/EditProfile')
 const Display_Notifications = require('./RecipeSeeker/routes/Display_notifications')
 const Send_notification_to_nutritionist = require('./RecipeSeeker/routes/Send_noti_to_Nutri')
 const Display_recipeSeekers = require('./RecipeSeeker/routes/Display_recipeseeker')
+const AddOrder = require('./RecipeSeeker/routes/AddToCart')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
 
 const admin_signin = require('./Admin/routes/login');
@@ -118,7 +122,66 @@ app.use('/recepieSeeker', Send_notification_to_nutritionist);
 app.use('/recepieSeeker', Edit_user_profile);
 app.use('/recepieSeeker', Display_Notifications);
 app.use('/recepieSeeker', Display_recipeSeekers);
+app.use('/recepieSeeker', AddOrder );
+
+// checkout api
+app.post("/api/create-checkout-session",async(req,res)=>{
+    const {products} = req.body;
+    console.log(products)
+    products.orders.forEach(async (order) => {
+        const chefId = order.items[0].chefId;
+        const vendorId = order.items[0].vendorId;
+        const price = order.items[0].price * order.items[0].quantity;
+    
+        // Calculate 40% of the price
+        const chefAmount = (40 / 100) * price;
+        const vendorAmount = (40 / 100) * price;
+    
+        // Update Chef and Vendor balances
+        try {
+          const chef = await Chef.findById(chefId);
+          const vendor = await Vendor.findById(vendorId);
+    
+       //   await chef.balance(chefAmount);
+       //   await vendor.balance(vendorAmount);
+        } catch (error) {
+          console.error('Error updating balances:', error.message);
+          // Handle the error appropriately
+        }
+      });
+
+    const lineItems = products.orders.map((order)=>({
+       
+        price_data:{
+            
+            currency:"Pkr",
+            product_data:{
+                name:order.items[0].name,
+            },
+            unit_amount:order.items[0].price*100,
+        },
+        quantity:order.items[0].quantity
+    }));
+
+    const totalamount=products.totalAmount;
+
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types:["card"],
+        line_items:lineItems,
+        mode:"payment",
+        success_url:"http://localhost:3000/Pyement/Success",
+        cancel_url:"http://localhost:3000/Pyement/Failure",
+    });
+
+    res.json({id:session.id})
+
+    
+ 
+})
+
+
 //recipe routes
+
 app.use('/recipes', Reipe_routes);
 
 //admin routes

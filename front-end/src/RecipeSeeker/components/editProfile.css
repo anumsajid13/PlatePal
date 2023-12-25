@@ -8,8 +8,26 @@
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #f9f9f9;
+  
+    
+  }
+  /*
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+  .edit-profile-container::-webkit-scrollbar {
+    width: 8px; 
   }
   
+  .edit-profile-container::-webkit-scrollbar-thumb {
+    background-color: #6b6b6b; 
+  }
+  
+  .edit-profile-container::-webkit-scrollbar-track {
+    background-color: #B7B6C1; 
+  }
+
+  */
   .edit-profile-form {
     display: flex;
     flex-direction: column;
@@ -34,7 +52,7 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 10px;
-    margin-left: 10%;
+    margin-left: 3%;
   }
   
   .profile-picture {

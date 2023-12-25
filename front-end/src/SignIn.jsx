@@ -6,7 +6,7 @@ import useTokenStore from './tokenStore';
 import './SignIn.css';
 
 const SignInPage =  () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { setToken } = useTokenStore();
   const { showDropdown, toggleDropdown, activeLink, setActiveLink, searchInput, setSearchInput } = useNavbarStore();
   const [username, setUsername] = useState('');
@@ -14,6 +14,7 @@ const SignInPage =  () => {
   const [userType, setUserType] = useState('recipeSeeker');
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  
 
   const handleCloseError = () => {
     setShowError(false);
@@ -67,6 +68,7 @@ const SignInPage =  () => {
         alert('Sign In successful')
         
         setToken(data.token);
+        localStorage.setItem('token', data.token);
         navigate('/recipe-seeker/Discover');
       } catch (error) {
         console.error('Error during Sign In:', error.message);

@@ -71,11 +71,21 @@
   }
   
   .sidebar1 a:hover {
-    background-color: #D5CFE1; /* Hover background color for links */
+    background-color: #D5CFE1; 
   }
   
-  /* Open the sidebar when it's toggled */
+  
   .sidebar-open {
     right: 0;
   }
   
+  .cart-counter {
+    position: absolute;
+    top: -2px;
+    right: 175px;
+    background-color: #ff5733;
+    color: #fff; 
+    border-radius: 50%;
+    padding: 5px 10px;
+    font-size: 12px;
+  }

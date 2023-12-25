@@ -6,6 +6,8 @@ import './NotificationBox.css';
 import NotificationBox from './NotificationBox';
 import  useTokenStore  from  '../../tokenStore.js'
 import { jwtDecode } from 'jwt-decode';
+import useCartStore from './cartStore'; 
+import CartPopup from './CartPopup';
 
 
 const Navbar = ({ activeLink }) => {
@@ -14,9 +16,12 @@ const Navbar = ({ activeLink }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
-  const token = useTokenStore((state) => state.token);
+ // const token = useTokenStore((state) => state.token);
+  const token = localStorage.getItem('token');
+  const { setToken } = useTokenStore();
   const decodedToken = jwtDecode(token); 
   const currentUserId = decodedToken.id;
+  const toggleCartPopup = useCartStore((state) => state.toggleCartPopup);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -29,6 +34,8 @@ const Navbar = ({ activeLink }) => {
   };
 
   useEffect(() => {
+
+    setToken(token);
     
     fetch(`http://localhost:9000/recepieSeeker/notifications/${currentUserId}`, {
       method: 'GET',
@@ -43,7 +50,14 @@ const Navbar = ({ activeLink }) => {
         console.log("notification data",data);
       })
       .catch((error) => console.error('Error fetching notifications:', error));
-  }, []);
+  }, [setToken, token]);
+
+  
+  const handleCartClick = () => {
+    toggleCartPopup();
+  };
+
+  const cartItemsCount = useCartStore((state) => state.cartItems.length);
 
   return (
     <nav className="navbar-1">
@@ -58,11 +72,15 @@ const Navbar = ({ activeLink }) => {
         <Link to="/my-feed" className={activeLink === 'My Feed' ? 'active-link-1' : ''}>
           My Feed
         </Link>
+
+        <span style={{cursor:"pointer"}} className="icon material-icons google-icon" onClick={handleCartClick}>shopping_cart</span>
+        {cartItemsCount > 0 && <div className="cart-counter">{cartItemsCount}</div>}
             
         <div className="notification-icon" onClick={toggleNotifications}>
           <span className="material-icons">notifications</span>
           {showNotifications && <div className="notification-arrow" />}
         </div>
+          
           <span className="material-icons google-icon" style={{cursor:"pointer"}}>logout</span>
           <span class="material-icons google-icon icon-link-1"  onClick={toggleSidebar}>menu</span>
           
@@ -79,6 +97,10 @@ const Navbar = ({ activeLink }) => {
      
       {showNotifications && (
         <NotificationBox notifications={notifications} onClose={toggleNotifications} />
+      )}
+
+      {useCartStore((state) => state.isCartPopupOpen) && (
+              <CartPopup onClose={toggleCartPopup}  />
       )}
     </nav>
   );
