@@ -42,10 +42,17 @@ const vendorSchema = new mongoose.Schema({
   type: Date,
   default: null, // Initially set to null, indicating not blocked
 },
-CollaborationNum: {
-  type: Number,
-  default: 0,
-},
+Collaboration: [{
+  chefId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Chef', 
+    required: true,
+  },
+  recipesCollaborated: {
+    type: Number,
+    default: 0,
+  },
+}]
 });
 
 const Vendor =   mongoose.model('Vendor', vendorSchema);

@@ -73,7 +73,7 @@ const CollaborationRequestCard = ({ request }) => {
         <label className='normal'>Status:</label>
         <label style={{ color: getStatusColor(request.isAccepted) }}>{request.isAccepted}</label>
       </div>
-      <label className='time'>{request.Time}</label>
+      <label>Time:{request.Time}</label>
     </div>
   );
 };
