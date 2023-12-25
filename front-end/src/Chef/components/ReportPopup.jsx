@@ -24,7 +24,7 @@ const ReportPopUp = ({ vendorId }) => {
         formData.append('proof', proof); // Assuming selectedFile is the uploaded image file
     
         try {
-            const response = await fetch(`http://localhost:9000/your_route/createVendorReport/${vendorId}`, {
+            const response = await fetch(`http://localhost:9000/chef/createVendorReport/${vendorId}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -36,6 +36,7 @@ const ReportPopUp = ({ vendorId }) => {
                 throw new Error('Error creating vendor report');
             }
     
+            console.log(response)
             // Handle success response or any UI updates
             //onClose(); // Close the pop-up
         } catch (error) {
