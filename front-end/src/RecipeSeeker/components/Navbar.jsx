@@ -1,20 +1,50 @@
 // Navbar.js
 import { Link, useNavigate } from 'react-router-dom';
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import './Navbar-1.css';
-//import Inbox from './Inbox';
+import './NotificationBox.css';
+import NotificationBox from './NotificationBox';
+import  useTokenStore  from  '../../tokenStore.js'
+import { jwtDecode } from 'jwt-decode';
+
 
 const Navbar = ({ activeLink }) => {
+  
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
+  const token = useTokenStore((state) => state.token);
+  const decodedToken = jwtDecode(token); 
+  const currentUserId = decodedToken.id;
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
     console.log("TOGGLE");
     console.log(activeLink);
   };
-
   
+  const toggleNotifications = () => {
+    setShowNotifications((prev) => !prev);
+  };
+
+  useEffect(() => {
+    
+    fetch(`http://localhost:9000/recepieSeeker/notifications/${currentUserId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, 
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setNotifications(data);
+        console.log("notification data",data);
+      })
+      .catch((error) => console.error('Error fetching notifications:', error));
+  }, []);
+
   return (
     <nav className="navbar-1">
       <div className="logo">Plate Pal</div>
@@ -29,7 +59,10 @@ const Navbar = ({ activeLink }) => {
           My Feed
         </Link>
             
-          <span className="material-icons google-icon" style={{cursor:"pointer"}}>notifications</span>
+        <div className="notification-icon" onClick={toggleNotifications}>
+          <span className="material-icons">notifications</span>
+          {showNotifications && <div className="notification-arrow" />}
+        </div>
           <span className="material-icons google-icon" style={{cursor:"pointer"}}>logout</span>
           <span class="material-icons google-icon icon-link-1"  onClick={toggleSidebar}>menu</span>
           
@@ -40,11 +73,13 @@ const Navbar = ({ activeLink }) => {
         <Link to="/recipe-seeker/Inbox" >Inbox</Link>
         <Link to="">My Bookmark</Link>
         <Link to="">My Followings</Link>
-        <Link to="">Edit Profile</Link>
+        <Link to="/recipe-seeker/UpdateProfile">Edit Profile</Link>
        
       </div>
      
-      
+      {showNotifications && (
+        <NotificationBox notifications={notifications} onClose={toggleNotifications} />
+      )}
     </nav>
   );
 };

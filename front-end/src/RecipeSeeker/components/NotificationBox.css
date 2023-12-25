@@ -1,0 +1,71 @@
+/* NotificationBox.css */
+.notification-box {
+    position: fixed;
+    top: 49px;
+    right: 10px;
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .notification-list {
+    padding: 10px;
+  }
+  
+  .notification-item {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+  }
+  
+  .notification-text {
+    margin-right: 10px;
+  }
+  
+  .notification-time {
+    font-size: 12px;
+    color: #888;
+  }
+
+  .notification-icon {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .notification-arrow {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 12px solid #fff; /* You can adjust the color */
+    z-index: 999; /* Adjust the z-index as needed */
+    animation: arrowFadeIn 0.3s ease-in-out forwards;
+  }
+  
+  @keyframes arrowFadeIn {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  } 

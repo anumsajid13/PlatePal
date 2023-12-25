@@ -58,7 +58,10 @@ const Display_Chefs = require('./RecipeSeeker/routes/Display_chefs')
 const Display_Nutritionists = require('./RecipeSeeker/routes/Display_Nutritionists')
 const Text_Chef = require('./RecipeSeeker/routes/Send_msgToChef')
 const Display_TextwithChef = require('./RecipeSeeker/routes/Display_chef_chats')
+const Edit_user_profile = require('./RecipeSeeker/routes/EditProfile')
+const Display_Notifications = require('./RecipeSeeker/routes/Display_notifications')
 const Send_notification_to_nutritionist = require('./RecipeSeeker/routes/Send_noti_to_Nutri')
+const Display_recipeSeekers = require('./RecipeSeeker/routes/Display_recipeseeker')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
 
 const admin_signin = require('./Admin/routes/login');
@@ -114,6 +117,9 @@ app.use('/recepieSeeker', Text_Chef);
 app.use('/recepieSeeker', Display_TextwithChef);
 app.use('/recepieSeeker', Display_Nutritionists);
 app.use('/recepieSeeker', Send_notification_to_nutritionist);
+app.use('/recepieSeeker', Edit_user_profile);
+app.use('/recepieSeeker', Display_Notifications);
+app.use('/recepieSeeker', Display_recipeSeekers);
 //recipe routes
 app.use('/recipes', Reipe_routes);
 

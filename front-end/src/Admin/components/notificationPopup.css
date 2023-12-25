@@ -30,6 +30,10 @@
     padding: 10px;
     border-bottom: 1px solid #ccc;
   }
-  
+  .createPlan
+  {
+    margin-left:20px;
+    background-color: aliceblue;
+  }
   /* Add more styles as needed */
   
