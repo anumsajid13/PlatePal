@@ -96,15 +96,43 @@ router.post('/sendMessageToUser/:userId', authenticateToken, async (req, res) =>
 
 router.get('/allUsers', async (req, res) => {
   try {
-    const users = await RecipeSeeker.find({}, 'name');
+    const users = await RecipeSeeker.find({}, 'name _id'); 
 
-    const names = users.map(user => user.name);
-
-    res.status(200).json({ names });
+    res.status(200).json( users );
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
 
+
+router.get('/chatMessages/:userId', authenticateToken, async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const chef = await Chef.findById(req.user.id);
+    if (!userId) {
+      return res.status(404).json({ message: 'Chef not found' });
+    }
+
+    //find the User_Chef_Inbox document for the specified chef and user
+    const userChefInbox = await UserChefInbox.findOne({ user: userId, chef: chef._id });
+
+    if (!userChefInbox) {
+      return res.status(404).json({ message: 'UserChefInbox not found' });
+    }
+
+    //Extract messages, author names, and times
+    const chatMessages = userChefInbox.messages.map((message) => ({
+      _id: message._id,
+      message: message.message,
+      author: message.author,
+      time: message.time,
+    }));
+
+    res.status(200).json({ messages: chatMessages });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+});
 
 module.exports = router;
