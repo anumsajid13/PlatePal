@@ -75,8 +75,15 @@ const ChefUserInboxx = () => {
           })
             .then((response) => response.json())
             .then((data) => {
-              setChatMessages((prevChatMessages) => [...prevChatMessages, messageInput]);
-              console.log('Message sent successfully:', data);
+                console.log(messageInput)
+                setChatMessages((prevChatMessages) => [
+                    ...prevChatMessages,
+                    {
+                      message: messageInput,
+                      author: currentUserId, 
+                      time: new Date().toLocaleTimeString(), 
+                    },
+                  ]);
             })
             .catch((error) => console.error('Error sending message:', error));
     
