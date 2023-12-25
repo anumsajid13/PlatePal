@@ -33,17 +33,17 @@
 .recipe-card-chef {
     width: 350px; 
     height: 350px; 
-    background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 12px 16px rgba(0, 0, 0, 0.1);
-    background-color: #EDDFEF;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     cursor:pointer;
     padding: 0; 
     transition: transform 0.3s ease-in-out;
-    position: relative; 
+    position: relative;
+    border: 1px solid #ddd; 
     
    
 }

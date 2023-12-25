@@ -95,6 +95,8 @@ app.use((req, res, next) => {
   });
 const chefnotifications = require('./Chef/routes/Notification_routes');
 const cheffollowerss = require('./Chef/routes/DisplayFollowers_routes');
+const chatwithuserChef = require('./Chef/routes/ChatUser_routes');
+const chatwithvendorChef = require('./Chef/routes/ChatVendor_Routes');
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 app.use('/chef', chefnotifications);
@@ -146,6 +148,11 @@ app.use('/chefVendors', collabVendorsChef);
 app.use('/n', Nutritionist_Signin); 
 app.use('/n', Nutritionist_Plan); 
 
+//chef-user inbox route (chef)
+app.use('/chef', chatwithuserChef);
+
+//chef-vendor inbox route (chef)
+app.use('/chef', chatwithvendorChef);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

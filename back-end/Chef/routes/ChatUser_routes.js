@@ -51,7 +51,7 @@ router.post('/sendMessageToUser/:userId', authenticateToken, async (req, res) =>
     //save the UserNotification document
     const savedUserNotification = await userNotification.save();
 
-    res.status(201).json({ message: 'Message sent successfully', data: savedUserNotification });
+    res.status(201).json({ message: 'Message sent successfully', data: savedUserChefInbox });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
