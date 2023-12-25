@@ -7,14 +7,27 @@ const NutritionistNotification = require('../../models/Nutritionist_Notification
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
 const User_Notification= require('../../models/User_Notification Schema');
 
-//show all recipes
+// Show all recipes with optional search functionality
 router.get('/recipes', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const pageSize = parseInt(req.query.pageSize) || 10;
     const skip = (page - 1) * pageSize;
+    const searchQuery = req.query.q || ''; // Get the search query from the URL
 
-    const recipes = await Recipe.find({})
+    let recipeQuery = Recipe.find({});
+
+    // If a search query is provided, filter recipes based on the search criteria
+    if (searchQuery) {
+      // Try to parse the search query as a number (calories)
+      const calories = parseFloat(searchQuery);
+      
+      if (!isNaN(calories)) {
+        recipeQuery = recipeQuery.where('calories').eq(calories);
+      }
+    }
+
+    const recipes = await recipeQuery
       .populate({
         path: 'ratings',
         populate: {
@@ -32,25 +45,17 @@ router.get('/recipes', async (req, res) => {
       .populate({
         path: 'chef',
         model: 'Chef',
-        select: 'name', // Select only the 'name' field of the Chef
       })
       .skip(skip)
       .limit(pageSize)
-      .select('title description ingredients allergens calories recipeImage chef')
       .exec();
 
     const recipesWithBase64Image = recipes.map((recipe) => {
       const uint8Array = new Uint8Array(recipe.recipeImage.data);
       const base64ImageData = Buffer.from(uint8Array).toString('base64');
       return {
-        _id: recipe._id,
-        title: recipe.title,
-        description: recipe.description,
-        ingredients: recipe.ingredients,
-        allergens: recipe.allergens,
-        calories: recipe.calories,
+        ...recipe.toObject(),
         recipeImage: { data: base64ImageData, contentType: recipe.recipeImage.contentType },
-        chef: recipe.chef,
       };
     });
 
@@ -59,7 +64,6 @@ router.get('/recipes', async (req, res) => {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
-
 //create meal plan
 router.post('/create-meal-plan',authenticateToken, async (req, res) => {
   try {
@@ -98,9 +102,17 @@ router.post('/create-meal-plan',authenticateToken, async (req, res) => {
       },
     });
 
-    
-    // Populate the 'user' field with the 'username' field from the User model
-    await newMealPlan.populate('user', 'username').execPopulate();
+    //     // Populate the 'user' field with specific fields from the User model
+    // await newMealPlan
+    // .populate({
+    //   path: 'user',
+    //   model: 'RecipeSeeker', // Replace with your User model name
+    //   select: 'username email', // Specify the fields you want to populate
+    // })
+    // .exec();
+        
+    // // Populate the 'user' field with the 'username' field from the User model
+    // await newMealPlan.populate('user', 'username').execPopulate();
 
     await newMealPlan.save();
 
@@ -162,18 +174,29 @@ router.post('/send-notification', async (req, res) => {
 
 // Endpoint to get all meal plans created by a specific nutritionist
 router.get('/planmade/:nutritionistId', async (req, res) => {
-    try {
-      const nutritionistId = req.params.nutritionistId;
+  try {
+    const nutritionistId = req.params.nutritionistId;
 
-      // Get all meal plans created by the specific nutritionist
-      const mealPlans = await MealPlan.find({ nutritionist: nutritionistId });
+    // Get all meal plans created by the specific nutritionist
+    const mealPlans = await MealPlan.find({ nutritionist: nutritionistId })
+      .populate({
+        path: 'user',
+        model: 'RecipeSeeker',
+        select: 'username', // Select only the 'username' field of the RecipeSeeker
+      })
+      .populate({
+        path: 'recipes',
+        model: 'Recipe',
+        select: 'title', // Select only the 'title' field of the Recipe
+      });
 
-      return res.json( mealPlans );
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+    return res.json(mealPlans);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
+
 
 // Endpoint to delete a meal plan
 router.delete('/delete-meal-plan/:mealPlanId', async (req, res) => {

@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const Nutritionist = require('../../models/Nutritionist Schema');
 require('dotenv').config();
 const router = express.Router();
+const authenticateToken = require('../../TokenAuthentication/token_authentication');
 
 // Endpoint to handle nutritionist login
 router.post('/login', async (req, res) => {
@@ -112,5 +113,59 @@ router.post('/signup', upload.fields([ { name: 'certificationImage', maxCount: 1
     }
 });
 
+
+//update profile
+router.put('/update', upload.single('profilePicture'), authenticateToken, async (req, res) => {
+  const id = req.user.id;
+  const { password, newPassword, ...otherUpdates } = req.body;
+  const profilePicture = req.file; 
+  try {
+    const nut = await Nutritionist.findById(id);
+
+    if (!nut) {
+      return res.status(404).json({ message: 'Nutritionist not found' });
+    }
+
+
+  if (profilePicture) {
+      
+      nut.profilePicture.data = profilePicture.buffer; 
+      nut.profilePicture.contentType = profilePicture.mimetype;
+  }
+
+  if(password && newPassword){
+
+    const passwordMatch = await bcrypt.compare(password, nut.password);
+
+    if (!passwordMatch) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    nut.password = hashedNewPassword;
+    
+  }
+    Object.assign(nut, otherUpdates);
+
+    const updatedChef = await nut.save();
+
+    return res.status(200).json({ message: 'Profile updated successfully' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Failed to update profile' });
+  }
+});
+
+//delete profile
+router.delete('/delete', authenticateToken, async (req, res) => {
+
+  const  id  = req.user.id;
+  try {
+      await Nutritionist.findByIdAndDelete(id);
+      res.json({ message: 'Profile deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to delete profile' });
+  }
+}); 
 
   module.exports = router;
