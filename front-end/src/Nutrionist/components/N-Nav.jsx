@@ -59,11 +59,8 @@ const AdminNav = () => {
         <a href="#" onClick={handleSidebarToggle} className="close-btn">×</a>
        
         <Link to="/n/planmade/:nutritionistId" onClick={handleSidebarToggle}>
-        <a href="#">View Plans</a>
+        <a href="#">Send Plans</a>
         </Link>
-        <a href="#">Edit Plan</a>
-        <a href="#">Update Profile</a>
-        <a href="#">Chat</a>
 
       </div>
     </div>
