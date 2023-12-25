@@ -68,11 +68,11 @@ const MealPlansPage = () => {
       ) : (
         mealPlans.map((mealPlan) => (
           <div key={mealPlan._id} className="meal-plan-card">
-            <h3>Meal Plan for User: {mealPlan.user.username}</h3>
+            {/* <h3>Meal Plan for User: {mealPlan.user.username}</h3> */}
             <p>BMI: {mealPlan.bmi}</p>
             <p>Calorie Range: {mealPlan.calorieRange.min} - {mealPlan.calorieRange.max}</p>
             <p>Date Created: {new Date(mealPlan.date).toLocaleDateString()}</p>
-            <button onClick={() => handleSendToUser(mealPlan.user._id)}>Send to User</button>
+            <button className = "ViewBtn" onClick={() => handleSendToUser(mealPlan.user._id)}>Send to User</button>
           </div>
         ))
       )}

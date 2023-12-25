@@ -39,7 +39,7 @@ import ChefUserInboxx from './Chef/pages/ChefUserInboxx';
 import ChefVendorInboxx from './Chef/pages/ChefVendorInboxx';
 import BlockReportsList from './Chef/pages/ChefVendorBlockReport';
 
-
+import ChefProfile1 from './Nutrionist/pages/Edit-Profile';
 function App() {
   return (
     <div className="App">
@@ -78,6 +78,7 @@ function App() {
 
         <Route path="/n/makeplan/:bmi/:userId" element={<Discover/>} />
         <Route path="/n/planmade/:nutritionistId" element={<MealPlansPage/>} />
+        <Route path="/n/n-profile" element={<ChefProfile1/>} />
 
         <Route path="/Chef/myProfile" element={<ChefProfile/>} />
         <Route path="/Chef/usersInbox" element={<ChefUserInboxx/>} />

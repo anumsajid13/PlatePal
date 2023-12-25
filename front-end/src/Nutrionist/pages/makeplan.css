@@ -1,97 +1,125 @@
-/* discover14.css */
 .main-container14 {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-container14 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.search-card14 {
+  border-radius: 10px;
+  margin-top: 3%;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-right: 20px;
+  background-color: #d5cfe1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%; /* Adjust the width of the search bar */
+  max-width: 600px; /* Limit the maximum width of the search bar */
+  gap: 20px; /* Reduce the gap between elements */
+}
+
+.search-recipe14 {
+  margin-left: 10px;
+  width: 70%; /* Adjust the width of the search input */
+}
+
+.search-icon14 {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.recipe-list14 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center the items on the x-axis */
+  gap: 20px;
+  margin-top: 3%;
+}
+
+.recipe-item14 {
+  width: calc(33.33% - 20px); /* Calculate the width for three items per row with a gap of 20px */
+  box-sizing: border-box;
+  padding: 10px; /* Reduce padding */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Add margin to create space between rows */
+}
+
+.recipe-name14 {
+  font-size: 1.2rem; /* Adjust the font size */
+  font-weight: bold;
+  margin-bottom: 8px; /* Adjust margin */
+  font-family: Chonburi;
+}
+
+.recipe-description14 {
+  margin-bottom: 8px; /* Adjust margin */
+  font-size: 0.9rem; /* Adjust the font size */
+  font-weight: 200;
+}
+
+.recipe-ingredients14,
+.recipe-allergens14,
+.recipe-calories14 {
+  margin-bottom: 8px; /* Adjust margin */
+}
+
+.recipe-ingredients14 ul,
+.recipe-allergens14 ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.recipe-ingredients14 li,
+.recipe-allergens14 li {
+  margin-bottom: 3px; /* Adjust margin */
+}
+
+.recipe-image14 img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.plus-icon14 {
+  margin-left: 5px; /* Adjust margin */
+  cursor: pointer;
+  font-size: 1.2rem; /* Adjust font size */
+  color: #34c759;
+  background-color: #ffffff;
+  padding: 2px; /* Adjust padding */
+  border-radius: 50%; /* Use a circular border radius */
+}
+/* discover.css (or your CSS file) */
+
+.notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  display: inline-block;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0;
   }
-  
-  .search-container14 {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
+  10%, 90% {
+    opacity: 1;
   }
-  
-  .search-card14 {
-    border-radius: 10px;
-    margin-top: 3%;
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-right: 20px;
-    background-color: #D5CFE1;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 95%; /* Make the search bar a little longer */
-  }
-  
-  .search-recipe14 {
-    margin-left: 10px;
-    width: 70%; /* Adjust the width of the search input */
-  }
-  
-  .search-icon14 {
-    margin-left: 10px;
-    cursor: pointer;
-    font-size: 1.5rem;
-  }
-  
-  .recipe-list14 {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 3%;
-  }
-  
-  .recipe-item14 {
-    width: 300px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #FFFFFF;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .recipe-name14 {
-    font-size: 1.5rem; /* Change the font size for recipe heading */
-    font-weight: bold;
-    margin-bottom: 10px;
-    font-family: Chonburi  }
-  
-  .recipe-description14 {
-    margin-bottom: 10px;
-    font-size: 1rem; /* Change the font size for recipe content */
-    font-weight: 200;
-  }
-  
-  .recipe-ingredients14,
-  .recipe-allergens14,
-  .recipe-calories14 {
-    margin-bottom: 10px;
-  }
-  
-  .recipe-ingredients14 ul,
-  .recipe-allergens14 ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .recipe-ingredients14 li,
-  .recipe-allergens14 li {
-    margin-bottom: 5px;
-  }
-  
-  .recipe-image14 img {
-    width: 100%;
-    border-radius: 10px;
-  }
-  .plus-icon14 {
-    margin-left: 10px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: #34c759; /* You can change the color as needed */
-    background-color: #ffffff; /* Background color for the plus button */
-    padding: 3px; /* Add padding for a better appearance */
-    border-radius: 80%; /* Make it a circle */
-    /* Add additional styling for the plus icon if desired */
-  }
+}

@@ -31,18 +31,18 @@
     margin: 10px 0;
   }
   
-  button {
+  .ViewBtn {
     background-color: #4caf50;
     color: white;
     border: none;
-    padding: 12px 24px;
+    padding: 9px 6px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease-in-out;
   }
   
-  button:hover {
+  .ViewBtn:hover {
     background-color: #45a049;
   }
   
