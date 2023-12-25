@@ -28,7 +28,6 @@ const recipeSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String
   },
-  vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
   description: String,
   Nutrients:[{
     nutrientName: String,
@@ -36,6 +35,7 @@ const recipeSchema = new mongoose.Schema({
     unitName: String,
   }],
   price:Number,
+  vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
 });
 
 const Recipe = mongoose.model('Recipe', recipeSchema);
