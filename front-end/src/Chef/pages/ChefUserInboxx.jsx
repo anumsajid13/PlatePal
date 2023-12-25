@@ -75,13 +75,13 @@ const ChefUserInboxx = () => {
           })
             .then((response) => response.json())
             .then((data) => {
-                console.log(messageInput)
+                
                 setChatMessages((prevChatMessages) => [
                     ...prevChatMessages,
                     {
                       message: messageInput,
                       author: currentUserId, 
-                      time: new Date().toLocaleTimeString(), 
+                      time: new Date().toISOString(),
                     },
                   ]);
             })
