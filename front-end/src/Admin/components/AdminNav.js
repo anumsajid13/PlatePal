@@ -35,9 +35,7 @@ const AdminNav = () => {
         {/* Clickable components on the right */}
         <div className="nav-links">
           <div>Home</div>
-          <div>Recipes</div>
-          <div>Reviews</div>
-          <div>Nutritionist</div>
+      
           <div className="icon-link" title="notifications" onClick={handleNotificationsClick}>
             <span className="material-icons google-icon">notifications</span>
           </div>

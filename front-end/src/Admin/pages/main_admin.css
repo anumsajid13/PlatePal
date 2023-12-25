@@ -1,11 +1,16 @@
+/* main_admin.css */
 .admin-content-container {
-    margin: 20px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    background-color:#B7B6C1;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  }
-  
+  margin: 20px auto; /* Add 'auto' to center horizontally */
+  justify-content: space-between;
+  background-color: #B7B6C1;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  max-width: 50%;
+  display: flex;
+  flex-direction: column; /* Change flex-direction to column */
+  align-items: center; /* Center the container horizontally */
+}
+
+
   .navigation-buttons {
     display: flex;
     flex-direction: column;
@@ -27,11 +32,10 @@
   
   .top-lists {
     display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center; /* Center the lists horizontally */
-  margin-right: 10px;
-  margin-left:190px;
   gap: 20px;
+  justify-content: center;
   }
   
   .top-chefs-list,
@@ -50,14 +54,14 @@
   
   .top-chefs-list h2,
 .top-nutritionists-list h2 {
-    font-size: 1rem;
+    font-size: 2rem;
     font-weight: bold;
     font-family: Chonburi;}
 
 .top-chefs-list p,
 .top-nutritionists-list p {
     font-family: "Quattrocento";
-    font-weight: bold;}
+    font-weight: normal;}
 
   /* Add more styles as needed */
   .profile-image {
@@ -66,3 +70,11 @@
     border-radius: 50%; /* Make the image round */
     margin-right: 10px; /* Add margin for spacing */
   }
+  /* main_admin.css */
+.rounded-profile-image {
+  border-radius: 50%;
+  width: 100px; /* Adjust the width as needed */
+  height: 100px; /* Adjust the height as needed */
+  object-fit: cover;
+  margin-right: 10px; /* Adjust the margin as needed */
+}
