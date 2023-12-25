@@ -74,51 +74,101 @@ router.post("/register", upload.fields([ { name: 'certificationImage', maxCount:
       return res.status(500).send({ error: "Internal Server Error" });
     }
   });
- 
- // login route
- router.post('/login', async (req, res) => {
+
+
+  // Endpoint to handle nutritionist login
+router.post('/login', async (req, res) => {
+  try {
     const { username, password } = req.body;
-    console.log(req.body);
 
-    if (!username || !password) {
-      res.status(400).send("Username and password are required");
-      return;
-  }
-  
-    try {
-    //checking if user exists
-      const user = await Vendor.findOne({ username });
-      if(!user){
-        return res.status(401).send("Invalid username.");
-      }
-      //checking if password is correct
-      const validpass=await bcrypt.compare(password, user.password);
-      if(!validpass){
-        return res.status(401).send("Invalid password.");
-      }
-      //checking if user is active
-        if (!user.isBlocked) {
-          // Create token
-          const token = jwt.sign(
-            {id:user.id,email:user.email, name:user.name,username:user.username},
-            process.env.SECRET_KEY
-          );
-          // Assign token to the user and save back to the database
-          user.token = token;
-          await user.save();
-          //return res.status(200).send({user, message: "Successful login"});
-         return res.json({ message: 'Signin successful', token });
-          //res.status(200).json({ token });//returning token
+    // Find the nutritionist by username
+    const user = await Vendor.findOne({ username });
 
-        } else {
-          return res.status(403).send('Access denied - you were blocked by the admin');
-        }
-      } 
-    catch (error) {
-      console.error(error);
-      return res.status(500).json({ message: "Internal Server Error", error: error });
+    if (!user) {
+      return res.status(404).json({ error: 'Nutritionist not found' });
     }
-  });
+
+   // Check if the chef is blocked
+   if (user.isBlocked) {
+    // Check if the unblock time is set
+    if (user.unblockTime) {
+      // Check if the unblock time has passed
+      if (new Date() >= user.unblockTime) {
+        // Unblock the chef
+        user.isBlocked = false;
+        user.unblockTime = null;
+        await user.save();
+      } else {
+        // is still blocked
+        return res.status(403).json({ error: ' nutritionist is blocked' });
+      }
+    } else {
+      //  is blocked indefinitely
+      return res.status(403).json({ error: 'nutritionist is blocked indefinitely' });
+    }
+  }
+   
+     // Check if the password is correct using bcrypt.compare
+    // const isPasswordValid = await bcrypt.compare(password, nutritionist.password);
+
+    //  if (!isPasswordValid) {
+    //    return res.status(401).json({ error: 'Invalid password' });
+    //  }
+ 
+  const token = jwt.sign({ id: user._id, username: user.username, email: user.email}, process.env.SECRET_KEY);
+
+    return res.json({ message: 'Login successful', token });
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+ 
+//  // login route
+//  router.post('/login', async (req, res) => {
+//     const { username, password } = req.body;
+//     console.log(req.body);
+
+//     if (!username || !password) {
+//       res.status(400).send("Username and password are required");
+//       return;
+//   }
+  
+//     try {
+//     //checking if user exists
+//       const user = await Vendor.findOne({ username });
+//       if(!user){
+//         return res.status(401).send("Invalid username.");
+//       }
+//       //checking if password is correct
+//       const validpass=await bcrypt.compare(password, user.password);
+//       if(!validpass){
+//         return res.status(401).send("Invalid password.");
+//       }
+//       //checking if user is active
+//         if (!user.isBlocked) {
+//           // Create token
+//           const token = jwt.sign(
+//             {id:user.id,email:user.email, name:user.name,username:user.username},
+//             process.env.SECRET_KEY
+//           );
+//           // Assign token to the user and save back to the database
+//           user.token = token;
+//           await user.save();
+//           //return res.status(200).send({user, message: "Successful login"});
+//          return res.json({ message: 'Signin successful', token });
+//           //res.status(200).json({ token });//returning token
+
+//         } else {
+//           return res.status(403).send('Access denied - you were blocked by the admin');
+//         }
+//       } 
+//     catch (error) {
+//       console.error(error);
+//       return res.status(500).json({ message: "Internal Server Error", error: error });
+//     }
+//   });
 
   //edit profile
   router.put('/editprofile', authenticateToken, async (req, res) => {
