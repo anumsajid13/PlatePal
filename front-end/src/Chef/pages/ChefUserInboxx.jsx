@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './chefUserInbox.css'
 import ChefNav from '../components/NavBarChef';
 import useTokenStore from '../../tokenStore.js';
 import { jwtDecode } from 'jwt-decode';
@@ -20,7 +19,7 @@ const ChefUserInboxx = () => {
         fetch('http://localhost:9000/chef/allUsers')
           .then((response) => response.json())
           .then((data) => {
-            console.log('Data received:', data); // Log the received data
+            console.log('Data received:', data); 
             setRecipeSeekers(data);
           })
           .catch((error) => console.error('Error fetching users:', error));
@@ -75,20 +74,21 @@ const ChefUserInboxx = () => {
           })
             .then((response) => response.json())
             .then((data) => {
-                
-                setChatMessages((prevChatMessages) => [
-                    ...prevChatMessages,
-                    {
-                      message: messageInput,
-                      author: currentUserId, 
-                      time: new Date().toISOString(),
-                    },
-                  ]);
-            })
-            .catch((error) => console.error('Error sending message:', error));
-    
+                setChatMessages((prevChatMessages) => {
+                    const updatedMessages = Array.isArray(prevChatMessages) ? prevChatMessages : [];
+                    return [
+                      ...updatedMessages,
+                      {
+                        message: messageInput,
+                        author: currentUserId,
+                        time: new Date().toISOString(),
+                      },
+                    ];
+                  });
+                })
+                .catch((error) => console.error('Error sending message:', error));
           
-          setMessageInput('');
+              setMessageInput('');
         }
       };
     
@@ -98,36 +98,36 @@ const ChefUserInboxx = () => {
             <ChefNav/>
             
             <div className="chef-chat-container">
-      <div className="chef-text-sidebar">
-        <div className="chef-options">
-          {recipeSeekers && recipeSeekers.map((user) => (
-            <div
-              key={user._id}
-              className={`chef-option ${selectedUser === user._id ? 'selected' : ''}`}
-              onClick={() => handleChefClick(user._id, user.name)}
-            >
+            <div className="chef-text-sidebar">
+                <div className="chef-options">
+                {recipeSeekers && recipeSeekers.map((user) => (
+                    <div
+                    key={user._id}
+                    className={`chef-option ${selectedUser === user._id ? 'selected' : ''}`}
+                    onClick={() => handleChefClick(user._id, user.name)}
+                    >
               
                   <p>{user.name}</p>
                
               
             </div>
-          ))}
-        </div>
-      </div>
-      <div className="chef-main">
-        <div className="chat-box">
-          {selectedUser && (
-            <>
-              <div className="chat-header">
-                <h2>{selectedUserName}</h2>
-              </div>
-              <div className="chat-messages-between-chefanduser">
-              {console.log("Back to  divs: ")}
-              {chatMessages && chatMessages.length > 0 ? (
-                chatMessages.map((message, index) => (
-                    <div key={index} className={`message-to-chef ${message.author === currentUserId ? 'other-user' : ''}`}>
-                    <div className="author-textmsg">
-                    <p className="author">
+                ))}
+                </div>
+            </div>
+            <div className="chef-main">
+                <div className="chat-box">
+                {selectedUser && (
+                    <>
+                    <div className="chat-header">
+                        <h2>{selectedUserName}</h2>
+                    </div>
+                    <div className="chat-messages-between-chefanduser">
+                    {console.log("Back to  divs: ")}
+                    {chatMessages && chatMessages.length > 0 ? (
+                        chatMessages.map((message, index) => (
+                            <div key={index} className={`message-to-chef ${message.author === currentUserId ? 'other-user' : ''}`}>
+                            <div className="author-textmsg">
+                            <p className="author">
                         {message.author === currentUserId ? 'You' : message.author}
                     </p>
                     <p className="message-text">{message.message}</p>
