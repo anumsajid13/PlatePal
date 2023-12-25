@@ -1,0 +1,61 @@
+/* editProfile.css */
+
+.edit-profile-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+  }
+  
+  .edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .editprofile-label {
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #333;
+  }
+  
+  .editprofile-input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+  }
+  
+  .profile-picture-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 10%;
+  }
+  
+  .profile-picture {
+    width: 115px;
+    height: 110px;
+    border-radius: 50%;
+    margin-top: 20px;
+    border: 3px solid #4caf50;
+  }
+  
+  .editprofile-button {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.2em;
+  }
+  
+  .editprofile-button:hover {
+    background-color: #45a049;
+  }
+  

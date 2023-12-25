@@ -221,39 +221,156 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
         
             <div className="recipe-details-left">
             <img   className="" src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}   />
-            <p>Ingredients:</p>
-            <ul>
-                {recipe.ingredients.map((ingredient, index) => (
-                <li key={index}>
-                    {ingredient.name}: {ingredient.quantity}
-                </li>
-                ))}
-            </ul>
-            <p>Allergens:</p>
-            <ul>
-                {recipe.allergens.map((all, index) => (
-                <li key={index}>
-                    {all}
-                </li>
-                ))}
-            </ul>
-            <p>Required Utensils:</p>
-            <ul>
-                {recipe.utensils.map((uten, index) => (
-                <li key={index}>
-                    {uten}
-                </li>
-                ))}
-            </ul>
 
-            <p>Instructions:</p>
+           
+            <div className="top-chef-recipe-description">
+                <h2>Price:</h2>
+                <p className='chef-recipe-description'>Rs.{recipe.price}</p>  
+            </div>
+
+           
+            <div className="chef-recipe-ingredients">
+            <h2>Ingredients:</h2>
+            <div className="ingredient-columns">
+                <ul className="ingredient-column">
+                {recipe.ingredients.slice(0, Math.ceil(recipe.ingredients.length / 2)).map((ingredient, index) => (
+                    <li key={index}>{ingredient.name}: {ingredient.quantity}</li>
+                ))}
+                </ul>
+                <ul className="ingredient-column">
+                {recipe.ingredients.slice(Math.ceil(recipe.ingredients.length / 2)).map((ingredient, index) => (
+                    <li key={index}>{ingredient.name}: {ingredient.quantity}</li>
+                ))}
+                </ul>
+            </div>
+            </div>
+            <div className="top-chef-recipe-description">
+                <h2>Allergens:</h2>
+                <ul className='chef-recipe-description'>
+                    {recipe.allergens.map((allergen, index) => (
+                    <li key={index}>{allergen.replace(/"/g, '')}</li>
+                    ))}
+                </ul>
+            </div>
+            <div className="chef-recipe-utensils">
+            <h2>Utensils:</h2>
             <ul>
-                {recipe.instructions.map((instruct, index) => (
-                <li key={index}>
-                    {instruct}
-                </li>
+                {recipe.utensils.map((utensil, index) => (
+                <li key={index}>{utensil.replace(/"/g, '')}</li>
                 ))}
             </ul>
+            </div>
+
+            <div className="chef-recipe-not-delivered">
+            <h2>Not included in your delivery:</h2>
+            <ul>
+                {recipe.notDelivered.map((item, index) => (
+                <li key={index}>{item.replace(/"/g, '')}</li>
+                ))}
+            </ul>
+            </div>
+
+            <div className="chef-recipe-instructions">
+                    <h2>Instructions:</h2>
+                    <div className='chef-recipe-description'>
+                        {recipe.instructions.map((instruction, index) => (
+                            <p key={index}>
+                                {instruction.replace(/"/g, '')}
+                            </p>
+                        ))}
+                    </div>
+            </div>
+
+            <button className="add-to-cart-button">
+              <span className="icon material-icons google-icon">shopping_cart</span>
+              Add to Cart
+            </button>
+
+
+          <div className="Rating-class">
+          <RecipeRating
+            recipeId={recipe._id}
+            initialRating={0}
+            onSaveRating={handleSaveRating}
+          />
+          <label
+            className="ViewRatingsButton"
+            onClick={() => setIsRatingsVisible(!isRatingsVisible)}
+          >
+            View Ratings
+          </label>
+              {isRatingsVisible && (
+                <div className="Rating-class2">
+                  {ratings.map((rating, index) => (
+                    <div key={index}>
+                      <p>{rating.user_id === currentUserId ? 'You' : rating.user}</p>
+                      <div>
+                        {[...Array(rating.ratingNumber)].map((_, starIndex) => (
+                          <img
+                            key={starIndex}
+                            src="/filled-star-image.svg"
+                            alt="Filled Star"
+                            style={{ width: '20px' }}
+                          />
+                        ))}
+                        {[...Array(5 - rating.ratingNumber)].map((_, starIndex) => (
+                          <img
+                            key={starIndex}
+                            src="/unfilled-star-image.svg"
+                            alt="Unfilled Star"
+                            style={{ width: '20px' }}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+<div className="comment-class comment">
+              <Comments comments={comments}  currentUser={currentUserId}/>
+              <div className="enter-comment" style={{display:"flex", rowGap:"100px"}}>
+                <input
+                  ref={commentInputRef}
+                  placeholder="Type your comment here..."
+                  style={{
+                    borderRadius: '10px', 
+                    height: '40px',
+                    paddingLeft: '10px',
+                    fontSize: '16px',
+                    border: '1px solid #ccc',
+                    boxSizing: 'border-box',
+                    width: '60%', 
+                  }}
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                />
+
+                <button
+                  onClick={handleCommentSubmit}
+                  style={{
+                    borderRadius: '8px',
+                    padding: '10px 15px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    background: 'rgb(218, 94, 218)',
+                    color: 'white',
+                    border: 'none',
+                    height: '35px',
+                    width:'90px',
+                    transition: 'background 0.3s ease-in-out',
+                  }}
+                >
+                  Post
+                </button>
+              </div>
+            </div>
+
+            
+        
+        </div>
+
+        
             
             </div>
             <div className="recipe-details-right">
@@ -262,93 +379,31 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
               Chef: {recipe.chef ? recipe.chef.name : 'Unknown Chef'}
             </p>
             <p className='recepie-category' style={{color:"purple"}}>Serving size: {recipe.servingSize}</p>
-            <p className='recepie-category' style={{color:"purple"}}>Calories: {recipe.calories}</p>
-            <p className='recepie-category' style={{color:"purple"}}>Total Time: {recipe.totalTime}</p>
-            <ul className='recepie-category'>
-                {recipe.category.map((cat, index) => (
-                <li key={index}>{cat}</li>
-                ))}
-            </ul>
+            <p className='recepie-category' style={{color:"purple"}}>Calories: {recipe.calories}kcal</p>
+            <p className='recepie-category' style={{color:"purple"}}>Total Time: {recipe.totalTime} mins</p>
+            <p className='recepie-category' style={{color:"purple"}}>Difficulty: {recipe.difficulty.replace(/"/g, '')}</p>
             <p>{recipe.description}</p>
-<div className="Rating-class">
-  <RecipeRating
-    recipeId={recipe._id}
-    initialRating={0}
-    onSaveRating={handleSaveRating}
-  />
-  <label
-    className="ViewRatingsButton"
-    onClick={() => setIsRatingsVisible(!isRatingsVisible)}
-  >
-    View Ratings
-  </label>
-      {isRatingsVisible && (
-        <div className="Rating-class2">
-          {ratings.map((rating, index) => (
-            <div key={index}>
-              <p>{rating.user_id === currentUserId ? 'You' : rating.user}</p>
-              <div>
-                {[...Array(rating.ratingNumber)].map((_, starIndex) => (
-                  <img
-                    key={starIndex}
-                    src="/filled-star-image.svg"
-                    alt="Filled Star"
-                    style={{ width: '20px' }}
-                  />
-                ))}
-                {[...Array(5 - rating.ratingNumber)].map((_, starIndex) => (
-                  <img
-                    key={starIndex}
-                    src="/unfilled-star-image.svg"
-                    alt="Unfilled Star"
-                    style={{ width: '20px' }}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
 
-        
-      </div>
-            <div className="comment-class comment">
-            <Comments comments={comments}  currentUser={currentUserId}/>
-            <div className="enter-comment" style={{display:"flex", rowGap:"100px"}}>
-              <input
-                ref={commentInputRef}
-                placeholder="Type your comment here..."
-                style={{
-                  borderRadius: '10px', 
-                  height: '40px',
-                  paddingLeft: '10px',
-                  fontSize: '16px',
-                  border: '1px solid #ccc',
-                  boxSizing: 'border-box',
-                  width: '60%', 
-                }}
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-              />
-
-            <button
-              onClick={handleCommentSubmit}
-              style={{
-                borderRadius: '8px',
-                padding: '10px 15px',
-                fontSize: '16px',
-                cursor: 'pointer',
-                background: 'rgb(218, 94, 218)',
-                color: 'white',
-                border: 'none',
-                height: '35px',
-                width:'90px',
-                transition: 'background 0.3s ease-in-out',
-              }}
-            >
-              Post
-            </button>
-            </div>
+            <div className="chef-recipe-nutrients">
+                <h2>Nutrients:</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nutrient</th>
+                            <th>Value</th>
+                            <th>Unit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {recipe.Nutrients.filter((nutrient) => nutrient.value !== 0).map((nutrient, index) => (
+                            <tr key={index}>
+                                <td>{nutrient.nutrientName}</td>
+                                <td>{parseFloat(nutrient.value).toFixed(1)}</td>
+                                <td>{nutrient.unitName}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
 
         </div>

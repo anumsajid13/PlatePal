@@ -10,6 +10,7 @@ import RecipeSeekerSignUp from './RecipeSeeker/components/SignUp_RecepieSeeker';
 import RecipeSeeker_InboxPage from './RecipeSeeker/components/Inbox';
 import ConsultNutritionist from './RecipeSeeker/components/Refer_to_Nutritionist';
 import DiscoverPage from './RecipeSeeker/components/Discover';
+import Edit_profil_user from './RecipeSeeker/components/edit_profile';
 import BlockReports from './Admin/pages/BlockReports';
 import ChefSignUp from './Chef/pages/ChefSignUp';
 import VendorSignUp from './Vendor/pages/SignUp_vendor';
@@ -49,6 +50,7 @@ function App() {
         <Route path="/signup/recipe-seeker" element={<RecipeSeekerSignUp />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/recipe-seeker/Discover" element={<DiscoverPage />} />
+        <Route path="/recipe-seeker/UpdateProfile" element={<Edit_profil_user />} />
         <Route path="/recipe-seeker/Inbox" element={<RecipeSeeker_InboxPage />} />
         <Route path="/recipe-seeker/Consult_Nutritionist" element={<ConsultNutritionist />} />
         <Route path="/admin/blockreport" element={<BlockReports />} />
@@ -77,6 +79,16 @@ function App() {
         <Route path="/n/makeplan/:bmi/:userId" element={<Discover/>} />
         <Route path="/n/planmade/:nutritionistId" element={<MealPlansPage/>} />
         <Route path="/n/n-profile" element={<ChefProfile1/>} />
+
+        <Route path="/Chef/myProfile" element={<ChefProfile/>} />
+        <Route path="/Chef/usersInbox" element={<ChefUserInboxx/>} />
+        <Route path="/Chef/vendorsInbox" element={<ChefVendorInboxx/>} />
+        <Route path="/Chef/myFollowers" element={<ChefDisplayFollowers/>} />
+        <Route path="/Chef/BlockReports" element={<BlockReportsList/>} />
+
+        
+
+
 
 
 

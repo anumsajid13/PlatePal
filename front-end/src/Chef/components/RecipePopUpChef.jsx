@@ -1,11 +1,11 @@
-import  {React, useEffect, useState } from 'react';
+import  {React, useState } from 'react';
 import useTokenStore from '../../tokenStore';
 import '../components/RecipePopUpChef.css';
 import RatingStars from './RatingStars';
 
 
 const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
-    
+
     const { token, setToken } = useTokenStore(); 
 
     if (!selectedRecipe) return null;
@@ -31,6 +31,8 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
     };
 
     console.log(selectedRecipe);
+
+
     return(
 
      <>
@@ -56,15 +58,12 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
                     <div className='chef-popup-content-item'>
                         <p>Calories: {selectedRecipe.calories}</p>
                     </div>
-                    <div className='chef-popup-content-item'>
-                        <p>Difficulty: {selectedRecipe.difficulty.replace(/"/g, '')}</p>
+                    <div className="chef-popup-content-item">
+                        <p>Difficulty: {selectedRecipe.difficulty}</p>
                     </div>
                 </div>
 
                 <div className='chef-popup-three-content'>
-                    <button className='update-delete-collab-chef'>
-                        <span className="material-icons">update</span>
-                    </button>
                     <button  className='update-delete-collab-chef' onClick={handleDelete}>
                         <span className="material-icons">delete</span>
                     </button>
@@ -80,10 +79,11 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
             </div>
 
 
+
             
             <div className="top-chef-recipe-description">
                 <h2>Price:</h2>
-                <p className='chef-recipe-description'>{selectedRecipe.price}</p>  
+                <p className='chef-recipe-description'>Rs.  {selectedRecipe.price}</p>  
             </div>
 
             
@@ -205,7 +205,7 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
                     </ul>
                    
             </div>
-            {/* need to nutritional table */}
+            
 
   </div>
 </div>

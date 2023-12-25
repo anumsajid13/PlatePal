@@ -44,7 +44,7 @@ const multer = require('multer');
               },
               chef: chefId,
               description,
-              price:parseInt(totalTime.replace(/\D/g, ''), 10),
+              price:parseInt(price.replace(/\D/g, ''), 10),
           });
 
 
@@ -83,18 +83,85 @@ const multer = require('multer');
 
   });
 
-
-//update a recipe
-router.put('/update/:id', authenticateToken, async (req, res) => {
-
+//udate recipe
+  router.put('/update/:id', upload.single('recipeImage'), authenticateToken, async (req, res) => {
     const { id } = req.params;
+    const {
+        title,
+        calories,
+        servingSize,
+        difficulty,
+        totalTime,
+        ingredients,
+        allergens,
+        notDelivered,
+        utensils,
+        category,
+        instructions,
+        description,
+        price
+    } = req.body;
+    const RecipeImage = req.file;
+
+   
     try {
-      const updatedRecipe  = await Recipe.findByIdAndUpdate(id, { $set: req.body }, { new: true });
-    
-      return res.status(200).json('Profile updated successfully');
+        const recipe = await Recipe.findById(id);
+
+        if (!recipe) {
+            return res.status(404).json({ message: 'Recipe not found' });
+        }
+
+        if (RecipeImage !== undefined && RecipeImage !== null) {
+            recipe.recipeImage.data = RecipeImage.buffer;
+            recipe.recipeImage.contentType = RecipeImage.mimetype;
+        }
+
+        if (title !== undefined && title !== null) {
+          recipe.title = title;
+      }
+      if (calories !== undefined && calories !== null) {
+          recipe.calories = calories;
+      }
+      if (servingSize !== undefined && servingSize !== null) {
+          recipe.servingSize = servingSize;
+      }
+      if (difficulty !== undefined && difficulty !== null) {
+          recipe.difficulty = difficulty;
+      }
+      if (totalTime !== undefined && totalTime !== null) {
+          recipe.totalTime = totalTime;
+      }
+      if (Array.isArray(ingredients) && ingredients.length > 0) {
+          recipe.ingredients = ingredients;
+      }
+      if (Array.isArray(allergens) && allergens.length > 0) {
+          recipe.allergens = allergens;
+      }
+      if (Array.isArray(notDelivered) && notDelivered.length > 0) {
+          recipe.notDelivered = notDelivered;
+      }
+      if (Array.isArray(utensils) && utensils.length > 0) {
+          recipe.utensils = utensils;
+      }
+      if (Array.isArray(category) && category.length > 0) {
+          recipe.category = category;
+      }
+      if (Array.isArray(instructions) && instructions.length > 0) {
+          recipe.instructions = instructions;
+      }
+      if (description !== undefined && description !== null) {
+          recipe.description = description;
+      }
+      if (price !== undefined && price !== null) {
+          recipe.price = parseInt(price.replace(/\D/g, ''), 10) || recipe.price;
+      }
+
+        const updated = await recipe.save();
+
+        return res.status(200).json({ message: 'Recipe updated successfully', updated });
     } catch (error) {
-      console.error(error);
-      return res.status(500).send({ message: 'Failed to update recipe' });
+        console.error(error);
+        return res.status(500).json({ message: 'Failed to update recipe' });
     }
 });
 
