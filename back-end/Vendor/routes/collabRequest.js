@@ -98,7 +98,7 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
         return res.status(404).json({ message: 'Collaboration request not found or already accepted/rejected.' });
       }
   
-
+      
       const ingredientIds = collaborationRequest.ingredients.map(ingredient => ingredient.name);
       const vendorIngredients = await Ingredient.find({
         name: { $in: ingredientIds },
@@ -108,7 +108,16 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
       if (vendorIngredients.length !== collaborationRequest.ingredients.length) {
         return res.status(400).json({ message: 'Invalid ingredients in the collaboration request.' });
       }
-  
+      if(recipe.vendor!=null)
+      {
+        collaborationRequest.isAccepted = 'Retracted';
+        await collaborationRequest.save();  
+        return res.status(400).json({ message: 'This recipe is already assigned to a vendor.' });
+
+      }
+      const recipe=await Recipe.findOne({_id:collaborationRequest.recipe});
+      recipe.vendor=vendorId;
+      await recipe.save();
       // Create a collaboration object
       const vendorCollaboration = new VendorCollaboration({
         vendor: collaborationRequest.vendor,
@@ -120,16 +129,14 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
   
   
       await vendorCollaboration.save();
-      const recipe=await Recipe.findOne({_id:collaborationRequest.recipe});
-      recipe.vendor=vendorId;
-      await recipe.save();
+     
       // Update collaboration request status
       collaborationRequest.isAccepted = 'accepted';
       await collaborationRequest.save();
 
       const notificationData = {
         user: collaborationRequest.chef, 
-        type: 'Collaboration accepted',
+        type: 'Request accepted',
         notification_text: 'Your collaboration request has been accepted.',
         Time: new Date(),
       };
@@ -156,11 +163,11 @@ router.put('/decline/:collaborationId', authenticateToken, async (req, res) => {
       if (!collaborationRequest) {
         return res.status(404).json({ message: 'Collaboration request not found' });
       }
-      collaborationRequest.isAccepted = 'declined';
+      collaborationRequest.isAccepted = 'Request declined';
       await collaborationRequest.save();
   
   
-      return res.json({ message: 'Collaboration request deleted successfully' });
+      return res.json({ message: 'Collaboration request has been declined successfully' });
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Internal Server Error' });

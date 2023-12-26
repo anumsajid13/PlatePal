@@ -7,7 +7,7 @@
     height: 120vh;
   }
   
-  .for-flex{
+  .vendor-signup-container.for-flex{
     display: flex;
     flex-direction: row;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -22,7 +22,7 @@
     margin-top: 13%;
     height: 90%;
   }
-  .card-container1 {
+  .vendor-signup-container.card-container1 {
     display: flex;
     flex-direction: column;
     width: 40%;
@@ -30,12 +30,12 @@
     margin-left: 5%;
   }
   
-  .heading1 {
+ .vendor-signup-container .heading1 {
     margin-left: 10%;
     color: #a34f76;
   }
   
-  .form-side {
+ .vendor-signup-container .form-side {
     flex: 1;
     padding: 40px;
     display: flex;
@@ -43,12 +43,12 @@
     gap: 10px;
   }
   
-  .form-side h2 {
+ .vendor-signup-container .form-side h2 {
     font-size: 2rem;
     color: #333;
   }
   
-  .form-label {
+ .vendor-signup-container .form-label {
     border-radius: 10px;
     padding: 10px;
     display: flex;
@@ -57,13 +57,13 @@
     margin-left: 5%;
   }
 
-  .l1{
+  .vendor-signup-container.l1{
     margin-top: 8%;
     margin-left: 10%;
     color:#a34f76
   }
   
-  input,
+  .vendor-signup-container input,
   button {
     padding: 10px;
     border: 2px solid #C4E0F9;
@@ -71,11 +71,11 @@
     font-size: 14px;
   }
   
-  input[type="file"] {
+ .vendor-signup-container input[type="file"] {
     border: none;
   }
   
-  .signup-button {
+  .vendor-signup-container .signup-button {
     background-color: #B95F89;
     color: white;
     margin-left: 25%;
@@ -87,11 +87,11 @@
     margin-bottom: 5%;
   }
   
-  .signup-button:hover {
+ .vendor-signup-container  .signup-button:hover {
     background-color: #944c6f;
   }
   
-  .Signupimage {
+ .vendor-signup-container .Signupimage {
      flex: 1; 
     background-image: url('../images/vendor_signup.svg'); 
     background-size: cover; 
@@ -100,7 +100,7 @@
     margin-right: 10%;
   }
 
-  .Profile-Picture{
+ .vendor-signup-container  .Profile-Picture{
     height:50%;
   }
   

@@ -1,0 +1,62 @@
+/* Acceptcert.css */
+
+.certifications-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+}
+
+.certification-card {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+  max-width: 80%; /* Adjust the width as needed */
+}
+
+  &:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  h2 {
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin-bottom: 16px;
+  }
+
+  iframe {
+    border: black;
+    width: 100%; /* Set iframe width to 100% of its parent container */
+    height: 300px; /* Adjust the height as needed */
+  }
+
+  .certification-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:6px;
+  }
+
+  .certification-buttons .accept-button,
+  .reject-button {
+    padding: 8px;
+    margin-top: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .accept-button:hover {
+    background-color: #4caf50;
+    color: #fff;
+  }
+
+  .reject-button:hover {
+    background-color: #f44336;
+    color: #fff;
+  }
+

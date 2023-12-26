@@ -66,8 +66,14 @@
     font-family: Chonburi;
   }
   
-  input,
-  button {
+  .input-field {
+    padding: 10px;
+    border: 2px solid #94958B;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  
+  .button-field {
     padding: 10px;
     border: 2px solid #94958B;
     border-radius: 10px;
