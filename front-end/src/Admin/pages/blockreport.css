@@ -1,14 +1,11 @@
-/* blockreport.css */
-
 body {
-  background-color: #f7f7f7;
+  background-color: #e4deff;
   margin: 0;
 }
 
 .container {
-  max-width: 800px;
+  max-width: 600px; /* Reduced max-width */
   margin: 0 auto;
-  padding: 20px;
 }
 
 h1 {
@@ -23,7 +20,7 @@ h1 {
   border: 1px solid #ccc;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 15px; /* Reduced padding */
   margin-bottom: 20px;
   transition: box-shadow 0.3s, transform 0.3s;
 }
@@ -33,38 +30,55 @@ h1 {
   transform: translateY(-2px);
 }
 
+p {
+  font-family: "Quattrocento";
+  font-weight: normal;
+  text-align: center;
+}
+
 .block-report h3 {
   color: #333;
   font-family: "Quattrocento";
   font-weight: bold;
+  text-align: center;
 }
 
 .proof-image-container {
   justify-content: center;
   align-items: center;
   margin-top: 15px;
-  margin-left:16%;
 }
+
 .proof-image {
-  width: 80%;
-  max-height: 700px;
+  width: 100%; /* Full width */
+  max-height: 400px; /* Reduced max height */
   object-fit: cover;
   border-radius: 8px;
   margin-top: 15px;
 }
 
+.block-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
 .block-button {
-  background-color: #ff5e5e;
-  color: #fff;
+  background-color: #e9d788;
+  color: black;
   border: none;
-  padding: 10px 15px;
+  padding: 15px 15px;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-left: 44%;
+  margin-top: 20px;
+  font-family: Chonburi;
+
 }
 
 .block-button:hover {
-  background-color: #e14141;
+  background-color: #bca4cb;
 }
 
 .status-text {
