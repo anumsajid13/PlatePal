@@ -78,6 +78,7 @@ const list_chef = require('./Admin/routes/list');
 const admin_Notification = require('./Admin/routes/Notifications');
 const top = require('./Admin/routes/top');
 const deleteN = require('./Admin/routes/delete');
+const allow = require('./Admin/routes/allow');
 
 //vendor routes
 const vendor_Routes = require('./Vendor/routes/profileRoute');
@@ -85,6 +86,7 @@ const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
 const collaboration_Routes = require('./Vendor/routes/collaborationroute');
 const collaboration_Request= require('./Vendor/routes/collabRequest');
 const vendorChatRoute = require('./Vendor/routes/inbox');
+const vendorNotificationRoute = require('./Vendor/routes/notificationroute');
 
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 
@@ -95,6 +97,8 @@ const Nutritionist_Plan = require('./Nutrionist/routes/plan')
 
 const getAllVendors = require('./Chef/routes/vendor_Routes_Chef');
 const collabVendorsChef = require('./Chef/routes/CollabVendors_routes');
+
+const chefReviews = require('./Chef/routes/ManageReviews_routes');
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -202,6 +206,7 @@ app.use('/admin', admin_Notification);
 app.use('/admin', top);
 app.use('/admin', list_chef);
 app.use('/admin', deleteN);
+app.use('/admin', allow);
 
 
 //Vendor routes
@@ -210,6 +215,7 @@ app.use('/ingredients', ingredient_Routes);
 app.use('/collaboration',collaboration_Routes);
 app.use('/collaboration-request',collaboration_Request);
 app.use('/chatWithchef',vendorChatRoute );
+app.use('/vendor/notifications',vendorNotificationRoute );
 
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);
@@ -226,7 +232,10 @@ app.use('/n', Nutritionist_Plan);
 app.use('/chef', chatwithuserChef);
 
 //chef-vendor inbox route (chef)
-app.use('/Chef', chatwithvendorChef);
+app.use('/chef', chatwithvendorChef);
+
+//chef reviews (cheff)
+app.use('/chef', chefReviews);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

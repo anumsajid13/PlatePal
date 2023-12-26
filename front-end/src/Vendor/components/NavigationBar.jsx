@@ -1,9 +1,8 @@
-//chef nav bar
 import React, { useState } from 'react';
 import '../assets/styles/navBar.css';
 import Sidebar from './vendor_sidebar';
 import { Link, useNavigate  } from 'react-router-dom'; 
-//import ChefNotificationBox from '../components/ChefNotificationss';
+import VendorNotificationBox from '../components/vendorNotification';
 
 const ChefNav = () => {
   
@@ -51,12 +50,7 @@ const ChefNav = () => {
     
         <div className="chef-navbar-logo">Plate Pal</div>
 
-      <div className="chef-search-bar">
-        <input className="chef-search-bar-input" type="text" placeholder="Search" />
-        <button className="chef-search-button">
-          <span className="material-icons google-icon">search</span>
-        </button>
-      </div>
+    
 
 
       <div className="chef-nav-links">
@@ -90,7 +84,7 @@ const ChefNav = () => {
 
     <Sidebar isOpen={isSidebarOpen} onClose={handleSidebarClose} />
 
-      {/* {showNotifications && <ChefNotificationBox />} */}
+      {showNotifications && <VendorNotificationBox />}
       </div>
 
   );

@@ -69,26 +69,22 @@ router.post('/sendCollabRequest/:recipeId/:vendorId', authenticateToken,  async 
     }
   });
 
-//view accepted collabs
-router.get('/acceptedCollabs', authenticateToken, async (req, res) => {
-    try {
-      const acceptedCollabs = await CollaborationRequest.find({ acceptanceStatus: true }).populate('vendor').populate('chef').populate('recipe');
-      res.json(acceptedCollabs);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server Error' });
-    }
-});
+//view all collabs (chef-logged in)
+router.get('/collabRequests', authenticateToken, async (req, res) => {
+  const loggedInChefId = req.user.id;
 
-//view rejected collabs
-router.get('/rejectedCollabs', authenticateToken, async (req, res) => {
-    try {
-      const rejectedCollabs = await CollaborationRequest.find({ acceptanceStatus: false }).populate('vendor').populate('chef').populate('recipe');
-      res.json(rejectedCollabs);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server Error' });
-    }
+  try {
+    // Find collaboration requests for the logged-in chef
+    const requests = await CollaborationRequest.find({ chef: loggedInChefId })
+      .populate('vendor', 'name') // Populate vendor name
+      .populate('chef', 'name') // Populate chef name
+      .populate('recipe', 'title') // Populate recipe name
+      .select('vendor chef recipe ingredients Time isAccepted'); // Select required fields
+
+    res.status(200).json({ collabRequests: requests });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
 });
 
 

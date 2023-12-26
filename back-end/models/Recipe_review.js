@@ -10,6 +10,10 @@ const ReviewSchema = new mongoose.Schema({
     default: Date.now,
 },
   recipe: { type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' },
+  isPinned:{
+    type:Boolean,
+    default: false,
+  },
 });
 
 const Review = mongoose.model('Review', ReviewSchema);
