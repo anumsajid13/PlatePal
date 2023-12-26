@@ -43,14 +43,14 @@ body {
   border-radius: 5px;
   font-size: 14px;
 }
-.search-button {
+.search-button-landing {
   border: none;
   padding: 0;
   border-radius: 2px;
   cursor: pointer;
   width: 30px;
   height: 30px;
-  background-color: #94958B ;
+  background-color: rgb(184, 164, 225) ;
 }
 
 /* Style the image to fill the button */
@@ -75,7 +75,7 @@ body {
 
 /* Best Food container styles */
 .best-food-container {
-  background-color: #D8E2EB;
+  background-color: #f5f6f8;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  
 
   margin: 20px;

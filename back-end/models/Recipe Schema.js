@@ -28,6 +28,10 @@ const recipeSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String
   },
+  isBlocked:{
+    type: Boolean,
+    default: false,
+  },
   description: String,
   Nutrients:[{
     nutrientName: String,
