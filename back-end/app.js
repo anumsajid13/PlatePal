@@ -84,6 +84,7 @@ const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
 const collaboration_Routes = require('./Vendor/routes/collaborationroute');
 const collaboration_Request= require('./Vendor/routes/collabRequest');
 const vendorChatRoute = require('./Vendor/routes/inbox');
+const vendorNotificationRoute = require('./Vendor/routes/notificationroute');
 
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 
@@ -207,6 +208,7 @@ app.use('/ingredients', ingredient_Routes);
 app.use('/collaboration',collaboration_Routes);
 app.use('/collaboration-request',collaboration_Request);
 app.use('/chatWithchef',vendorChatRoute );
+app.use('/vendor/notifications',vendorNotificationRoute );
 
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);

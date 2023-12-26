@@ -3,8 +3,9 @@ import '../assets/styles/mainpage.css';
 import { React, useEffect, useState } from 'react';
 import useTokenStore from '../../tokenStore';
 import NavigationBar from '../components/NavigationBar';
-import { FaArrowLeft, FaArrowRight,FaPlusCircle } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight,FaPlusCircle ,FaSearch} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -79,6 +80,16 @@ navigate('/ingredients/newProduct');
   return (
     <>
       <NavigationBar />
+      <div className="discover-container-1">
+                    <div className="search-card-11">
+                    <input className='searchRecepie' type="text" placeholder="Search..." />
+                    <button className="search-button-1">
+                        Search <FaSearch/></button>
+                    
+                    
+                    </div>
+                    
+            </div>
       <div >
       
         <div className='BigClass'>
