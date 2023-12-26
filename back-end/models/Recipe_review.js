@@ -11,7 +11,7 @@ const ReviewSchema = new mongoose.Schema({
 },
   recipe: { type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' },
   isPinned:{
-    type:Boolean,
+    type: Boolean,
     default: false,
   },
 });

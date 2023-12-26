@@ -1,10 +1,10 @@
 .notification-box {
     position: absolute;
-    top: 50px; /* Adjust as needed */
-    right: 10px; /* Adjust as needed */
+    top: 50px; 
+    right: 10px; 
     width: 300px;
-    max-height: 300px; /* Limit height if needed */
-    overflow-y: auto; /* Enable vertical scrolling if needed */
+    max-height: 300px; 
+    overflow-y: auto; 
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;

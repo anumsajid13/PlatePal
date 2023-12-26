@@ -35,6 +35,27 @@ const ChefNotificationBox = () => {
     fetchNotifications();
   }, [token]);
 
+  const handleDeleteNotification = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:9000/chef/deletenotifications/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete notification');
+      }
+
+      const updatedNotifications = notifications.filter((notification) => notification._id !== id);
+      setNotifications(updatedNotifications);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="notification-box">
         <div className="notification-header">
@@ -56,13 +77,20 @@ const ChefNotificationBox = () => {
              ? '/Chef/myFollowers' 
              : notification.type === 'comment'
              ? '/Chef/Mainpage' 
+             : notification.type === 'review'
+             ? '/Chef/AllReviews' 
              : '#'
          }
        >
          <div className="notification-item">
+         <span className="material-icons" 
+            onClick={() => handleDeleteNotification(notification._id)}  
+            >close</span>
            <span className="notification-text">{notification.notification_text}</span>
             <span className="notification-time">{new Date(notification.Time).toLocaleString()}</span>
+            
          </div>
+        
        </Link>
     ))}
     </div>
