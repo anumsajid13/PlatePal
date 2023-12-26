@@ -63,7 +63,7 @@
 
 
 .create-recipe-button {
-  background-color: #D5CFE1;
+  background-color: rgb(228, 207, 117);
   color: white;
   cursor: pointer;
   margin-top: 30px;
@@ -73,20 +73,20 @@
 }
 
 .create-recipe-button:hover {
-  background-color: #EDDFEF;
+  background-color:#c0a42b;
 }
 
 .create-recipe-input[type='file']::-webkit-file-upload-button {
   padding: 8px;
   border: none;
-  background-color: #D5CFE1;
+  background-color: rgb(228, 207, 117);;
   color: white;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .create-recipe-input[type='file']::-webkit-file-upload-button:hover {
-  background-color: #EDDFEF;
+  background-color:#c0a42b;
 }
 
 

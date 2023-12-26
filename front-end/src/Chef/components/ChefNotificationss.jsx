@@ -37,10 +37,14 @@ const ChefNotificationBox = () => {
 
   return (
     <div className="notification-box">
-    
+        <div className="notification-header">
+        <span>Notifications</span>
+        
+      </div>
+      <div className="notification-list">
       {notifications && notifications.map((notification, index) => (
          <Link  className='chef-linkss'
-         key={index}
+         key={index} 
          to={
               notification.type === 'follow'
              ? '/Chef/myFollowers' 
@@ -53,16 +57,13 @@ const ChefNotificationBox = () => {
              : '#'
          }
        >
-         <p>
-           {notification.type === 'follow' && '👥 '}
-           {notification.type === 'unfollow' && '👥 '}
-           {notification.type === 'message from recipe seeker' && '💬 '}
-           {notification.type === 'message' && '💬 '}
-           {/* add one for like collab accepeted rejected ...*/}
-           {notification.notification_text}
-         </p>
+         <div className="notification-item">
+           <span className="notification-text">{notification.notification_text}</span>
+            <span className="notification-time">{new Date(notification.Time).toLocaleString()}</span>
+         </div>
        </Link>
     ))}
+    </div>
     </div>
   );
 };

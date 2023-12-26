@@ -47,14 +47,7 @@ const ChefNav = () => {
      
     
         <div className="chef-navbar-logo">Plate Pal</div>
-      {/* Search bar with search icon */}
-      <div className="chef-search-bar">
-        <input className="chef-search-bar-input" type="text" placeholder="Search" />
-        <button className="chef-search-button">
-          <span className="material-icons google-icon">search</span>
-        </button>
-      </div>
-
+ 
       {/* Clickable components on the right */}
       <div className="chef-nav-links">
         <div><Link className='chef-linkss' to="/Chef/Mainpage">Home</Link></div>
