@@ -8,7 +8,7 @@ const ChefDisplayFollowers = () => {
     const { token, setToken } = useTokenStore(); 
 
     useEffect(() => {
-        // Fetch followers' names
+       
         const fetchFollowers = async () => {
             try {
                 const response = await fetch('http://localhost:9000/chef/myfollowers', {
@@ -24,6 +24,7 @@ const ChefDisplayFollowers = () => {
                 }
 
                 const data = await response.json();
+                console.log(data)
                 setFollowers(data.followers);
             } catch (error) {
                 console.error(error);
@@ -36,13 +37,16 @@ const ChefDisplayFollowers = () => {
     return (
         <>
             <ChefNav />
-            <div className="followers-list">
-                <h2>Followers</h2>
-                <ul>
+            <div className="chef-followers-list">
+                <h2 className='chef-follower-heading'>My Followers</h2>
+                <div className='chef-followers-list-item'>
                     {followers.map((follower, index) => (
-                        <li key={index}>{follower.name}</li>
+                        <div className="chef-followers-names"  key={index}><p className='chef-followers-names-text'>{follower.name}</p>
+                        <img className="chef-followers-image" src={follower.profilePicture ? follower.profilePicture : require('../assets/images/no-profile-picture-15257.svg').default} alt="Profile" />
+                        </div>
+                        
                     ))}
-                </ul>
+                </div>
             </div>
         </>
     );

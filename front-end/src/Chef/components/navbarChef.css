@@ -1,15 +1,15 @@
 
-.chef-navbar {
+.chef-chef-navbar {
     background-color: #E4DEFF;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 30px;
-   
+  
   }
   
-  .chef-navbar-logo {
+  .chef-chef-navbar-logo {
     font-size: 1.5rem;
     font-weight: bold;
     font-family: Chonburi;

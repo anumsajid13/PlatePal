@@ -54,6 +54,8 @@ const ChefNotificationBox = () => {
              ? '/Chef/vendorsInbox' 
              : notification.type === 'unfollow'
              ? '/Chef/myFollowers' 
+             : notification.type === 'comment'
+             ? '/Chef/Mainpage' 
              : '#'
          }
        >

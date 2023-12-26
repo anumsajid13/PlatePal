@@ -43,10 +43,10 @@ const ChefNav = () => {
           <span className="loading-text">Logging out...</span>
         </div>
       )}
-    <nav className="chef-navbar">
+    <nav className="chef-chef-navbar">
      
     
-        <div className="chef-navbar-logo">Plate Pal</div>
+        <div className="chef-chef-navbar-logo">Plate Pal</div>
  
       {/* Clickable components on the right */}
       <div className="chef-nav-links">
@@ -81,7 +81,8 @@ const ChefNav = () => {
 
       <div className={`chef-sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <a href="#" onClick={handleSidebarToggle} className="chef-close-btn"><span className="material-icons">close</span></a>
-        <a href="#">Collab Requests</a>
+        <Link className='chef-linkss' to="/Chef/allVendors/1">Collab Requests</Link>
+        <Link className='chef-linkss' to="/Chef/allVendors/1">My Reviews</Link>
         <Link className='chef-linkss' to="/Chef/allVendors/1">Vendors</Link>
         <Link className='chef-linkss' to="/Chef/myFollowers">Followers</Link>
         <Link className='chef-linkss' to="/Chef/BlockReports">Block Reports</Link>
