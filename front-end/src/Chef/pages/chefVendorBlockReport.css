@@ -25,22 +25,18 @@
     border-radius: 8px;
     background-color:#eff5f2;
     text-align: left;
-    transition: transform 0.3s ease-in-out;
     cursor:pointer;
     margin-bottom: 50px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
   }
 
-  .vendor-br-item:hover {
-    transform: scale(1.05);
-  }
   
   .vendor-chef-br{
     padding: 8px 16px;
     margin-top: 20px;
     border: none;
     border-radius: 4px;
-    background-color: #D5CFE1;  
+    background-color:rgb(228, 207, 117);
     color: white;
     cursor: pointer;
     width: 10%;
@@ -48,7 +44,7 @@
   }
   
   .vendor-chef-br:hover {
-    background-color: #EDDFEF; 
+    background-color:  #c0a42b;
   }
 
   .vendor-chef-br-image{

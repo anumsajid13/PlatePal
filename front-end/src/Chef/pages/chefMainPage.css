@@ -1,5 +1,10 @@
+body{
+    background-color: #E4DEFF
+}
+
 body.no-scroll{
     overflow:auto;
+    
 }
 .chef-recipe-card-with-vc-heading{
     margin-top: 50px;
@@ -97,14 +102,14 @@ body.no-scroll{
 }
 
 .recipe-update-buttonn{
-    background-color: #D5CFE1;
+    background-color: purple;
     color: white;
     cursor: pointer;
     margin-top: 30px;
     border-radius: 10px;
-    padding:10px;
+    padding: 5px 10px;
     width: 25%;
-    border: 2px solid #D5CFE1;
+    border: none;
 
 }
 

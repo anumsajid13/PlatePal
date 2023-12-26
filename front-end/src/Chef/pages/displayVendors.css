@@ -39,7 +39,7 @@
     margin-top: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #D5CFE1;  
+    background-color: rgb(228, 207, 117);;  
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
@@ -47,5 +47,5 @@
   }
   
   .vendor-chef-displayVendors:hover {
-    background-color: #EDDFEF; 
+    background-color: #c0a42b;
   }

@@ -3,7 +3,7 @@ import './chefFollowers.css';
 import ChefNav from '../components/NavBarChef';
 import useTokenStore from '../../tokenStore';
 
-const ChefDisplayFollowers = () => {
+const ChefCollabs = () => {
     const [followers, setFollowers] = useState([]);
     const { token, setToken } = useTokenStore(); 
 
@@ -38,7 +38,7 @@ const ChefDisplayFollowers = () => {
         <>
             <ChefNav />
             <div className="chef-followers-list">
-                <h2 className='chef-follower-heading'>My Followers</h2>
+                <h2 className='chef-follower-heading'>Chef Collabs</h2>
                 <div className='chef-followers-list-item'>
                     {followers.map((follower, index) => (
                         <div className="chef-followers-names"  key={index}><p className='chef-followers-names-text'>{follower.name}</p>
@@ -53,4 +53,4 @@ const ChefDisplayFollowers = () => {
 
 };
 
-export default ChefDisplayFollowers;
+export default ChefCollabs;
