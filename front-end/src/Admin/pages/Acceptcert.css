@@ -17,9 +17,6 @@
   max-width: 80%; /* Adjust the width as needed */
 }
 
-  &:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
 
   h2 {
     margin-bottom: 8px;

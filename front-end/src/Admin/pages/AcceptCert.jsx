@@ -6,6 +6,7 @@ import AdminNav from '../components/AdminNav';
 const ViewCertifications = () => {
   const [nutritionists, setNutritionists] = useState([]);
   const [chefs, setChefs] = useState([]);
+  const [message, setMessage] = useState('');
   const token = useTokenStore((state) => state.token);
 
   useEffect(() => {
@@ -49,16 +50,59 @@ const ViewCertifications = () => {
     };
 
     fetchNutritionists();
-  }, [token]);
+  }, [token,message]);
 
-  const handleAccept = (professionalId) => {
-    // Implement logic for accepting certification
-    console.log(`Accept certification for professional ${professionalId}`);
+  const handleAccept = async (professionalId) => {
+    try {
+      const response = await fetch(`http://localhost:9000/allow-chef-signup/${professionalId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ allowSignup: true }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setMessage(data.message);
+
+      // You may want to refresh the certifications after accepting
+      // Call fetchNutritionists() or any other appropriate function here
+
+    } catch (error) {
+      console.error(error);
+      setMessage('Error accepting certification');
+    }
   };
 
-  const handleReject = (professionalId) => {
-    // Implement logic for rejecting certification
-    console.log(`Reject certification for professional ${professionalId}`);
+  const handleReject = async (professionalId) => {
+    try {
+      const response = await fetch(`http://localhost:9000/disallow-chef-signup/${professionalId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setMessage(data.message);
+
+      // You may want to refresh the certifications after rejecting
+      // Call fetchNutritionists() or any other appropriate function here
+
+    } catch (error) {
+      console.error(error);
+      setMessage('Error rejecting certification');
+    }
   };
 
   return (
@@ -66,6 +110,7 @@ const ViewCertifications = () => {
       <AdminNav />
       <>
         <h1>Nutritionists and Chefs with Certifications</h1>
+        {message && <p>{message}</p>}
         {nutritionists.length === 0 && chefs.length === 0 ? (
           <div style={{ textAlign: 'center', marginTop: '50px' }}>
             <p>No certifications to view.</p>
@@ -122,4 +167,3 @@ const ViewCertifications = () => {
 };
 
 export default ViewCertifications;
-

@@ -12,7 +12,7 @@ const fs = require('fs');
 // Endpoint to view certification pictures of nutritionists
 router.get('/view-certifications', autheticateToken, async (req, res) => {
   try {
-    const nutritionists = await Nutritionist.find({ allowSignup: false }, 'name certificationImage');
+    const nutritionists = await Nutritionist.find({ allowSignup: false }, 'name certificationImage _id');
 
     const nutritionistsWithBase64PDFs = nutritionists.map((nutritionist) => {
       const certificationDocument = nutritionist.certificationImage;
@@ -38,7 +38,7 @@ router.get('/view-certifications', autheticateToken, async (req, res) => {
 // Endpoint to view certification pictures of chefs
 router.get('/view-chef-certifications', autheticateToken, async (req, res) => {
   try {
-    const chefs = await Chef.find({ allowSignup: false }, 'name certificationImage');
+    const chefs = await Chef.find({ allowSignup: false }, 'name certificationImage _id');
 
     const chefsWithBase64PDFs = chefs.map((chef) => {
       const certificationDocument = chef.certificationImage;
@@ -72,7 +72,7 @@ router.put('/allow-chef-signup/:chefId', autheticateToken, async (req, res) => {
       return res.status(404).json({ error: 'Chef not found' });
     }
 
-    chef.allowSignup = allowSignup;
+    chef.allowSignup = true;
     await chef.save();
 
     const message = allowSignup
@@ -86,7 +86,33 @@ router.put('/allow-chef-signup/:chefId', autheticateToken, async (req, res) => {
   }
 });
 
+// Endpoint to change the boolean value to disallow chefs to sign up and delete the user
+router.delete('/disallow-chef-signup/:chefId', autheticateToken, async (req, res) => {
+  try {
+    const chefId = req.params.chefId;
 
+    // Find the chef by ID
+    const chef = await Chef.findById(chefId);
+
+    if (!chef) {
+      return res.status(404).json({ error: 'Chef not found' });
+    }
+
+    // Set allowSignup to false
+    chef.allowSignup = false;
+
+    // Save the updated chef
+    await chef.save();
+
+    // Delete the chef user
+    await Chef.findByIdAndDelete(chefId);
+
+    return res.json({ message: 'Chef signup disallowed, and the chef user deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 // Endpoint to change the boolean value to allow nutritionists to sign up
 router.put('/allow-nutritionist-signup/:nutritionistId', autheticateToken, async (req, res) => {
