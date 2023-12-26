@@ -4,12 +4,11 @@ const Ingredient = require('../../models/Ingredient Schema');
 const jwt = require("jsonwebtoken");
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
  
-
-//get all ingredients with filtering ,sorting and pagination
-router.get('/All',authenticateToken, async (req, res) => {
+// Endpoint to get all ingredients with filtering, sorting, and pagination
+router.get('/All', authenticateToken, async (req, res) => {
   try {
     // Extract query parameters
-    const { sortBy, sortOrder, filterType, filterValue, page=1, pageSize=4 } = req.query;
+    const { sortBy, sortOrder, filterType, filterValue, search } = req.query;
     const vendorId = req.user.id;
 
     // Build the query object
@@ -31,31 +30,38 @@ router.get('/All',authenticateToken, async (req, res) => {
    /*  if (filterType && filterValue) { //does the same as above but more generic if we have a lot of  filters
       query[filterType] = filterValue;
     } */
+    if (search) {
+      // Add a new condition for searching by name
+      query.name = { $regex: new RegExp(search, 'i') }; // Case-insensitive search
+    }
 
     const sortOptions = {};
-    if(!sortBy)
-    {
-    sortOptions[sortBy]=1;
+
+    if (!sortBy) {
+      sortOptions[sortBy] = 1;
     }
-    if (sortBy && sortBy=='price') {
+
+    if (sortBy ) {
       let sortvalue;
-      if (!sortOrder) {
-        sortvalue = 1;//asc default
-      } else if (sortOrder === 'highest') {
-        sortvalue = -1;//desc
-      } else {
-        sortvalue = 1;//sortorder=='lowest' 
+      if(!sortOrder || !sortBy)
+      { 
+        sortBy='Time';
+        sortvalue=-1;
       }
-      sortOptions[sortBy] = sortvalue; 
-    } 
+      else if (sortOrder === 'desc') {
+        sortvalue = -1; // desc
+      } else if(sortOrder === 'asc') {
+        sortvalue = 1; // sortorder=='lowest'
+      }
   
-    const skip = (page - 1) * pageSize;
+      sortOptions[sortBy] = sortvalue;
+    }
+
 
     // Fetch ingredients based on the query, sort, and pagination
     const ingredients = await Ingredient.find(query)
       .sort(sortOptions)
-      .skip(skip)
-      .limit(parseInt(pageSize));
+
 
     return res.json(ingredients);
   } catch (error) {
@@ -63,6 +69,7 @@ router.get('/All',authenticateToken, async (req, res) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
 
 
 // Get an ingredient

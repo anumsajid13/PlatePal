@@ -11,7 +11,7 @@ router.get('/', authenticateToken, async (req, res) => {
     const vendorId = req.user.id;
 
     // Extract query parameters for filtering, sorting, and pagination
-    const { chefId, sortBy, sortOrder, page=1, pageSize=30 } = req.query; //pagesize = number of collaborations per page
+    const { chefId, sortBy, sortOrder } = req.query; //pagesize = number of collaborations per page
 //filtering
     const query = { vendor: vendorId };
     if (chefId) {
@@ -34,8 +34,7 @@ router.get('/', authenticateToken, async (req, res) => {
     // Find collaborations for the specified vendor and chef
     const collaborations = await VendorCollaboration.find(query)
       .sort(sort)
-      .skip(skip)
-      .limit(parseInt(pageSize))
+
   
       
 
