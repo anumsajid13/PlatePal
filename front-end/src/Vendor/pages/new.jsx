@@ -42,12 +42,8 @@ const CollaborationRequests = () => {
         <div>
           {collaborationRequests.map(request => (
             <div key={request._id}>
-              {/* Display collaboration request details */}
               <p>Vendor: {request.vendor}</p>
               <p>Chef: {request.chef}</p>
-              {/* Add more details as needed */}
-
-              {/* Add a button to accept or reject the collaboration request */}
               <button>Accept</button>
               <button>Reject</button>
 

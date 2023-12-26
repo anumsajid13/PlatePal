@@ -52,15 +52,20 @@ const BlockReportsList  = () => {
              <div className="vendorbr-list">
                     <h1>Vendor Block Reports</h1>
                     
-                <div className="vendor-br-item">
+                <div className='itemsss'>
                 {reports.length > 0 ? (
                     reports.map((report) => (
             
-                        <div className="vendor-br-alignment" key={report._id}>
+                        <div className="vendor-br-item" key={report._id}>
+
+                          <div className='vendor-br-alignment'>
                         <h1>Reason:</h1> <p> {report.reason}</p>
+                        <h1>Vendor:</h1> <p>{report.vendor}</p> 
+                        <h1>Chef:</h1> <p>{report.chef}</p> 
                         <h1>Proof:</h1>
                         <img className='vendor-chef-br-image' src={`data:image/jpeg;base64,${report.proof.data}`} alt={`Proof for report ${report._id}`} />
                         <button className='vendor-chef-br' onClick={() => handleDelete(report._id)}>Delete</button>
+                        </div>
                         </div>
                        
                     ))

@@ -5,74 +5,119 @@ import { useStore } from './DeleteStore'; // assuming you have a store for manag
 import './ChefList.css';
 import useTokenStore from '../../tokenStore';
 import AdminNav from '../components/AdminNav';
+import useBlockStore from './blockstore';
+import BlockReports from './BlockReports';
 
 const ChefList = () => {
-  const { chefs, setChefs, setLoading } = useStore();
+
+  const { blockReports, setBlockReports } = useBlockStore();
+
+  const { chefs, setChefs, setLoading, nutri, vendor, setVendor, setNutri } = useStore();
   const [error, setError] = useState(null);
   const token = useTokenStore((state) => state.token);
 
   useEffect(() => {
-    const fetchAllChefs = async () => {
+    const fetchAllData = async () => {
       try {
         setLoading(true);
         setError(null);
-        // Make API call to fetch chefs
-        const response = await fetch('http://localhost:9000/admin/list-all-chefs');
-        const data = await response.json();
-        setChefs(data);
-        console.log("coo" ,data)
+
+        const chefResponse = await fetch('http://localhost:9000/admin/list-all-chefs');
+        const chefData = await chefResponse.json();
+        setChefs(chefData);
+
+        const vendorResponse = await fetch('http://localhost:9000/admin/list-all-vendors');
+        const vendorData = await vendorResponse.json();
+        setVendor(vendorData);
+
+        const nutriResponse = await fetch('http://localhost:9000/admin/list-all-nutritionists');
+        const nutriData = await nutriResponse.json();
+        setNutri(nutriData);
+
+        console.log("coo", chefData);
       } catch (error) {
         console.error(error);
-        setError('Error fetching chefs');
+        setError('Error fetching data');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAllChefs();
-  }, [setChefs, setLoading, setError]);
+    fetchAllData();
+  }, [setChefs, setLoading, setError, setVendor, setNutri,blockReports]);
 
-  const deleteChef = async (chefId) => {
+  const deleteEntity = async (entityType, entityId, blockCount) => {
     try {
-      // Make API call to delete chef
-      await fetch(`http://localhost:9000/delete-chef/${chefId}`, {
-        method: 'DELETE',
-        headers: {
+      // Check if blockCount is greater than zero
+      if (blockCount > 3) {
+        // Make API call to delete entity based on the type (chef, vendor, nutritionist)
+        const response = await fetch(`http://localhost:9000/admin/delete-${entityType}/${entityId}`, {
+          method: 'DELETE',
+          headers: {
             Authorization: `Bearer ${token}`,
           },
-      });
-
-      // Update local state in the component
-      setChefs((chefs) => chefs.filter((chef) => chef._id !== chefId));
+        });
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          // Trigger a refetch of the data from the server after successful deletion
+          setError(`User (${entityType}) deleted successfully`);
+        } else {
+          setError(result.error || 'Error deleting user');
+        }
+      } else {
+        setError(`Block count for user (${entityType}) is not greater than 3`);
+      }
     } catch (error) {
       console.error(error);
-      // You might want to handle the error here (e.g., show a notification)
+      setError('Error deleting user');
     }
   };
-
-  const handleDelete = async (chefId, blockCount) => {
-    if (blockCount > 3) {
-      await deleteChef(chefId);
-      setError('User Deleted');
-    } else {
-      setError('Block count is not above the limit yet');
-    }
-  };
+  
 
   return (
-    <><AdminNav /><div className="chef-list-container">
-          <h1>Block Chefs</h1>
-          {error && <p className="error">{error}</p>}
-          {chefs.map((chef) => (
-              <div key={chef._id} className="chef-item">
-                  <p>{chef.name}</p>
-                  <p>Block Count: {chef.blockCount}</p>
-                  <button onClick={() => handleDelete(chef._id, chef.blockCount)}>Delete</button>
-              </div>
-          ))}
-      </div></>
+    <>
+      <AdminNav />
+      <div className="chef-list-container">
+        <h1>Delete Chefs</h1>
+        {error && <p className="error">{error}</p>}
+        {chefs.map((chef) => (
+          <div key={chef._id} className="chef-item">
+            <p>{chef.username}</p>
+            <p>Block Count: {chef.blockCount}</p>
+            <button className="delete-button" onClick={() => deleteEntity('chef', chef._id, chef.blockCount)}>Delete</button>
+          </div>
+        ))}
+      </div>
+
+      <div className="chef-list-container">
+        <h1>Delete Vendors</h1>
+        {error && <p className="error">{error}</p>}
+        {vendor.map((vendor) => (
+          <div key={vendor._id} className="chef-item">
+            <p>{vendor.username}</p>
+            <p>Block Count: {vendor.blockCount}</p>
+            <button className="delete-button" onClick={() => deleteEntity('vendor', vendor._id, vendor.blockCount)}>Delete</button>
+          </div>
+        ))}
+      </div>
+
+      <div className="chef-list-container">
+        <h1>Delete Nutritionists</h1>
+        {error && <p className="error">{error}</p>}
+        {nutri.map((nutritionist) => (
+          <div key={nutritionist._id} className="chef-item">
+            <p>{nutritionist.username}</p>
+            <p>Block Count: {nutritionist.blockCount}</p>
+            <button className="delete-button" onClick={() => deleteEntity('nutritionist', nutritionist._id, nutritionist.blockCount)}>
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 
 export default ChefList;
-

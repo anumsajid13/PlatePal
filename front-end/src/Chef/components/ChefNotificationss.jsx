@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useTokenStore from '../../tokenStore';
 import './chefNotifications.css';
-
+import { Link } from 'react-router-dom';
 
 const ChefNotificationBox = () => {
   const [notifications, setNotifications] = useState([]);
@@ -39,14 +39,29 @@ const ChefNotificationBox = () => {
     <div className="notification-box">
     
       {notifications && notifications.map((notification, index) => (
-        
-        <p key={index}>
-            {notification.type === 'follow' && '👥 '}
-            {notification.type === 'unfollow' && '👥 '}
-            {notification.type === 'message from recipe seeker' && '💬 '}
-            {notification.notification_text}
-        </p>
-        
+         <Link  className='chef-linkss'
+         key={index}
+         to={
+              notification.type === 'follow'
+             ? '/Chef/myFollowers' 
+             : notification.type === 'message from recipe seeker'
+             ? '/Chef/usersInbox' 
+             : notification.type === 'message from vendor'
+             ? '/Chef/vendorsInbox' 
+             : notification.type === 'unfollow'
+             ? '/Chef/myFollowers' 
+             : '#'
+         }
+       >
+         <p>
+           {notification.type === 'follow' && '👥 '}
+           {notification.type === 'unfollow' && '👥 '}
+           {notification.type === 'message from recipe seeker' && '💬 '}
+           {notification.type === 'message' && '💬 '}
+           {/* add one for like collab accepeted rejected ...*/}
+           {notification.notification_text}
+         </p>
+       </Link>
     ))}
     </div>
   );

@@ -1,118 +1,188 @@
 import React, { useState, useEffect } from 'react';
-import useTokenStore from '../../tokenStore';
-import { useParams, Link } from 'react-router-dom';
+import NavigationBar from '../components/NavigationBar';
+import useTokenStore from '../../tokenStore.js';
+import { jwtDecode } from 'jwt-decode';
+import '../assets/styles/chat.css';
+import { FaArrowLeft } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
-const Inbox = () => {
-  const { chefId } = useParams();
-  const { token } = useTokenStore();
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState('');
-  const [inboxList, setInboxList] = useState([]);
+const VendorInbox = () => {
+  const [chefs, setChefs] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUserName, setSelectedUserName] = useState(null);
+  const [messageInput, setMessageInput] = useState('');
+  const [chatMessages, setChatMessages] = useState([]);
+  const [loadingVendors, setLoadingVendors] = useState(true);
+  const [loadingMessages, setLoadingMessages] = useState(false);
+  const navigate = useNavigate();
+
+  const token = useTokenStore.getState().token;
+  const decodedToken = jwtDecode(token);
+  const currentUserId = decodedToken.name;
 
   useEffect(() => {
-    // Fetch messages for the selected chef
-    const fetchMessages = async () => {
-      try {
-        const response = await fetch(`http://localhost:9000/inbox/retrieve-messages/${chefId}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
+    fetchVendors();
+  }, []);
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch messages');
-        }
+  useEffect(() => {
+    if (selectedUser) {
+      fetchMessages(selectedUser);
+    }
+  }, [selectedUser]);
 
-        const data = await response.json();
-        setMessages(data.messages || []);
-      } catch (error) {
-        console.error('Error fetching messages:', error);
+  const fetchVendors = async () => {
+    try {
+      setLoadingVendors(true);
+  
+      const response = await fetch('http://localhost:9000/chatWithchef/chefs', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
       }
-    };
-
-    // Fetch the list of inboxes
-    const fetchInboxList = async () => {
-      try {
-        const response = await fetch('http://localhost:9000/inbox/inbox-list', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch inbox list');
-        }
-
-        const data = await response.json();
-        setInboxList(data.inboxes || []);
-      } catch (error) {
-        console.error('Error fetching inbox list:', error);
+  
+      const data = await response.json();
+  
+      // Log data to check its structure
+      console.log('Fetched chefs data:', data);
+  
+      // Ensure data is an array before setting it
+      if (Array.isArray(data)) {
+        setChefs(data);
+        console.log(' data set:', data._id);
+        console.log('Chefs data set:',chefs._id);
+      } else {
+        console.error('Error: Fetched data is not an array');
       }
-    };
+    } catch (error) {
+      console.error('Error fetching chefs:', error);
+    } finally {
+      setLoadingVendors(false);
+    }
+  };
+  
+  const handleChefSelection = async (chefId, chefName) => {
+    console.log('Selected chef:', chefId);
+    setSelectedUser(chefId);
+    setSelectedUserName(chefName);
+    await fetchMessages(chefId);
+  };
 
-    fetchMessages();
-    fetchInboxList();
-  }, [chefId, token]);
+  const fetchMessages = async (chefId) => {
+    try {
+      setLoadingMessages(true);
+
+      const response = await fetch(`http://localhost:9000/chatWithchef/retrievemessages/${chefId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
+      setChatMessages(data);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    } finally {
+      setLoadingMessages(false);
+    }
+  };
 
   const handleSendMessage = async () => {
     try {
-      const response = await fetch('http://localhost:9000/inbox/send-message', {
+      const response = await fetch('http://localhost:9000/chatWithchef/sendmessage', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ chefId, message: newMessage }),
+        body: JSON.stringify({
+          chefId: selectedUser,
+          message: messageInput,
+          time: new Date(),
+        }),
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to send message');
-      }
-
-      // Refetch messages after sending a new message
       const data = await response.json();
-      setMessages(data.messages || []);
-      setNewMessage('');
+      await fetchMessages(selectedUser);
     } catch (error) {
       console.error('Error sending message:', error);
     }
   };
 
+  const handleBackButton = () => {
+    setSelectedUser(null);
+    setSelectedUserName(null);
+    navigate('/Vendor/Mainpage');
+  };
+
+  console.log('chatMessages:', chatMessages);
+
   return (
-    <div>
-      <h1>Chat with Chef</h1>
-      <div>
-        {/* List of chefs in the inbox */}
-        <ul>
-          {inboxList.map((inbox) => (
-            <li key={inbox.chef._id}>
-              <Link to={`/inbox/${inbox.chef._id}`}>{inbox.chef.name}</Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        {/* Messages for the selected chef */}
-        <h2>Chat with Chef</h2>
-        <ul>
-          {messages.map((msg, index) => (
-            <li key={index}>
-              <strong>{msg.author}:</strong> {msg.message}
-            </li>
-          ))}
-        </ul>
-        {/* Message input and send button */}
-        <div>
-          <input type="text" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
-          <button onClick={handleSendMessage}>Send</button>
+    <>
+      <NavigationBar />
+
+      <div className="vendor-chat-container">
+        <div className="vendor-text-sidebar">
+          <div className="back-button">
+            <button onClick={handleBackButton}>
+              <FaArrowLeft /> Back
+            </button>
+          </div>
+          <div className="vendor-buttons">
+            {loadingVendors ? (
+              <p>Loading vendors...</p>
+            ) : (
+              chefs.map((chef) => (
+                <button key={chef.chefId} onClick={() => handleChefSelection(chef._Id, chef.name)}>
+                  {chef.name}
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+        <div className="vendor-main">
+          <div className="chat-box">
+            {selectedUser && (
+              <>
+                <div className="chat-header">
+                  <h3>Chef {selectedUserName}</h3>
+                </div>
+                <div className="chat-messages-between-vendoranduser">
+                  {loadingMessages ? (
+                    <p>Loading messages...</p>
+                  ) : (chatMessages && chatMessages.length > 0) ? (
+                    chatMessages.map((message, index) => (
+                      <div
+                        key={index}
+                        className={`message-to-chef ${message.author === currentUserId ? 'other-user' : ''}`}
+                      >
+                        <p>{message.author}</p>
+                        <p>{message.message}</p>
+                        <small>{new Date(message.time).toLocaleString()}</small>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No messages yet</p>
+                  )}
+                </div>
+                <div className="messageToVendor-byuser-input">
+                  <input
+                    type="text"
+                    placeholder="Type your message..."
+                    value={messageInput}
+                    onChange={(e) => setMessageInput(e.target.value)}
+                  />
+                  <button onClick={handleSendMessage}>Send</button>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default Inbox;
+export default VendorInbox;

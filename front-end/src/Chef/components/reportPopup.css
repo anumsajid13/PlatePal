@@ -1,5 +1,4 @@
-
-.reprort-popup-containe{
+.report-popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -9,16 +8,56 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999; 
+    z-index: 9999;
+  }
+  
+  .report-popup-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    width: 90%; 
+    max-height: 95%;
+    overflow-y: auto;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+  }
+  
+.reportt-heading{
+    
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+    font-family: Chonburi;
+    margin-bottom: 50px;
 }
-
 .report-popup-inner{
     background-color: white;
-    padding: 20px;
+    padding: 70px;
     border-radius: 8px;
-    max-width: 50%;
+    max-width: 70%;
     max-height: 95%;
     overflow-y: auto;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     z-index: 10000; 
+}
+
+.reportt-input{
+    border: 2px solid #D5CFE1;
+}
+
+.report-chef-pop-close-btn{
+    position: absolute;
+    top: 20%;
+    right: 35%;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;   
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D5CFE1;
+    color: black;
+    padding: 0px 0px;
 }

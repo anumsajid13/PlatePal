@@ -8,14 +8,17 @@ body {
 }
 
 .The-most-outer-part{
-  background-color: #C8C7D7;
+  background-color :#E4DEFF
+  ;
 }
 
 .outer-container-landingpage{
-  background-color:  #C8C7D7;
+  background-color:  #E4DEFF
+  ;
 }
 .navbar-landingpage {
-  background-color:rgb(184, 164, 225);
+  background-color:#E4DEFF
+  ;
   padding: 10px;
   display: flex;
   justify-content: space-between;
@@ -75,8 +78,8 @@ body {
 
 /* Best Food container styles */
 .best-food-container {
-  background-color: #f5f6f8;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  
+  background-color: rgb(225, 213, 159);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  
 
   margin: 20px;
   padding: 20px;
@@ -147,7 +150,8 @@ body {
   display: flex;
   margin-top: 20px;
   justify-content: center;
-  background-color:  #C8C7D7;
+  background-color: #E4DEFF
+  ;
 
 }
 
@@ -175,7 +179,8 @@ body {
   margin-top: 20px;
   border-radius: 10px; /* Add rounded edges */
   overflow: hidden; /* Hide overflow content */
-background-color:  #D5CFE1;
+background-color: #E4DEFF
+;
 }
 
 .food-info {
