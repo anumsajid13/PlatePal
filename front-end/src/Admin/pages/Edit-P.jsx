@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import '../../Chef/pages/chefProfile.css'
 import useTokenStore from '../../tokenStore';
 import ChefGenericPopup from '../../Chef/components/ChefGenericPopup';
-import NutNav from '../components/N-Nav';
+import NutNav from '../components/AdminNav';
 
-const ChefProfile1 = () => {
+const Edit1 = () => {
 
     const navigate = useNavigate();
     const [chef, setChef] = useState({});
@@ -34,7 +34,7 @@ const ChefProfile1 = () => {
 
     const fetchChefData = async () => {
         try {
-          const response = await fetch('http://localhost:9000/n/get', {
+          const response = await fetch('http://localhost:9000/admin/get', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const ChefProfile1 = () => {
         formData.append('newpassword', chef.newpassword);
 
         try {
-          const response = await fetch('http://localhost:9000/n/update', {
+          const response = await fetch('http://localhost:9000/admin/update', {
             method: 'PUT',
             headers: {
               
@@ -80,7 +80,7 @@ const ChefProfile1 = () => {
           });
     
           if (!response.ok) {
-            throw new Error('Failed to update Nurtionist data');
+            throw new Error('Failed to update Admin data');
           }
     
           
@@ -92,28 +92,7 @@ const ChefProfile1 = () => {
           }
       };
     
-      const handleDelete = async () => {
-        try {
-          const response = await fetch('http://localhost:9000/n/delete', {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`, 
-            },
-          });
-    
-          if (!response.ok) {
-            throw new Error('Failed to delete Chef data');
-          }
-          
-          setPopupMessage('Your Account deleted successfully !');
-          setShowPopup(true);
-          
-         
-        } catch (error) {
-          console.error(error);
-        }
-      };
+     
     
       const handleChange = (e) => {
         const { name, value } = e.target;
@@ -211,10 +190,7 @@ const ChefProfile1 = () => {
                         </div>
                     </div>
                     <button className='chef-profile-buttonss' onClick={handleEdit}>Edit</button>
-                    <button className='chef-profile-buttonss' onClick={handleDelete}>Delete</button>
-                    {/* <button className="chef-profile-buttonss" onClick={handleViewFollowers}>
-                        View Followers
-                        </button> */}
+                  
                     </div>
                 )}
             </div>
@@ -229,4 +205,4 @@ const ChefProfile1 = () => {
 
  };
 
-export default ChefProfile1;
+export default Edit1;

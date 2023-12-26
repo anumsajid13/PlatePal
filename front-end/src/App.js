@@ -45,6 +45,7 @@ import DisplayVendors from './Chef/pages/DisplayVendors';
 import EditVendorProfile from './Vendor/pages/EditProfile';
 import AddNewProduct from './Vendor/pages/AddNewProducts';
 import Inbox from './Vendor/pages/chatwithchef';
+import Edit1 from './Admin/pages/Edit-P';
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
         <Route path="/admin/delete" element={<Delete />} />
         <Route path="/admin/registered-users" element={<AllUsers />} />
         <Route path="/admin/blocked-users" element={<Blocked />} />
+        <Route path="/admin/edit-profile" element={<Edit1/>} />
 
 
         <Route path="/signup/chef" element={<ChefSignUp/>}/>
@@ -77,7 +79,7 @@ function App() {
 
         <Route path="/n/makeplan/:bmi/:userId" element={<Discover/>} />
         <Route path="/n/planmade/:nutritionistId" element={<MealPlansPage/>} />
-        <Route path="/n/n-profile" element={<ChefProfile1/>} />
+        <Route path="/n-profile" element={<ChefProfile1/>} />
 
         <Route path="/Chef/myProfile" element={<ChefProfile/>} />
         <Route path="/Chef/usersInbox" element={<ChefUserInboxx/>} />

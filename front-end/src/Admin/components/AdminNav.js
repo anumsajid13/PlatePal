@@ -38,13 +38,16 @@ const AdminNav = () => {
         <Link to="/" style={{ textDecoration: 'none', color: 'black'}}>
           <div>Home</div>
           </Link>
-      
           <div className="icon-link" title="notifications" onClick={handleNotificationsClick}>
             <span className="material-icons google-icon">notifications</span>
           </div>
+
+          <Link to="/admin/edit-profile" style={{ textDecoration: 'none', color: 'black'}}>
+
           <div className="icon-link" title="Profile">
             <span className="material-icons google-icon">person</span>
           </div>
+          </Link>
           <div className="icon-link" title="Menu" onClick={handleSidebarToggle}>
           <span className="material-icons">menu</span>
         </div>
