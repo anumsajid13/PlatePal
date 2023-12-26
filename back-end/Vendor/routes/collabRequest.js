@@ -6,6 +6,7 @@ const CollaborationRequest = require('../../models/CollaborationRequest Schema')
 const Chef=require('../../models/Chef Schema');
 const Recipe=require('../../models/Recipe Schema');
 const Ingredient=require('../../models/Ingredient Schema');
+const Notification=require('../../models/Chef_Notification Schema');
 
 
 //Endpoint to see all collaboration request of a vendor with a chef 
@@ -103,10 +104,7 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
         name: { $in: ingredientIds },
         vendor: vendorId,
       });
-      console.log("names",ingredientIds );
-  console.log("vendor",vendorIngredients);
-  console.log("vendor",vendorIngredients.length);
-  console.log("collab",collaborationRequest.ingredients.length);
+   
       if (vendorIngredients.length !== collaborationRequest.ingredients.length) {
         return res.status(400).json({ message: 'Invalid ingredients in the collaboration request.' });
       }
@@ -128,6 +126,16 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
       // Update collaboration request status
       collaborationRequest.isAccepted = 'accepted';
       await collaborationRequest.save();
+
+      const notificationData = {
+        user: collaborationRequest.chef, 
+        type: 'Collaboration accepted',
+        notification_text: 'Your collaboration request has been accepted.',
+        Time: new Date(),
+      };
+  
+      const notification = new Notification(notificationData);
+      await notification.save();
   
       return res.json({ message: 'Collaboration request accepted successfully', collaboration: vendorCollaboration });
     } catch (error) {

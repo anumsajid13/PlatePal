@@ -10,7 +10,7 @@ const Sidebar = ({ isOpen, onClose }) => {
       </div>
       <ul>
         <li>
-        <Link to="/Vendor/Profile">profile</Link>
+        <Link to="/Vendor/Profile">Profile</Link>
         </li>
         <li>
           <Link to="/vendor/Collaboration">Collaboration</Link>

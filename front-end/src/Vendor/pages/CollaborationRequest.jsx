@@ -43,17 +43,7 @@ const handleClick = () => {
   return (
     <>
     <NavigationBar />
-        <div className="mainContainer" >
-          <div className="productSearch1">
-            <input className="searchProducts" type="text" placeholder="Search..." />
-            <select className="searchDropdown">
-              <option value="recipeName">Search by Recipe Name</option>
-              <option value="chef">Search by Chef</option>
-            </select>
-            <span className="search-icon-1">&#128269;</span>
-          </div>
-          </div>
-      
+     
      <div className="Requestheader">
         <button onClick={handleClick} className="backButton">
           <FaArrowLeft /> Back
