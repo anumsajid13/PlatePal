@@ -8,6 +8,7 @@ const recipeSchema = new mongoose.Schema({
   title: String,
   ratings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }],
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+  reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
   calories: Number,
   servingSize: Number,
   chef: { type: mongoose.Schema.Types.ObjectId, ref: 'Chef' },

@@ -1,4 +1,7 @@
-
+.home{
+  background-color :#E4DEFF;
+  min-height: 100vh;
+}
 .discover-container {
     display: flex;
     justify-content: space-between;
@@ -17,7 +20,7 @@
     border: 1px solid #ccc;
     padding: 10px;
     margin-right: 20px;
-    background-color: #D5CFE1; 
+    background-color: rgb(228, 207, 117); 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
     width:90%;
     margin-left: 5%;
@@ -48,7 +51,7 @@
     cursor: pointer;
     padding: 8px;
     border-radius: 8px;
-    background-color: #D5CFE1; 
+    background-color: rgb(236, 208, 81);  
     color: #333; 
     font-family: 'Arial', sans-serif; 
     font-size: 14px;
@@ -72,5 +75,6 @@
     flex-wrap: wrap;
     row-gap: 10px;
     margin-top: 3%;
+    margin-left: 2%;
     
   }

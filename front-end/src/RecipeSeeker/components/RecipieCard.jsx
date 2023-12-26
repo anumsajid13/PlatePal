@@ -4,7 +4,7 @@ import { useState, useRef,useEffect } from 'react';
 import './RecipeCard.css';
 import  useTokenStore  from  '../../tokenStore.js'
 import Comments from './Comments';
-import './Comments.css'
+import Reviews from './Reviews';
 import { jwtDecode } from 'jwt-decode';
 import useCartStore from './cartStore'; 
 
@@ -17,6 +17,9 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
   const [commentText, setCommentText] = useState('');
   const [comments, setComments] = useState([]);
   const commentInputRef = useRef(null);
+  const [reviewText, setReviewText] = useState('');
+  const [reviews, setReviews] = useState([]);
+  const reviewInputRef = useRef(null);
   const decodedToken = jwtDecode(token); 
   const currentUserId = decodedToken.id;
   const [isRatingsVisible, setIsRatingsVisible] = useState(false);
@@ -58,13 +61,26 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
         }
       );
 
-      if (ratingResponse.ok && commentResponse.ok) {
+      const ReviewResponse = await fetch(
+        `http://localhost:9000/recepieSeeker/reviews/${recipe._id}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (ratingResponse.ok && commentResponse.ok && ReviewResponse.ok) {
         const ratingData = await ratingResponse.json();
         const commentData = await commentResponse.json();
+        const reviewData = await ReviewResponse.json();
 
         
         setRatings(ratingData.ratings);
         setComments(commentData.comments);
+        setReviews(reviewData.reviews)
         console.log("Comments: ", commentData.comments)
         setIsPopupOpen(true);
       } else {
@@ -73,7 +89,9 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
           ratingResponse.status,
           ratingResponse.statusText,
           commentResponse.status,
-          commentResponse.statusText
+          commentResponse.statusText,
+          ReviewResponse.status,
+          ReviewResponse.statusText
         );
       }
     } catch (error) {
@@ -98,7 +116,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ commentText }),
+        body: JSON.stringify({ commentText  }),
       });
 
       if (response.ok) {
@@ -111,6 +129,31 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
       }
     } catch (error) {
       console.error('Error adding comment:', error.message);
+    }
+  };
+
+
+  const handleReviewSubmit = async () => {
+    try {
+      const response = await fetch(`http://localhost:9000/recepieSeeker/addReview/${recipe._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ reviewText }),
+      });
+
+      if (response.ok) {
+        console.log('Reviews added successfully');
+        
+        setReviews([...reviews, { reviewText, user: 'You', time: new Date() }]);
+        setReviewText('');
+      } else {
+        console.error('Failed to add Review:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error adding Reviews:', error.message);
     }
   };
 
@@ -356,21 +399,12 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
                 </div>
               )}
 
-<div className="comment-class comment">
+              <div className="comment-class comment">
               <Comments comments={comments}  currentUser={currentUserId}/>
-              <div className="enter-comment" style={{display:"flex", rowGap:"100px"}}>
-                <input
+              <div className="enter-comment" style={{display:"flex", Gap:"100px"}}>
+                <input  className="enter-comment-input"
                   ref={commentInputRef}
                   placeholder="Type your comment here..."
-                  style={{
-                    borderRadius: '10px', 
-                    height: '40px',
-                    paddingLeft: '10px',
-                    fontSize: '16px',
-                    border: '1px solid #ccc',
-                    boxSizing: 'border-box',
-                    width: '60%', 
-                  }}
                   value={commentText}
                   onChange={(e) => setCommentText(e.target.value)}
                 />
@@ -395,7 +429,35 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
               </div>
             </div>
 
-            
+            <div className="comment-class comment">
+            <Reviews reviews={reviews}  currentUser={currentUserId}/>
+              <div className="enter-comment" style={{display:"flex", Gap:"100px"}}>
+                <input  className="enter-comment-input"
+                  ref={reviewInputRef}
+                  placeholder="Type your Review here..."
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
+                />
+
+                <button
+                  onClick={handleReviewSubmit}
+                  style={{
+                    borderRadius: '8px',
+                    padding: '10px 15px',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    background: 'rgb(218, 94, 218)',
+                    color: 'white',
+                    border: 'none',
+                    height: '35px',
+                    width:'90px',
+                    transition: 'background 0.3s ease-in-out',
+                  }}
+                >
+                  Post
+                </button>
+              </div>
+            </div>
         
         </div>
 

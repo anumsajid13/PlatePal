@@ -15,8 +15,10 @@ type: {
 notification_text:
 {
   type :String
-}
+},
+read: { type: Boolean, default: false },
 });
+
 
 const Vendor_Notification = mongoose.model('Vendor_Notification',Vendor_notificationSchema);
 

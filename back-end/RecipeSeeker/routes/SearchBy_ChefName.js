@@ -12,7 +12,6 @@ router.get('/searchRecipesByChef/:chefName', async (req, res) => {
       return res.status(404).json({ message: 'Chef not found' });
     }
 
-    // Find recipes associated with the Chef using the Chef's ID
     const recipes = await Recipe.find({ chef: chef._id })
       .populate({
         path: 'ratings',
@@ -28,7 +27,7 @@ router.get('/searchRecipesByChef/:chefName', async (req, res) => {
           select: 'name',
         },
       })
-      .populate('chef', 'name profilePicture') // Populate the 'chef' field with the 'name' and 'profilePicture' properties
+      .populate('chef', 'name profilePicture') 
       .exec();
 
     res.status(200).json({ recipes });

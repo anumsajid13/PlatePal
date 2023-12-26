@@ -89,14 +89,14 @@ const Discover = () => {
   };
 
   useEffect(() => {
-
     fetchRecipes();
     console.log("After Toggle - Following Chef IDs:", followingChefIds);
   }, [token]);
   return (
     <>
+    <div className='home'>
        <Navbar activeLink="Discover" />
-      <div className='home'>
+      
       <div className="discover-container-1">
         <div className="search-card-11">
           <input className='searchRecepie' type="text" placeholder="Search..." />

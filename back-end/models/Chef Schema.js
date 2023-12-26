@@ -43,7 +43,7 @@ const chefSchema = new mongoose.Schema({
   default: 0,
 }, unblockTime: {
   type: Date,
-  default: null, // Initially set to null, indicating not blocked
+  default: null, 
 },
 
   followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'RecipeSeeker' }],

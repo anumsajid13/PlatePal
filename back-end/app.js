@@ -14,6 +14,7 @@ const NutritionistBlockReport = require('./models/NutritionistBlockReport Schema
 const Order = require('./models/Order Schema');
 const Cart = require('./models/Cart Schema');
 const Rating = require('./models/Rating Schema');
+const Review = require('./models/Recipe_review');
 const Recipe = require('./models/Recipe Schema');
 const RecipeSeeker = require('./models/RecipeSeekerSchema');
 const User_Chef_Inbox = require('./models/User-Chef_Inbox Schema');
@@ -84,6 +85,7 @@ const ingredient_Routes = require('./Vendor/routes/ingredients_routes');
 const collaboration_Routes = require('./Vendor/routes/collaborationroute');
 const collaboration_Request= require('./Vendor/routes/collabRequest');
 const vendorChatRoute = require('./Vendor/routes/inbox');
+const vendorNotificationRoute = require('./Vendor/routes/notificationroute');
 
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 
@@ -208,6 +210,7 @@ app.use('/ingredients', ingredient_Routes);
 app.use('/collaboration',collaboration_Routes);
 app.use('/collaboration-request',collaboration_Request);
 app.use('/chatWithchef',vendorChatRoute );
+app.use('/vendor/notifications',vendorNotificationRoute );
 
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);

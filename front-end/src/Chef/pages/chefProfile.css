@@ -72,7 +72,7 @@
     margin-top: 20px;
     margin-left: 30%;
     cursor: pointer;
-    background-color: #D5CFE1;
+    background-color: rgb(228, 207, 117);
     color: #fff;
     border: none;
     border-radius: 15px;
@@ -82,7 +82,7 @@
   }
   
   .chef-profile-buttonss:hover {
-    background-color: #c7b3ee;
+    background-color: #c0a42b;
   }
   
 .chef-profile-inpuut-editable {

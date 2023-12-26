@@ -47,6 +47,10 @@ import AddNewProduct from './Vendor/pages/AddNewProducts';
 import Inbox from './Vendor/pages/chatwithchef';
 import Edit1 from './Admin/pages/Edit-P';
 import AcceptCert from './Admin/pages/AcceptCert';
+
+import ChefCollabs from './Chef/pages/ChefCollabRequests';
+import ChefViewReviews from './Chef/pages/ChefReviews';
+
 function App() {
   return (
     <div className="App">
@@ -99,8 +103,8 @@ function App() {
         <Route path="/ingredients/newProduct" element={<AddNewProduct/>} />
         <Route path="/vendor/inbox" element={<Inbox/>} />
     
-
-
+        <Route path="/Chef/AllCollabs" element={<ChefCollabs/>} />
+        <Route path="/Chef/AllReviews" element={<ChefViewReviews/>} />
 
 
 

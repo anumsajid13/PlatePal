@@ -1,5 +1,5 @@
 
-.chef-follower-heading{
+.chef-collab-heading{
     margin-top: 50px;
     margin-bottom: 30px;
     padding:10px;
@@ -9,42 +9,32 @@
     text-align: center;
 }
 
-.chef-followers-list {
+.chef-collab-list {
     width: 80%;
     margin: 20px auto;
   }
   
-  .chef-followers-list-item {
+  .chef-collab-list-item {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: row;
     gap: 50px;
     padding: 30px;
     
    
   }
   
-  .chef-followers-names {
-    list-style: none;
-    width: 200px; 
+  .chef-collab-names {
+    display:flex;
+    flex-direction: column;
+    width: 30%; 
     background-color: #eff5f2;
     padding: 45px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative; 
-   
+ 
   }
-  
-  .chef-followers-image{
-    position: absolute; 
-    top: -40px; 
-    left: -10px; 
-    border-radius: 50%;
-    width: 120px; 
-    height: 120px;
-    object-fit: cover;
-    border:none;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  .chef-followers-names-text{
+
+  .chef-collab-names-text{
     margin-left:70px;
   }
