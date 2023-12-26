@@ -1,7 +1,9 @@
+
+
 const express = require('express');
 const router = express.Router();
 const Nutritionist = require('../../models/Nutritionist Schema');
-const MealPlan = require('../../models/MealPlanSchema');
+const MealPlan =require('../../models/mealPlanSchema');
 const Recipe = require('../../models/Recipe Schema');
 const NutritionistNotification = require('../../models/Nutritionist_Notification Schema');
 const authenticateToken = require('../../TokenAuthentication/token_authentication');

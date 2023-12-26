@@ -8,16 +8,16 @@ body {
 }
 
 .The-most-outer-part{
-  background-color :#E4DEFF;
+  background-color :rgb(212,226,209);
   
 }
 
 .outer-container-landingpage{
-  background-color:  #E4DEFF
+  background-color: rgb(212,226,209);
   ;
 }
 .navbar-landingpage {
-  background-color:#E4DEFF
+  background-color:rgb(212,226,209)
   ;
   padding: 10px;
   display: flex;
@@ -78,7 +78,7 @@ body {
 
 /* Best Food container styles */
 .best-food-container {
-  background-color: rgb(233, 215, 136);
+  background-color: rgb(230,220,154);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  
 
   margin: 20px;
@@ -150,7 +150,7 @@ body {
   display: flex;
   margin-top: 20px;
   justify-content: center;
-  background-color: #E4DEFF
+  background-color:rgb(212,226,209)
   ;
 
 }

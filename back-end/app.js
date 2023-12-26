@@ -64,6 +64,7 @@ const Display_Nutritionists = require('./RecipeSeeker/routes/Display_Nutritionis
 const Text_Chef = require('./RecipeSeeker/routes/Send_msgToChef')
 const Display_TextwithChef = require('./RecipeSeeker/routes/Display_chef_chats')
 const Edit_user_profile = require('./RecipeSeeker/routes/EditProfile')
+const follow_nutritionist = require('./RecipeSeeker/routes/Follow_Nutritionists')
 const Display_Notifications = require('./RecipeSeeker/routes/Display_notifications')
 const Send_notification_to_nutritionist = require('./RecipeSeeker/routes/Send_noti_to_Nutri')
 const Display_recipeSeekers = require('./RecipeSeeker/routes/Display_recipeseeker')
@@ -77,6 +78,7 @@ const list_chef = require('./Admin/routes/list');
 const admin_Notification = require('./Admin/routes/Notifications');
 const top = require('./Admin/routes/top');
 const deleteN = require('./Admin/routes/delete');
+const allow = require('./Admin/routes/allow');
 
 //vendor routes
 const vendor_Routes = require('./Vendor/routes/profileRoute');
@@ -95,6 +97,8 @@ const Nutritionist_Plan = require('./Nutrionist/routes/plan')
 
 const getAllVendors = require('./Chef/routes/vendor_Routes_Chef');
 const collabVendorsChef = require('./Chef/routes/CollabVendors_routes');
+
+const chefReviews = require('./Chef/routes/ManageReviews_routes');
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -130,6 +134,8 @@ app.use('/recepieSeeker', Edit_user_profile);
 app.use('/recepieSeeker', Display_Notifications);
 app.use('/recepieSeeker', Display_recipeSeekers);
 app.use('/recepieSeeker', AddOrder );
+//app.use('/recepieSeeker', follow_nutritionist);
+
 
 // checkout api
 app.post("/api/create-checkout-session",async(req,res)=>{
@@ -200,6 +206,7 @@ app.use('/admin', admin_Notification);
 app.use('/admin', top);
 app.use('/admin', list_chef);
 app.use('/admin', deleteN);
+app.use('/admin', allow);
 
 
 //Vendor routes
@@ -225,7 +232,10 @@ app.use('/n', Nutritionist_Plan);
 app.use('/chef', chatwithuserChef);
 
 //chef-vendor inbox route (chef)
-app.use('/Chef', chatwithvendorChef);
+app.use('/chef', chatwithvendorChef);
+
+//chef reviews (cheff)
+app.use('/chef', chefReviews);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

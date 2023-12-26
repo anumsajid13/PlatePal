@@ -182,7 +182,7 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
                                     )}
                                     <div className="chef-user-details">
                                         <p className="chef-user-name">{comment.user ? comment.user.name : 'Unknown'}</p>
-                                        <p className="chef-comment-time">{comment.Time}</p>
+                                        <p className="chef-comment-time">{new Date(comment.Time).toLocaleString()}</p>
                                        
                                     </div>
                                 </div>
@@ -202,7 +202,7 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
                                     )}
                                     <div className="chef-user-details">
                                         <p className="chef-user-name">{rating.user ? rating.user.name : 'Unknown'}</p>
-                                        <p className="chef-comment-time">{rating.Time}</p>
+                                        <p className="chef-comment-time">{new Date(rating.Time).toLocaleString()}</p>
                                        
                                     </div>
                                 </div>

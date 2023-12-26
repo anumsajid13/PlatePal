@@ -27,18 +27,11 @@ const nutritionistSchema = new mongoose.Schema({
       contentType: String
 
       },
-
-      address: String,
-
-  certificationPictures: {
-    type: Buffer,
-    validate: {
-      validator: function (v) {   
-        return /\.(pdf)$/.test(v);
+      certificationImage:{
+        data: Buffer,
+        contentType: String
       },
-      message: props => `${props.value} is not a valid image file. Please use pdf.`,
-    },
-  },allowSignup: {
+  allowSignup: {
     type: Boolean,
     default: false,
   },
