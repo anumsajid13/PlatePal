@@ -8,8 +8,8 @@ body {
 }
 
 .The-most-outer-part{
-  background-color :#E4DEFF
-  ;
+  background-color :#E4DEFF;
+  
 }
 
 .outer-container-landingpage{
@@ -78,7 +78,7 @@ body {
 
 /* Best Food container styles */
 .best-food-container {
-  background-color: rgb(225, 213, 159);
+  background-color: rgb(233, 215, 136);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  
 
   margin: 20px;

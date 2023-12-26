@@ -1,5 +1,9 @@
 /* SignInPage.css */
 
+
+.signin-outerbody{
+  background-color :#E4DEFF;
+}
 .page-container {
     font-family: 'Quattrocento', sans-serif;
     font-weight: bold;
@@ -14,7 +18,7 @@
     flex-direction: row;
     max-width: 75%;
     width: 90%;
-    background-color: #D5CFE1;
+    background-color: rgb(233, 215, 136);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
     overflow: hidden;
@@ -150,4 +154,26 @@
   
   .modal button:hover {
     background-color: #944c6f;
+  }
+
+  .user-type select {
+    width: 65%;
+    padding: 8px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    border: 2px solid #C4E0F9;;
+    border-radius: 10px;
+    box-sizing: border-box;
+    margin-left: 10px;
+    
+  }
+  
+ 
+  .user-type select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: url('https://img.icons8.com/sf-ultralight/25/down-squared.png') no-repeat scroll right center transparent;
+    padding-left: 35px; /* Adjust the padding based on your arrow icon's width */
+    background-color: white;
   }

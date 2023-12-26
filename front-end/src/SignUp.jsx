@@ -8,8 +8,8 @@ const SignUpPage = () => {
   const { showDropdown, toggleDropdown, activeLink, setActiveLink, searchInput, setSearchInput } = useNavbarStore();
 
   return (
-    <>
-      <nav className="navbar" style={{ height: '45px' }}>
+    <div className='signin-outerbody' style={{minHeight:"100vh"}}>
+      <nav className="navbar-landingpage" style={{ height: '45px' }}>
         <div className="logo">Plate Pal</div>
         <div className="nav-links">
           <Link
@@ -51,7 +51,7 @@ const SignUpPage = () => {
           <SignUpCard role="I am a Vendor" icon="🛒" to="/signup/vendor" />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -209,8 +209,8 @@ const SignInPage =  () => {
   };
 
   return (
-    <div>
-      <nav className="navbar" style={{ height: '45px' }}>
+    <div className='signin-outerbody'>
+      <nav className="navbar-landingpage" style={{ height: '45px' }}>
         <div className="logo">Plate Pal</div>
         <div className="nav-links">
         <Link to="/"  style={{ color: 'black', textDecoration: 'none' }} onClick={() => setActiveLink('Home')} className={activeLink === 'Home' ? 'active-link' : ''}>
@@ -252,53 +252,16 @@ const SignInPage =  () => {
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </label>
             <br />
-            <label>
-              User Type
-              <br />
-              <input className="radio-button"
-                type="radio"
-                name="userType"
-                value="recipeSeeker"
-                checked={userType === 'recipeSeeker'}
-                onChange={() => setUserType('recipeSeeker')}
-              />{' '}
-              Recipe Seeker
-              <br />
-              <input className="radio-button"
-                type="radio"
-                name="userType"
-                value="admin"
-                checked={userType === 'admin'}
-                onChange={() => setUserType('admin')}
-              />{' '}
-              Admin
-              <br />
-              <input className="radio-button"
-                type="radio"
-                name="userType"
-                value="chef"
-                checked={userType === 'chef'}
-                onChange={() => setUserType('chef')}
-              />{' '}
-              Chef
-              <br />
-              <input className="radio-button"
-                type="radio"
-                name="userType"
-                value="vendor"
-                checked={userType === 'vendor'}
-                onChange={() => setUserType('vendor')}
-              />{' '}
-              Vendor
-              <br />
-              <input className="radio-button"
-                type="radio"
-                name="userType"
-                value="nutritionist"
-                checked={userType === 'nutritionist'}
-                onChange={() => setUserType('nutritionist')}
-              />{' '}
-              Nutritionist
+            <label className="user-type">
+            User Type
+            
+              <select value={userType} onChange={(e) => setUserType(e.target.value)}>
+                <option value="recipeSeeker">Recipe Seeker</option>
+                <option value="admin">Admin</option>
+                <option value="chef">Chef</option>
+                <option value="vendor">Vendor</option>
+                <option value="nutritionist">Nutritionist</option>
+              </select>
             </label>
             <br />
             <button className='button-signin' type="button" onClick={handleSignIn}>
