@@ -24,6 +24,10 @@ const ingredientSchema = new mongoose.Schema({
     default: ' ',
   },
   vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
+  Time: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Ingredient = mongoose.model('Ingredient', ingredientSchema);

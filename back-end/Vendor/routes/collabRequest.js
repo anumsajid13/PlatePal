@@ -7,7 +7,7 @@ const Chef=require('../../models/Chef Schema');
 const Recipe=require('../../models/Recipe Schema');
 const Ingredient=require('../../models/Ingredient Schema');
 const Notification=require('../../models/Chef_Notification Schema');
-
+const Vendor=require('../../models/Vendor Schema');
 
 //Endpoint to see all collaboration request of a vendor with a chef 
 router.get('/', authenticateToken, async (req, res) => {
@@ -28,14 +28,12 @@ router.get('/', authenticateToken, async (req, res) => {
       sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
     }
 
-    //skippvalue
-    const skip = (page - 1) * pageSize;
+  
 
     // Find collaborations for the specified vendor and chef
     const collaborationReq = await CollaborationRequest.find({vendor:req.user.id})
       .sort(sort)
-      .skip(skip)
-      .limit(parseInt(pageSize))
+     
    
   /*     const processedCollaborationRequests = [];
     for (const request of collaborationReq) {
@@ -85,6 +83,7 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
   router.put('/accept/:collaborationRequestId', authenticateToken, async (req, res) => {
     try {
       const vendorId = req.user.id;
+    
       const collaborationRequestId = req.params.collaborationRequestId;
   console.log("vendor",vendorId,"collab",collaborationRequestId);
    
@@ -126,14 +125,13 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
         ingredients: vendorIngredients.map(ingredient => ingredient._id),
         Time: collaborationRequest.Time,
       });
-  
-  
       await vendorCollaboration.save();
      
       // Update collaboration request status
       collaborationRequest.isAccepted = 'accepted';
       await collaborationRequest.save();
-
+      const vendor=await Vendor.findByIdAndUpdate({vendorId},{$set:{collabNum:collabNum+1}});
+      await vendor.save();  
       const notificationData = {
         user: collaborationRequest.chef, 
         type: 'Request accepted',

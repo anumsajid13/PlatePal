@@ -21,9 +21,9 @@ const NutritionistList = ({ onSelectNutritionist }) => {
   };
 
   const handleSendNotification = () => {
-    // Call the parent component's onSelectNutritionist function with the selected nutritionist's ID
+    
     onSelectNutritionist(selectedNutritionist);
-    // Add any additional logic related to sending notification if needed
+  
   };
 
   return (
@@ -49,7 +49,7 @@ const NutritionistList = ({ onSelectNutritionist }) => {
           <p>Loading...</p>
         )}
       </div>
-      <button onClick={handleSendNotification}>Send Notification</button>
+      <button style={{marginTop:"35px"}} onClick={handleSendNotification}>Send Notification</button>
     </div>
   );
 };
