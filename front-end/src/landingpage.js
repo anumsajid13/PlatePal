@@ -48,7 +48,7 @@ const LandingPage = () => {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
-          <button className="search-button">
+          <button className="search-button-landing">
             <span className="material-icons google-icon">search</span>
           </button>
         </div>

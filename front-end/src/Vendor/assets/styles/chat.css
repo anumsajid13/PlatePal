@@ -1,0 +1,168 @@
+/* Add your global styles here if needed */
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navigation Bar Styles */
+.navigationBar {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+}
+
+/* Chat Container Styles */
+.vendor-chat-container {
+  display: flex;
+  height: 98vh;
+}
+
+/* Text Sidebar Styles */
+.vendor-text-sidebar {
+  flex: 1;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+/* Back Button Styles */
+.back-button {
+  margin-bottom: 10px;
+}
+
+/* Vendor Buttons Styles */
+.vendor-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.vendor-buttons button {
+  margin-bottom: 5px;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.vendor-buttons button:hover {
+  background-color: #45a049;
+}
+
+/* Main Chat Area Styles */
+.vendor-main {
+  flex: 3;
+  padding: 10px;
+}
+
+/* Chat Header Styles */
+.chat-header {
+  background-color: #4caf50;
+  color: white;
+position:fixed;
+  height: 8%;
+  width: 71%;
+  text-align: center;
+}
+
+.chat-messages-between-vendoranduser
+ {
+  max-height: calc(80% - 20%); 
+  overflow-y: scroll;
+  padding: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: #6b6b6b ;
+  margin-top: 10%;
+}
+
+.chat-messages-between-vendoranduser
+::-webkit-scrollbar {
+  width: 8px; 
+}
+
+.chat-messages-between-vendoranduser
+::-webkit-scrollbar-thumb {
+  background-color: #6b6b6b; 
+}
+
+.chat-messages-between-vendoranduser
+::-webkit-scrollbar-track {
+  background-color: #B7B6C1; 
+}
+
+.message-to-chef.other-user {
+  margin-left: 44%;
+}
+
+
+.small {
+  font-size: smaller;
+  color: #888; 
+}
+
+
+
+  .chat-box {
+    border: 1px solid #ddd;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+
+.chat-messages-between-vendoranduser p {
+  text-align: center;
+  color: #777;
+}
+
+.messageToVendor-byuser-input {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 70.5%;
+  height: 40px; 
+  padding: 10px;
+  margin-left: 26.9%;
+  margin-top: 5%;
+  background-color: #fff;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 2; 
+}
+
+.messageToVendor-byuser-input input {
+  flex: 1;
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc; 
+  border-radius: 4px;
+}
+
+.messageToVendor-byuser-input button {
+  padding: 8px 16px;
+  background-color: #4caf50; 
+  color: #fff; 
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Optional: Style the button on hover */
+.messageToVendor-byuser-input button:hover {
+  background-color: #45a049; /* Set your desired button background color on hover */
+}
+
+
+.message-to-chef.other-user {
+  margin-left: 44%;
+}
+
+.message-to-chef {
+  max-width: 55%;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+  background-color: #ddd;
+}

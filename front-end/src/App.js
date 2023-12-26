@@ -72,7 +72,7 @@ function App() {
         <Route path="/signup/chef" element={<ChefSignUp/>}/>
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
         <Route path="/Chef/CreateRecipe" element={<CreateRecipe/>} />
-        <Route path="/Chef/AllVendors" element={<DisplayVendors/>} />
+        <Route path="/Chef/AllVendors/:id" element={<DisplayVendors/>} />
 
        <Route path="/n/mainpage" element={<Main/>} /> 
         <Route path="/signup/nutritionist" element={<RegisterN />} />

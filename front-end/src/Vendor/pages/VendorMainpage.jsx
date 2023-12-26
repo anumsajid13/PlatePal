@@ -80,16 +80,7 @@ navigate('/ingredients/newProduct');
     <>
       <NavigationBar />
       <div >
-        <div className="mainContainer" >
-          <div className="productSearch1">
-            <input className="searchProducts" type="text" placeholder="Search..." />
-            <select className="searchDropdown">
-              <option value="recipeName">Search by Recipe Name</option>
-              <option value="chef">Search by Chef</option>
-            </select>
-            <span className="search-icon-1">&#128269;</span>
-          </div>
-        </div>
+      
         <div className='BigClass'>
         <button className="add-ingredient-button" onClick={handleAddNewIngredient}>
           Add New Ingredient <FaPlusCircle />

@@ -2,9 +2,12 @@ import  {React, useState } from 'react';
 import useTokenStore from '../../tokenStore';
 import '../components/RecipePopUpChef.css';
 import RatingStars from './RatingStars';
+import { useNavigate } from 'react-router-dom';
 
 
 const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
+
+    const navigate = useNavigate();
 
     const { token, setToken } = useTokenStore(); 
 
@@ -30,6 +33,10 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
         }
     };
 
+    const handleGroupIconClick = (recipeId) => {
+        navigate(`/Chef/AllVendors/${recipeId}`);
+      };
+
     console.log(selectedRecipe);
 
 
@@ -53,7 +60,7 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
             </div>
             <div className='chef-popup-three-content'>
                     <div className='chef-popup-content-item'>
-                        <p>Total Time: {selectedRecipe.totalTime}</p>
+                        <p>Total Time: {selectedRecipe.totalTime} mins</p>
                     </div>
                     <div className='chef-popup-content-item'>
                         <p>Calories: {selectedRecipe.calories}</p>
@@ -67,7 +74,7 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
                     <button  className='update-delete-collab-chef' onClick={handleDelete}>
                         <span className="material-icons">delete</span>
                     </button>
-                    <button  className='update-delete-collab-chef'>
+                    <button  className='update-delete-collab-chef'  onClick={() => handleGroupIconClick(selectedRecipe._id)}>
                         <span className="material-icons">groups</span>
                     </button>
                  </div>

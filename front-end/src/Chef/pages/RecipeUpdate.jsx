@@ -1,5 +1,4 @@
 import {React , useState} from 'react';
-import '../components/RecipePopUpChef.css';
 import useTokenStore from '../../tokenStore';
 
 const RecipeUpdateModal = ({ selectedRecipe, onClose, onUpdate}) => {
@@ -159,12 +158,16 @@ const RecipeUpdateModal = ({ selectedRecipe, onClose, onUpdate}) => {
     };
     return (
         <>
-            <div className="chef-recipe-popup-container">
-            <div className="chef-recipe-popup">
+            <div  className="chef-recipe-popup-container">
+            <div style={{background: '#eff5f2'}} className="chef-recipe-popup">
+                    <button className="updatepop-chef-pop-close-btn" onClick={onClose} >
+                        <span className="material-icons">close</span>
+                    </button>
+
                 <div className="chef-recipe-image-container">
 
                     
-                    <h2>Update Recipe</h2>
+                    <h2 className='reportt-heading'>Update Recipe</h2>
                     <form >
                     <div className='create-recipe-inputlabel'>
                         <label className='create-recipe-label' htmlFor="title">Title</label>
@@ -318,10 +321,9 @@ const RecipeUpdateModal = ({ selectedRecipe, onClose, onUpdate}) => {
                     </div>
 
                         <input type="file" name="recipeImage" onChange={handleImageChange} />
-                        <button onClick={handleSubmit} type="button">Update Recipe</button>
+                        <button className='create-recipe-button'  onClick={handleSubmit} type="button">Update Recipe</button>
                     </form>
-                    <button onClick={onClose}>Close</button>
-
+                    
                 </div>
       
             </div>

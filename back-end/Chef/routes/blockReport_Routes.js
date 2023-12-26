@@ -74,15 +74,21 @@ router.delete('/deleteVendorReport/:reportId', authenticateToken, async (req, re
     try {
       const loggedInChefId = req.user.id;
     
-      const reports = await VendorBlockReport.find({ chef: loggedInChefId });
+      const reports = await VendorBlockReport.find({ chef: loggedInChefId })
+      .populate({ path: 'vendor', select: 'name', model: 'Vendor' })
+      .populate({ path: 'chef', select: 'name', model: 'Chef' });
 
       // Convert the image buffer to a Base64 string
       const reportswithBasestring = reports.map(report => {
         const unit8Array = new Uint8Array(report.proof.data);
         const base64string = Buffer.from(unit8Array).toString('base64');
+        const vendorName = report.vendor ? report.vendor.name : 'Vendor Name Not Available';
+         const chefName = report.chef ? report.chef.name : 'Chef Name Not Available';
         return{
           ...report.toObject(),
-          proof: { data: base64string, contentType: report.proof.contentType }
+          proof: { data: base64string, contentType: report.proof.contentType },
+          vendor: vendorName, 
+          chef: chefName
         };
       });
      
