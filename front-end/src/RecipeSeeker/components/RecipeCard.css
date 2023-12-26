@@ -238,13 +238,7 @@
     margin: 5px 0;
   }
   
-  .comment textarea {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
+  
   
   .comment button {
     background-color: #4caf50;
@@ -276,6 +270,7 @@
   .add-to-cart-button {
     display: flex;
     align-items: center;
+    margin-left: 3%;
     justify-content: center;
     padding: 10px 15px;
     font-size: 16px;
@@ -284,17 +279,42 @@
     text-transform: uppercase;
     border: none;
     border-radius: 5px;
-    background-color: #b69ab6; /* Green color, you can change it */
-    color: #fff; /* White text */
+    background-color: #b69ab6; 
+    color: #fff; 
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
   }
   
   .add-to-cart-button:hover {
-    background-color: #cc53cc; /* Darker green color on hover */
+    background-color: #cc53cc; 
   }
   
   .icon {
     margin-right: 8px;
     font-size: 24px;
+  }
+
+  .quantity-counter{
+    margin-top:10px;
+    margin-left: 2%;
+  }
+
+  .quantity-counter input{
+    width:30%;
+  }
+
+  .enter-comment-input{
+
+    border-width:'3px';
+    border-bottom-color:'transparent' ;
+    border-right-color:'transparent';
+    border-left-color:'transparent';
+    height: '40px';
+    padding-left: '10px';
+    font-size: '16px';
+    border: '1px solid #ccc';
+  
+    width: '60%';
+    outline: "none";
+    
   }

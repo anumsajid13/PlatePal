@@ -14,6 +14,7 @@ const NutritionistBlockReport = require('./models/NutritionistBlockReport Schema
 const Order = require('./models/Order Schema');
 const Cart = require('./models/Cart Schema');
 const Rating = require('./models/Rating Schema');
+const Review = require('./models/Recipe_review');
 const Recipe = require('./models/Recipe Schema');
 const RecipeSeeker = require('./models/RecipeSeekerSchema');
 const User_Chef_Inbox = require('./models/User-Chef_Inbox Schema');

@@ -1,26 +1,26 @@
-// Comments.jsx
+// Reviews.jsx
 import React from 'react';
 import './RecipeCard.css';
 import { useState, useRef } from 'react';
 
-const Comments = ({ comments, currentUser }) => {
-  const [commentsVisible, setCommentsVisible] = useState(false);
+const Reviews = ({ reviews, currentUser }) => {
+  const [reviewVisible, setReviewVisible] = useState(false);
 
-  const toggleCommentsVisibility = () => {
-    setCommentsVisible(!commentsVisible);
+  const toggleReviewVisibility = () => {
+    setReviewVisible(!reviewVisible);
   };
 
 
   return (
     <>
       <div className="comment-class comments-section">
-        <h3 onClick={toggleCommentsVisibility}>Comments</h3>
-        <div className={`comments-list ${commentsVisible ? 'visible' : ''}`}>
-          {comments.map((comment, index) => (
+        <h3 onClick={toggleReviewVisibility}>Reviews</h3>
+        <div className={`comments-list ${reviewVisible ? 'visible' : ''}`}>
+          {reviews.map((review, index) => (
             <div key={index} className="comment">
-              {comment.user.profilePicture && typeof comment.user.profilePicture === 'string' ? (
+              {review.user.profilePicture && typeof review.user.profilePicture === 'string' ? (
                 <img
-                  src={comment.user.profilePicture}
+                  src={review.user.profilePicture}
                   alt="Profile"
                   style={{ width: '40px', height: '40px', borderRadius:"20px" }}
                 />
@@ -35,10 +35,10 @@ const Comments = ({ comments, currentUser }) => {
                
               )}
               <div className='profilepic-div' style={{display:"flex", flexDirection:"row"}}>
-              <p style={{}}>{comment.user._id === currentUser ? 'You' : comment.user.name}</p>
-              <p style={{marginLeft:"10px"}}>{comment.commentText}</p>
+              <p style={{}}>{review.user._id === currentUser ? 'You' : review.user.name}</p>
+              <p style={{marginLeft:"10px"}}>{review.reviewText}</p>
               </div>
-              <p>{new Date(comment.time).toLocaleString()}</p>
+              <p>{new Date(review.time).toLocaleString()}</p>
             </div>
           ))}
         </div>
@@ -47,4 +47,4 @@ const Comments = ({ comments, currentUser }) => {
   );
 };
 
-export default Comments;
+export default Reviews;

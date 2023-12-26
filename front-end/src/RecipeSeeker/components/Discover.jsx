@@ -89,7 +89,6 @@ const Discover = () => {
   };
 
   useEffect(() => {
-
     fetchRecipes();
     console.log("After Toggle - Following Chef IDs:", followingChefIds);
   }, [token]);
