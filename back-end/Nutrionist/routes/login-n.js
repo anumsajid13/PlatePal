@@ -168,4 +168,28 @@ router.delete('/delete', authenticateToken, async (req, res) => {
   }
 }); 
 
+// get profile
+router.get('/get', authenticateToken, async (req, res) => {
+  const id = req.user.id;
+  try {
+    const nutritionist = await Nutritionist.findById(id);
+    if (!nutritionist) {
+      return res.status(404).json({ message: 'Nutritionist not found' });
+    }
+
+    // Convert the image buffer to a Base64 string
+    const unit8Array = new Uint8Array(nutritionist.profilePicture.data);
+    const base64string = Buffer.from(unit8Array).toString('base64');
+    
+    const chefDataWithBase64Image = { ...nutritionist._doc, profilePicture: base64string };
+
+    return res.status(200).json(chefDataWithBase64Image);
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to retrieve profile' });
+  }
+});
+
+
   module.exports = router;
