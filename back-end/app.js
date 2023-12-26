@@ -97,6 +97,8 @@ const Nutritionist_Plan = require('./Nutrionist/routes/plan')
 const getAllVendors = require('./Chef/routes/vendor_Routes_Chef');
 const collabVendorsChef = require('./Chef/routes/CollabVendors_routes');
 
+const chefReviews = require('./Chef/routes/ManageReviews_routes');
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -227,7 +229,10 @@ app.use('/n', Nutritionist_Plan);
 app.use('/chef', chatwithuserChef);
 
 //chef-vendor inbox route (chef)
-app.use('/Chef', chatwithvendorChef);
+app.use('/chef', chatwithvendorChef);
+
+//chef reviews (cheff)
+app.use('/chef', chefReviews);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
