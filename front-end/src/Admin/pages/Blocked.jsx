@@ -1,50 +1,112 @@
 import React, { useEffect } from 'react';
-import useChefStore from './AllUserStore';
+import useChefStore from './blockUserstore';
 import './AllUsers.css';
 import AdminNav from '../components/AdminNav';
+import useTokenStore from '../../tokenStore';
 
 const ChefList = () => {
   const store = useChefStore();
+  const token = useTokenStore((state) => state.token);
 
   useEffect(() => {
-    const fetchBlockedChefs = async () => {
+    const fetchBlockedUsers = async () => {
       try {
-        
-        // Make API call to fetch chefs
-        const response = await fetch('http://localhost:9000/admin/list-blocked-chefs');
-        const data = await response.json();
-        store.setBlockedChef(data);
-  
-        console.log("coo", data);
+        // Make API call to fetch blocked chefs
+        const chefResponse = await fetch('http://localhost:9000/admin/list-blocked-chefs', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const chefData = await chefResponse.json();
+        store.setBlockedChefs(chefData);
+
+        // Make API call to fetch blocked vendors
+        const vendorResponse = await fetch('http://localhost:9000/admin/list-blocked-vendors', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const vendorData = await vendorResponse.json();
+        store.setBlockedVendors(vendorData);
+
+        // Make API call to fetch blocked nutritionists
+        const nutritionistResponse = await fetch('http://localhost:9000/admin/list-blocked-nutritionists', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const nutritionistData = await nutritionistResponse.json();
+        store.setBlockedNutritionists(nutritionistData);
+
+        console.log("Blocked Chefs:", chefData);
+        console.log("Blocked Vendors:", vendorData);
+        console.log("Blocked Nutritionists:", nutritionistData);
       } catch (error) {
-        console.error('Error fetching Blocked Chefs:', error);
-      } 
+        console.error('Error fetching blocked users:', error);
+      }
     };
-  
-    fetchBlockedChefs();
-  }, []);
-  
+
+    fetchBlockedUsers();
+  }, [token, store]);
 
   return (
-
-    <><AdminNav /><div className="outer-container">
-
-      <div className="chef-list">
-
-        <div className="chef-category">
-          <h2 className="list-title">Blocked Chefs</h2>
-          <div className="chef-card-container">
-            {store.blockedChefs.map((chef) => (
-              <div key={chef._id} className="chef-card">
-                <p className="chef-details">Username: {chef.username}</p>
-                <p className="chef-details">Email: {chef.email}</p>
-                {/* Add other details specific to blocked chefs */}
+    <>
+      <AdminNav />
+      <div className="outer-container">
+        <div className="chef-list">
+          <div className="chef-category">
+            <h2 className="list-title">Blocked Chefs</h2>
+            {store.blockedChefs.length === 0 ? (
+              <p>No blocked chefs at the moment.</p>
+            ) : (
+              <div className="chef-card-container">
+                {store.blockedChefs.map((chef) => (
+                  <div key={chef._id} className="chef-card">
+                    <p className="chef-details">Username: {chef.username}</p>
+                    <p className="chef-details">Email: {chef.email}</p>
+                    {/* Add other details specific to blocked chefs */}
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
+          </div>
+
+          <div className="chef-category">
+            <h2 className="list-title">Blocked Vendors</h2>
+            {store.blockedVendors.length === 0 ? (
+              <p>No blocked vendors at the moment.</p>
+            ) : (
+              <div className="chef-card-container">
+                {store.blockedVendors.map((vendor) => (
+                  <div key={vendor._id} className="chef-card">
+                    <p className="chef-details">Username: {vendor.username}</p>
+                    <p className="chef-details">Email: {vendor.email}</p>
+                    {/* Add other details specific to blocked vendors */}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="chef-category">
+            <h2 className="list-title">Blocked Nutritionists</h2>
+            {store.blockedNutritionists.length === 0 ? (
+              <p>No blocked nutritionists at the moment.</p>
+            ) : (
+              <div className="chef-card-container">
+                {store.blockedNutritionists.map((nutritionist) => (
+                  <div key={nutritionist._id} className="chef-card">
+                    <p className="chef-details">Username: {nutritionist.username}</p>
+                    <p className="chef-details">Email: {nutritionist.email}</p>
+                    {/* Add other details specific to blocked nutritionists */}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
-    </div></>
+    </>
   );
 };
 

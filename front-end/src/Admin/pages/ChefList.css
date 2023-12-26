@@ -1,17 +1,43 @@
 /* ChefList.css */
 
 .chef-list-container {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .chef-item {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .error {
-    color: red;
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.chef-item {
+  border: 2px solid #3498db;
+  padding: 15px;
+  margin-bottom: 15px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.chef-item:hover {
+  transform: translateY(-5px);
+  border-color: #2980b9;
+}
+
+.error {
+  color: red;
+}
+
+.delete-button {
+  display: inline-block;
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #e74c3c;
+  color: #fff;
+  background-color: #e74c3c;
+  transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+  border-color: #c0392b;
+  transform: translateY(-3px);
+}
+

@@ -10,6 +10,8 @@ import RecipeSeekerSignUp from './RecipeSeeker/components/SignUp_RecepieSeeker';
 import RecipeSeeker_InboxPage from './RecipeSeeker/components/Inbox';
 import ConsultNutritionist from './RecipeSeeker/components/Refer_to_Nutritionist';
 import DiscoverPage from './RecipeSeeker/components/Discover';
+import SuccessComponent from './RecipeSeeker/components/SuccessComponent';
+import CancelComponent from './RecipeSeeker/components/CancelComponent';
 import Edit_profil_user from './RecipeSeeker/components/edit_profile';
 import BlockReports from './Admin/pages/BlockReports';
 import ChefSignUp from './Chef/pages/ChefSignUp';
@@ -57,6 +59,8 @@ function App() {
         <Route path="/recipe-seeker/UpdateProfile" element={<Edit_profil_user />} />
         <Route path="/recipe-seeker/Inbox" element={<RecipeSeeker_InboxPage />} />
         <Route path="/recipe-seeker/Consult_Nutritionist" element={<ConsultNutritionist />} />
+        <Route path="/Pyement/Success" element={<SuccessComponent />} />
+        <Route path="/Pyement/Failure" element={<CancelComponent />} />
         <Route path="/admin/blockreport" element={<BlockReports />} />
         <Route path="/admin/delete" element={<Delete />} />
         <Route path="/admin/registered-users" element={<AllUsers />} />
@@ -66,7 +70,7 @@ function App() {
         <Route path="/signup/chef" element={<ChefSignUp/>}/>
         <Route path="/Chef/Mainpage" element={<ChefMainPage/>}/>
         <Route path="/Chef/CreateRecipe" element={<CreateRecipe/>} />
-        <Route path="/Chef/AllVendors" element={<DisplayVendors/>} />
+        <Route path="/Chef/AllVendors/:id" element={<DisplayVendors/>} />
 
        <Route path="/n/mainpage" element={<Main/>} /> 
         <Route path="/signup/nutritionist" element={<RegisterN />} />

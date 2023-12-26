@@ -29,6 +29,10 @@ router.get('/allRecipes', async (req, res) => {
         path: 'chef',
         model: 'Chef',
       })
+      .populate({
+        path: 'vendor',
+        model: 'Vendor',
+      })
       .skip(skip)
       .limit(pageSize)
       .exec();

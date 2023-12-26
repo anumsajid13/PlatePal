@@ -2,8 +2,15 @@ const Nutritionist = require('../../models/Nutritionist Schema');
 const Chef = require('../../models/Chef Schema');
 const Vendor = require('../../models/Vendor Schema');
 const autheticateToken = require('../../TokenAuthentication/token_authentication');
+const ChefNotification = require('../../models/Chef_Notification Schema');
+const VendorNotification = require('../../models/Vendor_Notification Schema');
+const NutritionistNotification = require('../../models/Nutritionist_Notification Schema');
+
+
 const express = require('express');
 const router = express.Router();
+
+
 // Endpoint to delete a nutritionist
 router.delete('/delete-nutritionist/:nutritionistId',  autheticateToken, async (req, res) => {
     try {
@@ -65,13 +72,15 @@ router.delete('/delete-vendor/:vendorId',  autheticateToken, async (req, res) =>
       if (!vendor) {
         return res.status(404).json({ error: 'Vendor not found' });
       }
-  
+      if (vendor.blockCount > 3) {
+
       // Delete vendor's notifications (optional)
-      await Notification.deleteMany({ user: vendor._id });
+      await VendorNotification.deleteMany({ user: vendor._id });
   
+       await Vendor.findByIdAndDelete(req.params.vendorId);
+
       // Delete the vendor
-      await vendor.remove();
-  
+      }
       return res.json({ message: 'Vendor deleted successfully' });
     } catch (error) {
       console.error(error);

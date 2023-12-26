@@ -1,11 +1,13 @@
-// ChefStore.js
-import {create} from 'zustand';
+// AllUsersStore.js
+import { create } from 'zustand';
 
-const useChefStore = create((set) => ({
+const useAllUsersStore = create((set) => ({
+  registeredVendors: [],
+  registeredNutritionists: [],
   registeredChefs: [],
-  blockedChefs: [],
-  setRegisteredChefs: (registeredChefs) => set( {registeredChefs }),
-  setBlockedChefs: (blockedChefs) => set({ blockedChefs} ),
+  setRegisteredVendors: (registeredVendors) => set({ registeredVendors }),
+  setRegisteredNutritionists: (registeredNutritionists) => set({ registeredNutritionists }),
+  setRegisteredChefs: (registeredChefs) => set({ registeredChefs }),
 }));
 
-export default useChefStore;
+export default useAllUsersStore;
