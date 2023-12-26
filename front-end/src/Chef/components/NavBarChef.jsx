@@ -81,8 +81,8 @@ const ChefNav = () => {
 
       <div className={`chef-sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <a href="#" onClick={handleSidebarToggle} className="chef-close-btn"><span className="material-icons">close</span></a>
-        <Link className='chef-linkss' to="/Chef/allVendors/1">Collab Requests</Link>
-        <Link className='chef-linkss' to="/Chef/allVendors/1">My Reviews</Link>
+        <Link className='chef-linkss' to="/Chef/AllCollabs">Collab Requests</Link>
+        <Link className='chef-linkss' to="/Chef/AllReviews">My Reviews</Link>
         <Link className='chef-linkss' to="/Chef/allVendors/1">Vendors</Link>
         <Link className='chef-linkss' to="/Chef/myFollowers">Followers</Link>
         <Link className='chef-linkss' to="/Chef/BlockReports">Block Reports</Link>
