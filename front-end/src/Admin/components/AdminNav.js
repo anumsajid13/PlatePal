@@ -51,6 +51,7 @@ const AdminNav = () => {
           <div className="icon-link" title="Menu" onClick={handleSidebarToggle}>
           <span className="material-icons">menu</span>
         </div>
+
         </div>
         {showNotifications && <NotificationPopup onClose={handleCloseNotifications} />}
       </nav>
@@ -70,6 +71,11 @@ const AdminNav = () => {
 
         <a href="#">Registered Users</a>
         </Link>
+
+        <Link to="/admin/check-c" onClick={handleSidebarToggle}>
+        <a href="#">View Certifications</a>
+        </Link>
+
         <Link to="/admin/delete" onClick={handleSidebarToggle}>
         <a href="#">Delete Users</a>
         </Link>

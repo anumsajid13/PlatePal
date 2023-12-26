@@ -66,8 +66,6 @@ router.post('/login', async (req, res) => {
   });
 
 
-
-
 // Multer configuration
 const storage = multer.memoryStorage(); // Store the image in memory
 const upload = multer({ storage: storage });
@@ -99,6 +97,9 @@ router.post('/signup', upload.fields([ { name: 'certificationImage', maxCount: 1
         profilePicture: {
           data: profilePicture[0].buffer,
           contentType: profilePicture[0].mimetype
+        }, certificationImage: {
+          data: certificationImage[0].buffer,
+          contentType: certificationImage[0].mimetype
         },
        
       });

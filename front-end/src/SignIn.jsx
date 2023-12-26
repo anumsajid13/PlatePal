@@ -5,6 +5,15 @@ import useNavbarStore from './navbarStore';
 import useTokenStore from './tokenStore';
 import './SignIn.css';
 
+const AlertMessage = ({ message, onClose }) => {
+  return (
+    <div className="alert-message">
+      <p>{message}</p>
+      <button onClick={onClose}>Close</button>
+    </div>
+  );
+};
+
 const SignInPage =  () => {
   const navigate = useNavigate();
   const { setToken } = useTokenStore();
@@ -16,6 +25,7 @@ const SignInPage =  () => {
   const [errorMessage, setErrorMessage] = useState('');
   
 
+  
   const handleCloseError = () => {
     setShowError(false);
   };  
@@ -88,23 +98,25 @@ const SignInPage =  () => {
       });
 
       if (!response.ok) {
-        const data = await response.json();
-        console.error('Admin Sign In failed:', data.error);
-        alert('Admin Sign In failed');
+        setErrorMessage(data.message);
+        setShowError(true);
         return;
       }
 
       const data = await response.json();
       console.log('Admin Sign In successful:', data.token);
-      alert('Admin Sign In successful');
-
+    //  alert('Admin Sign In successful');
+   
       // Store the admin token using the token store (if needed)
       setToken(data.token);
+      setShowError(true);
+      setErrorMessage('Successfully Signed In');
       navigate('/admin');
 
     } catch (error) {
-      console.error('Error during Admin Sign In:', error.message);
-      alert('Could not sign in as admin');
+      console.error('Error during Sign In:', error.message);
+      setShowError(true);
+      setErrorMessage('Wrong Credentials. Please Try again');
     }
   };
 
@@ -189,13 +201,14 @@ const SignInPage =  () => {
       if (!response.ok) {
         const data = await response.json();
         console.error('Nutritionist Sign In failed:', data.error);
-        alert('Nutritionist Sign In failed');
+        setShowError(true);
+        setErrorMessage('Wrong Credentials. Please Try again');
         return;
       }
 
       const data = await response.json();
       console.log('Nutritionist Sign In successful:', data.token);
-      alert('Nutritionist Sign In successful');
+ //     alert('Nutritionist Sign In successful');
 
       // Store the nutritionist token using the token store (if needed)
       setToken(data.token);

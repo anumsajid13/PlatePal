@@ -76,6 +76,7 @@ const list_chef = require('./Admin/routes/list');
 const admin_Notification = require('./Admin/routes/Notifications');
 const top = require('./Admin/routes/top');
 const deleteN = require('./Admin/routes/delete');
+const allow = require('./Admin/routes/allow');
 
 //vendor routes
 const vendor_Routes = require('./Vendor/routes/profileRoute');
@@ -198,6 +199,7 @@ app.use('/admin', admin_Notification);
 app.use('/admin', top);
 app.use('/admin', list_chef);
 app.use('/admin', deleteN);
+app.use('/admin', allow);
 
 
 //Vendor routes

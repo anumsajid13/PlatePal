@@ -46,7 +46,7 @@ import EditVendorProfile from './Vendor/pages/EditProfile';
 import AddNewProduct from './Vendor/pages/AddNewProducts';
 import Inbox from './Vendor/pages/chatwithchef';
 import Edit1 from './Admin/pages/Edit-P';
-
+import AcceptCert from './Admin/pages/AcceptCert';
 function App() {
   return (
     <div className="App">
@@ -67,6 +67,7 @@ function App() {
         <Route path="/admin/registered-users" element={<AllUsers />} />
         <Route path="/admin/blocked-users" element={<Blocked />} />
         <Route path="/admin/edit-profile" element={<Edit1/>} />
+        <Route path="/admin/check-c" element={<AcceptCert/>} />
 
 
         <Route path="/signup/chef" element={<ChefSignUp/>}/>
