@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import Navbar from './Navbar';
 import './ConsultNutritionist.css';
 import NutritionistList from './NutritionistList'
 import  useTokenStore  from  '../../tokenStore.js'
+import MealCard from './MealCard.jsx'
 
 const ConsultNutritionist = () => {
-    const [weight, setWeight] = useState('');
-    const [height, setHeight] = useState('');
-    const [bmi, setBMI] = useState(null);
-    const [showBMI, setShowBMI] = useState(false);
-    const [selectedNutritionist, setSelectedNutritionist] = useState(null);
-    const token = useTokenStore((state) => state.token);
-
+  const [weight, setWeight] = useState('');
+  const [height, setHeight] = useState('');
+  const [bmi, setBMI] = useState(null);
+  const [showBMI, setShowBMI] = useState(false);
+  const [selectedNutritionist, setSelectedNutritionist] = useState(null);
+  const [recipes, setRecipes] = useState([]);
+  const [mealplan, setMealPlan] = useState([]);
+  const token = useTokenStore((state) => state.token);
 
   const calculateBMI = () => {
     const weightValue = parseFloat(weight);
@@ -29,36 +31,63 @@ const ConsultNutritionist = () => {
 
   const handleSelectNutritionist = async (nutritionistId) => {
     setSelectedNutritionist(nutritionistId);
-  
-    try {
 
-        console.log('nut id:', selectedNutritionist )
+    try {
       const response = await fetch(`http://localhost:9000/recepieSeeker/sendNotification/${selectedNutritionist}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           notification_text: 'Send Meal Plan',
-          bmi: bmi, 
+          bmi: bmi,
         }),
       });
-  
+
       if (!response.ok) {
         const data = await response.json();
         console.error('Error sending notification:', data.message);
-      
       } else {
         const data = await response.json();
         console.log('Notification sent successfully:', data.message);
-       
       }
     } catch (error) {
       console.error('Error sending notification:', error);
-      
     }
   };
+
+  useEffect(() => {
+    // Call your meal plan route here and set the states accordingly
+    const fetchMealPlansAndRecipes = async () => {
+      try {
+        const mealPlanResponse = await fetch('http://localhost:9000/recepieSeeker/mealPlans', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!mealPlanResponse.ok) {
+          throw new Error('Failed to fetch meal plans');
+        }
+
+        const mealPlanData = await mealPlanResponse.json();
+        const mealPlansArray = mealPlanData.mealplan || [];
+
+        // Now set the state
+        setMealPlan(mealPlansArray);
+
+     //   console.log("MealPlan : ", mealplan);
+        // Assuming the meal plan object has a "recipes" field
+     //   setRecipes(mealPlanData.recipes || []);
+      } catch (error) {
+        console.error('Error fetching meal plans:', error.message);
+      }
+    };
+
+    fetchMealPlansAndRecipes();
+  }, [token]);
+
   return (
     <>
       <Navbar activeLink="Discover" />
@@ -99,6 +128,37 @@ const ConsultNutritionist = () => {
       </div>
       <NutritionistList onSelectNutritionist={handleSelectNutritionist} />
       </div>
+
+      <div className="">
+      {console.log('Meal Plan:', mealplan)}
+        {mealplan.map((meal,index) => (
+          <div key={index} className="mealplan-card">
+            
+            <div className="detailss">
+            <h2>Customized Meal Plan</h2>
+            <img
+                src={meal.nutritionist.profilePicture}
+                alt={`Nutritionist ${meal.nutritionist.name}`}
+                style={{ width: '200px', height: '200px', borderRadius: '20px', borderRadius:"60%", marginLeft:"10%" }}
+            />
+            <h3 style={{marginLeft:"25%"}}>{meal.nutritionist.name}</h3>
+            <h3 style={{marginLeft:"25%"}}>BMI: {meal.bmi}</h3>
+            <h3 style={{marginLeft:"5%"}}>Calorie Range: {meal.calorieRange.min}-{meal.calorieRange.max}</h3>
+
+            </div>
+            
+            {meal.recipes.map((recipe) => (
+              <div key={recipe._id}>
+                <MealCard recipe={recipe}
+                
+               />
+              </div>
+            ))}
+            
+          </div>
+        ))}
+       </div>
+
     </>
   );
 };

@@ -82,3 +82,42 @@
   .nutritionist-item.selected {
     background-color: #f4f4f4;
   }
+
+  .mealplans-container{
+
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width:100%;
+    height:auto;
+    
+
+  }
+
+  .mealplan-card{
+
+    border: 1px solid #ddd;
+    border-radius: 8px; 
+    margin: 16px;
+    cursor: pointer;
+    width:97%;
+    margin-left: 2%;
+    min-height:auto;
+    transition: transform 0.2s ease-in-out;
+    background-color: #fffdfd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding-top: 0;
+    display: flex;
+
+  }
+
+  .detailss{
+    display:flex;
+    flex-direction: column;
+    margin-left: 6%;
+    margin-right: 6%;
+    margin-top: 4%;
+  }
