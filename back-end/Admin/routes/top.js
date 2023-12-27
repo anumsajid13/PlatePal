@@ -32,16 +32,36 @@ router.get('/top-chefs', async (req, res) => {
       }
     ]);
 
+    
     const topChefsWithBase64Image = topChefs.map(chef => {
-      const uint8Array = new Uint8Array(chef.profilePicture.data);
-      const base64ImageData = Buffer.from(uint8Array).toString('base64');
-      return {
-        ...chef,
-        profilePicture: { data: base64ImageData, contentType: chef.profilePicture.contentType },
-        followers: chef.followersCount, // Replace the followers array with its count
-      };
+      if (chef.profilePicture && chef.profilePicture.data && chef.profilePicture.contentType) {
+        try {
+          const base64ImageData = chef.profilePicture.data.toString('base64');
+          return {
+            ...chef._doc,
+            profilePicture: { data: base64ImageData, contentType: chef.profilePicture.contentType },
+            followers: chef.followersCount,
+          };
+        } catch (error) {
+          console.error("Error converting image to base64:", error);
+          return {
+            ...chef._doc,
+            profilePicture: { data: '', contentType: chef.profilePicture.contentType }, 
+            followers: chef.followersCount,
+          };
+        }
+      } else {
+       
+        return {
+          ...chef._doc,
+          profilePicture: { data: '', contentType: '' }, 
+          followers: chef.followersCount,
+        };
+      }
     });
+    
 
+    //console.log("hahhaha",topChefsWithBase64Image)
     return res.json({ topChefs: topChefsWithBase64Image });
   } catch (error) {
     console.error(error);
