@@ -113,7 +113,7 @@ const ChefUserInboxx = () => {
                         <div style={{display:"flex", gap:"10px", flexDirection:'row'}}>
                         <img
                           src={user.profilePicture}
-                          style={{ width: '70px', height: '70px', borderRadius: '70px' }}
+                          style={{ width: '70px', height: '70px', borderRadius: '70px', objectFit:'cover' }}
                         />
                           <p>{user.name}</p>
                         </div>
@@ -123,7 +123,7 @@ const ChefUserInboxx = () => {
                         <img
                           src={user.profilePicture.data ? `data:image/jpeg;base64,${user.profilePicture.data}` : require('../assets/images/no-profile-picture-15257.svg').default} 
                           alt={`Chef ${user.name}`}
-                          style={{ width: '70px', height: '70px', borderRadius: '70px' }}
+                          style={{ width: '70px', height: '70px', borderRadius: '70px' , objectFit:'cover'  }}
                         />
                           <p>{user.name}</p>
                         </div>

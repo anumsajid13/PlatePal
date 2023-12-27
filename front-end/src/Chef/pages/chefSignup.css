@@ -8,11 +8,11 @@
     height: 100vh;
   }
   
-.chef-for-flex{
+.chef-chef-for-flex{
     display: flex;
     flex-direction: row;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    background-color: #D5CFE1;
+    background-color: #ffb32f;
     width: 70%;
     
     border-radius: 15px;
@@ -80,8 +80,8 @@
     border: none;
   }
   
-  .chef-form-button {
-    background-color: #464655;
+  .chef-chef-form-button {
+    background-color: #db8f0b;
     color: white;
     margin-left: 25%;
     border: none;
@@ -92,17 +92,18 @@
     margin-bottom: 5%;
   }
   
-  .chef-form-button:hover {
-    background-color:#EDDFEF;
+  .chef-chef-form-button:hover{
+    background-color: #e39611;
   }
   
-  .chef-image-side {
+  .chef-chef-image-side {
     flex: 1;
-    background-image: url('../assets/images/lol2.svg'); 
+    background-image: url('../assets/images/Chef-bro.svg'); 
     background-size: cover;
     background-position: center;
     position: relative;
     margin-right: 10%;
+   
   }
 
   .Profile-Picture{

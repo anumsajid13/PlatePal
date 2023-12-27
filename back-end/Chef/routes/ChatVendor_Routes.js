@@ -93,7 +93,7 @@ router.get('/allVendors', async (req, res) => {
       }
     });
     
-    console.log(usersWithBase64Image)
+  
     //console.log("hahhaha",topChefsWithBase64Image)
     return res.json( usersWithBase64Image);
 
