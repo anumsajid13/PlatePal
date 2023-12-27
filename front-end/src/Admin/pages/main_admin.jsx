@@ -45,6 +45,7 @@ const Adminmain = () => {
             {topChefs.map((chef) => (
               <div key={chef._id} className="list-item">
                 <div className="chef-profile">
+                {console.log("picture data", chef.profilePicture)}
                   {chef.profilePicture && chef.profilePicture.contentType && (
                     <img
                       src={`data:${chef.profilePicture.contentType};base64,${chef.profilePicture.data}`}
@@ -84,6 +85,7 @@ const Adminmain = () => {
             {topVendors.map((nutritionist) => (
               <div key={nutritionist._id} className="list-item">
                 <div className="nutritionist-profile">
+                {console.log("picture data", nutritionist.profilePicture)}
                 {nutritionist.profilePicture && nutritionist.profilePicture.contentType && (
                     <img
                       src={`data:${nutritionist.profilePicture.contentType};base64,${nutritionist.profilePicture.data}`}
