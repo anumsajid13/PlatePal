@@ -39,14 +39,24 @@ const ChefDisplayFollowers = () => {
             <ChefNav />
             <div className="chef-followers-list">
                 <h2 className='chef-follower-heading'>My Followers</h2>
-                <div className='chef-followers-list-item'>
-                    {followers.map((follower, index) => (
-                        <div className="chef-followers-names"  key={index}><p className='chef-followers-names-text'>{follower.name}</p>
-                        <img className="chef-followers-image" src={follower.profilePicture ? follower.profilePicture : require('../assets/images/no-profile-picture-15257.svg').default} alt="Profile" />
-                        </div>
-                        
-                    ))}
-                </div>
+                {followers.length === 0 ? (
+                    <div className='chef-followers-list-item'>
+                    <p style={{marginLeft: '45%'}}>No followers yet</p>
+                    </div>
+                ) : (
+                    <div className='chef-followers-list-item'>
+                        {followers.map((follower, index) => (
+                            <div className="chef-followers-names" key={index}>
+                                <p className='chef-followers-names-text'>{follower.name}</p>
+                                <img
+                                    className="chef-followers-image"
+                                    src={follower.profilePicture ? follower.profilePicture : require('../assets/images/no-profile-picture-15257.svg').default}
+                                    alt="Profile"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </>
     );

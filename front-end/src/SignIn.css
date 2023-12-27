@@ -2,7 +2,7 @@
 
 
 .signin-outerbody{
-  background-color :#E4DEFF;
+  background-color :white;
 }
 .page-container {
     font-family: 'Quattrocento', sans-serif;
@@ -18,7 +18,7 @@
     flex-direction: row;
     max-width: 75%;
     width: 90%;
-    background-color: rgb(233, 215, 136);
+    background-color: #ffe853;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
     overflow: hidden;
