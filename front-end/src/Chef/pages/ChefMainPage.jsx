@@ -111,7 +111,7 @@ const ChefMainPage = () => {
             <ChefNav/>
 
             <div className="discover-container-1">
-                    <div className="search-card-11">
+                    <div style={{background:'#ffe853'}} className="search-card-11">
                     <input className='searchRecepie' type="text" placeholder="Search..." />
                     <select className="search-dropdown-1">
                         <option value="recipeName">Search by Recipe Name</option>

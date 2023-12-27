@@ -33,6 +33,7 @@ const ChefUserInboxx = () => {
           setChatMessages([]);
           document.body.classList.add('no-scroll');
        
+          console.log('selected user', selectedUser)
           fetch(`http://localhost:9000/chef/chatMessages/${selectedUser}`, {
             method: 'GET',
             headers: {
@@ -62,6 +63,7 @@ const ChefUserInboxx = () => {
       };
     
       const handleSendMessage = () => {
+        
         if (selectedUser && messageInput.trim() !== '') {
         
           fetch(`http://localhost:9000/chef/sendMessageToUser/${selectedUser}`, {
