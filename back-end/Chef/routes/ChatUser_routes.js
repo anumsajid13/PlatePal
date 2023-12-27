@@ -58,47 +58,42 @@ router.post('/sendMessageToUser/:userId', authenticateToken, async (req, res) =>
   }
 });
 
-/*router.get('/allUsers', async (req, res) => {
-  try {
-    const userss = await RecipeSeeker.find({}, 'name profilePicture');
-
-    const usersWithBase64Image = userss.map((users) => {
-      if (users.profilePicture !== undefined || users.profilePicture !== null) {
-        if (typeof users.profilePicture === 'object') {
-          const base64String = Buffer.from(users.profilePicture.data.buffer).toString('base64');
-          return {
-            _id: users._id,
-            name: users.name,
-            profilePicture: `data:${users.profilePicture.contentType};base64,${base64String}`,
-          };
-        } else {
-          return {
-            _id: users._id,
-            name: users.name,
-            profilePicture: users.profilePicture.toString('base64'),
-          };
-        }
-      } else {
-        console.log(`Profile picture is undefined or null for user with ID: ${users._id}`);
-        return {
-          _id: users._id,
-          name: users.name,
-          profilePicture: null,
-        };
-      }
-    });
-
-    res.status(200).json({ users: usersWithBase64Image });
-  } catch (error) {
-    res.status(500).json({ message: 'Internal server error', error: error.message });
-  }
-});*/
 
 router.get('/allUsers', async (req, res) => {
   try {
-    const users = await RecipeSeeker.find({}, 'name _id'); 
+    const users = await RecipeSeeker.find({}, 'name profilePicture');
 
-    res.status(200).json( users );
+    const usersWithBase64Image = users.map(user => {
+      if (user.profilePicture && user.profilePicture.data && user.profilePicture.contentType) {
+        try {
+          const base64ImageData = user.profilePicture.data.toString('base64');
+          return {
+            ...user._doc,
+            profilePicture: { data: base64ImageData, contentType: user.profilePicture.contentType },
+           
+          };
+        } catch (error) {
+          console.error("Error converting image to base64:", error);
+          return {
+            ...user._doc,
+            profilePicture: { data: '', contentType: user.profilePicture.contentType }, 
+            
+          };
+        }
+      } else {
+       
+        return {
+          ...user._doc,
+          profilePicture: { data: '', contentType: '' }, 
+          
+        };
+      }
+    });
+    
+    console.log(usersWithBase64Image)
+    //console.log("hahhaha",topChefsWithBase64Image)
+    return res.json( usersWithBase64Image);
+
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
