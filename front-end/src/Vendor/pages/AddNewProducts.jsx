@@ -113,15 +113,6 @@ const AddNewProduct = () => {
             value={data.quantity}
             onChange={handleInputChange}
           />
-
-          <label htmlFor="constituentsOf">Constituents Of:</label>
-          <input
-            type="text"
-            id="constituentsOf"
-            name="constituentsOf"
-            value={data.constituentsOf}
-            onChange={handleInputChange}
-          />
           <button onClick={handleAddIngredient}>
            Add product
           </button>

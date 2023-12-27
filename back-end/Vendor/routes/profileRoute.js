@@ -3,19 +3,19 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
 const Vendor = require('../../models/Vendor Schema');
+/* const Collaboration=require('../../models/Collaboration Schema'); */
+const VendorChefInbox=require('../../models/Vendor-Chef_Inbox Schema');
 const router = express.Router();
 require('dotenv').config();
 const multer = require('multer');
- // Multer configuration
+
+
+// Multer configuration
 const storage = multer.memoryStorage(); // Store the image in memory
 const upload = multer({ storage: storage });
 
-
- // Endpoint to get vendor information by ID
- router.get('/profile', authenticateToken, async (req, res) => {
-  console.log("im in profile",req.user.id);
-  
-
+// Endpoint to get vendor information by ID
+router.get('/profile', authenticateToken, async (req, res) => {
   try {
     const vendor = await Vendor.findById(req.user.id);
 
@@ -24,56 +24,57 @@ const upload = multer({ storage: storage });
       return res.status(404).json({ message: 'Vendor not found' });
      
     }
-/* const name=vendor.name;
-const email=vendor.email;
-const username=vendor.username; */
-const { name, username, email, profilePicture, certificationImage } = vendor;
-console.log("this is vendir",vendor);
-    console.log("im in profile", name, username, email);
-    return res.json({name, username, email,profilePicture, certificationImage });
-  
+    // Convert the image buffer to a Base64 string
+    const unit8Array = new Uint8Array(vendor.profilePicture.data);
+    const base64string = Buffer.from(unit8Array).toString('base64');
+    
+    const vendorDataWithBase64Image = { ...vendor._doc, profilePicture: base64string };
+
+    return res.status(200).json(vendorDataWithBase64Image);
+   
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
 //register as new vendor
 router.post("/register", upload.fields([ { name: 'certificationImage', maxCount: 1 }, { name: 'profilePicture', maxCount: 1 }]), async (req, res) => {
-    try {
-      const { name,username, email, password } = req.body;
-      const { profilePicture, certificationImage } = req.files;
-      if (!(email && password && name && username && profilePicture && certificationImage)) {
-        return res.status(400).send({ message: "All fields should be filled." });
-      }
-     //checking if user already exists
-      const oldUser = await Vendor.findOne({ email });
-      if (oldUser) {
-        return res.status(409).send({ message: "Email already in use." });
-      }
-      const User = await Vendor.findOne({username });
-      if (User) {
-        return res.status(409).send({ message: "Username already in use." });
-      }
-
-      //encrypting password
-      const Password = await bcrypt.hash(password, 10);
-      const user = new Vendor({ name:name, username:username,email:email, password:Password,
-        profilePicture: {
-          data: profilePicture[0].buffer,
-          contentType: profilePicture[0].mimetype
-        },
-        certificationImage: {
-          data: certificationImage[0].buffer,
-          contentType: certificationImage[0].mimetype
-        }
-        });
-      await user.save();
-      res.status(201).json({ message: 'Signup successful', data: user});
-    } catch (err) {
-      console.error(err);
-      return res.status(500).send({ error: "Internal Server Error" });
+  try {
+    const { name,username, email, password } = req.body;
+    const { profilePicture, certificationImage } = req.files;
+    if (!(email && password && name && username && profilePicture && certificationImage)) {
+      return res.status(400).send({ message: "All fields should be filled." });
     }
-  });
+   //checking if user already exists
+    const oldUser = await Vendor.findOne({ email });
+    if (oldUser) {
+      return res.status(409).send({ message: "Email already in use." });
+    }
+    const User = await Vendor.findOne({username });
+    if (User) {
+      return res.status(409).send({ message: "Username already in use." });
+    }
+
+    //encrypting password
+    const Password = await bcrypt.hash(password, 10);
+    const user = new Vendor({ name:name, username:username,email:email, password:Password,
+      profilePicture: {
+        data: profilePicture[0].buffer,
+        contentType: profilePicture[0].mimetype
+      },
+      certificationImage: {
+        data: certificationImage[0].buffer,
+        contentType: certificationImage[0].mimetype
+      }
+      });
+    await user.save();
+    res.status(201).json({ message: 'Signup successful', data: user});
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ error: "Internal Server Error" });
+  }
+});
 
 
   // Endpoint to handle nutritionist login
@@ -85,7 +86,7 @@ router.post('/login', async (req, res) => {
     const user = await Vendor.findOne({ username });
 
     if (!user) {
-      return res.status(404).json({ error: 'Nutritionist not found' });
+      return res.status(404).json({ error: 'Vendor not found' });
     }
 
    // Check if the chef is blocked
@@ -100,24 +101,28 @@ router.post('/login', async (req, res) => {
         await user.save();
       } else {
         // is still blocked
-        return res.status(403).json({ error: ' nutritionist is blocked' });
+        return res.status(403).json({ error: 'Vendor is blocked' });
       }
     } else {
       //  is blocked indefinitely
-      return res.status(403).json({ error: 'nutritionist is blocked indefinitely' });
+      return res.status(403).json({ error: 'Vendor is blocked indefinitely' });
     }
   }
-   
+  if(user.allowSignup && !user.isBlocked)
+   {
      // Check if the password is correct using bcrypt.compare
-    // const isPasswordValid = await bcrypt.compare(password, nutritionist.password);
-
-    //  if (!isPasswordValid) {
-    //    return res.status(401).json({ error: 'Invalid password' });
-    //  }
+     const isPasswordValid =await bcrypt.compare(password, user.password);
+     if (!isPasswordValid) {
+       return res.status(401).json({ error: 'Invalid password' });
+     }
  
   const token = jwt.sign({ id: user._id, username: user.username, email: user.email}, process.env.SECRET_KEY);
 
     return res.json({ message: 'Login successful', token });
+   } 
+   else{
+    return res.status(403).json({ error: 'Admin is reviewing your certificate' });
+   }
   } catch (error) {
     console.error('Error during login:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -170,30 +175,45 @@ router.post('/login', async (req, res) => {
 //     }
 //   });
 
-  //edit profile
-  router.put('/editprofile', authenticateToken, async (req, res) => {
-    try {
-      const updatedUser = await Vendor.findByIdAndUpdate(req.user.id,  { $set: req.body }, { new: true });
-      if(!updatedUser){
-        return res.status(401).json({message:"Invalid email."});
-      }
-      await updatedUser.save();
-      return res.status(200).json({message:'Profile updated successfully',data:updatedUser});
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({message:"Internal Server Error",error});
+// Edit profile
+router.put('/editprofile', upload.single('profilePicture'), authenticateToken, async (req, res) => {
+  try {
+    const profilePicture = req.file;
+    const { ...otherUpdates } = req.body;
+    
+    const updatedUser = await Vendor.findById(req.user.id);
+
+    if (!updatedUser) {
+      return res.status(401).json({ message: 'Invalid user.' });
     }
-  });
+
+    if (profilePicture) {
+      updatedUser.profilePicture.data = profilePicture.buffer;
+      updatedUser.profilePicture.contentType = profilePicture.mimetype;
+    }
+
+    if (Object.keys(otherUpdates).length > 0) {
+      Object.assign(updatedUser, otherUpdates);
+    }
+
+    await updatedUser.save();
+
+    return res.status(200).json({ message: 'Profile updated successfully', data: updatedUser });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error', error });
+  }
+});
+
 
 //ForgetPassword
-router.post('/forgotpassword', async (req,res) => {
+router.put('/forgotpassword',authenticateToken, async (req,res) => {
 
-  const { email, newPassword,oldPassword } = req.body;
-
+  const {  newPassword,oldPassword } = req.body;
   try{
 
       //find chef by email
-      const vendor = await Vendor.findOne({ email });
+      const vendor = await Vendor.findById(req.user.id );
    
       if (!vendor) {
           return res.status(404).json({ message: 'Vendor not found' });
@@ -217,12 +237,15 @@ router.post('/forgotpassword', async (req,res) => {
       res.status(500).json({ message: 'Server Error' });
   }
 });
-
+/* 
 
   //delete profile
   router.delete('/deleteprofile', authenticateToken, async (req, res) => {
     try {
       const deletedUser = await Vendor.findByIdAndDelete(req.user.id);
+      const collaborations = await Collaboration.findByIdAndDelete({ vendor: req.user.id });
+      const inbox = await VendorChefInbox.findByIdAndDelete({ vendor: req.user.id });
+
       if(!deletedUser){
         return res.status(401).send("Invalid email.");
       }
@@ -231,7 +254,7 @@ router.post('/forgotpassword', async (req,res) => {
       console.error(error);
       return res.status(500).send("Internal Server Error");
     }
-  });
+  }); */
 
  
   module.exports = router;

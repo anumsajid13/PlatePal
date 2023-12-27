@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+/* import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import useTokenStore from '../../tokenStore';
@@ -13,13 +13,10 @@ const EditVendorProfile = () => {
     name: '',
     username: '',
     email: '',
+    profilePicture: null,
+    certificationImage: null,
   });
-  const [profilePictureFile, setProfilePictureFile] = useState(null);
-   //function to handle profile picture change
-   const handleProfilePictureChange = (event) => {
-    const file = event.target.files[0];
-    setProfilePictureFile(file);
-};
+
   useEffect(() => {
     const fetchVendorDetails = async () => {
       try {
@@ -53,7 +50,13 @@ const EditVendorProfile = () => {
     }));
   };
 
-
+  const handleImageChange = (e) => {
+    const { name, files } = e.target;
+    setVendor((prevVendor) => ({
+      ...prevVendor,
+      [name]: files[0], 
+    }));
+  };
 
   const handleUpdate = async () => {
     try {
@@ -75,9 +78,9 @@ const EditVendorProfile = () => {
       const vendorData = await response.json();
       setVendor(vendorData);
       navigate('/vendor/profile');
-      alert('Vendor profile updated successfully');
+      console.log('Vendor profile updated successfully');
     } catch (error) {
-      alert('Error updating vendor profile:', error.message);
+      console.error('Error updating vendor profile:', error.message);
     }
   };
 
@@ -125,11 +128,9 @@ const EditVendorProfile = () => {
             type="file"
             id="profilePicture"
             name="profilePicture"
-            accept="image/*"
-            onChange={handleProfilePictureChange }
+            onChange={handleImageChange}
             className='file'
           />
-         
 
 
          
@@ -142,3 +143,4 @@ const EditVendorProfile = () => {
 };
 
 export default EditVendorProfile;
+ */
