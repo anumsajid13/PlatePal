@@ -15,7 +15,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     border-radius: 10px;
-    background-color: rgb(233, 215, 136);
+    background-color:  #ffe853;
     height:200px;
   }
  
@@ -23,14 +23,14 @@
     text-align: center;
     text-decoration: none;
     color: #333;
-    border: 1px solid #94958B;
+    border: 1px solid #eff5f2;
     border-radius: 8px;
     padding: 20px;
     width: 150px;
     height:100px;
     margin-top: 10%;
     transition: transform 0.3s;
-    background-color: white;
+    background-color:#eff5f2;
   }
   
   .signup-card:hover {

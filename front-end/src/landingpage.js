@@ -55,13 +55,14 @@ const LandingPage = () => {
 
         {/* Clickable components on the right */}
         <div className="nav-links">
-          <div onClick={() => setActiveLink('/')} className={activeLink === 'Home' ? 'active-link' : ''} 
-          style={{
-            color: activeLink === 'Home' ? 'white' : 'black', 
-            textDecoration: 'none', 
-            cursor: 'pointer', 
-          }}
-          >Home</div>
+          <Link
+            to="/"
+            style={{ color: 'black', textDecoration: 'none', marginRight:'5%' }}
+            onClick={() => setActiveLink('Home')}
+            className={activeLink === 'Home' ? 'active-link' : ''}
+          >
+            Home
+          </Link>
           <div onClick={() => setActiveLink('Contact Us')} className={activeLink === 'Contact Us' ? 'active-link' : ''}
            style={{
             color: activeLink === 'Contact Us' ? 'red' : 'black', 
@@ -113,7 +114,7 @@ const LandingPage = () => {
       </div>
 
     <div className="outer-container-landingpage">
-      <div className="category-container">
+      {/*<div className="category-container">
         <div className="category" >
           Salads
         </div>
@@ -126,11 +127,22 @@ const LandingPage = () => {
         <div className="category" >
           Pizza
         </div>
-      </div>
+          </div>*/}
+       
+       <div className="how-it-works">
+          <p>How Does It Work?</p>
+        </div>
+
+        <div className="how-it-works-steps">
+
+          <div className="works-steps">
+              <img src="./HowItWorks.PNG"></img>
+          </div>
+        </div>
 
       {/* Food information divs */}
       <div className="LALALALA">
-      <div className="recipe-list" style={{marginLeft:"6%", gap:"2%"}}>
+      <div className="recipe-list" style={{marginLeft:"0%", gap:"2%"}}>
           {recipes.map((recipe) => (
             <div key={recipe._id}>
               <RecipeCard

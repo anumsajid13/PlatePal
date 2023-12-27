@@ -1,20 +1,18 @@
-
 .ingredientsContainer {
-
   border: 1px solid #ddd;
   padding: 10px;
   margin: 10px;
   border-radius: 5px;
   cursor: pointer;
-  transition: box-shadow 0.3s ease-in-out;
-  width: calc(20% - 20px);
-
-
+  width: calc(28% - 20px);
+  transition: transform 0.3s ease-in-out;
 }
 
 .ingredientsContainer:hover {
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05); 
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
 }
+
 
 .iconContainer {
   display: flex;
@@ -52,4 +50,3 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-

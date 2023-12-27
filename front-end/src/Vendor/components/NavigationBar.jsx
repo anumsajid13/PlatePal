@@ -45,7 +45,7 @@ const ChefNav = () => {
           <span className="loading-text">Logging out...</span>
         </div>
       )}
-    <nav className="chef-navbar">
+    <nav className="vendor-navbar">
      
     
         <div className="chef-navbar-logo">Plate Pal</div>

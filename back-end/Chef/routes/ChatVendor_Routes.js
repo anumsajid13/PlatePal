@@ -61,12 +61,42 @@ router.post('/sendMessageToVendor/:vendorId', authenticateToken, async (req, res
 });
 
 
+
 router.get('/allVendors', async (req, res) => {
   try {
-    const users = await Vendor.find({}, 'name _id'); 
+    const users = await Vendor.find({}, 'name profilePicture');
 
-  
-    res.status(200).json( users );
+    const usersWithBase64Image = users.map(user => {
+      if (user.profilePicture && user.profilePicture.data && user.profilePicture.contentType) {
+        try {
+          const base64ImageData = user.profilePicture.data.toString('base64');
+          return {
+            ...user._doc,
+            profilePicture: { data: base64ImageData, contentType: user.profilePicture.contentType },
+           
+          };
+        } catch (error) {
+          console.error("Error converting image to base64:", error);
+          return {
+            ...user._doc,
+            profilePicture: { data: '', contentType: user.profilePicture.contentType }, 
+            
+          };
+        }
+      } else {
+       
+        return {
+          ...user._doc,
+          profilePicture: { data: '', contentType: '' }, 
+          
+        };
+      }
+    });
+    
+    console.log(usersWithBase64Image)
+    //console.log("hahhaha",topChefsWithBase64Image)
+    return res.json( usersWithBase64Image);
+
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }

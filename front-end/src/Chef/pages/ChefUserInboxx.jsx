@@ -33,6 +33,7 @@ const ChefUserInboxx = () => {
           setChatMessages([]);
           document.body.classList.add('no-scroll');
        
+          console.log('selected user', selectedUser)
           fetch(`http://localhost:9000/chef/chatMessages/${selectedUser}`, {
             method: 'GET',
             headers: {
@@ -62,6 +63,7 @@ const ChefUserInboxx = () => {
       };
     
       const handleSendMessage = () => {
+        
         if (selectedUser && messageInput.trim() !== '') {
         
           fetch(`http://localhost:9000/chef/sendMessageToUser/${selectedUser}`, {
@@ -106,11 +108,29 @@ const ChefUserInboxx = () => {
                     className={`chef-option ${selectedUser === user._id ? 'selected' : ''}`}
                     onClick={() => handleChefClick(user._id, user.name)}
                     >
-              
-                  <p>{user.name}</p>
-               
-              
-            </div>
+                     {console.log("Profile pic data",user.profilePicture)}
+                     {user.profilePicture && typeof user.profilePicture === 'string' ? (
+                        <div style={{display:"flex", gap:"10px", flexDirection:'row'}}>
+                        <img
+                          src={user.profilePicture}
+                          style={{ width: '70px', height: '70px', borderRadius: '70px' }}
+                        />
+                          <p>{user.name}</p>
+                        </div>
+                      
+                      ) : (
+                        <div style={{display:"flex", gap:"10px", flexDirection:'row'}}>
+                        <img
+                          src={user.profilePicture.data ? `data:image/jpeg;base64,${user.profilePicture.data}` : require('../assets/images/no-profile-picture-15257.svg').default} 
+                          alt={`Chef ${user.name}`}
+                          style={{ width: '70px', height: '70px', borderRadius: '70px' }}
+                        />
+                          <p>{user.name}</p>
+                        </div>
+                      
+                      )}
+          
+                 </div>
                 ))}
                 </div>
             </div>

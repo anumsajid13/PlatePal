@@ -9,56 +9,65 @@ const Ingredient=require('../../models/Ingredient Schema');
 const Notification=require('../../models/Chef_Notification Schema');
 const Vendor=require('../../models/Vendor Schema');
 
-//Endpoint to see all collaboration request of a vendor with a chef 
+
 router.get('/', authenticateToken, async (req, res) => {
   try {
-    console.log("inside collaboration request",req.body,req.user._id);
-     const { chefId, sortBy, sortOrder, page=1, pageSize=30 } = req.query; //pagesize = number of collaborations per page
-//filtering
- /*    //const query = { vendor:req.user.id}; */
-   
+    const vendorId = req.user.id;
 
-    //sorting
+    // Extract query parameters for filtering, sorting, and pagination
+    const { sortBy, sortOrder, filterType, filterValue } = req.query;
+console.log("im here")
+    // Filtering
+    const query = { vendor: vendorId };
+    console.log("filter type",filterType,"filter value",filterValue);
+    if (filterType && filterValue) {
+      if(filterType=='status')
+      {  query.isAccepted = { $regex: new RegExp(filterValue, 'i') }; 
+     /*    query.isAccepted = filterValue; */
+      }
+      else if (filterType == 'chef') {
+        console.log("filter value",filterValue)
+        const chefid = await Chef.findOne({ name: { $regex: new RegExp(filterValue, 'i') } });
+
+          console.log("chef id",chefid)
+          if(chefid){
+            query.chef = chefid._id;
+            console.log("chef id",chefid._id,"query",query.chef)
+          } 
+          else{
+            query.chef = null;
+          }
+        } else if (filterType == 'recipe') {
+          console.log("filter value",filterValue)
+         const recipeId=await Recipe.findOne({ title: { $regex: new RegExp(filterValue, 'i') } });
+         console.log("recipe id",recipeId)
+         if(recipeId){
+          query.recipe = recipeId._id;
+          console.log("recipe id",recipeId._id,"query",query.recipe)
+        } 
+        else{
+          query.recipe = null;
+        }
+        }
+    }
+    // Sorting
     const sort = {};
-    if(!sortBy)
-    {
-      sort[sortBy]=1;
-    }
-    if (sortBy && sortOrder) {
+    if (sortBy && sortBy === 'Time') {
       sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
+      console.log("sorting",sort);
     }
-
-  
 
     // Find collaborations for the specified vendor and chef
-    const collaborationReq = await CollaborationRequest.find({vendor:req.user.id})
-      .sort(sort)
-     
-   
-  /*     const processedCollaborationRequests = [];
-    for (const request of collaborationReq) {
-      
-      const chef = await Chef.findOne({ _id: request.chef });
-      const recipename=await Recipe.findOne({_id:request.recipe});
- 
-      processedCollaborationRequests.push({
-        chefName: chef ? chef.name : null, 
-        isAccepted: request.isAccepted,
-        time: request.Time,
-        recipeName: recipename? recipename.title:null,
-      }); */
+    const collaborations = await CollaborationRequest.find(query)
+      .sort(sort);
 
-   
-   return res.json(collaborationReq); 
-  //}
-  //return res.json(processedCollaborationRequests ); 
-}
-   catch (error) {
+    return res.json(collaborations);
+  } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
-  
+
 //Endpoint to see  a specific collaboration request of a chef
 router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
     try {
@@ -80,13 +89,11 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
 
 
   
-  router.put('/accept/:collaborationRequestId', authenticateToken, async (req, res) => {
+  router.put('/:collaborationRequestId/accept', authenticateToken, async (req, res) => {
     try {
       const vendorId = req.user.id;
-    
       const collaborationRequestId = req.params.collaborationRequestId;
-  console.log("vendor",vendorId,"collab",collaborationRequestId);
-   
+  
       const collaborationRequest = await CollaborationRequest.findOne({
         _id: collaborationRequestId,
         vendor: vendorId,
@@ -97,26 +104,22 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
         return res.status(404).json({ message: 'Collaboration request not found or already accepted/rejected.' });
       }
   
-      
       const ingredientIds = collaborationRequest.ingredients.map(ingredient => ingredient.name);
       const vendorIngredients = await Ingredient.find({
         name: { $in: ingredientIds },
         vendor: vendorId,
       });
-   
+  
       if (vendorIngredients.length !== collaborationRequest.ingredients.length) {
+        collaborationRequest.isAccepted = 'retracted';
+        await collaborationRequest.save();
         return res.status(400).json({ message: 'Invalid ingredients in the collaboration request.' });
       }
-      if(recipe.vendor!=null)
-      {
-        collaborationRequest.isAccepted = 'Retracted';
-        await collaborationRequest.save();  
-        return res.status(400).json({ message: 'This recipe is already assigned to a vendor.' });
-
-      }
-      const recipe=await Recipe.findOne({_id:collaborationRequest.recipe});
-      recipe.vendor=vendorId;
+  
+      const recipe = await Recipe.findOne({ _id: collaborationRequest.recipe });
+      recipe.vendor = vendorId;
       await recipe.save();
+    
       // Create a collaboration object
       const vendorCollaboration = new VendorCollaboration({
         vendor: collaborationRequest.vendor,
@@ -126,14 +129,17 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
         Time: collaborationRequest.Time,
       });
       await vendorCollaboration.save();
-     
+  
       // Update collaboration request status
       collaborationRequest.isAccepted = 'accepted';
       await collaborationRequest.save();
-      const vendor=await Vendor.findByIdAndUpdate({vendorId},{$set:{collabNum:collabNum+1}});
-      await vendor.save();  
+  
+      const vendor = await Vendor.findById({ _id: vendorId });
+      vendor.collabNum++;
+      await vendor.save();
+  
       const notificationData = {
-        user: collaborationRequest.chef, 
+        user: collaborationRequest.chef,
         type: 'Request accepted',
         notification_text: 'Your collaboration request has been accepted.',
         Time: new Date(),
@@ -141,19 +147,32 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
   
       const notification = new Notification(notificationData);
       await notification.save();
+      if (recipe.vendor) {
+
+        const allRequests = await CollaborationRequest.find({ recipe: collaborationRequest.recipe,isAccepted: 'pending' });
   
+        for (const request of allRequests) {
+          if(request._id!=collaborationRequestId){
+          request.isAccepted = 'retracted';
+          await request.save();
+      
+          }
+        }
+ 
+        return res.status(400).json({ message: 'This recipe is already assigned to a vendor.' });
+      }
       return res.json({ message: 'Collaboration request accepted successfully', collaboration: vendorCollaboration });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'Internal Server Error' });
+      return res.status(500).json({ message: 'Internal Server Error' },error.message);
     }
   });
   
 
   // Endpoint to delete a collaboration request
-router.put('/decline/:collaborationId', authenticateToken, async (req, res) => {
+router.put('/:collaborationId/decline', authenticateToken, async (req, res) => {
     try {
-      const vendorId = req.user._id;
+      const vendorId = req.user.id;
 
       const collaborationId = req.params.collaborationId;
       const collaborationRequest = await CollaborationRequest.findOne({ _id: collaborationId, vendor: vendorId });

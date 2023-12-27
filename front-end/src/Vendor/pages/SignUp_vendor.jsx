@@ -4,6 +4,7 @@ import '../assets/styles/signup.css';
 import useNavbarStore from '../../navbarStore';
 import Message from '../components/message';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const VendorSignUp = () => {
 
@@ -17,6 +18,7 @@ const VendorSignUp = () => {
     const [loading, setLoading] = useState(false);
     const [isFormCleared, setIsFormCleared] = useState(false);
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
     const handleSignUp = async () => {
         setLoading(true);
@@ -44,10 +46,11 @@ const VendorSignUp = () => {
           }
     
           const data = await response.json();
-          console.log('Sign Up successful:', data.message);
-       /*    alert('Please wait for the admin to approve your account'); */
-          alert('Sign Up successful!');
-          //login the vendor after confiramtaion
+      
+          alert('Admin is currently reviewing your Certificates.Please wait before you login');
+          setIsFormCleared(true);
+          navigate('/signin');
+
         } catch (error) {
           console.error('Error during Sign Up:', error.message);
        

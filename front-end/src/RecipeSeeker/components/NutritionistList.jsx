@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './ConsultNutritionist.css';
+import './NutritionistPopup.css';
+import NutritionistPopup from './Nutri_popup';
 
 const NutritionistList = ({ onSelectNutritionist }) => {
   const [nutritionists, setNutritionists] = useState([]);
   const [selectedNutritionist, setSelectedNutritionist] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
     // Fetch nutritionists data from your backend endpoint
@@ -20,7 +23,22 @@ const NutritionistList = ({ onSelectNutritionist }) => {
 
 
     setSelectedNutritionist(nutritionistId);
+   
     console.log("nutritionist clicked: ",nutritionistId)
+   
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
+
+  const handleSelectNutritionistName = (nutritionistId) => {
+
+
+    setSelectedNutritionist(nutritionistId);
+    setShowPopup(true);
+    console.log("nutritionist clicked for opening popup: ",nutritionistId)
   };
 
   const handleSendNotification = () => {
@@ -46,13 +64,21 @@ const NutritionistList = ({ onSelectNutritionist }) => {
                 alt={`Nutritionist ${nutritionist.name}`}
                 style={{ width: '40px', height: '40px', borderRadius: '20px' }}
               />
-              <p>{nutritionist.name}</p>
+              <h4 onClick={() => handleSelectNutritionistName(nutritionist._id)}>{nutritionist.name}</h4>
             </div>
           ))
         ) : (
           <p>Loading...</p>
         )}
       </div>
+
+      {showPopup && selectedNutritionist && (
+        <NutritionistPopup
+          nutritionist={nutritionists.find(n => n._id === selectedNutritionist)}
+          onClose={handleClosePopup}
+          onFollow={(id) => console.log(`Follow clicked for Nutritionist ${id}`)}
+        />
+      )}
       <button style={{marginTop:"35px"}} onClick={handleSendNotification}>Send Notification</button>
     </div>
   );
