@@ -111,16 +111,10 @@ const ChefMainPage = () => {
             <ChefNav/>
 
             <div className="discover-container-1">
-                    <div style={{background:'#ffe853'}} className="search-card-11">
-                    <input className='searchRecepie' type="text" placeholder="Search..." />
-                    <select className="search-dropdown-1">
-                        <option value="recipeName">Search by Recipe Name</option>
-                        <option value="chef">Search by Most Followed</option>
-                    </select>
+                <div style={{background:'#ffe853'}} className="search-card-11">
+                    <input style={{marginLeft: '19%'}} className='searchRecepie' type="text" placeholder="Search..." />
                     <span className="material-icons google-icon">search</span>
-                    
-                    </div>
-                    
+                </div>
             </div>
            {/* Display recipes with vendor collaboration */}
             <div className='chef-recipe-card-with-vc'>

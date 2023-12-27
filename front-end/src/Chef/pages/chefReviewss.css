@@ -9,7 +9,7 @@
     padding: 20px;
     margin: 10px;
     border-radius: 8px;
-    background-color: #eff5f2;
+    background-color: #ffb32f;
     text-align: left;
     cursor: pointer;
     margin-bottom: 50px;
@@ -23,8 +23,8 @@
 
 .review-item button {
     padding: 8px 12px;
-    background-color: rgb(228, 207, 117);
-    color: #fff;
+    background-color: #ffe853;
+    color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;

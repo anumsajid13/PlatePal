@@ -5,7 +5,7 @@
     max-width: 800px;
     margin: 60px auto 20px;
     padding: 20px;
-    background-color: #eff5f2;
+    background-color: #ffe853;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 
@@ -63,8 +63,8 @@
 
 
 .create-recipe-button {
-  background-color: rgb(228, 207, 117);
-  color: white;
+  background-color: #ffb32f;
+  color: black;
   cursor: pointer;
   margin-top: 30px;
   border-radius: 10px;
