@@ -67,13 +67,13 @@ const BlockReports = () => {
         {blockReports.map((report) => (
           <div key={report._id} className="block-report">
             <h3>Block User:</h3>
-            <p>{report.vendor.name}</p>
+            <p className='para'>{report.vendor.name}</p>
 
             <h3>Complaint by Chef: </h3>
-            <p>{report.chef.name}</p>  
+            <p className='para'>{report.chef.name}</p>  
 
             <h3>Reason: </h3>
-            <p>{report.reason}</p>  
+            <p className='para'>{report.reason}</p>  
             
             <div className="proof-image-container">
 

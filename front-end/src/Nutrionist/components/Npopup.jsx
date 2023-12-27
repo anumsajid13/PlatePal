@@ -77,9 +77,13 @@ console.log("woo", data)
         ) : (
           notifications.map((notification) => (
             <div key={notification._id} className="notification-item">
-              <strong>{notification.sender.username}</strong>: {notification.notification_text} (BMI: {notification.bmi})
-              {!notification.seen && (
-                <button className = "createPlan" onClick={() => handleCreatePlan( notification._id, notification.sender._id,notification.bmi)}>Create Plan</button>
+              <strong>{notification.sender.username}</strong>: {notification.notification_text}  {!notification.seen && notification.type !== 'follower alert' && (
+                <span className="bmi-text">BMI: {notification.bmi}</span>
+              )}
+              {!notification.seen && notification.type !== 'follower alert' && (
+                <button className="createPlan" onClick={() => handleCreatePlan(notification._id, notification.sender._id, notification.bmi)}>
+                  Create Plan
+                </button>
               )}
             </div>
           ))
