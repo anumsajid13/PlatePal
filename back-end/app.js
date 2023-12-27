@@ -134,7 +134,7 @@ app.use('/recepieSeeker', Edit_user_profile);
 app.use('/recepieSeeker', Display_Notifications);
 app.use('/recepieSeeker', Display_recipeSeekers);
 app.use('/recepieSeeker', AddOrder );
-//app.use('/recepieSeeker', follow_nutritionist);
+app.use('/recepieSeeker', follow_nutritionist);
 
 
 // checkout api
