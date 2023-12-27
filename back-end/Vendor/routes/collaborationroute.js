@@ -4,6 +4,8 @@ const VendorCollaboration = require('../../models/VendorCollaboration Schema');
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
 const vendor = require('../../models/Vendor Schema');
 const Ingredient = require('../../models/Ingredient Schema');
+const Chef=require('../../models/Chef Schema');
+const Recipe=require('../../models/Recipe Schema');
   
 //Endpoint to see all collaborations of a vendor with a chef 
 router.get('/', authenticateToken, async (req, res) => {
@@ -11,34 +13,51 @@ router.get('/', authenticateToken, async (req, res) => {
     const vendorId = req.user.id;
 
     // Extract query parameters for filtering, sorting, and pagination
-    const { chefId, sortBy, sortOrder } = req.query; //pagesize = number of collaborations per page
-//filtering
+    const { filterType, filterValue, sortBy, sortOrder } = req.query;
+console.log("filter type",filterType,"filter value",filterValue);
+console.log("sort by",sortBy,"sort order",sortOrder);
+    // Define the query object
     const query = { vendor: vendorId };
-    if (chefId) {
-      query.chef = chefId;
+
+    // Filter based on chef or recipe name
+    if (filterType && filterValue) {
+      if (filterType == 'chef') {
+      console.log("filter value",filterValue)
+        const chefid= await Chef.findOne({name:filterValue});
+        console.log("chef id",chefid)
+        if(chefid){
+          query.chef = chefid._id;
+          console.log("chef id",chefid._id,"query",query.chef)
+        } 
+        else{
+          query.chef = null;
+        }
+      } else if (filterType == 'recipe') {
+        console.log("filter value",filterValue)
+       const recipeId=await Recipe.findOne({title:filterValue});
+       console.log("recipe id",recipeId)
+       if(recipeId){
+        query.recipe = recipeId._id;
+        console.log("recipe id",recipeId._id,"query",query.recipe)
+      } 
+      else{
+        query.recipe = null;
+      }
+      }
     }
- 
-    //sorting
+
+    // Sorting
     const sort = {};
-    if(!sortBy)
-    {
-      sort[sortBy]=1;
-    }
-    if (sortBy && sortOrder) {
+    if (sortBy) {
       sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
     }
 
-    //skippvalue
-    const skip = (page - 1) * pageSize;
+    // Find collaborations for the specified vendor and filter criteria
+    const collaborations = await VendorCollaboration.find(query).sort(sort);
 
-    // Find collaborations for the specified vendor and chef
-    const collaborations = await VendorCollaboration.find(query)
-      .sort(sort)
+   
 
-  
-      
-
-    return res.json(collaborations);
+    return res.json(collaborations );
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -66,8 +85,7 @@ router.get('/:collaborationId', authenticateToken, async (req, res) => {
 
     const vendorIngredients = await Ingredient.find({ _id: { $in: ingredientIds } });
     const collaborationWithIngredients = { ...collaboration.toObject(), ingredients: vendorIngredients };
-    console.log("nsdjans")
-    console.log("x",collaborationWithIngredients);
+
       return res.json(collaborationWithIngredients);
     } catch (error) {
       console.error(error);

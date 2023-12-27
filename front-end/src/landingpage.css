@@ -486,11 +486,120 @@ background-color: #E4DEFF
 
 .how-it-works{
   margin-top:5%;
+  
 }
 
 .works-steps{
  
-  margin-left: 17%;
+  margin-left: 25%;
   margin-top:4%;
 
+}
+
+.landing-about-us-wrapper{
+
+  background-color: #ffb32f;
+
+}
+.landing-about-us{
+ 
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 0px;
+  
+} 
+
+.about-us-image {
+  margin-top:30px;
+  margin-left:30px;
+  flex: 2;
+}
+
+.about-us-image-2{
+  margin-bottom:30px;
+  margin-left:30px;
+  flex: 2;
+ 
+}
+
+.about-us-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+.landing-about-us-heading{
+  flex: 1;
+  padding: 0 20px;
+  margin-bottom: 0px;
+  font-size: 3.5rem; 
+  font-weight: bold;
+
+}
+.landing-about-us-text {
+  flex: 1;
+  padding: 0 20px;
+  margin-bottom: 0px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: justify;
+}
+
+
+@media (max-width: 768px) {
+  .landing-about-us {
+    flex-direction: column;
+  }
+
+  .landing-about-us-heading,
+  .landing-about-us-text,
+  .about-us-image {
+    padding: 10px;
+    text-align: center;
+  }
+}
+
+.contact-footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.contact-info
+{
+  flex: 1;
+  text-align: center;
+}
+
+.contact-info h3 {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.contact-info p {
+  margin-bottom: 5px;
+  color: #333;
+  text-decoration: none;
+}
+
+.contact-info p:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .contact-footer {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .contact-info,
+  .social-links {
+    margin-bottom: 20px;
+  }
 }

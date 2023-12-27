@@ -91,6 +91,7 @@ const collaboration_Routes = require('./Vendor/routes/collaborationroute');
 const collaboration_Request= require('./Vendor/routes/collabRequest');
 const vendorChatRoute = require('./Vendor/routes/inbox');
 const vendorNotificationRoute = require('./Vendor/routes/notificationroute');
+const orderRoute = require('./Vendor/routes/orderRoute');
 
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 
@@ -115,6 +116,9 @@ const chefnotifications = require('./Chef/routes/Notification_routes');
 const cheffollowerss = require('./Chef/routes/DisplayFollowers_routes');
 const chatwithuserChef = require('./Chef/routes/ChatUser_routes');
 const chatwithvendorChef = require('./Chef/routes/ChatVendor_Routes');
+
+const Chat = require('./Nutrionist/routes/chat');
+
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 app.use('/chef', chefnotifications);
@@ -139,7 +143,7 @@ app.use('/recepieSeeker', Edit_user_profile);
 app.use('/recepieSeeker', Display_Notifications);
 app.use('/recepieSeeker', Display_recipeSeekers);
 app.use('/recepieSeeker', AddOrder );
-app.use('/recepieSeeker', follow_nutritionist);
+//app.use('/recepieSeeker', follow_nutritionist);
 app.use('/recepieSeeker', Send_msg_to_nutritionist);
 app.use('/recepieSeeker', SearchByRecipe);
 app.use('/recepieSeeker', SearchByChef);
@@ -265,6 +269,7 @@ app.use('/admin', deleteN);
 app.use('/admin', allow);
 app.use('/n', followers);
 
+app.use('/n', Chat);
 
 //Vendor routes
 app.use('/vendor', vendor_Routes);
@@ -273,6 +278,7 @@ app.use('/collaboration',collaboration_Routes);
 app.use('/collaboration-request',collaboration_Request);
 app.use('/chatWithchef',vendorChatRoute );
 app.use('/vendor/notifications',vendorNotificationRoute );
+app.use('/vendor/cart', orderRoute);
 
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);

@@ -37,12 +37,29 @@ const RequestOverlay = ({ request, chefName, recipeName, closeOverlay, getStatus
   const handleAction = async (action) => {
     setLoading(true);
     try {
-      // Your existing code for handling the action
+      const response = await fetch(`http://localhost:9000/collaboration-request/${request._id}/${action}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        alert(`Failed to ${action} collaboration request due to the error:${response.json}`);
+        throw new Error(`Failed to ${action} collaboration request`);
+      }
+alert("Collaboration request has been "+action+"ed");
+
+  
+
     } catch (error) {
       console.error(`Error ${action} collaboration request:`, error);
     } finally {
       setLoading(false);
+   
     }
+  
   };
 
   const formattedTime = new Date(request.Time).toLocaleString();

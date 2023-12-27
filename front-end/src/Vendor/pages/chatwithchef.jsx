@@ -67,6 +67,10 @@ const VendorInbox = () => {
   
   const handleChefSelection = async (chefId, chefName) => {
     console.log('Selected chef:', chefId);
+    console.log('imgere')
+    if(chefId==undefined){
+      chefId=null;
+    }
     setSelectedUser(chefId);
     setSelectedUserName(chefName);
     await fetchMessages(chefId);
@@ -135,7 +139,7 @@ const VendorInbox = () => {
               <p>Loading vendors...</p>
             ) : (
               chefs.map((chef) => (
-                <button key={chef.chefId} onClick={() => handleChefSelection(chef._Id, chef.name)}>
+                <button key={chef.chefId} onClick={() => handleChefSelection(chef._id, chef.name)}>
                   {chef.name}
                 </button>
               ))

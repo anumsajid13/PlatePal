@@ -31,7 +31,7 @@ router.get('/All', authenticateToken, async (req, res) => {
       query[filterType] = filterValue;
     } */
     if (search) {
-      // Add a new condition for searching by name
+      
       query.name = { $regex: new RegExp(search, 'i') }; // Case-insensitive search
     }
 

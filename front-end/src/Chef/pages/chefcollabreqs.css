@@ -10,7 +10,7 @@
 }
 
 .chef-collab-list {
-    width: 80%;
+    width: 90%;
     margin: 20px auto;
   }
   
@@ -20,6 +20,7 @@
     flex-direction: row;
     gap: 50px;
     padding: 30px;
+    margin-left: 16%;
     
    
   }

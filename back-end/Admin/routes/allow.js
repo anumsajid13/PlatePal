@@ -5,6 +5,7 @@ const Chef = require('../../models/Chef Schema');
 const autheticateToken = require('../../TokenAuthentication/token_authentication');
 
 const Nutritionist = require('../../models/Nutritionist Schema');
+const Vendor = require('../../models/Vendor Schema');
 
 const fs = require('fs');
 
@@ -148,5 +149,70 @@ router.delete('/disallow-nutritionist-signup/:nutritionistId', autheticateToken,
   }
 });
 
+// Endpoint to view certification pictures of vendors
+router.get('/view-vendor-certifications', autheticateToken, async (req, res) => {
+  try {
+    const vendors = await Vendor.find({ allowSignup: false }, 'name certificationImage _id');
+
+    const vendorsWithBase64PDFs = vendors.map((vendor) => {
+      const certificationDocument = vendor.certificationImage;
+      const dataBuffer = certificationDocument.data;
+      const base64Data = dataBuffer ? Buffer.from(dataBuffer).toString('base64') : '';
+
+      return {
+        ...vendor.toObject(),
+        certificationImage: {
+          data: base64Data,
+          contentType: certificationDocument.contentType,
+        },
+      };
+    });
+
+    return res.json({ vendors: vendorsWithBase64PDFs });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Endpoint to allow or disallow vendors to sign up
+router.put('/allow-vendor-signup/:vendorId', autheticateToken, async (req, res) => {
+  try {
+    const vendor = await Vendor.findById(req.params.vendorId);
+
+    if (!vendor) {
+      return res.status(404).json({ error: 'Vendor not found' });
+    }
+
+    vendor.allowSignup = true;
+    await vendor.save();
+   
+    const message = 'Vendor signup allowed successfully';
+
+    return res.json({ message });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Endpoint to disallow vendors to sign up and delete the user
+router.delete('/disallow-vendor-signup/:vendorId', autheticateToken, async (req, res) => {
+  try {
+    const vendorId = req.params.vendorId;
+
+    // Find the vendor by ID
+    const vendor = await Vendor.findByIdAndDelete(vendorId);
+
+    if (!vendor) {
+      return res.status(404).json({ error: 'Vendor not found' });
+    }
+
+    return res.json({ message: 'Vendor signup disallowed, and the vendor user deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
   module.exports=router;

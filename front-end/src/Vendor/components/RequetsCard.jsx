@@ -13,6 +13,7 @@ const CollaborationRequestCard = ({ request }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [deletionSuccess, setDeletionSuccess] = useState(null);
   const navigate = useNavigate();
+ 
 
 
 
@@ -116,7 +117,7 @@ const CollaborationRequestCard = ({ request }) => {
  
 
   const formattedTime = new Date(request.Time).toLocaleString();
-
+  console.log("isAccepted",request.isAccepted,"request",request,"chefid",request.chef);
   return (
     <>
       {showOverlay && (
@@ -136,14 +137,15 @@ const CollaborationRequestCard = ({ request }) => {
         <div className='status'>
           <label className='normal'>Status:</label>
           <label style={{ color: getStatusColor(request.isAccepted) }}>{request.isAccepted}</label>
+      
         </div>
         <label>Time: {formattedTime}</label>
       </div>
-      <button onClick={onDelete} disabled={!isChecked}>
+      {/* <button onClick={onDelete} disabled={!isChecked}>
         Delete Selected
       </button>
       {deletionSuccess === true && <p>Collaboration request deleted successfully</p>}
-      {deletionSuccess === false && <p>Error deleting collaboration request</p>}
+      {deletionSuccess === false && <p>Error deleting collaboration request</p>} */}
     </>
   );
 };
