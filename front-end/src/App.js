@@ -36,6 +36,7 @@ import ChefVendorInboxx from './Chef/pages/ChefVendorInboxx';
 import BlockReportsList from './Chef/pages/ChefVendorBlockReport';
 
 import ChefProfile1 from './Nutrionist/pages/Edit-Profile';
+import Chat from './Nutrionist/pages/Chat';
 
 import VendorSignUp from './Vendor/pages/SignUp_vendor';
 import VendorMainpage from './Vendor/pages/VendorMainpage';
@@ -119,6 +120,7 @@ function App() {
         <Route path="/admin/MainBlock" element={<MainBlock/>} />
 
         <Route path="/nut/followers" element={<Followers/>} />
+        <Route path="/n/chat" element={<Chat/>} />
 
 
       </Routes>

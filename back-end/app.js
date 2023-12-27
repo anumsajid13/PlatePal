@@ -8,6 +8,7 @@ const User_Notification = require('./models/User_Notification Schema');//recipie
 const Admin_Notification = require('./models/Admin_Notification Schema');
 const Chef_Notification = require('./models/Chef_Notification Schema');
 const Nutritionist_Notification = require('./models/Nutritionist_Notification Schema');
+const User_Nutritionist_Inbox = require('./models/User-Nutritionist_Inbox Schema');
 const Vendor_Notification = require('./models/Vendor_Notification Schema');
 const Nutritionist = require('./models/Nutritionist Schema');
 const NutritionistBlockReport = require('./models/NutritionistBlockReport Schema');
@@ -18,7 +19,6 @@ const Review = require('./models/Recipe_review');
 const Recipe = require('./models/Recipe Schema');
 const RecipeSeeker = require('./models/RecipeSeekerSchema');
 const User_Chef_Inbox = require('./models/User-Chef_Inbox Schema');
-const User_Nutritionist_Inbox = require('./models/User-Nutritionist_Inbox Schema');
 const Vendor = require('./models/Vendor Schema');
 const VendorBlockReport = require('./models/VendorBlockReport Schema');
 const VendorCollaboration = require('./models/VendorCollaboration Schema');
@@ -67,8 +67,12 @@ const Edit_user_profile = require('./RecipeSeeker/routes/EditProfile')
 const follow_nutritionist = require('./RecipeSeeker/routes/Follow_Nutritionists')
 const Display_Notifications = require('./RecipeSeeker/routes/Display_notifications')
 const Send_notification_to_nutritionist = require('./RecipeSeeker/routes/Send_noti_to_Nutri')
+const Send_msg_to_nutritionist = require('./RecipeSeeker/routes/Send_msgToNutritionist')
+const SearchByRecipe = require('./RecipeSeeker/routes/SearchBy_RecepieName')
+const SearchByChef = require('./RecipeSeeker/routes/SearchBy_ChefName')
 const Display_recipeSeekers = require('./RecipeSeeker/routes/Display_recipeseeker')
 const AddOrder = require('./RecipeSeeker/routes/AddToCart')
+const DisplayCategories= require('./RecipeSeeker/routes/DisplayCategories')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
 
 const admin_signin = require('./Admin/routes/login');
@@ -112,6 +116,9 @@ const chefnotifications = require('./Chef/routes/Notification_routes');
 const cheffollowerss = require('./Chef/routes/DisplayFollowers_routes');
 const chatwithuserChef = require('./Chef/routes/ChatUser_routes');
 const chatwithvendorChef = require('./Chef/routes/ChatVendor_Routes');
+
+const Chat = require('./Nutrionist/routes/chat');
+
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 app.use('/chef', chefnotifications);
@@ -137,7 +144,10 @@ app.use('/recepieSeeker', Display_Notifications);
 app.use('/recepieSeeker', Display_recipeSeekers);
 app.use('/recepieSeeker', AddOrder );
 //app.use('/recepieSeeker', follow_nutritionist);
-
+app.use('/recepieSeeker', Send_msg_to_nutritionist);
+app.use('/recepieSeeker', SearchByRecipe);
+app.use('/recepieSeeker', SearchByChef);
+app.use('/recepieSeeker', DisplayCategories);
 
 // checkout api
 app.post("/api/create-checkout-session",async(req,res)=>{
@@ -183,30 +193,31 @@ app.post("/api/create-checkout-session",async(req,res)=>{
           const recipeIngredients = vendorCollaboration.recipe.ingredients;
           console.log("ingredients inside vendor collaboration inside recipe: ",recipeIngredients)
           var index=0;
-          for (const ingredient of vendorCollaboration.ingredients) {
+          for (const ingredient of vendorCollaboration.recipe.ingredients) {
             // Find the corresponding ingredient in the Recipe
-           /* const recipeIngredient = recipeIngredients.find(item =>
-                {
-                    item._id.equals(ingredient._id);
-                    console.log(ingredient._id," ",item._id);
-                });*/
-                
-         //   if (recipeIngredient) {
-           //    Calculate the quantity to decrement
-       //       console.log("ingredients found: ",recipeIngredient)
-         //     console.log("Ingredients",vendorCollaboration.recipe.title ," requred in recipe: ",recipeIngredient.quantity)
+            const recipeIngredient = recipeIngredients.find(item =>
+              item.name === ingredient.name
+            );
+            console.log(ingredient.name, " ", recipeIngredient); // vendor colla ingred, recipe ingred
+            console.log("ingredients found: ", recipeIngredient);
+        
+            if (recipeIngredient) {
+            //   Calculate the quantity to decrement
+              console.log("ingredients found: ",recipeIngredient)
+             console.log("Ingredients",ingredient.name ," requred in recipe: ",recipeIngredient.quantity)
              
               const quantityToDecrement = order.items[0].quantity * recipeIngredient.quantity;
-        
+              console.log("quantityToDecrement",quantityToDecrement);
               // Decrement the quantity in the Ingredient schema
-              const dbIngredient = await Ingredient.findById(ingredient._id);
-        
+              console.log("gonna find ing id: ",ingredient._id)
+              const dbIngredient = await Ingredient.findOne({ name: ingredient.name });
               if (dbIngredient) {
+                console.log("quantity in db before: ",dbIngredient.quantity)
                 dbIngredient.quantity -= quantityToDecrement;
                 console.log(dbIngredient, " left in amount: ",dbIngredient.quantity )
                 await dbIngredient.save();
               }
-        //    }
+           }
           }
         }
       }
@@ -258,6 +269,7 @@ app.use('/admin', deleteN);
 app.use('/admin', allow);
 app.use('/n', followers);
 
+app.use('/n', Chat);
 
 //Vendor routes
 app.use('/vendor', vendor_Routes);

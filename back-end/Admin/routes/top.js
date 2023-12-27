@@ -5,6 +5,7 @@ const Vendor= require('../../models/Vendor Schema');
 const express = require('express');
 
 const router = express.Router();
+//count no of chef followers
 
 router.get('/top-chefs', async (req, res) => {
   try {
@@ -21,7 +22,7 @@ router.get('/top-chefs', async (req, res) => {
           name: { $first: '$name' },
           username: { $first: '$username' },
           profilePicture: { $first: '$profilePicture' },
-          followersCount: { $sum: 1 } // Count followers
+          followersCount: { $sum: 1 } ,// Count followers
         }
       },
       {
@@ -48,6 +49,7 @@ router.get('/top-chefs', async (req, res) => {
             ...chef._doc,
             profilePicture: { data: '', contentType: chef.profilePicture.contentType }, 
             followers: chef.followersCount,
+            username: chef.username,
           };
         }
       } else {
@@ -56,6 +58,8 @@ router.get('/top-chefs', async (req, res) => {
           ...chef._doc,
           profilePicture: { data: '', contentType: '' }, 
           followers: chef.followersCount,
+          username: chef.username, 
+
         };
       }
     });
@@ -69,23 +73,56 @@ router.get('/top-chefs', async (req, res) => {
   }
 });
 
-// Endpoint to get the top nutritionists based on followers
 router.get('/top-nutritionists', async (req, res) => {
   try {
-    const topNutritionists = await Nutritionist.find({ isBlocked: false })
-      .sort({ followers: -1 })
-      .limit(5)
-      .select('name username followers profilePicture')
-      .populate('followers', '_id'); // Populate the 'followers' array with only the _id field
+    const topNutritionists = await Nutritionist.aggregate([
+      {
+        $match: { isBlocked: false }
+      },
+      {
+        $unwind: '$followers'
+      },
+      {
+        $group: {
+          _id: '$_id',
+          name: { $first: '$name' },
+          username: { $first: '$username' },
+          profilePicture: { $first: '$profilePicture' },
+          followersCount: { $sum: 1 } // Count followers
+        }
+      },
+      {
+        $sort: { followersCount: -1 }
+      },
+      {
+        $limit: 5
+      }
+    ]);
 
     const topNutritionistsWithBase64Image = topNutritionists.map(nutritionist => {
-      const uint8Array = new Uint8Array(nutritionist.profilePicture.data);
-      const base64ImageData = Buffer.from(uint8Array).toString('base64');
-      return {
-        ...nutritionist.toObject(),
-        profilePicture: { data: base64ImageData, contentType: nutritionist.profilePicture.contentType },
-        followers: nutritionist.followers.length, // Replace the followers array with its length (follower count)
-      };
+      if (nutritionist.profilePicture && nutritionist.profilePicture.data && nutritionist.profilePicture.contentType) {
+        try {
+          const base64ImageData = nutritionist.profilePicture.data.toString('base64');
+          return {
+            ...nutritionist._doc,
+            profilePicture: { data: base64ImageData, contentType: nutritionist.profilePicture.contentType },
+            followers: nutritionist.followersCount,
+          };
+        } catch (error) {
+          console.error("Error converting image to base64:", error);
+          return {
+            ...nutritionist._doc,
+            profilePicture: { data: '', contentType: nutritionist.profilePicture.contentType }, 
+            followers: nutritionist.followersCount,
+          };
+        }
+      } else {
+        return {
+          ...nutritionist._doc,
+          profilePicture: { data: '', contentType: '' }, 
+          followers: nutritionist.followersCount,
+        };
+      }
     });
 
     return res.json({ topNutritionists: topNutritionistsWithBase64Image });
@@ -94,7 +131,6 @@ router.get('/top-nutritionists', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 // Endpoint to get the top vendors based on collabNum
 router.get('/top-vendors', async (req, res) => {
   try {
