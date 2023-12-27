@@ -3,22 +3,21 @@
 body {
   font-family: "Quattrocento";
   font-weight: bold;
-  background-color:  rgb(218,218,218);
+  background-color: white;
   
 }
 
 .The-most-outer-part{
-  background-color :#e4deff
-  ;
+  background-color :white;
   
 }
 
 .outer-container-landingpage{
-  background-color:  #E4DEFF
+  background-color:  white
   ;
 }
 .navbar-landingpage {
-  background-color:#E4DEFF
+  background-color:white
   ;
   padding: 10px;
   display: flex;
@@ -69,17 +68,19 @@ body {
   align-items: center;
   font-family: "Quattrocento";
   font-weight: bold;
-  
+  gap:1%;
+  margin-right:2%;
 }
 
 .nav-links div {
   margin: 0 10px;
   cursor: pointer;
+  width:120px;
 }
 
 /* Best Food container styles */
 .best-food-container {
-  background-color: rgb(233, 215, 136);
+  background-color: #ffe853;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);  
 
   margin: 20px;
@@ -120,10 +121,182 @@ body {
   margin-right: 10px; /* Add some space between "The best delicious food" and the additional text */
 }
 
+.landing-signin-button{
+  /* Frame 29 */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 14px 16px;
+gap: 10px;
+
+width: 118px;
+height: 46px;
+
+background: #FFFFFF;
+/* Shadow/1 */
+box-shadow: 0px 5px 10px rgba(255, 174, 0, 0.26), 0px 20px 40px rgba(255, 174, 0, 0.29);
+border-radius: 8px;
+border-color: transparent;
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* user */
+
+width: 25px;
+height: 18px;
+
+font-family: 'Font Awesome 5 Free';
+font-style: normal;
+font-weight: 900;
+font-size: 18px;
+line-height: 100%;
+/* identical to box height, or 18px */
+text-align: center;
+
+/* yellow button */
+background: linear-gradient(92.84deg, #FFB800 -47.72%, #FF8A00 136.81%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Login */
+
+width: 90px;
+height: 18px;
+
+/* Button Bold */
+font-family: 'Source Sans Pro';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 100%;
+/* identical to box height, or 18px */
+text-align: left;
+
+/* yellow button */
+background: linear-gradient(92.84deg, #FFB800 -47.72%, #FF8A00 136.81%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+transition: transform 0.3s ease;
+cursor:pointer;
+
+}
+
+
+.landing-signup-button-2{
+  /* Frame 29 */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 14px 10px;
+gap: 10px;
+margin-left:2%;
+width: 118px;
+height: 46px;
+
+background: #ffb32f;
+/* Shadow/1 */
+box-shadow: 0px 5px 10px rgba(255, 174, 0, 0.26), 0px 20px 40px rgba(255, 174, 0, 0.29);
+border-radius: 8px;
+border-color: transparent;
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+
+/* user */
+
+width: 25px;
+height: 18px;
+
+font-family: 'Font Awesome 5 Free';
+font-style: normal;
+font-weight: 900;
+font-size: 18px;
+line-height: 100%;
+/* identical to box height, or 18px */
+text-align: center;
+
+/* yellow button */
+background: #ffb32f;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+/* Login */
+
+width: 90px;
+height: 18px;
+
+/* Button Bold */
+font-family: 'Source Sans Pro';
+font-style: normal;
+font-weight: 700;
+font-size: 18px;
+line-height: 100%;
+/* identical to box height, or 18px */
+text-align: left;
+
+/* yellow button */
+background: #ffb32f;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+text-fill-color: transparent;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+cursor:pointer;
+
+transition: transform 0.3s ease;
+
+}
+
+.landing-signup-button-2 .landing-signin-button:hover{
+  transform: scale(1.1);
+}
 
 /* Discover menu button styles */
 .discover-menu-button {
-  background-color: #BCA4CB; /* Green background color */
+  background-color: #ffb32f; /* Green background color */
   color: black; /* White text color */
   border: none; /* Remove border */
   padding: 15px 60px; /* Add padding */
@@ -151,7 +324,7 @@ body {
   display: flex;
   margin-top: 20px;
   justify-content: center;
-  background-color: #E4DEFF
+  background-color: white
   ;
 
 }
