@@ -40,7 +40,7 @@ const LandingPage = () => {
         {/* Plate Pal logo on the left */}
         <div className="logo">Plate Pal</div>
 
-        {/* Search bar with search icon */}
+        {/* Search bar with search icon 
         <div className="search-bar">
           <input
             type="text"
@@ -51,7 +51,7 @@ const LandingPage = () => {
           <button className="search-button-landing">
             <span className="material-icons google-icon">search</span>
           </button>
-        </div>
+        </div>*/}
 
         {/* Clickable components on the right */}
         <div className="nav-links">
@@ -76,30 +76,34 @@ const LandingPage = () => {
             cursor: 'pointer', 
           }}
           >About Us</div>
-          <div className="icon-link dropdown" title="Profile" onClick={toggleDropdown}>
-            <span className="material-icons google-icon">person</span>
+        
+              <button  className="landing-signin-button" > <Link to="/signin" className='link'>Log In</Link></button>
+              <button  className="landing-signup-button-2"><Link to="/signup" className='link'>Sign Up</Link></button>
 
-            {/* Dropdown menu */}
+
+
+            {/* Dropdown menu 
             {showDropdown && (
               <div className="dropdown-menu">
                 <Link to="/signup" className='link'>Sign Up</Link>
                 <Link to="/signin" className='link'>Sign In</Link>
               </div>
-            )}
-          </div>
+            )}*/}
+          
         </div>
       </nav>
 
       {/* Yellow background div with "Best Food" text and image */}
       <div className="best-food-container">
         <div className="best-food-text">
-          <span className="inline-text">The best </span>
-          <span className="inline-text">delicious food</span>
+          <span className="inline-text"> </span>
+          
+          <span className="inline-text" style={{marginTop:"8%"}}>Are you starving?</span>
 
           <div className="additional-text">
             <p>Explore our delicious and nutritious food options made with the freshest ingredients.</p>
           </div>
-          <button className="discover-menu-button">Discover Menu</button>
+          <button className="discover-menu-button" style={{marginLeft:"3%"}}>Discover Menu</button>
         </div>
 
         {/* You can replace the placeholder with the actual image source */}
@@ -126,7 +130,7 @@ const LandingPage = () => {
 
       {/* Food information divs */}
       <div className="LALALALA">
-      <div className="recipe-list">
+      <div className="recipe-list" style={{marginLeft:"6%", gap:"2%"}}>
           {recipes.map((recipe) => (
             <div key={recipe._id}>
               <RecipeCard
