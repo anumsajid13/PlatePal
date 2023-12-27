@@ -14,6 +14,7 @@ const Adminmain = () => {
         const chefResponse = await fetch('http://localhost:9000/admin/top-chefs');
         const chefData = await chefResponse.json();
         fetchTopChefs(chefData.topChefs); // Set the topChefs array
+        console.log(chefData.topChefs, "YAAAAAAA");
 
         const nutritionistResponse = await fetch('http://localhost:9000/admin/top-nutritionists');
         const nutritionistData = await nutritionistResponse.json();
@@ -34,7 +35,7 @@ const Adminmain = () => {
   return (
     <>
       <AdminNav />
-    
+    <div className='out'>
       <div className="admin-content-container">
         {/* Left Side - Navigation Buttons */}
 
@@ -103,6 +104,7 @@ const Adminmain = () => {
         
           
         </div>
+      </div>
       </div>
     </>
   );

@@ -35,20 +35,20 @@ const AdminNav = () => {
 
 
         {/* Clickable components on the right */}
-        <div className="nav-links">
+        <div className="nav-links1">
         <Link to="/" style={{ textDecoration: 'none', color: 'black'}}>
           <div>Home</div>
           </Link>
-          <div className="icon-link" title="notifications" onClick={handleNotificationsClick}>
+          <div className="icon-link1" title="notifications" onClick={handleNotificationsClick}>
             <span className="material-icons google-icon">notifications</span>
           </div>
           <Link to="/n-profile" style={{ textDecoration: 'none', color: 'black'}}>
-          <div className="icon-link" title="Profile">
+          <div className="icon-link1" title="Profile">
             <span className="material-icons google-icon">person</span>
           </div>
           </Link>
 
-          <div className="icon-link" title="Menu" onClick={handleSidebarToggle}>
+          <div className="icon-link1" title="Menu" onClick={handleSidebarToggle}>
           <span className="material-icons">menu</span>
         </div>
         </div>
@@ -60,6 +60,10 @@ const AdminNav = () => {
        
         <Link to="/n/planmade/:nutritionistId" onClick={handleSidebarToggle}>
         <a href="#">Send Plans</a>
+        </Link>
+
+        <Link to="/n/chat" onClick={handleSidebarToggle}>
+        <a href="#">Chat</a>
         </Link>
 
       </div>

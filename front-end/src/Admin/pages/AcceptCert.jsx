@@ -6,6 +6,8 @@ import AdminNav from '../components/AdminNav';
 const ViewCertifications = () => {
   const [nutritionists, setNutritionists] = useState([]);
   const [chefs, setChefs] = useState([]);
+  const [vendors, setVendors] = useState([]);
+
   const [message, setMessage] = useState('');
   const token = useTokenStore((state) => state.token);
 
@@ -44,6 +46,27 @@ const ViewCertifications = () => {
 
         console.log(data1.chefs ,"lol")
         setChefs(data1.chefs);
+
+
+         // Fetch data from the backend with bearer token
+         const response2 = await fetch('http://localhost:9000/admin/view-vendor-certifications', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response2.ok) {
+          throw new Error(`HTTP error! Status: ${response1.status}`);
+        }
+        const data2 = await response2.json();
+
+        console.log(data2.vendors ,"lol")
+        setVendors(data2.vendors);
+        
+
+
 
       } catch (error) {
         console.error(error);
@@ -163,11 +186,69 @@ const ViewCertifications = () => {
     }
   };
 
+  const handleAccept2 = async (professionalId) => {
+
+    console.log("id",professionalId)
+    try {
+      const response = await fetch(`http://localhost:9000/admin/allow-vendor-signup/${professionalId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("message", data)
+      setMessage(data.message);
+
+      // You may want to refresh the certifications after accepting
+      // Call fetchNutritionists() or any other appropriate function here
+
+    } catch (error) {
+      console.error(error);
+      setMessage('Error accepting certification');
+    }
+  };
+
+  const handleReject2 = async (professionalId) => {
+    console.log(professionalId)
+    try {
+      const response = await fetch(`http://localhost:9000/admin/disallow-vendor-signup/${professionalId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setMessage(data.message);
+
+      // You may want to refresh the certifications after rejecting
+      // Call fetchNutritionists() or any other appropriate function here
+
+    } catch (error) {
+      console.error(error);
+      setMessage('Error rejecting certification');
+    }
+  };
+
+
   return (
     <>
       <AdminNav />
       <>
-        <h1>Nutritionists and Chefs with Certifications</h1>
+        <h1>Users with Certifications</h1>
         {message &&   <p >{message}</p>  }
         {nutritionists.length === 0 && chefs.length === 0 ? (
           <div style={{ textAlign: 'center', marginTop: '50px' }}>
@@ -217,6 +298,32 @@ const ViewCertifications = () => {
                 </div>
               )
             ))}
+
+
+          {vendors.map((chef) => (
+              chef.certificationImage && (
+                <div key={chef._id} className="certification-card">
+                  <h2>{chef.name}</h2>
+                  <p>Certification:</p>
+                  <iframe
+                    title={chef.name}
+                    src={`data:${chef.certificationImage.contentType};base64,${chef.certificationImage.data}`}
+                  />
+                  <div className="certification-buttons">
+                    <button className="accept-button" onClick={() => handleAccept2(chef._id)}>
+                      Accept
+                    </button>
+                    <button className="reject-button" onClick={() => handleReject2(chef._id)}>
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              )
+            ))}
+
+
+
+
           </div>
         )}
       </>

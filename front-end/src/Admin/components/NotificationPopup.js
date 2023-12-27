@@ -5,7 +5,7 @@ import useTokenStore from '../../tokenStore';
 
 const NotificationPopup = ({ onClose }) => {
   const [loading, setLoading] = useState(true);
-  const notifications = useNotificationStore((state) => state.notifications);
+  const notifications = useNotificationStore((state) => state.notifications) || [];
   const token = useTokenStore((state) => state.token);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const NotificationPopup = ({ onClose }) => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
   
         setLoading(true);
-        const response = await fetch('/admin/notifications', {
+        const response = await fetch('http://localhost:9000/admin/notifications', {
           headers: {
             Authorization: `Bearer ${token}`, // Replace with your authentication token
           },
@@ -28,8 +28,10 @@ const NotificationPopup = ({ onClose }) => {
   
         // Log the parsed data for debugging
         console.log('Parsed Data:', data);
-  
-        useNotificationStore.setState({ notifications: data.notifications });
+        useNotificationStore.setState({ notifications: data });
+
+        console.log(data.notifications)
+
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -38,7 +40,7 @@ const NotificationPopup = ({ onClose }) => {
     };
   
     fetchNotifications();
-  }, []);
+  }, [token]); // Added token as a dependency for useEffect
 
   return (
     <div className="notification-popup">
@@ -59,7 +61,6 @@ const NotificationPopup = ({ onClose }) => {
               <strong>{notification.sender.username}</strong>: {notification.notification_text}
             </div>
           ))
-          
         )}
       </div>
     </div>

@@ -111,6 +111,9 @@ const chefnotifications = require('./Chef/routes/Notification_routes');
 const cheffollowerss = require('./Chef/routes/DisplayFollowers_routes');
 const chatwithuserChef = require('./Chef/routes/ChatUser_routes');
 const chatwithvendorChef = require('./Chef/routes/ChatVendor_Routes');
+
+const Chat = require('./Nutrionist/routes/chat');
+
 //chefModule Routes
 app.use('/chef', chefLoginSignUp);
 app.use('/chef', chefnotifications);
@@ -257,6 +260,7 @@ app.use('/admin', deleteN);
 app.use('/admin', allow);
 app.use('/n', followers);
 
+app.use('/n', Chat);
 
 //Vendor routes
 app.use('/vendor', vendor_Routes);
