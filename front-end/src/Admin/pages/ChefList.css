@@ -6,15 +6,16 @@
 }
 
 .chef-item {
-  border: 2px solid #3498db;
+  border: 2px solid #e9d788;
   padding: 15px;
   margin-bottom: 15px;
   transition: transform 0.2s, border-color 0.2s;
+  background-color: #bca4cb;
 }
 
 .chef-item:hover {
   transform: translateY(-5px);
-  border-color: #2980b9;
+  border-color: #e9d788;
 }
 
 .error {
@@ -29,10 +30,11 @@
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  border: 2px solid #e74c3c;
-  color: #fff;
-  background-color: #e74c3c;
+  border: 2px solid#e9d788;
+  color: rgb(46, 45, 45);
+  background-color: #e9d788;
   transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
+  margin-left:45%;
 }
 
 .delete-button:hover {

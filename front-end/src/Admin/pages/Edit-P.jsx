@@ -4,6 +4,7 @@ import '../../Chef/pages/chefProfile.css'
 import useTokenStore from '../../tokenStore';
 import ChefGenericPopup from '../../Chef/components/ChefGenericPopup';
 import NutNav from '../components/AdminNav';
+import AdminNav from '../components/AdminNav';
 
 const Edit1 = () => {
 
@@ -102,7 +103,7 @@ const Edit1 = () => {
     return(
 
         <>
-            <NutNav/>
+            <AdminNav/>
             <h2 className='chef-profile-heading'>My Profile</h2>
              <div className='chef-profile-container'>
                 {editMode ? (

@@ -48,10 +48,11 @@ import AddNewProduct from './Vendor/pages/AddNewProducts';
 import Inbox from './Vendor/pages/chatwithchef';
 import Edit1 from './Admin/pages/Edit-P';
 import AcceptCert from './Admin/pages/AcceptCert';
+import Followers from './Nutrionist/pages/Followers';
 
 import ChefCollabs from './Chef/pages/ChefCollabRequests';
 import ChefViewReviews from './Chef/pages/ChefReviews';
-
+import MainBlock from './Admin/pages/MainBlock'
 function App() {
   return (
     <div className="App">
@@ -111,7 +112,9 @@ function App() {
         <Route path="/Chef/AllReviews" element={<ChefViewReviews/>} />
 
 
+        <Route path="/admin/MainBlock" element={<MainBlock/>} />
 
+        <Route path="/nut/followers" element={<Followers/>} />
 
 
       </Routes>
