@@ -52,7 +52,7 @@
   input {
     width: 60%;
     padding: 10px;
-    border: 2px solid #C4E0F9;
+    border: 2px solid #ffb32f;
     border-radius: 10px;
     height:10px;
     margin-top: 3px;
@@ -69,7 +69,7 @@
     width:10px;
   }
   .button-signin {
-    background-color: #464655;
+    background-color: #ffb32f;
     color: white;
     border: none;
     padding: 10px;
@@ -82,7 +82,7 @@
   }
   
   .button-signin:hover {
-    background-color: #944c6f;
+    background-color: #df981c;
   }
   
   
