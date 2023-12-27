@@ -90,6 +90,7 @@ const vendorNotificationRoute = require('./Vendor/routes/notificationroute');
 
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 
+const followers= require('./Nutrionist/routes/followers');
 
 
 const Nutritionist_Signin = require('./Nutrionist/routes/login-n')
@@ -254,6 +255,7 @@ app.use('/admin', top);
 app.use('/admin', list_chef);
 app.use('/admin', deleteN);
 app.use('/admin', allow);
+app.use('/n', followers);
 
 
 //Vendor routes
@@ -274,6 +276,7 @@ app.use('/chefVendors', collabVendorsChef);
 //nutri routes
 app.use('/n', Nutritionist_Signin); 
 app.use('/n', Nutritionist_Plan); 
+app.use('/n', followers);
 
 //chef-user inbox route (chef)
 app.use('/chef', chatwithuserChef);

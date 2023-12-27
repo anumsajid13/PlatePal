@@ -19,6 +19,7 @@ const RegisterN = () =>{
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [description, setDescription] = useState('');
 
     const handleClose = () => {
         setShowSuccess(false);
@@ -40,7 +41,8 @@ const RegisterN = () =>{
           formData.append('password', password);
           formData.append('profilePicture', profilePicture);
           formData.append('certificationImage', certificationImage);
-    
+          formData.append('description', description); // Add description to form data
+
           const response = await fetch('http://localhost:9000/n/signup', {
             method: 'POST',
             body: formData,
@@ -118,6 +120,15 @@ const RegisterN = () =>{
                             <label className="chef-form-label">
                                 Email:
                             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="chef-form-input" />
+                            </label>
+
+                            <label className="chef-form-label">
+                                Description:
+                                <textarea
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                className="chef-form-input"
+                                />
                             </label>
                             <label className="chef-form-label">
                                 Password:

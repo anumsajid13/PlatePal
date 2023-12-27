@@ -23,7 +23,8 @@ const nutritionist_notificationSchema = new mongoose.Schema({
   },seen: {
     type: Boolean,
     default: false,
-  },
+  }
+
 });
 
 const nutritionist_Notification = mongoose.model('nutritionist_Notification', nutritionist_notificationSchema);

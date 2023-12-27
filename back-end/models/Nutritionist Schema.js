@@ -44,6 +44,9 @@ const nutritionistSchema = new mongoose.Schema({
 }, unblockTime: {
   type: Date,
   default: null, // Initially set to null, indicating not blocked
+}, description: {
+  type: String, // Add description field
+  default: '', // Set a default value if needed
 },
 followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'RecipeSeeker' }],
 

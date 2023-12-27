@@ -23,8 +23,7 @@ router.post('/login', async (req, res) => {
       }
 
       // Check if nutritionist signup is allowed
-    const allowSignup = await Nutritionist.findOne({ allowSignup: true });
-
+      const allowSignup = nutritionist.allowSignup;
     if (!allowSignup) {
       return res.status(403).json({ error: 'Nutritionist signup is currently not allowed' });
     }

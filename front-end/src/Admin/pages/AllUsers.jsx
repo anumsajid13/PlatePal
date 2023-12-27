@@ -4,15 +4,17 @@ import useAllUsersStore from './AllUserStore';
 import './AllUsers.css';
 import AdminNav from '../components/AdminNav';
 import useTokenStore from '../../tokenStore';
+import useUserStore from '../../userStore';
 
 const AllUsers = () => {
   const store = useAllUsersStore();
   const token = useTokenStore((state) => state.token);
+  const setNut = useUserStore((state) => state.setNut);
+
 
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
-        // Make API calls to fetch all users
         // Make API calls to fetch all users
         const vendorResponse = await fetch('http://localhost:9000/admin/list-registered-vendors', {
           headers: {
@@ -41,17 +43,19 @@ const AllUsers = () => {
         store.setRegisteredVendors(vendorData);
         store.setRegisteredNutritionists(nutritionistData);
         store.setRegisteredChefs(chefData);
+        setNut(false);
+
       } catch (error) {
         console.error('Error fetching all users:', error);
       }
     };
 
     fetchAllUsers();
-  }, []);
+  }, [setNut]);
 
   return (
 
-    <><AdminNav /><div className="outer-container">
+    <><AdminNav /><div className="outer-container1">
 
       <div className="chef-list">
         <div className="chef-category">
