@@ -18,7 +18,10 @@
     display: flex;
     flex-wrap: wrap;
     gap: 50px;
-    padding: 30px;
+    padding: 50px;
+    background-color:  #ffe853;
+    border-radius: 10px; /* Adjust the value to change the roundness */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     
    
   }

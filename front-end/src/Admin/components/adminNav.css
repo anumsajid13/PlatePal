@@ -39,19 +39,18 @@
     background-color:  #94958B;
   }
   
-  .nav-links {
-    display: flex;
-    align-items: center;
+  .nav-links1 {
+   
     font-family: "Quattrocento";
     font-weight: bold;
+    margin-left: auto;
   }
   
-  .nav-links div {
-    margin: 0 10px;
+  .nav-links1 div {
     cursor: pointer;
   }
   
-  .icon-link {
+  .icon-link1 {
     margin: 0 10px;
     cursor: pointer;
   }

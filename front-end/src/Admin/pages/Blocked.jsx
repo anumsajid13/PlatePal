@@ -52,7 +52,7 @@ const ChefList = () => {
   return (
     <>
       <AdminNav />
-      <div className="outer-container">
+      <div className="outer-container1">
         <div className="chef-list">
           <div className="chef-category">
             <h2 className="list-title">Blocked Chefs</h2>

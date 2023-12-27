@@ -33,22 +33,22 @@ const AdminNav = () => {
         <div className="logo">Plate Pal</div>
 
         {/* Clickable components on the right */}
-        <div className="nav-links">
+        <div className="nav-links1">
 
         <Link to="/" style={{ textDecoration: 'none', color: 'black'}}>
           <div>Home</div>
           </Link>
-          <div className="icon-link" title="notifications" onClick={handleNotificationsClick}>
+          <div className="icon-link1" title="notifications" onClick={handleNotificationsClick}>
             <span className="material-icons google-icon">notifications</span>
           </div>
 
           <Link to="/admin/edit-profile" style={{ textDecoration: 'none', color: 'black'}}>
 
-          <div className="icon-link" title="Profile">
+          <div className="icon-link1" title="Profile">
             <span className="material-icons google-icon">person</span>
           </div>
           </Link>
-          <div className="icon-link" title="Menu" onClick={handleSidebarToggle}>
+          <div className="icon-link1" title="Menu" onClick={handleSidebarToggle}>
           <span className="material-icons">menu</span>
         </div>
 
@@ -59,16 +59,15 @@ const AdminNav = () => {
       <div className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <a href="#" onClick={handleSidebarToggle} className="close-btn">×</a>
        
-        <Link to="/admin/blockreport" onClick={handleSidebarToggle}>
-          View Block Reports
+        <Link to="/admin/MainBlock" onClick={handleSidebarToggle}>
+        <a href="#">View Blocked Reports</a>
         </Link>
-        {/* Use Link for navigation */}
-        <Link to="/admin/blocked-users" onClick={handleSidebarToggle}>
 
+        <Link to="/admin/blocked-users" onClick={handleSidebarToggle}>
         <a href="#">Blocked users</a>
         </Link>
-        <Link to="/admin/registered-users" onClick={handleSidebarToggle}>
 
+        <Link to="/admin/registered-users" onClick={handleSidebarToggle}>
         <a href="#">Registered Users</a>
         </Link>
 

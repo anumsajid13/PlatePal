@@ -199,7 +199,52 @@ router.get('/planmade/:nutritionistId', async (req, res) => {
   }
 });
 
+// Endpoint to get unsent meal plans created by a specific nutritionist
+router.get('/unsent-plans/:nutritionistId', async (req, res) => {
+  try {
+    const nutritionistId = req.params.nutritionistId;
 
+    // Get only unsent meal plans created by the specific nutritionist
+    const unsentMealPlans = await MealPlan.find({ nutritionist: nutritionistId, seen: false })
+      .populate({
+        path: 'user',
+        model: 'RecipeSeeker',
+        select: 'username',
+      })
+      .populate({
+        path: 'recipes',
+        model: 'Recipe',
+        select: 'title',
+      });
+
+    return res.json(unsentMealPlans);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+// Endpoint to update the 'seen' field to true for a specific meal plan
+router.put('/mark-seen/:mealPlanId', async (req, res) => {
+  try {
+    const mealPlanId = req.params.mealPlanId;
+
+    // Find the meal plan by ID and update the 'seen' field to true
+    const updatedMealPlan = await MealPlan.findByIdAndUpdate(
+      mealPlanId,
+      { $set: { seen: true } },
+      { new: true } // Return the updated document
+    );
+
+    if (!updatedMealPlan) {
+      return res.status(404).json({ error: 'Meal plan not found' });
+    }
+
+    return res.json(updatedMealPlan);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 // Endpoint to delete a meal plan
 router.delete('/delete-meal-plan/:mealPlanId', async (req, res) => {
     try {

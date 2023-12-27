@@ -1,11 +1,16 @@
 /* AllUsers.css */
 
-.outer-container {
+.outer-container1 {
   margin: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  background-color: #fff;
+  background-color: #bca4cb;
   text-align: center;
+  transition: box-shadow 0.3s;
+}
+
+.outer-container1:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .chef-list {
@@ -38,6 +43,14 @@
   margin: 10px;
   width: 250px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.5s, margin 0.3s, background-color 0.3s; /* Added transition for background-color */
+  background-color:#eff5f2 ; /* Initial background color */
+}
+
+.chef-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  margin: 8px; /* Adjust the margin on hover */
+  background-color: #e9d788; /* Background color on hover */
 }
 
 .chef-details {

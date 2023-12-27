@@ -18,7 +18,7 @@ const MealPlansPage = () => {
   useEffect(() => {
     const fetchMealPlans = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/n/planmade/${nutritionistId}`);
+        const response = await fetch(`http://localhost:9000/n/unsent-plans/${nutritionistId}`);
 
         if (!response.ok) {
           throw new Error('Failed to fetch meal plans');
@@ -50,6 +50,15 @@ const MealPlansPage = () => {
 
       if (!response.ok) {
         throw new Error('Failed to send notification');
+      }
+
+      // Update the 'seen' field to true for the meal plan
+      const markSeenResponse = await fetch(`http://localhost:9000/n/mark-seen/${mealPlanId}`, {
+        method: 'PUT',
+      });
+
+      if (!markSeenResponse.ok) {
+        throw new Error('Failed to mark meal plan as seen');
       }
 
       const data = await response.json();

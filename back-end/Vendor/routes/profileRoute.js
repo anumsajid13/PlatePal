@@ -83,7 +83,7 @@ router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     // Find the nutritionist by username
-    const user = await Vendor.findOne({ username });
+    const user = await Vendor.find({ username });
 
     if (!user) {
       return res.status(404).json({ error: 'Vendor not found' });

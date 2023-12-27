@@ -119,6 +119,12 @@ const ChefProfile1 = () => {
         const { name, value } = e.target;
         setChef({ ...chef, [name]: value });
       };
+
+
+      const handleViewFollowers = () => {
+        // Navigate to /nut/followers when "View Followers" button is clicked
+        navigate('/nut/followers');
+    };
       
     return(
 
@@ -212,9 +218,9 @@ const ChefProfile1 = () => {
                     </div>
                     <button className='chef-profile-buttonss' onClick={handleEdit}>Edit</button>
                     <button className='chef-profile-buttonss' onClick={handleDelete}>Delete</button>
-                    {/* <button className="chef-profile-buttonss" onClick={handleViewFollowers}>
+                    <button className="chef-profile-buttonss" onClick={handleViewFollowers}>
                         View Followers
-                        </button> */}
+                        </button>
                     </div>
                 )}
             </div>

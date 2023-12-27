@@ -91,6 +91,7 @@ const orderRoute = require('./Vendor/routes/orderRoute');
 
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 
+const followers= require('./Nutrionist/routes/followers');
 
 
 const Nutritionist_Signin = require('./Nutrionist/routes/login-n')
@@ -135,62 +136,109 @@ app.use('/recepieSeeker', Edit_user_profile);
 app.use('/recepieSeeker', Display_Notifications);
 app.use('/recepieSeeker', Display_recipeSeekers);
 app.use('/recepieSeeker', AddOrder );
-//app.use('/recepieSeeker', follow_nutritionist);
+app.use('/recepieSeeker', follow_nutritionist);
 
 
 // checkout api
 app.post("/api/create-checkout-session",async(req,res)=>{
-    const {products} = req.body;
-    console.log(products)
-    products.orders.forEach(async (order) => {
+    const { products } = req.body;
+   // console.log("products",products);
+   if(products)
+   {
+    for (const order of products.orders) {
         const chefId = order.items[0].chefId;
         const vendorId = order.items[0].vendorId;
         const price = order.items[0].price * order.items[0].quantity;
-        console.log("PRICE ", price)
+  
         // Calculate 40% of the price
         const chefAmount = Math.round((40 / 100) * price);
         const vendorAmount = Math.round((60 / 100) * price);
-    
+  
         // Update Chef and Vendor balances
         try {
-            const chef = await Chef.findById(chefId);
-            chef.balance += chefAmount;
-            await chef.save();
-      
-            const vendor = await Vendor.findById(vendorId);
-            vendor.balance += vendorAmount;
-            await vendor.save();
+          const chef = await Chef.findById(chefId);
+          chef.balance += chefAmount;
+          console.log("chef balane: ",chef.balance)
+          await chef.save();
+  
+          const vendor = await Vendor.findById(vendorId);
+          vendor.balance += vendorAmount;
+          console.log("Vendor balane: ",vendor.balance)
+          await vendor.save();
+  
         } catch (error) {
           console.error('Error updating balances:', error.message);
-          // Handle the error appropriately
+          return res.status(500).json({ message: 'Internal server error', error: error.message });
         }
+  
+        const vendorCollaboration = await VendorCollaboration.findOne({
+          vendor: vendorId,
+          chef: chefId,
+          recipe: order.items[0].recipe._id,
+        }).populate('recipe');
+        
+        console.log("Vendor collaboration: ",vendorCollaboration)
+        // Map across the array of ingredients in vendor collaboration
+        if (vendorCollaboration && vendorCollaboration.recipe) {
+          const recipeIngredients = vendorCollaboration.recipe.ingredients;
+          console.log("ingredients inside vendor collaboration inside recipe: ",recipeIngredients)
+          var index=0;
+          for (const ingredient of vendorCollaboration.ingredients) {
+            // Find the corresponding ingredient in the Recipe
+           /* const recipeIngredient = recipeIngredients.find(item =>
+                {
+                    item._id.equals(ingredient._id);
+                    console.log(ingredient._id," ",item._id);
+                });*/
+                
+         //   if (recipeIngredient) {
+           //    Calculate the quantity to decrement
+       //       console.log("ingredients found: ",recipeIngredient)
+         //     console.log("Ingredients",vendorCollaboration.recipe.title ," requred in recipe: ",recipeIngredient.quantity)
+             
+              const quantityToDecrement = order.items[0].quantity * recipeIngredient.quantity;
+        
+              // Decrement the quantity in the Ingredient schema
+              const dbIngredient = await Ingredient.findById(ingredient._id);
+        
+              if (dbIngredient) {
+                dbIngredient.quantity -= quantityToDecrement;
+                console.log(dbIngredient, " left in amount: ",dbIngredient.quantity )
+                await dbIngredient.save();
+              }
+        //    }
+          }
+        }
+      }
+        
+  
+      const lineItems = products.orders.map((order)=>({
+         
+          price_data:{
+              
+              currency:"Pkr",
+              product_data:{
+                  name:order.items[0].name,
+              },
+              unit_amount:order.items[0].price*100,
+          },
+          quantity:order.items[0].quantity
+      }));
+  
+      const totalamount=products.totalAmount;
+  
+      const session = await stripe.checkout.sessions.create({
+          payment_method_types:["card"],
+          line_items:lineItems,
+          mode:"payment",
+          success_url:"http://localhost:3000/Pyement/Success",
+          cancel_url:"http://localhost:3000/Pyement/Failure",
       });
-
-    const lineItems = products.orders.map((order)=>({
-       
-        price_data:{
-            
-            currency:"Pkr",
-            product_data:{
-                name:order.items[0].name,
-            },
-            unit_amount:order.items[0].price*100,
-        },
-        quantity:order.items[0].quantity
-    }));
-
-    const totalamount=products.totalAmount;
-
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types:["card"],
-        line_items:lineItems,
-        mode:"payment",
-        success_url:"http://localhost:3000/Pyement/Success",
-        cancel_url:"http://localhost:3000/Pyement/Failure",
-    });
-
-    res.json({id:session.id})
-
+  
+      res.json({id:session.id})
+  
+      
+   }
     
  
 })
@@ -208,6 +256,7 @@ app.use('/admin', top);
 app.use('/admin', list_chef);
 app.use('/admin', deleteN);
 app.use('/admin', allow);
+app.use('/n', followers);
 
 
 //Vendor routes
@@ -229,6 +278,7 @@ app.use('/chefVendors', collabVendorsChef);
 //nutri routes
 app.use('/n', Nutritionist_Signin); 
 app.use('/n', Nutritionist_Plan); 
+app.use('/n', followers);
 
 //chef-user inbox route (chef)
 app.use('/chef', chatwithuserChef);

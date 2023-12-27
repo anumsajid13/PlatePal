@@ -224,33 +224,41 @@ const SignInPage =  () => {
 
   return (
     <div className='signin-outerbody'>
-      <nav className="navbar-landingpage" style={{ height: '45px' }}>
+      <nav className="navbar-landingpage">
+        {/* Plate Pal logo on the left */}
         <div className="logo">Plate Pal</div>
+
+        {/* Clickable components on the right */}
         <div className="nav-links">
-        <Link to="/"  style={{ color: 'black', textDecoration: 'none' }} onClick={() => setActiveLink('Home')} className={activeLink === 'Home' ? 'active-link' : ''}>
-          Home
+          <Link
+            to="/"
+            style={{ color: 'black', textDecoration: 'none', marginRight:'5%'}}
+            onClick={() => setActiveLink('Home')}
+            className={activeLink === 'Home' ? 'active-link' : ''}
+          >
+            Home
           </Link>
-          <div onClick={() => setActiveLink('Contact Us')} className={activeLink === 'Contact Us' ? 'active-link' : ''}>
-            Contact Us
-          </div>
-          <div onClick={() => setActiveLink('About Us')} className={activeLink === 'About Us' ? 'active-link' : ''}>
-            About Us
-          </div>
-          <div className="icon-link dropdown" title="Profile" onClick={toggleDropdown}>
-            <span className="material-icons google-icon">person</span>
-            {showDropdown && (
-              <div className="dropdown-menu">
-                <Link to="/signup" className="link">
-                  Sign Up
-                </Link>
-                <Link to="/signin" className="link">
-                  Sign In
-                </Link>
-              </div>
-            )}
-          </div>
+          <div onClick={() => setActiveLink('Contact Us')} className={activeLink === 'Contact Us' ? 'active-link' : ''}
+           style={{
+            color: activeLink === 'Contact Us' ? 'red' : 'black', 
+            textDecoration: 'none', 
+            cursor: 'pointer', 
+          }}
+          >Contact Us</div>
+          <div onClick={() => setActiveLink('About Us')} className={activeLink === 'About Us' ? 'active-link' : ''}
+           style={{
+            color: activeLink === 'About US' ? 'red' : 'black', 
+            textDecoration: 'none', 
+            cursor: 'pointer', 
+          }}
+          >About Us</div>
+        
+              <button  className="landing-signin-button" > <Link to="/signin" className='link'>Log In</Link></button>
+              <button  className="landing-signup-button-2"><Link to="/signup" className='link'>Sign Up</Link></button>
+          
         </div>
       </nav>
+
 
       <div className="page-container">
         <div className="card-container">

@@ -1,0 +1,40 @@
+body {
+    font-family: "Quattrocento";
+    margin: 0;
+    background-color: white;
+  }
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  .block-reports-menu {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    margin-bottom: -10px;
+  }
+  
+  .block-report-option {
+    text-decoration: none;
+    color:#333;
+    background-color: #e9d788;
+    padding: 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  }
+  
+  .block-report-option:hover {
+    background-color: #bca4cb;
+    transform: translateY(-5px);
+  }
+  
