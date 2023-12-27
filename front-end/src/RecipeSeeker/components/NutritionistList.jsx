@@ -17,7 +17,10 @@ const NutritionistList = ({ onSelectNutritionist }) => {
   }, []);
 
   const handleSelectNutritionist = (nutritionistId) => {
+
+
     setSelectedNutritionist(nutritionistId);
+    console.log("nutritionist clicked: ",nutritionistId)
   };
 
   const handleSendNotification = () => {
@@ -35,9 +38,10 @@ const NutritionistList = ({ onSelectNutritionist }) => {
             <div
               key={nutritionist._id}
               className={`nutritionist-item ${selectedNutritionist === nutritionist._id ? 'selected' : ''}`}
-              onClick={() => handleSelectNutritionist(nutritionist._id)}
+              
             >
-              <img
+              <img 
+                onClick={() => handleSelectNutritionist(nutritionist._id)}
                 src={nutritionist.profilePicture}
                 alt={`Nutritionist ${nutritionist.name}`}
                 style={{ width: '40px', height: '40px', borderRadius: '20px' }}
