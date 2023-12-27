@@ -11,6 +11,8 @@
   transition: 0.5s;
   padding-top: 60px;
   z-index: 1001;
+  font-family: "Quattrocento";
+
 }
 
 .sidebar a {

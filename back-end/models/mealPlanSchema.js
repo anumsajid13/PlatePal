@@ -12,7 +12,10 @@ const mealPlanSchema = new mongoose.Schema({
     date: {
       type: Date,
       default: Date.now,
-    },
+    },seen: {
+      type: Boolean,
+      default: false,
+    }
   });
   
   const MealPlan = mongoose.model('MealPlan', mealPlanSchema);
