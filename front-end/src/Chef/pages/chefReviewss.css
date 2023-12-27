@@ -1,0 +1,55 @@
+.review-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.review-item {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    background-color: #eff5f2;
+    text-align: left;
+    cursor: pointer;
+    margin-bottom: 50px;
+}
+
+
+.review-item .button-container {
+    display: flex;
+    align-items: center;
+}
+
+.review-item button {
+    padding: 8px 12px;
+    background-color: rgb(228, 207, 117);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+
+.chef-review-text {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #333; 
+}
+
+.chef-review-subheading {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    font-family: Chonburi;
+}
+
+.chef-review-heading {
+    margin-top: 50px;
+    margin-bottom: 30px;
+    padding: 10px;
+    color: #333;
+    font-weight: bold;
+    font-family: Chonburi;
+    text-align: center;
+}

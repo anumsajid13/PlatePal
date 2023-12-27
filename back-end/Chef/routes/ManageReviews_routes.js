@@ -25,12 +25,17 @@ router.get('/chefReviews', authenticateToken, async (req, res) => {
           path: 'recipe',
           select: 'title', 
         })
-        .select('Review Time user recipe isPinned');
+        .select('Review Time isPinned user recipe');
   
-      //map review details including user data, recipe title, and profile pictures
-      const reviewsWithDetails = chefReviews.map(review => ({
+      //separate pinned and unpinned reviews
+    const pinnedReviews = [];
+    const unpinnedReviews = [];
+    chefReviews.forEach(review => {
+      const reviewData = {
+        _id: review._id,
         Review: review.Review,
         Time: review.Time,
+        isPinned: review.isPinned,
         user: {
           _id: review.user._id,
           name: review.user.name,
@@ -42,9 +47,18 @@ router.get('/chefReviews', authenticateToken, async (req, res) => {
           _id: review.recipe._id,
           title: review.recipe.title,
         },
-      }));
-  
-      res.status(200).json({ chefReviews: reviewsWithDetails });
+      };
+      if (review.isPinned) {
+        pinnedReviews.push(reviewData);
+      } else {
+        unpinnedReviews.push(reviewData);
+      }
+    });
+
+    //concatenate pinned reviews on top of unpinned reviews
+    const sortedReviews = [...pinnedReviews, ...unpinnedReviews];
+
+    res.status(200).json({ chefReviews: sortedReviews });
     } catch (error) {
       res.status(500).json({ message: 'Internal server error', error: error.message });
     }
@@ -72,6 +86,28 @@ router.put('/pinReview/:reviewId', authenticateToken, async (req, res) => {
     }
 });
 
+//unpin reviews
+router.put('/unpinReview/:reviewId', authenticateToken, async (req, res) => {
+    try {
+      const reviewId = req.params.reviewId;
+      //finding the review by ID
+      const review = await Review.findById(reviewId);
+  
+      if (!review) {
+        return res.status(404).json({ message: 'Review not found' });
+      }
+  
+      //updating the review to set it as unpinned
+      review.isPinned = false;
+  
+      await review.save();
+  
+      res.status(200).json({ message: 'Review unpinned successfully', review: review });
+    } catch (error) {
+      res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+  });
+  
 
 
 module.exports = router;

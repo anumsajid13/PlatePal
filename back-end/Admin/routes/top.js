@@ -6,22 +6,39 @@ const express = require('express');
 
 const router = express.Router();
 
-// Endpoint to get the top chefs based on followers
 router.get('/top-chefs', async (req, res) => {
   try {
-    const topChefs = await Chef.find({ isBlocked: false })
-      .sort({ followers: -1 })
-      .limit(5)
-      .select('name  username followers profilePicture')
-      .populate('followers', '_id'); // Populate the 'followers' array with only the _id field
+    const topChefs = await Chef.aggregate([
+      {
+        $match: { isBlocked: false }
+      },
+      {
+        $unwind: '$followers'
+      },
+      {
+        $group: {
+          _id: '$_id',
+          name: { $first: '$name' },
+          username: { $first: '$username' },
+          profilePicture: { $first: '$profilePicture' },
+          followersCount: { $sum: 1 } // Count followers
+        }
+      },
+      {
+        $sort: { followersCount: -1 }
+      },
+      {
+        $limit: 5
+      }
+    ]);
 
     const topChefsWithBase64Image = topChefs.map(chef => {
       const uint8Array = new Uint8Array(chef.profilePicture.data);
       const base64ImageData = Buffer.from(uint8Array).toString('base64');
       return {
-        ...chef.toObject(),
+        ...chef,
         profilePicture: { data: base64ImageData, contentType: chef.profilePicture.contentType },
-        followers: chef.followers.length, // Replace the followers array with its length (follower count)
+        followers: chef.followersCount, // Replace the followers array with its count
       };
     });
 

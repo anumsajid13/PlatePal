@@ -92,21 +92,11 @@ router.delete('/disallow-chef-signup/:chefId', autheticateToken, async (req, res
     const chefId = req.params.chefId;
 
     // Find the chef by ID
-    const chef = await Chef.findById(chefId);
+    const chef = await Chef.findByIdAndDelete(chefId);
 
     if (!chef) {
       return res.status(404).json({ error: 'Chef not found' });
     }
-
-    // Set allowSignup to false
-    chef.allowSignup = false;
-
-    // Save the updated chef
-    await chef.save();
-
-    // Delete the chef user
-    await Chef.findByIdAndDelete(chefId);
-
     return res.json({ message: 'Chef signup disallowed, and the chef user deleted successfully' });
   } catch (error) {
     console.error(error);
@@ -124,7 +114,7 @@ router.put('/allow-nutritionist-signup/:nutritionistId', autheticateToken, async
       return res.status(404).json({ error: 'Nutritionist not found' });
     }
 
-    nutritionist.allowSignup = allowSignup;
+    nutritionist.allowSignup = true;
     await nutritionist.save();
 
     const message = allowSignup
@@ -132,6 +122,26 @@ router.put('/allow-nutritionist-signup/:nutritionistId', autheticateToken, async
       : 'Nutritionist signup is currently not allowed';
 
     return res.json({ message });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+// Endpoint to change the boolean value to disallow nutritionists to sign up and delete the user
+router.delete('/disallow-nutritionist-signup/:nutritionistId', autheticateToken, async (req, res) => {
+  try {
+    const nutritionistId = req.params.nutritionistId;
+
+    // Find the nutritionist by ID and delete
+    const nutritionist = await Nutritionist.findByIdAndDelete(nutritionistId);
+
+    if (!nutritionist) {
+      return res.status(404).json({ error: 'Nutritionist not found' });
+    }
+
+    return res.json({ message: 'Nutritionist signup disallowed, and the nutritionist user deleted successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });

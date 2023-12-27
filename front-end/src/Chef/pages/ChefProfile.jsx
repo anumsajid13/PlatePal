@@ -210,6 +210,7 @@ const ChefProfile = () => {
                             <p className='chef-profile-p-editable'><p className='chef-profile-label-editable'>Name:</p> {chef.name}</p>
                             <p className='chef-profile-p-editable'><p className='chef-profile-label-editable'>Email:</p> {chef.email}</p>
                             <p className='chef-profile-p-editable'><p className='chef-profile-label-editable'>Username:</p> {chef.username}</p>
+                            <p className='chef-profile-p-editable'><p className='chef-profile-label-editable'>Balance:</p> Rs. {chef.balance}</p>
                         </div>
                     </div>
                     <button className='chef-profile-buttonss' onClick={handleEdit}>Edit</button>

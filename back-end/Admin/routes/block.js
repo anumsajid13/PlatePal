@@ -129,17 +129,25 @@ router.post('/block-vendor/:vendorId', authenticateToken, async (req, res) => {
 // Endpoint to view nutritionist block reports
 router.get('/view-nutritionist-block-reports', authenticateToken, async (req, res) => {
   try {
-    // Fetch all nutritionist block reports with the nutritionist details and proof picture
-    const blockReports = await NutritionistBlockReport.find().populate('nutritionist').select('reason proof');
+    // Fetch nutritionist block reports with the necessary details and proof picture
+    const blockReports = await NutritionistBlockReport.find()
+      .populate('nutritionist', 'name') // Populate nutritionist field and select only 'name'
+      .populate('recipeSeeker', 'name') // Populate recipeSeeker field and select only 'name'
+      .select('reason proof nutritionist recipeSeeker'); // Select necessary fields
+
+    // Filter out reports where nutritionist name is null
+    const filteredBlockReports = blockReports.filter(
+      (report) => report.nutritionist && report.nutritionist.name !== null
+    );
 
     // Convert pictures to base64 and include them in the response
-    const blockReportsWithBase64Image = blockReports.map(report => {
+    const blockReportsWithBase64Image = filteredBlockReports.map((report) => {
       if (report.proof && report.proof.data) {
         const uint8Array = new Uint8Array(report.proof.data);
         const base64ImageData = Buffer.from(uint8Array).toString('base64');
         return {
           ...report.toObject(),
-          proof: { data: base64ImageData, contentType: report.proof.contentType }
+          proof: { data: base64ImageData, contentType: report.proof.contentType },
         };
       }
       return report;
@@ -151,15 +159,20 @@ router.get('/view-nutritionist-block-reports', authenticateToken, async (req, re
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 // Endpoint to view chef block reports
 router.get('/view-chef-block-reports', authenticateToken, async (req, res) => {
   try {
-    // Fetch all chef block reports with the chef details and proof picture
-    const blockReports = await ChefBlockReport.find().populate('chef').select('reason proof');
+    // Fetch chef block reports with the necessary details and proof picture
+    const blockReports = await ChefBlockReport.find()
+      .populate('chef', 'name') // Populate chef field and select only 'name'
+      .populate('recipeSeeker', 'name') // Populate recipeSeeker field and select only 'name'
+      .select('reason proof chef recipeSeeker'); // Select necessary fields
+
+    // Filter out reports where chef name is null
+    const filteredBlockReports = blockReports.filter(report => report.chef && report.chef.name !== null);
 
     // Convert pictures to base64 and include them in the response
-    const blockReportsWithBase64Image = blockReports.map(report => {
+    const blockReportsWithBase64Image = filteredBlockReports.map(report => {
       if (report.proof && report.proof.data) {
         const uint8Array = new Uint8Array(report.proof.data);
         const base64ImageData = Buffer.from(uint8Array).toString('base64');
@@ -177,14 +190,20 @@ router.get('/view-chef-block-reports', authenticateToken, async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-  // Endpoint to view vendor block reports
+// Endpoint to view vendor block reports
 router.get('/view-vendor-block-reports', authenticateToken, async (req, res) => {
   try {
-    // Fetch all vendor block reports with the vendor details and proof picture
-    const blockReports = await VendorBlockReport.find().populate('vendor').select('reason proof');
+    // Fetch vendor block reports with the vendor details, chef details, and proof picture
+    const blockReports = await VendorBlockReport.find()
+      .populate('vendor', 'name') // Populate vendor field and select only 'name'
+      .populate('chef', 'name')   // Populate chef field and select only 'name'
+      .select('reason proof vendor chef'); // Select necessary fields
+
+    // Filter out reports where vendor name is null
+    const filteredBlockReports = blockReports.filter(report => report.vendor && report.vendor.name !== null);
 
     // Convert pictures to base64 and include them in the response
-    const blockReportsWithBase64Image = blockReports.map(report => {
+    const blockReportsWithBase64Image = filteredBlockReports.map(report => {
       if (report.proof && report.proof.data) {
         const uint8Array = new Uint8Array(report.proof.data);
         const base64ImageData = Buffer.from(uint8Array).toString('base64');
@@ -202,6 +221,7 @@ router.get('/view-vendor-block-reports', authenticateToken, async (req, res) => 
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 
   module.exports = router;

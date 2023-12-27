@@ -1,7 +1,8 @@
 /* adminNav.css */
 
 .admin-navbar {
-    background-color:   #94958B;
+    background-color: #e4deff
+    ;
     padding: 10px;
     display: flex;
     justify-content: space-between;
