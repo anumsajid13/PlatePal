@@ -9,15 +9,16 @@ const NutritionistPopup = ({ nutritionist, onClose, onFollow }) => {
           &times;
         </span>
         <img
-          src={nutritionist}
+          src={nutritionist.profilePicture}
           alt={`Nutritionist ${nutritionist.name}`}
-          style={{ width: '80px', height: '80px', borderRadius: '40px' }}
+          className="popup-image"
         />
-        {console.log(nutritionist._id)}
-        <h3>{nutritionist.name}</h3>
-        <h3>{nutritionist.isBlocked}</h3>
-        <p>{nutritionist.description}</p>
-        <button onClick={() => onFollow(nutritionist._id)}>Follow</button>
+        <div className="popup-details">
+          <h3 className="popup-details-h3">{nutritionist.name}</h3>
+          <h4>{nutritionist.email}</h4>
+          <p>{nutritionist.description}</p>
+          <button className="popup-details-button"  onClick={() => onFollow(nutritionist._id)}>Follow</button>
+        </div>
       </div>
     </div>
   );

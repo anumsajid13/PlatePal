@@ -73,11 +73,14 @@ const NutritionistList = ({ onSelectNutritionist }) => {
       </div>
 
       {showPopup && selectedNutritionist && (
+        <>
+        <div className="overlay-nut-popup"></div>
         <NutritionistPopup
-          nutritionist={nutritionists.find(n => n._id === selectedNutritionist)}
+          nutritionist={nutritionists.find((n) => n._id === selectedNutritionist)}
           onClose={handleClosePopup}
           onFollow={(id) => console.log(`Follow clicked for Nutritionist ${id}`)}
         />
+      </>
       )}
       <button style={{marginTop:"35px"}} onClick={handleSendNotification}>Send Notification</button>
     </div>

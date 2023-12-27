@@ -78,3 +78,78 @@
     margin-left: 2%;
     
   }
+  .category-slider-container {
+    margin-top:50px;
+    overflow: hidden;
+    margin-left: 18%;
+    width:60%;
+  }
+  
+  .category-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; 
+  }
+
+  
+  .category-slider::-webkit-scrollbar {
+    width: 3px; 
+  }
+  
+  .category-slider::-webkit-scrollbar-thumb {
+    background-color:transparent; 
+  }
+  
+  .category-slider::-webkit-scrollbar-track {
+    background-color: transparent; 
+  }
+  .message-to-chef.other-user {
+    margin-left: 44%;
+  }
+  
+  
+  .category-card {
+   
+    background-color: #dad755;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    scroll-snap-align: start;
+    transition: background-color 0.3s ease;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .category-card:hover {
+    background-color: #2980b9;
+    transform: scale(1.1);
+
+  }
+
+  .Categories-choose{
+     /* Title */
+
+  width: 600px;
+  height: 25px;
+
+  /* Headline 4 Bold */
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 43px;
+  line-height: 112%;
+  /* or 48px */
+  text-align: center;
+
+  color: #F17228;
+
+  margin-left: 25%;
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  }

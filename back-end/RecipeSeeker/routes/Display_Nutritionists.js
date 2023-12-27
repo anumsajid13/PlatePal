@@ -64,7 +64,7 @@ router.get('/mealPlans', async (req, res) => {
 
 router.get('/allNutritionists', async (req, res) => {
   try {
-    const nutritionists = await Nutritionist.find({}, 'name profilePicture');
+    const nutritionists = await Nutritionist.find({}, 'name profilePicture email description followers' );
 
     const nutritionistsWithBase64Image = nutritionists.map((nutritionist) => {
       if (nutritionist.profilePicture && nutritionist.profilePicture.data && nutritionist.profilePicture.contentType) {
@@ -74,12 +74,19 @@ router.get('/allNutritionists', async (req, res) => {
             _id: nutritionist._id,
             name: nutritionist.name,
             profilePicture: `data:${nutritionist.profilePicture.contentType};base64,${base64String}`,
+            email:nutritionist.email,
+            description:nutritionist.description,
+            followers:nutritionist.followers
+           
           };
         } else {
           return {
             _id: nutritionist._id,
             name: nutritionist.name,
             profilePicture: nutritionist.profilePicture.toString('base64'),
+            email:nutritionist.email,
+            description:nutritionist.description,
+            followers:nutritionist.followers
           };
         }
       } else {
@@ -87,10 +94,14 @@ router.get('/allNutritionists', async (req, res) => {
           _id: nutritionist._id,
           name: nutritionist.name,
           profilePicture: null,
+          email:nutritionist.email,
+          description:nutritionist.description,
+          followers:nutritionist.followers
         };
       }
     });
 
+    console.log(nutritionists);
     res.status(200).json({ nutritionists: nutritionistsWithBase64Image });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });
