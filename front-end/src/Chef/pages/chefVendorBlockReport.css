@@ -19,11 +19,11 @@
   }
   
   .vendor-br-item {
-    border: 1px solid #eff5f2;
+    border: 1px solid #ffb32f;
     padding: 20px;
     margin: 10px;
     border-radius: 8px;
-    background-color:#eff5f2;
+    background-color:#ffb32f;
     text-align: left;
     cursor:pointer;
     margin-bottom: 50px;
@@ -36,8 +36,8 @@
     margin-top: 20px;
     border: none;
     border-radius: 4px;
-    background-color:rgb(228, 207, 117);
-    color: white;
+    background-color:#ffe853;
+    color: black;
     cursor: pointer;
     width: 10%;
     transition: background-color 0.3s ease-in-out;
