@@ -55,13 +55,14 @@ const LandingPage = () => {
 
         {/* Clickable components on the right */}
         <div className="nav-links">
-          <div onClick={() => setActiveLink('/')} className={activeLink === 'Home' ? 'active-link' : ''} 
-          style={{
-            color: activeLink === 'Home' ? 'white' : 'black', 
-            textDecoration: 'none', 
-            cursor: 'pointer', 
-          }}
-          >Home</div>
+          <Link
+            to="/"
+            style={{ color: 'black', textDecoration: 'none', marginRight:'5%' }}
+            onClick={() => setActiveLink('Home')}
+            className={activeLink === 'Home' ? 'active-link' : ''}
+          >
+            Home
+          </Link>
           <div onClick={() => setActiveLink('Contact Us')} className={activeLink === 'Contact Us' ? 'active-link' : ''}
            style={{
             color: activeLink === 'Contact Us' ? 'red' : 'black', 
