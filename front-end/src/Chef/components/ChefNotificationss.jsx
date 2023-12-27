@@ -71,7 +71,7 @@ const ChefNotificationBox = () => {
              ? '/Chef/myFollowers' 
              : notification.type === 'message from recipe seeker'
              ? '/Chef/usersInbox' 
-             : notification.type === 'message from vendor'
+             : notification.type === 'message'
              ? '/Chef/vendorsInbox' 
              : notification.type === 'unfollow'
              ? '/Chef/myFollowers' 
@@ -79,6 +79,8 @@ const ChefNotificationBox = () => {
              ? '/Chef/Mainpage' 
              : notification.type === 'review'
              ? '/Chef/AllReviews' 
+             : notification.type === 'Request accepted'
+             ? '/Chef/AllCollabs' 
              : '#'
          }
        >

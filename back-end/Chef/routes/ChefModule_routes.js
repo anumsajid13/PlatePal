@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Chef = require('../../models/Chef Schema');
 const authenticateToken = require('../../TokenAuthentication/token_authentication')
+const AdminNotification = require('../../models/Admin_Notification Schema'); 
 require('dotenv').config();
 const multer = require('multer');
 const router = express.Router();
@@ -48,7 +49,18 @@ router.post('/signup', upload.fields([ { name: 'certificationImage', maxCount: 1
       });
   
       //save the new Chef 
-      await newChef.save();
+      const savedChef = await newChef.save();
+
+      //send notification to admin
+      const adminNotification = new AdminNotification({
+        user: '657dab6364bd105aeb65e8c7',
+        sender: savedChef._id, 
+        senderType: 'Chef',
+        type: 'Certification',
+        notification_text: `A new certification has been submitted by Chef ${savedChef.name}.`
+      });
+
+      await adminNotification.save();
   
       res.status(201).json({ message: 'Your sign up request sent to admin!' });
     } catch (error) {
