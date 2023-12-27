@@ -217,38 +217,48 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
 
 
     const addToCart = async () => {
-      try {
-        const newItem = {
-          recipe: recipe._id,
-          name: recipe.title,
-          price: recipe.price,
-          quantity: quantity,
-          chefId:recipe.chef,
-          vendorId:recipe.vendor
-        };
-  
-        console.log("recipe id sending: ",recipe._id)
-        const response = await fetch('http://localhost:9000/recepieSeeker/addOrder', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ items: [newItem] }),
-        });
-  
-        if (response.ok) {
-          console.log('Order added successfully');
-          useCartStore.getState().addToCart(newItem);
-        } else {
-          console.error('Failed to add order:', response.status, response.statusText);
-        }
 
-      } catch (error) {
-        console.error('Error adding order:', error.message);
+      if(recipe.vendor!== undefined)
+      {
+
+        try {
+          const newItem = {
+            recipe: recipe._id,
+            name: recipe.title,
+            price: recipe.price,
+            quantity: quantity,
+            chefId:recipe.chef,
+            vendorId:recipe.vendor,
+          };
+          
+          console.log("item: ",recipe._id)
+          const response = await fetch('http://localhost:9000/recepieSeeker/addOrder', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ items: [newItem] }),
+          });
+    
+          if (response.ok) {
+            console.log('Order added successfully');
+            useCartStore.getState().addToCart(newItem);
+          } else {
+            console.error('Failed to add order:', response.status, response.statusText);
+          }
+  
+        } catch (error) {
+          console.error('Error adding order:', error.message);
+        }
+      
+      
       }
-    
-    
+      else
+      {
+        alert("Recipe not available yet! It is pending Vendor collaboration")
+      }
+      
   };
  
   return (
