@@ -3,7 +3,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
 const Vendor = require('../../models/Vendor Schema');
-/* const Collaboration=require('../../models/Collaboration Schema'); */
+ const Collaboration=require('../../models/VendorCollaboration Schema'); 
+ const CollaborationRequest=require('../../models/CollaborationRequest Schema');
 const VendorChefInbox=require('../../models/Vendor-Chef_Inbox Schema');
 const router = express.Router();
 require('dotenv').config();
@@ -81,16 +82,17 @@ router.post("/register", upload.fields([ { name: 'certificationImage', maxCount:
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
-
+console.log("body",req.body)
     // Find the nutritionist by username
-    const user = await Vendor.find({ username });
-
+    const user = await Vendor.findOne({ username });
+console.log("user",user)
     if (!user) {
       return res.status(404).json({ error: 'Vendor not found' });
     }
 
    // Check if the chef is blocked
    if (user.isBlocked) {
+    console.log("blocked")
     // Check if the unblock time is set
     if (user.unblockTime) {
       // Check if the unblock time has passed
@@ -109,7 +111,7 @@ router.post('/login', async (req, res) => {
     }
   }
   if(user.allowSignup && !user.isBlocked)
-   {
+   {console.log("allow")
      // Check if the password is correct using bcrypt.compare
      const isPasswordValid =await bcrypt.compare(password, user.password);
      if (!isPasswordValid) {
@@ -120,8 +122,8 @@ router.post('/login', async (req, res) => {
 
     return res.json({ message: 'Login successful', token });
    } 
-   else{
-    return res.status(403).json({ error: 'Admin is reviewing your certificate' });
+  else{
+   return res.status(403).json({ error: 'Admin is reviewing your certificate' });
    }
   } catch (error) {
     console.error('Error during login:', error);
@@ -237,24 +239,40 @@ router.put('/forgotpassword',authenticateToken, async (req,res) => {
       res.status(500).json({ message: 'Server Error' });
   }
 });
-/* 
 
-  //delete profile
-  router.delete('/deleteprofile', authenticateToken, async (req, res) => {
-    try {
-      const deletedUser = await Vendor.findByIdAndDelete(req.user.id);
-      const collaborations = await Collaboration.findByIdAndDelete({ vendor: req.user.id });
-      const inbox = await VendorChefInbox.findByIdAndDelete({ vendor: req.user.id });
 
-      if(!deletedUser){
-        return res.status(401).send("Invalid email.");
+router.delete('/deleteprofile', authenticateToken, async (req, res) => {
+  try {
+    const vendorId = req.user.id;
+
+    const collaborations = await Collaboration.findByIdAndDelete(vendorId);
+    console.log("collaborations", collaborations);
+
+    const inbox = await VendorChefInbox.findByIdAndDelete(vendorId);
+    console.log("inbox", inbox);
+
+    const collabrequests = await CollaborationRequest.find({ vendor: vendorId });
+    if (collabrequests) {
+      for (const request of collabrequests) {
+        request.isAccepted = 'declined';
+        await request.save();
       }
-      return res.status(200).send('Profile deleted successfully');
-    } catch (error) {
-      console.error(error);
-      return res.status(500).send("Internal Server Error");
     }
-  }); */
+    console.log("collabrequests", collabrequests);
+
+    const deletedUser = await Vendor.findByIdAndDelete(vendorId);
+    if (!deletedUser) {
+      return res.status(401).send("Invalid email.");
+    }
+    console.log("all deleted successfully");
+    return res.status(200).send('Profile deleted successfully');
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Internal Server Error", error.message, error);
+  }
+});
+
+
 
  
   module.exports = router;

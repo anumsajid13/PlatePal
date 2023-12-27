@@ -16,7 +16,7 @@ const VendorProfile = () => {
     email: '',
     profilePicture: null,
   });
-
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   useEffect(() => {
     const fetchVendorDetails = async () => {
       try {
@@ -48,22 +48,53 @@ const VendorProfile = () => {
   const handleReset = async () => {
     navigate('/vendor/reset-password');
   }
-   
+  const handleDelete = () => {
+    setShowConfirmationModal(true);
+  };
+  const confirmDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:9000/vendor/deleteprofile`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        alert('Profile deleted successfully');
+        navigate('/'); 
+      } else {
+        throw new Error('Failed to delete profile');
+      }
+    } catch (error) {
+      alert('Error deleting vendor profile:', error.message);
+    } finally {
+  
+      setShowConfirmationModal(false);
+    }
+  };
+
+  const cancelDelete = () => {
+    setShowConfirmationModal(false);
+  };
   return (
     <>
       <NavigationBar />
       <div className="profilePageContainer">
-        <div className="profileHeader">
-          <Link to="/Vendor/Mainpage" className="backButton">
+     {/*    <div className="profileHeader">
+          <button to="/Vendor/Mainpage" className="backButton">
             <FaArrowLeft /> Back
-          </Link>
+          </button>
           
-          <h1>
-            {vendor.name}'s Profile
-            <FaEdit className="editIcon" onClick={HandleEdit} />
-          </h1>
+         
        
-        </div>
+        </div> */}
+        <h1>
+            {vendor.name}'s Profile
+            <button className="vendoreditButton" onClick={HandleEdit}>
+                <FaEdit /> Edit Information
+              </button>
+          </h1>
         <div className="profileContent">
           <div className="profilePictureContainer">
           {vendor.profilePicture && (
@@ -88,6 +119,14 @@ const VendorProfile = () => {
               <strong>Balance:</strong> {vendor.balance}
             </p>
             <button className="passwordReset" onClick={handleReset}>Reset Password</button>
+            <button onClick={handleDelete} className='deleteConfirm'>Delete Profile</button>
+          {showConfirmationModal && (
+          <div className="confirmation-modal">
+            <p>Warning: Deleting your profile will remove all your data. Are you sure?</p>
+            <button onClick={confirmDelete} className='deleteConfirm'> Delete</button>
+            <button onClick={cancelDelete} className='cancelButton'>Cancel</button>
+          </div>
+        )}
           </div>
          
         </div>

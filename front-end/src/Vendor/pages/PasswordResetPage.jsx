@@ -39,25 +39,28 @@ const PasswordReset=()=>{
           throw new Error('Failed to update password');
         }
   
-        // Optionally, you may want to clear the password fields or handle the success in a different way
+       
         setOldPassword('');
         setNewPassword('');
   
-        navigate('/vendor/profile');
+     
         alert('Password updated successfully');
+        navigate('/vendor/profile');
       } catch (error) {
-        alert('Error updating password:', error.message);
+        alert('Error updating password');
       }
     };
-  
+  const goBack = () => {
+    navigate('/vendor/profile');
+  };
     return (
       <>
         <NavigationBar />
         <div className="editProfileContainer">
           <div className="header">
-            <Link to="/vendor/profile" className="backButton">
+            <button onClick={goBack} className="backButton">
               <FaArrowLeft /> Back
-            </Link>
+            </button>
           </div>
           <h2>Edit Vendor Password</h2>
           <div className="formContainer">

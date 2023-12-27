@@ -14,8 +14,8 @@ const EditVendorProfile = () => {
     username: '',
     email: '',
   });
+ 
   const [profilePictureFile, setProfilePictureFile] = useState(null);
-   //function to handle profile picture change
    const handleProfilePictureChange = (event) => {
     const file = event.target.files[0];
     setProfilePictureFile(file);
@@ -81,14 +81,18 @@ const EditVendorProfile = () => {
     }
   };
 
+
+const goBack = () => {  
+  navigate('/vendor/profile');
+}
   return (
     <>
       <NavigationBar />
       <div className="editProfileContainer">
         <div className="header">
-          <Link to="/vendor/profile" className="backButton">
+          <button className="backButton" onClick={goBack}>
             <FaArrowLeft /> Back
-          </Link>
+          </button>
         </div>
         <h2>Edit Vendor Profile</h2>
         <div className="formContainer">
@@ -130,11 +134,8 @@ const EditVendorProfile = () => {
             className='file'
           />
          
-
-
-         
-
           <button onClick={handleUpdate}>Update Profile</button>
+       
         </div>
       </div>
     </>

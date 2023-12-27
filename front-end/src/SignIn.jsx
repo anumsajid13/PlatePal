@@ -52,7 +52,7 @@ const SignInPage =  () => {
         signInNutritionist();
                 break;
       default:
-        // Handle invalid user type
+       
     }
   };
 
@@ -135,7 +135,8 @@ const SignInPage =  () => {
   
       if (!response.ok) {
         data = await response.json();
-        alert('Vendor failed to login:', data.error);
+        alert(`Vendor failed to login:${data.error}`);
+    
         //setShowError(true);
         return;
       }
@@ -148,7 +149,7 @@ const SignInPage =  () => {
   
       navigate('/Vendor/Mainpage');
     } catch (error) {
-      alert('Error during vendor Sign In:', error.message);
+      alert(`Error during vendor Sign In${error.message}`);
      // setShowError(true);
      
     }

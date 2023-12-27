@@ -72,15 +72,17 @@ const EditIngredient = () => {
       console.error('Error updating ingredient:', error.message);
     }
   };
-
+const goBack = () => {
+    navigate(`/ingredients/${id}`);
+};
   return (
     <>
      <NavigationBar />
      <div className="editIngredientContainer">
      <div className="header">
-        <Link to={`/ingredients/${id}`} className="backButton">
+        <button onClick={goBack} className="backButton">
           <FaArrowLeft /> Back
-        </Link>
+        </button>
         </div>
       <h2>Edit Ingredient Information</h2>
       <div className="formContainer">

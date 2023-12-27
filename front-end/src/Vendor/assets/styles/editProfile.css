@@ -4,8 +4,9 @@
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
+    background-color:  rgb(221, 220, 220);
+  
   }
   
   .editProfileContainer.header {
@@ -16,8 +17,6 @@
   
   .editProfileContainer .backButton {
     text-decoration: none;
-    color: #333;
-    font-size: 18px;
     display: flex;
     align-items: center;
   }

@@ -164,7 +164,7 @@ router.get('/:collaborationRequestId', authenticateToken, async (req, res) => {
       return res.json({ message: 'Collaboration request accepted successfully', collaboration: vendorCollaboration });
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ message: 'Internal Server Error' });
+      return res.status(500).json({ message: 'Internal Server Error' },error.message);
     }
   });
   

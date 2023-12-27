@@ -1,117 +1,117 @@
 .mainContainer {
-    display: flex;
-    flex-wrap: wrap; 
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    padding-bottom: 20px;
-    background-color: #f0f0f0;
-    margin-bottom: 20px;
-   
-  }
-  .BigClass{
-    margin-left: 2%;
-    margin-right: 2%;
-    margin: 3%;
- /*    background-color: #E5ECE9; */
-    border-radius: 10px;
-  }
-
-  .IngredientsContainer{
-    display: flex;
-    flex-wrap: wrap; 
-    flex-direction: row;
-  }
-  .productSearch1 {
-
-    border-radius: 10px;
-    margin-top: 3%;
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-right: 20px;
-    background-color: #E5ECE9; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-    width:90%;
-    margin-left: 5%;
-  }
-  
-  .search-icon-1 {
-    margin-left: 10px;
-    cursor: pointer;
-    font-size: 1.5rem; 
-  }
-  
-  .category-card-1 {
-    display: flex;
-    gap: 3%;
-    margin-left: 30%; 
-    margin-top: 1.5%;
-  }
-  
- .searchProducts{
-    margin-left: 100px;
- }
-  .category-card-1 label {
-    margin: 5px 0;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 8px;
-    background-color: #b4e2d8; 
-    color: #333;
-    font-family: 'Arial', sans-serif;
-    font-size: 14px;
-    font-weight: bold;
-    
-  }
-  
-  .searchDropdown {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-right: 10px;
-    font-size: 14px;
-    margin-left: 2%;
-  }
- 
-  .add-ingredient-button  {
-    padding: 10px;
-    background-color: #4caf50;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    margin-left:86% ;
-/*     margin: 2% 2% 2% 84%; */
-    margin-bottom: 2%;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .add-ingredient-button button:hover {
-    background-color: #6345a0;
-  }
-
-
-  
-.pagination {
   display: flex;
+  flex-wrap: wrap; 
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  padding: 10px;
+  padding-bottom: 20px;
+  background-color: #f0f0f0;
+  margin-bottom: 20px;
+ 
+}
+.BigClass{
+  margin-left: 2%;
+  margin-right: 2%;
+  margin: 3%;
+/*    background-color: #E5ECE9; */
+  border-radius: 10px;
+}
+
+.IngredientsContainer{
+  display: flex;
+  flex-wrap: wrap; 
+  flex-direction: row;
+}
+.productSearch1 {
+
+  border-radius: 10px;
+  margin-top: 3%;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-right: 20px;
+  background-color: #E5ECE9; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  width:90%;
+  margin-left: 5%;
+}
+
+.search-icon-1 {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 1.5rem; 
+}
+
+.category-card-1 {
+  display: flex;
+  gap: 3%;
+  margin-left: 30%; 
+  margin-top: 1.5%;
+}
+
+.searchProducts{
+  margin-left: 100px;
+}
+.category-card-1 label {
+  margin: 5px 0;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: #b4e2d8; 
+  color: #333;
+  font-family: 'Arial', sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  
+}
+
+.searchDropdown {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-right: 10px;
+  font-size: 14px;
+  margin-left: 2%;
+}
+
+.add-ingredient-button  {
+  padding: 10px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-left:86% ;
+/*     margin: 2% 2% 2% 84%; */
+  margin-bottom: 2%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-ingredient-button button:hover {
+  background-color: #6345a0;
+}
+
+
+
+.pagination {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 20px;
 }
 
 .pagination button {
-  background-color: #4caf50;
-  color: #fff;
-  padding: 8px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 40px;
+background-color: #4caf50;
+color: #fff;
+padding: 8px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+margin: 40px;
 }
 
 .pagination span {
-  font-size: 14px;
+font-size: 14px;
 }
