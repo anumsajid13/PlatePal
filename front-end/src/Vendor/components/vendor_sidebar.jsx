@@ -23,8 +23,10 @@ const Sidebar = ({ isOpen, onClose }) => {
           <Link to="/Vendor/Mainpage">Products</Link>
         </li>
         <li>
-     
           <Link to="/vendor/inbox">Chat</Link>
+        </li>
+        <li>
+          <Link to="/vendor/orders">Orders</Link>
         </li>
       </ul>
     </div>

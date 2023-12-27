@@ -135,21 +135,22 @@ const SignInPage =  () => {
   
       if (!response.ok) {
         data = await response.json();
-        console.error('Vendor failed to login:', data.error);
-        alert('Vendor Sign In failed');
+        alert('Vendor failed to login:', data.error);
+        //setShowError(true);
         return;
       }
   
       data = await response.json();
       console.log('Vendor Sign In successful:', data.token);
       alert('Vendor Sign In successful');
-  console.log('Token:', data.token);
+      console.log('Token:', data.token);
       setToken(data.token);
   
       navigate('/Vendor/Mainpage');
     } catch (error) {
-      console.error('Error during vendor Sign In:', error.message);
-      alert('Could not sign in as vendor');
+      alert('Error during vendor Sign In:', error.message);
+     // setShowError(true);
+     
     }
   };
   

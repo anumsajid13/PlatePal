@@ -69,7 +69,7 @@ router.post('/sendmessage', authenticateToken, async (req, res) => {
       const vendorId = req.user.id; 
       const { chefId, message } = req.body;
   
-      let inboxEntry = await VendorChefInbox.findOne({ chef:chefId});
+      let inboxEntry = await VendorChefInbox.findOne({ vendor:vendorId,chef:chefId});
   
       if (!inboxEntry) {
         inboxEntry = new VendorChefInbox({ vendor: vendorId, chef: chefId, messages: [] });
@@ -84,10 +84,9 @@ router.post('/sendmessage', authenticateToken, async (req, res) => {
       await inboxEntry.save();
 
 
-    //create a notification for vendor
+   
     const chefNotification = new Chef_Notification({
-      vendor: vendorId,
-      chef: chefId,
+      user: chefId,
       type: `message`, 
       notification_text: `Vendor ${vendor.name} sent you a message.`,
       Time: new Date(),
@@ -104,26 +103,35 @@ router.post('/sendmessage', authenticateToken, async (req, res) => {
   
 // Endpoint to get messages from a specific chef in the inbox
 router.get('/retrievemessages/:chefId', authenticateToken, async (req, res) => {
-    try {
-      const vendorId = req.user.id;
-      const chefId = req.params.chefId;
-  
-      const inboxEntry = await VendorChefInbox.findOne({ vendor: vendorId, chef: chefId });
-  
-      if (!inboxEntry) {
-        return res.status(404).json({ message: 'No inbox entry found for the specified chef' });
-      }
-
-      const messages = inboxEntry.messages;
-  
-      res.json( messages);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
+  try {
+    const vendorId = req.user.id;
+    const chefId = req.params.chefId;
+console.log("chefId",chefId);
+    // Check if chefId is null, and handle it gracefully
+    if (chefId == null) {
+      res.status(400).json({ message: 'Chef ID is required' });
+      return;
     }
-  });
-  //endpoint to delete all messages from a certain chef
-  //endpoint to delete his messages to a certain chef
+
+    // Find the inbox entry for the specified vendor and chef
+    let inboxEntry = await VendorChefInbox.findOne({ vendor: vendorId, chef: chefId });
+
+    // If no inbox entry is found, create a new one with an empty messages array
+    if (!inboxEntry) {
+      inboxEntry = new VendorChefInbox({ vendor: vendorId, chef: chefId, messages: [] });
+      await inboxEntry.save();
+    }
+
+    // Retrieve the messages from the inbox entry
+    const messages = inboxEntry.messages || [];
+
+    res.json(messages);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
   
 module.exports = router;
  

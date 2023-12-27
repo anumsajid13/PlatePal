@@ -1,9 +1,10 @@
 import Indiviual from './Products';
 import '../assets/styles/mainpage.css';
+import '../assets/styles/search.css';
 import { React, useEffect, useState } from 'react';
 import useTokenStore from '../../tokenStore';
 import NavigationBar from '../components/NavigationBar';
-import { FaArrowLeft, FaArrowRight,FaPlusCircle ,FaSearch,FaSort} from 'react-icons/fa';
+import { FaPlusCircle ,FaSearch,FaSort} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -15,7 +16,6 @@ const MainPage = () => {
   const [sortOption, setSortOption] = useState('Time'); // Sorting option: Name, Type, Price, Quantity
   const [sortOrder, setSortOrder] = useState('asc'); // Sorting order: asc, desc
   const [showSortOptionDropdown, setShowSortOptionDropdown] = useState(false);
-  const [showSortOrderDropdown, setShowSortOrderDropdown] = useState(false);
   const [ingredients, setIngredients] = useState([]);
   const { token } = useTokenStore();
   const navigate = useNavigate();
@@ -98,54 +98,50 @@ const MainPage = () => {
 
       <div>
         <div className="BigClass">
-          <span>
-            <label htmlFor="filterType">Filter Type:</label>
-            <select
-              id="filterType"
-              name="filterType"
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value)}
-            >
-              <option value="">Select</option>
-              <option value="type">Type</option>
-              <option value="price">Price</option>
-              <option value="quantity">Quantity</option>
-            </select>
-            <input
-              type="text"
-              placeholder="Filter Value"
-              value={filterValue}
-              onChange={(e) => setFilterValue(e.target.value)}
-            />
-            <button className="filter-button" onClick={fetchIngredients}>
-              Filter <FaPlusCircle />
-            </button>
-          </span>
-          <button className="add-ingredient-button" onClick={handleAddNewIngredient}>
+        <span className="vendor-filter-container">
+      <label htmlFor="vendor-filterType">Filter:</label>
+      <select
+        id="vendor-filterType"
+        name="vendor-filterType"
+        value={filterType}
+        onChange={(e) => setFilterType(e.target.value)}
+      >
+        <option className="vendor-filter-options" value="">Select</option>
+        <option className="vendor-filter-options" value="type">Type</option>
+        <option className="vendor-filter-options" value="price">Price</option>
+        <option className="vendor-filter-options" value="quantity">Quantity</option>
+      </select>
+
+      {filterType && (
+        <input
+          type="text"
+          placeholder={`Enter ${filterType}`}
+          value={filterValue}
+          onChange={(e) => setFilterValue(e.target.value)}
+        />
+      )}
+     
+    </span>
+    <button className="add-ingredient-button" onClick={handleAddNewIngredient}>
             Add New Ingredient <FaPlusCircle />
           </button>
+        
           
-          <div className="sort-dropdown">
+          <div className="vendor-sort-dropdown">
             <button onClick={() => setShowSortOptionDropdown(!showSortOptionDropdown)}>
               Sort by {sortOption || 'Select'} <FaSort />
             </button>
             {showSortOptionDropdown && (
-              <div className="sort-options">
-              <div onClick={() => handleSortOptionChange('Time','asc')}>time(asc)</div>
-                <div onClick={() => handleSortOptionChange('Time','desc')}>time(desc)</div>
-                <div onClick={() => handleSortOptionChange('price','asc')}>Price(asc)</div>
-                <div onClick={() => handleSortOptionChange('price','desc')}>Price(desc)</div>
-                <div onClick={() => handleSortOptionChange('quantity','asc')}>Quantity(acs)</div>
-                <div onClick={() => handleSortOptionChange('quantity','desc')}>Quantity(desc)</div>
+              <div className="vendor-sort-options-div">
+              <div  className="vendor-sort-options"onClick={() => handleSortOptionChange('Time','asc')}>time(asc)</div>
+                <div  className="vendor-sort-options" onClick={() => handleSortOptionChange('Time','desc')}>time(desc)</div>
+                <div  className="vendor-sort-options" onClick={() => handleSortOptionChange('price','asc')}>Price(asc)</div>
+                <div  className="vendor-sort-options" onClick={() => handleSortOptionChange('price','desc')}>Price(desc)</div>
+                <div  className="vendor-sort-options" onClick={() => handleSortOptionChange('quantity','asc')}>Quantity(acs)</div>
+                <div  className="vendor-sort-options"onClick={() => handleSortOptionChange('quantity','desc')}>Quantity(desc)</div>
               </div>
             )}
           </div>
-
-        
-      
-      
-        
-
           <div className="IngredientsContainer">
             {ingredients.map((individual) => (
               <Indiviual key={individual._id} ingredients={individual} handleDelete={handleDelete} />

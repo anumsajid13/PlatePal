@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useTokenStore from '../../tokenStore';
-import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowLeft,FaSort } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
 import CollaborationRequestCard  from '../components/RequetsCard';
@@ -10,11 +10,16 @@ const CollaborationsRequestsList = () => {
   const [loading, setLoading] = useState(true);
   const { token } = useTokenStore();
   const navigate = useNavigate();
-  useEffect(() => {
+  const [filterType, setFilterType] = useState('');
+  const [filterValue, setFilterValue] = useState('');
+  const [sortOption, setSortOption] = useState('Time');
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [showSortOptionDropdown, setShowSortOptionDropdown] = useState(false);
+
     const fetchRequests = async () => {
       try {
         
-        const response = await fetch('http://localhost:9000/collaboration-request', {
+        const response = await fetch(`http://localhost:9000/collaboration-request?filterType=${filterType}&filterValue=${filterValue}&sortBy=${sortOption}&sortOrder=${sortOrder}`, {
             method: 'GET',
             headers: {
             'Authorization': `Bearer ${token}`,
@@ -33,17 +38,55 @@ const CollaborationsRequestsList = () => {
         setLoading(false);
       }
     };
-
+useEffect(() => {
     fetchRequests();
-  }, [token]);
+  }, [token, filterType, filterValue,  sortOption, sortOrder]);
 const handleClick = () => {
 
     navigate('/Vendor/Mainpage');
 };
+const handleSortOptionChange = (option,order) => {
+  setSortOption(option);
+  setSortOrder(order);
+  setShowSortOptionDropdown(false);
+  fetchRequests();
+};
+
   return (
     <>
     <NavigationBar />
-     
+    <div className="discover-container-1">
+                    <div className="search-card-11">
+                    <input className='searchRecepie' type="text" placeholder="Search..."  value={filterValue}
+              onChange={(e) => setFilterValue(e.target.value)} />
+                      <select  id="vendor-filterType"
+                          name="vendor-filterType"
+                          value={filterType}
+                          onChange={(e) => setFilterType(e.target.value)}className="search-dropdown-1">
+                        <option value="recipe" className='vendor-filter-options'>Search by Recipe Name</option>
+                        <option value="status" className='vendor-filter-options'>Search by Status</option>
+                        <option value="chef"className='vendor-filter-options' >Search by Chef</option>
+                    </select>
+                  
+                    
+                    </div>   
+            </div>
+
+        <div className="vendor-sort-dropdown">
+          <button onClick={() => setShowSortOptionDropdown(!showSortOptionDropdown)}>
+            Sort by {sortOption || 'Select'} <FaSort />
+          </button>
+          {showSortOptionDropdown && (
+            <div className="vendor-sort-options-div">
+              <div className="vendor-sort-options" onClick={() => handleSortOptionChange('Time', 'asc')}>
+                time(asc)
+              </div>
+              <div className="vendor-sort-options" onClick={() => handleSortOptionChange('Time', 'desc')}>
+                time(desc)
+              </div>
+            </div>
+          )}
+        </div>
      <div className="Requestheader">
         <button onClick={handleClick} className="backButton">
           <FaArrowLeft /> Back

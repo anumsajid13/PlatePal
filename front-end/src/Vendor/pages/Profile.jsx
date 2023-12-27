@@ -15,7 +15,6 @@ const VendorProfile = () => {
     username: '',
     email: '',
     profilePicture: null,
-    certificationImage: null,
   });
 
   useEffect(() => {
@@ -35,6 +34,7 @@ const VendorProfile = () => {
 
         const vendorData = await response.json();
         setVendor(vendorData);
+        console.log(vendorData.profilePicture.data);
       } catch (error) {
         console.error('Error fetching vendor details:', error.message);
       }
@@ -45,6 +45,10 @@ const VendorProfile = () => {
   const HandleEdit = () => {
     navigate('/Vendor/editProfile');
       };
+  const handleReset = async () => {
+    navigate('/vendor/reset-password');
+  }
+   
   return (
     <>
       <NavigationBar />
@@ -63,7 +67,8 @@ const VendorProfile = () => {
         <div className="profileContent">
           <div className="profilePictureContainer">
           {vendor.profilePicture && (
-            <img src={`data:image/jpeg;base64,${vendor.profilePicture.data}`}  className="profilePicture"  /> 
+            <img src={vendor.profilePicture ? `data:image/jpeg;base64,${vendor.profilePicture}`: require('../assets/images/no-profile-picture-15257.svg').default}  className="profilePicture"  /> 
+          
           )}
           {!vendor.profilePicture && (
             <img src={defaultProfilePicture} className="profilePicture" /> 
@@ -79,7 +84,12 @@ const VendorProfile = () => {
             <p>
               <strong>Email:</strong> {vendor.email}
             </p>
+            <p>
+              <strong>Balance:</strong> {vendor.balance}
+            </p>
+            <button className="passwordReset" onClick={handleReset}>Reset Password</button>
           </div>
+         
         </div>
       </div>
     </>

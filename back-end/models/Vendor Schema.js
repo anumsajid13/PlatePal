@@ -61,7 +61,12 @@ balance:
 {
   type:Number,
   default:0.0,
-}
+},
+allowSignup: {
+  type: Boolean,
+  default: false,
+},
+
 });
 
 const Vendor =   mongoose.model('Vendor', vendorSchema);
