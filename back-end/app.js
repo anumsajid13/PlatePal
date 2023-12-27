@@ -8,6 +8,7 @@ const User_Notification = require('./models/User_Notification Schema');//recipie
 const Admin_Notification = require('./models/Admin_Notification Schema');
 const Chef_Notification = require('./models/Chef_Notification Schema');
 const Nutritionist_Notification = require('./models/Nutritionist_Notification Schema');
+const User_Nutritionist_Inbox = require('./models/User-Nutritionist_Inbox Schema');
 const Vendor_Notification = require('./models/Vendor_Notification Schema');
 const Nutritionist = require('./models/Nutritionist Schema');
 const NutritionistBlockReport = require('./models/NutritionistBlockReport Schema');
@@ -18,7 +19,6 @@ const Review = require('./models/Recipe_review');
 const Recipe = require('./models/Recipe Schema');
 const RecipeSeeker = require('./models/RecipeSeekerSchema');
 const User_Chef_Inbox = require('./models/User-Chef_Inbox Schema');
-const User_Nutritionist_Inbox = require('./models/User-Nutritionist_Inbox Schema');
 const Vendor = require('./models/Vendor Schema');
 const VendorBlockReport = require('./models/VendorBlockReport Schema');
 const VendorCollaboration = require('./models/VendorCollaboration Schema');
@@ -67,6 +67,7 @@ const Edit_user_profile = require('./RecipeSeeker/routes/EditProfile')
 const follow_nutritionist = require('./RecipeSeeker/routes/Follow_Nutritionists')
 const Display_Notifications = require('./RecipeSeeker/routes/Display_notifications')
 const Send_notification_to_nutritionist = require('./RecipeSeeker/routes/Send_noti_to_Nutri')
+const Send_msg_to_nutritionist = require('./RecipeSeeker/routes/Send_msgToNutritionist')
 const Display_recipeSeekers = require('./RecipeSeeker/routes/Display_recipeseeker')
 const AddOrder = require('./RecipeSeeker/routes/AddToCart')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
@@ -136,8 +137,8 @@ app.use('/recepieSeeker', Display_Notifications);
 app.use('/recepieSeeker', Display_recipeSeekers);
 app.use('/recepieSeeker', AddOrder );
 app.use('/recepieSeeker', follow_nutritionist);
-
-
+app.use('/recepieSeeker', Send_msg_to_nutritionist);
+Send_msg_to_nutritionist
 // checkout api
 app.post("/api/create-checkout-session",async(req,res)=>{
     const { products } = req.body;
@@ -184,16 +185,16 @@ app.post("/api/create-checkout-session",async(req,res)=>{
           var index=0;
           for (const ingredient of vendorCollaboration.ingredients) {
             // Find the corresponding ingredient in the Recipe
-           /* const recipeIngredient = recipeIngredients.find(item =>
+            const recipeIngredient = recipeIngredients.find(item =>
                 {
                     item._id.equals(ingredient._id);
                     console.log(ingredient._id," ",item._id);
-                });*/
+                });
                 
-         //   if (recipeIngredient) {
-           //    Calculate the quantity to decrement
-       //       console.log("ingredients found: ",recipeIngredient)
-         //     console.log("Ingredients",vendorCollaboration.recipe.title ," requred in recipe: ",recipeIngredient.quantity)
+            if (recipeIngredient) {
+            //   Calculate the quantity to decrement
+              console.log("ingredients found: ",recipeIngredient)
+             console.log("Ingredients",vendorCollaboration.recipe.title ," requred in recipe: ",recipeIngredient.quantity)
              
               const quantityToDecrement = order.items[0].quantity * recipeIngredient.quantity;
         
@@ -205,7 +206,7 @@ app.post("/api/create-checkout-session",async(req,res)=>{
                 console.log(dbIngredient, " left in amount: ",dbIngredient.quantity )
                 await dbIngredient.save();
               }
-        //    }
+           }
           }
         }
       }
