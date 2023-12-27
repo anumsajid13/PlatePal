@@ -191,6 +191,7 @@ app.post("/api/create-checkout-session",async(req,res)=>{
         // Map across the array of ingredients in vendor collaboration
         if (vendorCollaboration && vendorCollaboration.recipe) {
           const recipeIngredients = vendorCollaboration.recipe.ingredients;
+          console.log("vendor id: ",vendorCollaboration.vendor._id)
           console.log("ingredients inside vendor collaboration inside recipe: ",recipeIngredients)
           var index=0;
           for (const ingredient of vendorCollaboration.recipe.ingredients) {
@@ -210,7 +211,7 @@ app.post("/api/create-checkout-session",async(req,res)=>{
               console.log("quantityToDecrement",quantityToDecrement);
               // Decrement the quantity in the Ingredient schema
               console.log("gonna find ing id: ",ingredient._id)
-              const dbIngredient = await Ingredient.findOne({ name: ingredient.name });
+              const dbIngredient = await Ingredient.findOne({ name: ingredient.name , vendor:vendorCollaboration.vendor._id});
               if (dbIngredient) {
                 console.log("quantity in db before: ",dbIngredient.quantity)
                 dbIngredient.quantity -= quantityToDecrement;
