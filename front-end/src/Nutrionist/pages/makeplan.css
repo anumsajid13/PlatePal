@@ -123,3 +123,16 @@
     opacity: 1;
   }
 }
+/* Add these styles to your existing CSS file or create a new one */
+
+.show-more-link {
+  display: block;
+  margin-top: 8px; /* Adjust the margin-top as needed */
+  font-weight: bold;
+  color: #007bff; /* Change the color to your preference */
+  cursor: pointer;
+}
+
+.show-more-link:hover {
+  text-decoration: underline;
+}

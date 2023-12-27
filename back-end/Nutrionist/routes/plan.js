@@ -205,7 +205,7 @@ router.get('/unsent-plans/:nutritionistId', async (req, res) => {
     const nutritionistId = req.params.nutritionistId;
 
     // Get only unsent meal plans created by the specific nutritionist
-    const unsentMealPlans = await MealPlan.find({ nutritionist: nutritionistId, sent: false })
+    const unsentMealPlans = await MealPlan.find({ nutritionist: nutritionistId, seen: false })
       .populate({
         path: 'user',
         model: 'RecipeSeeker',
