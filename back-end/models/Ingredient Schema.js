@@ -16,7 +16,11 @@ const ingredientSchema = new mongoose.Schema({
   type: {
     type: String,
   },
-   
+  productImage: {    
+    data: Buffer,
+    contentType: String
+
+    },
 
   quantity: {
     type: Number,

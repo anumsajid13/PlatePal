@@ -61,9 +61,10 @@ router.get('/All', authenticateToken, async (req, res) => {
     // Fetch ingredients based on the query, sort, and pagination
     const ingredients = await Ingredient.find(query)
       .sort(sortOptions)
-
-
-    return res.json(ingredients);
+      const unit8Array = new Uint8Array(ingredients.productImage.data);
+      const base64string = Buffer.from(unit8Array).toString('base64');
+      const ingredientDataWithBase64Image = { ...ingredients._doc,ptoductImage: base64string };
+    return res.json(ingredientDataWithBase64Image);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
