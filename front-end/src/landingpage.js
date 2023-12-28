@@ -47,6 +47,13 @@ const LandingPage = () => {
       contactSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const handlediscover = () =>{
+    const recipeSection = document.getElementById('lala');
+    if (recipeSection) {
+      recipeSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
  
   return (
     <div className='The-most-outer-part'>
@@ -119,7 +126,7 @@ const LandingPage = () => {
           <div className="additional-text">
             <p>Explore our delicious and nutritious food options made with the freshest ingredients.</p>
           </div>
-          <button className="discover-menu-button" style={{marginLeft:"3%"}}>Discover Menu</button>
+          <button onClick={() => handlediscover()} className="discover-menu-button" style={{marginLeft:"3%"}}>Discover Menu</button>
         </div>
 
         {/* You can replace the placeholder with the actual image source */}
@@ -156,7 +163,7 @@ const LandingPage = () => {
         </div>
 
       {/* Food information divs */}
-      <div className="LALALALA">
+      <div className="LALALALA" id='lala'>
       <div className="recipe-list" style={{marginLeft:"6%", gap:"2%"}}>
           {recipes.map((recipe) => (
             <div key={recipe._id}>

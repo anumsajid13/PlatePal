@@ -564,8 +564,8 @@ background-color: #E4DEFF
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: white;
-  padding: 20px;
+  background-color: #faefa6;
+  padding: 10px;
   font-family: Arial, sans-serif;
 }
 
@@ -573,6 +573,7 @@ background-color: #E4DEFF
 {
   flex: 1;
   text-align: center;
+
 }
 
 .contact-info h3 {
