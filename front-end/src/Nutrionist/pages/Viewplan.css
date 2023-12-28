@@ -2,13 +2,13 @@
 
 .meal-plans-page {
     font-family: Chonburi ;
-    background-color: #f5f5f5;
+    background-color: #fff;
     padding: 20px;
     text-align: center;
   }
   
   .meal-plan-card {
-    background-color: #fff;
+    background-color:rgb(255,232,83);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 20px;
@@ -27,7 +27,7 @@
   }
   
   .meal-plan-card p {
-    color: #777;
+    color: #373636;
     margin: 10px 0;
   }
   

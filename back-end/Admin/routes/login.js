@@ -16,7 +16,8 @@ router.post('/login', async (req, res) => {
     if (username === 'admin' && password === 'admin123') {
       try {
         // Find the admin by username
-        const admin = await Admin.findOne({ username });
+        const admin = await Admin.find({ username });
+        console.log(admin);
   
         if (!admin) {
           return res.status(404).json({ error: 'Admin not found' });

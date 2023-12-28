@@ -63,6 +63,12 @@ const AllUsers = () => {
           <div className="chef-card-container">
             {store.registeredChefs.map((chef) => (
               <div key={chef._id} className="chef-card">
+                 <div className="round-image">
+              <img
+                src={`data:${chef.profilePicture.contentType};base64,${chef.profilePicture.data}`}
+                alt={chef.username}
+              />
+              </div>
                 <p className="chef-details">Username: {chef.username}</p>
                 <p className="chef-details">Email: {chef.email}</p>
                 {/* Add other details specific to registered chefs */}
@@ -79,6 +85,12 @@ const AllUsers = () => {
           <div className="chef-card-container">
             {store.registeredVendors.map((chef) => (
               <div key={chef._id} className="chef-card">
+                 <div className="round-image">
+              <img
+                src={`data:${chef.profilePicture.contentType};base64,${chef.profilePicture.data}`}
+                alt={chef.username}
+              />
+              </div>
                 <p className="chef-details">Username: {chef.username}</p>
                 <p className="chef-details">Email: {chef.email}</p>
                 {/* Add other details specific to registered chefs */}
@@ -95,6 +107,12 @@ const AllUsers = () => {
           <div className="chef-card-container">
             {store.registeredNutritionists.map((chef) => (
               <div key={chef._id} className="chef-card">
+                 <div className="round-image">
+              <img
+                src={`data:${chef.profilePicture.contentType};base64,${chef.profilePicture.data}`}
+                alt={chef.username}
+              />
+              </div>
                 <p className="chef-details">Username: {chef.username}</p>
                 <p className="chef-details">Email: {chef.email}</p>
                 {/* Add other details specific to registered chefs */}

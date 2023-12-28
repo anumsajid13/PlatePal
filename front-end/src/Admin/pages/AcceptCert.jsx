@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import useTokenStore from '../../tokenStore';
 import './Acceptcert.css'; // Import your CSS file
 import AdminNav from '../components/AdminNav';
+import PopupMessage from './PopupMessage';
 
 const ViewCertifications = () => {
   const [nutritionists, setNutritionists] = useState([]);
   const [chefs, setChefs] = useState([]);
   const [vendors, setVendors] = useState([]);
+  const [popupMessage, setPopupMessage] = useState(null);
 
   const [message, setMessage] = useState('');
   const token = useTokenStore((state) => state.token);
@@ -92,14 +94,18 @@ const ViewCertifications = () => {
       }
 
       const data = await response.json();
-      setMessage(data.message);
+     // setMessage(data.message);
+     setPopupMessage(data.message);
+
 
       // You may want to refresh the certifications after accepting
       // Call fetchNutritionists() or any other appropriate function here
 
     } catch (error) {
       console.error(error);
-      setMessage('Error accepting certification');
+      setPopupMessage('Error accepting certification');
+
+     // setMessage('Error accepting certification');
     }
   };
 
@@ -120,7 +126,8 @@ const ViewCertifications = () => {
       }
 
       const data = await response.json();
-      setMessage(data.message);
+    //  setMessage(data.message);
+    setPopupMessage(data.message);
 
       // You may want to refresh the certifications after rejecting
       // Call fetchNutritionists() or any other appropriate function here
@@ -147,7 +154,8 @@ const ViewCertifications = () => {
       }
 
       const data = await response.json();
-      setMessage(data.message);
+    //  setMessage(data.message);
+      setPopupMessage(data.message);
 
       // You may want to refresh the certifications after accepting
       // Call fetchNutritionists() or any other appropriate function here
@@ -175,7 +183,8 @@ const ViewCertifications = () => {
       }
 
       const data = await response.json();
-      setMessage(data.message);
+    //  setMessage(data.message);
+    setPopupMessage(data.message);
 
       // You may want to refresh the certifications after rejecting
       // Call fetchNutritionists() or any other appropriate function here
@@ -204,7 +213,9 @@ const ViewCertifications = () => {
 
       const data = await response.json();
       console.log("message", data)
-      setMessage(data.message);
+     // setMessage(data.message);
+     setPopupMessage(data.message);
+
 
       // You may want to refresh the certifications after accepting
       // Call fetchNutritionists() or any other appropriate function here
@@ -232,7 +243,8 @@ const ViewCertifications = () => {
       }
 
       const data = await response.json();
-      setMessage(data.message);
+      //setMessage(data.message);
+      setPopupMessage(data.message);
 
       // You may want to refresh the certifications after rejecting
       // Call fetchNutritionists() or any other appropriate function here

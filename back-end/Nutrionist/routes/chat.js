@@ -44,7 +44,7 @@ router.post('/sendMessageToUserNutritionist/:userId', authenticateToken, async (
     // Create a notification for the Recipe Seeker
     const userNotification = new UserNotification({
       user: userId,
-      type: `message`, 
+      type: `Message from Nutritionist`, 
       notification_text: `Nutritionist ${nutritionistName} sent you a message.`,
       Time: new Date(),
     });

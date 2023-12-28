@@ -25,16 +25,15 @@ body {
   .block-report-option {
     text-decoration: none;
     color:#333;
-    background-color: #e9d788;
+    background-color: rgb(255,182,47);
     padding: 20px;
     border-radius: 8px;
     transition: background-color 0.3s, transform 0.3s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
+    box-shadow: 0 0 10px #343541;
   }
   
   .block-report-option:hover {
-    background-color: #bca4cb;
+    background-color: rgb(239,245,242);
     transform: translateY(-5px);
   }
   

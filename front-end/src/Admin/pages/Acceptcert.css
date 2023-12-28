@@ -1,21 +1,27 @@
 /* Acceptcert.css */
 
+/* Acceptcert.css */
+
 .certifications-container {
   display: flex;
-  flex-direction: row;
-  align-items: center; /* Center horizontally */
-  justify-content: center; /* Center vertically */
+  flex-wrap: wrap; /* Allow flex items to wrap to the next line */
+  justify-content: center; /* Center the items horizontally */
+  gap: 20px; /* Add some gap between certification cards */
 }
 
 .certification-card {
   border: 1px solid #ccc;
   padding: 16px;
-  margin: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   transition: box-shadow 0.3s ease;
-  max-width: 80%; /* Adjust the width as needed */
+  flex: 0 1 calc(33.33% - 32px); /* Set the width to 33.33% and subtract the margin */
+  max-width: 300px; /* Adjust the max-width as needed */
+  margin: 16px;
+  box-sizing: border-box;
+  background-color: rgb(255,232,83);
 }
+
 
   h2 {
     margin-bottom: 8px;
@@ -43,6 +49,7 @@
     padding: 8px;
     margin-top: 8px;
     cursor: pointer;
+    background-color: rgb(255,182,47);
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 

@@ -4,7 +4,7 @@
   margin: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  background-color: #bca4cb;
+  background-color: rgb(255,232,83);
   text-align: center;
   transition: box-shadow 0.3s;
 }
@@ -50,7 +50,7 @@
 .chef-card:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   margin: 8px; /* Adjust the margin on hover */
-  background-color: #e9d788; /* Background color on hover */
+  background-color: rgb(255,182,47); /* Background color on hover */
 }
 
 .chef-details {
@@ -60,4 +60,17 @@
 .chef-picture {
   max-width: 100%;
   max-height: 100px;
+}
+/* ChefList.css */
+.round-image {
+  border-radius: 50%;
+  overflow: hidden;
+}
+.round-image img {
+  border-radius: 50%;
+  overflow: hidden;
+  max-width: 70px; /* Adjust the maximum width as needed */
+  max-height: 70px; /* Adjust the maximum height as needed */
+  width: auto;
+  height: auto;
 }

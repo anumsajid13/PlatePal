@@ -3,14 +3,16 @@
 .chef-list-container {
   max-width: 800px;
   margin: 0 auto;
+  
 }
 
 .chef-item {
-  border: 2px solid #e9d788;
+  border: 2px solid  #ccc;
   padding: 15px;
   margin-bottom: 15px;
   transition: transform 0.2s, border-color 0.2s;
-  background-color: #bca4cb;
+  background-color: rgb(255,232,83);
+  text-align: center;
 }
 
 .chef-item:hover {
@@ -27,19 +29,31 @@
   padding: 8px 15px;
   font-size: 14px;
   font-weight: bold;
-  text-align: center;
   text-decoration: none;
   cursor: pointer;
-  border: 2px solid#e9d788;
+  border: 2px solid  #ccc;
   color: rgb(46, 45, 45);
-  background-color: #e9d788;
+  background-color: rgb(255,182,47);
   transition: background-color 0.2s, border-color 0.2s, transform 0.2s;
-  margin-left:45%;
 }
 
 .delete-button:hover {
   background-color: #c0392b;
   border-color: #c0392b;
   transform: translateY(-3px);
+}
+
+/* ChefList.css */
+.round-image {
+  border-radius: 50%;
+  overflow: hidden;
+}
+.round-image img {
+  border-radius: 50%;
+  overflow: hidden;
+  max-width: 70px; /* Adjust the maximum width as needed */
+  max-height: 70px; /* Adjust the maximum height as needed */
+  width: auto;
+  height: auto;
 }
 

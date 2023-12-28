@@ -19,14 +19,14 @@ h1 {
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px  rgb(255,182,47);
   padding: 15px; /* Reduced padding */
   margin-bottom: 20px;
   transition: box-shadow 0.3s, transform 0.3s;
 }
 
 .block-report:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px  rgb(255,182,47);
   transform: translateY(-2px);
 }
 
@@ -71,14 +71,13 @@ h1 {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-left: 44%;
   margin-top: 20px;
   font-family: Chonburi;
 
 }
 
 .block-button:hover {
-  background-color: #bca4cb;
+  background-color: rgb(239,245,242);
 }
 
 .status-text {

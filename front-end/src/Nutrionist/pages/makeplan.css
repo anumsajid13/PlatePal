@@ -13,17 +13,16 @@
 
 .search-card14 {
   border-radius: 10px;
-  margin-top: 3%;
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-right: 20px;
-  background-color: #d5cfe1;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 80%; /* Adjust the width of the search bar */
-  max-width: 600px; /* Limit the maximum width of the search bar */
-  gap: 20px; /* Reduce the gap between elements */
+    margin-top: 3%;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-right: 20px;
+    background-color: rgb(228, 207, 117); 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    width:90%;
+    margin-left: 5%;
 }
 
 .search-recipe14 {
@@ -51,7 +50,7 @@
   padding: 10px; /* Reduce padding */
   border: 1px solid #ccc;
   border-radius: 10px;
-  background-color: #ffffff;
+  background-color: rgb(255,232,83);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px; /* Add margin to create space between rows */
 }

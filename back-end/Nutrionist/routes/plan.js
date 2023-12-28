@@ -137,7 +137,7 @@ router.get('/unseen-notifications',authenticateToken, async (req, res) => {
   }
 });
 
-// to change bool to seen 
+// to change bool to seen matlab request sent
 router.post('/n-createplan/:notificationId', async (req, res) => {
   const { notificationId } = req.params;
 
@@ -155,7 +155,10 @@ router.post('/n-createplan/:notificationId', async (req, res) => {
 // Endpoint to send a notification
 router.post('/send-notification', async (req, res) => {
   try {
-    const { userId, type, notification_text } = req.body;
+    const { userId,  notification_text } = req.body;
+
+    const type = 'meal plan';
+
 
     // Create a new notification
     const newNotification = new User_Notification({
