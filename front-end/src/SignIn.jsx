@@ -178,7 +178,7 @@ const SignInPage =  () => {
 
             console.log('Token:', data.token);
             setToken(data.token);
-            alert('Chef log in successful');
+            //alert('Chef log in successful');
             navigate('/Chef/Mainpage');
       }
       catch(error){
@@ -287,8 +287,8 @@ const SignInPage =  () => {
       </div>
 
       {showError && (
-                <div className="modal-overlay">
-                    <div className="modal">
+                <div className="model-modal-overlay">
+                    <div className="model-modal">
                         <h2>Message</h2>
                         <p>{errorMessage}</p>
                         <button onClick={handleCloseError}>Close</button>

@@ -109,7 +109,7 @@
 
   /* this is the css for the popup*/
 
-  .modal-overlay {
+  .model-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -121,30 +121,31 @@
     align-items: center;
   }
   
-  .modal {
+  .model-modal {
     background-color: #fff;
-    padding: 20px;
+    padding: 60px;
+    width: 20%;
     border-radius: 8px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     text-align: center;
   }
   
-  .modal h2 {
+  .model-modal h2 {
     font-size: 24px;
     margin-bottom: 10px;
   }
   
  
-  .modal p {
+  .model-modal p {
     font-size: 16px;
     margin-bottom: 20px;
     
   }
   
  
-  .modal button {
+  .model-modal button {
     padding: 10px 20px;
-    background-color: #B95F89;
+    background-color: #ffb32f;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -152,8 +153,8 @@
     margin-right: 20px;
   }
   
-  .modal button:hover {
-    background-color: #944c6f;
+  .model-modal button:hover {
+    background-color: #e79200;
   }
 
   .user-type select {
@@ -174,6 +175,6 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     background: url('https://img.icons8.com/sf-ultralight/25/down-squared.png') no-repeat scroll right center transparent;
-    padding-left: 35px; /* Adjust the padding based on your arrow icon's width */
+    padding-left: 35px; 
     background-color: white;
   }

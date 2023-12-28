@@ -451,7 +451,7 @@ const CreateRecipe = () => {
                     <div className="success-popup">
                     <p>Recipe Created Successfully!</p>
                     <button className="popup-button" onClick={handlePopupClose}>
-                        Directed to Vendors Page to Send Collab Request
+                       close
                     </button>
                     </div>
                 )}
