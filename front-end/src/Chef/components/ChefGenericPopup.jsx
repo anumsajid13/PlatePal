@@ -3,12 +3,14 @@ import './chefGenericPopup.css';
 
 const ChefGenericPopup = ({ message, onClose }) => {
   return (
-    <div className="chef-g-popup">
-      <div className="chef-g-popup-content">
+    <div className="chef-g-popup-overlay">
+      <div className="chef-g-popup">
         <span className="chef-g-close-btn" onClick={onClose}>
           &times;
         </span>
-        <p>{message}</p>
+        <div className="chef-g-popup-content">
+          <p>{message}</p>
+        </div>
       </div>
     </div>
   );

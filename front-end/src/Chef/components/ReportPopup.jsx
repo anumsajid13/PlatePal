@@ -1,11 +1,14 @@
 import {React, useState} from 'react';
 import useTokenStore from '../../tokenStore';
 import './reportPopup.css';
+import ChefGenericPopup from '../components/ChefGenericPopup';
 
 const ReportPopUp = ({ vendorId, onClose  }) => {
 
     const [reason, setReason] = useState('');
     const [proof, setProof] = useState(null);
+    const [responseMessage, setResponseMessage] = useState('');
+    const [showPopup, setShowPopup] = useState(false);
 
     console.log(vendorId)
 
@@ -36,14 +39,23 @@ const ReportPopUp = ({ vendorId, onClose  }) => {
                 throw new Error('Error creating vendor report');
             }
     
-            console.log(response)
+            
+            const responseData = await response.json();
+            console.log(responseData)
+            setResponseMessage("Block Report made successfully !");
+            alert('Block Report made successfully !')
+            setShowPopup(true);
             onClose();
         } catch (error) {
             console.error('Error creating vendor report:', error);
             
         }
     };
-    
+    const handleClosePopup = () => {
+        setShowPopup(false);
+        setResponseMessage('');
+    };
+
     return(
 
         <>
@@ -74,6 +86,8 @@ const ReportPopUp = ({ vendorId, onClose  }) => {
             </div>
             </div>
             </div>
+
+            {showPopup && <ChefGenericPopup message={responseMessage} onClose={handleClosePopup} />}
         </>
 
     );
