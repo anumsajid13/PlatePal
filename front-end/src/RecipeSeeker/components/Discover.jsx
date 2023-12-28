@@ -13,7 +13,13 @@ const Discover = () => {
   const token = useTokenStore.getState().token;
   const [searchType, setSearchType] = useState("searchRecipesByName");
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(12); 
 
+
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => Math.max(parseInt(prevPage) - 1, 1));
+  };
   const handleSearchTypeChange = (event) => {
     setSearchType(event.target.value);
   };
@@ -44,7 +50,9 @@ const Discover = () => {
 
   const fetchRecipes = async () => {
     try {
-      const url = 'http://localhost:9000/recepieSeeker/allRecipes?page=$1&pageSize=$3';
+
+      console.log("currentPage",currentPage) 
+      const url = `http://localhost:9000/recepieSeeker/allRecipes?page=${currentPage}&pageSize=${pageSize}`;
 
       const response = await fetch(url, {
         headers: {
@@ -79,6 +87,12 @@ const Discover = () => {
     }
   };
 
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => parseInt(prevPage) + 1);
+   
+  };
+
+ 
   const fetchCategories = async () => {
     try {
       const response = await fetch('http://localhost:9000/recepieSeeker/uniqueCategories');
@@ -165,7 +179,7 @@ const Discover = () => {
   useEffect(() => {
     fetchRecipes();
     fetchCategories();
-  }, [token]);
+  }, [token, currentPage, pageSize]);
 
   return (
     <>
@@ -213,6 +227,14 @@ const Discover = () => {
           ))}
         </div>
       </div>
+
+      <div className="pagination-buttons">
+          <button className="pagination-buttons-button" onClick={handlePrevPage} disabled={currentPage === 1}>
+            Previous Page
+          </button>
+          <span className="pagination-buttons-span">Page {currentPage}</span>
+          <button className="pagination-buttons-button" onClick={handleNextPage}>Next Page</button>
+        </div>
     </>
   );
 };

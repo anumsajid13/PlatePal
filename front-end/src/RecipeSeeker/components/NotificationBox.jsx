@@ -5,7 +5,7 @@ import './NotificationBox.css';
 
 const NotificationBox = ({ notifications, onClose }) => {
   return (
-    <div className="notification-box">
+    <div className="notification-box-user">
       <div className="notification-header">
         <span>Notifications</span>
         

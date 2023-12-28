@@ -5,9 +5,11 @@ const Recipe = require('../../models/Recipe Schema');
 
 router.get('/allRecipes', async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1; 
-    const pageSize = parseInt(req.query.pageSize) || 10; 
+    const page = parseInt(req.query.currentPage) || 1; 
+    const pageSize = parseInt(req.query.pageSize) ||12; 
     console.log("page size: "+ pageSize)
+    console.log("currentPage",page)
+
     const skip = (page - 1) * pageSize;
 
     const recipes = await Recipe.find({})

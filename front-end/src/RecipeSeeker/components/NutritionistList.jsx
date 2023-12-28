@@ -82,7 +82,7 @@ const NutritionistList = ({ onSelectNutritionist }) => {
         />
       </>
       )}
-      <button style={{marginTop:"35px"}} onClick={handleSendNotification}>Send Notification</button>
+      <button className="i-dont-know" style={{marginTop:"35px"}} onClick={handleSendNotification}>Send Notification</button>
     </div>
   );
 };

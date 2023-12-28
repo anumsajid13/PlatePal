@@ -65,13 +65,11 @@ const Navbar = ({ activeLink }) => {
       <div className="nav-links-1">
         <Link
           to="http://localhost:3000/recipe-seeker/Discover"
-          className={activeLink === 'Discover' ? 'active-link-1' : ''}
+          className={activeLink === 'Discover' ? 'active-link-12' : ''}
         >
           Discover
         </Link>
-        <Link to="/my-feed" className={activeLink === 'My Feed' ? 'active-link-1' : ''}>
-          My Feed
-        </Link>
+       
 
         <span style={{cursor:"pointer"}} className="icon material-icons google-icon" onClick={handleCartClick}>shopping_cart</span>
         {cartItemsCount > 0 && <div className="cart-counter">{cartItemsCount}</div>}

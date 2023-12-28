@@ -3,7 +3,7 @@ const router = express.Router();
 const authenticateToken = require('../../TokenAuthentication/token_authentication'); 
 const User_Nutritionist_Inbox = require('../../models/User-Nutritionist_Inbox Schema'); 
 const RecipeSeeker = require('../../models/RecipeSeekerSchema');
-const NutritionistNotification = require('../../models/User_Notification Schema'); 
+const NutritionistNotification = require('../../models/Nutritionist_Notification Schema'); 
 const Nutritionist = require('../../models/Nutritionist Schema');
 
 // Route for a RecipeSeeker to send a message to a Nutritionist

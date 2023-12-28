@@ -1,14 +1,16 @@
 /* NotificationBox.css */
-.notification-box {
+.notification-box-user {
     position: fixed;
     top: 49px;
     right: 10px;
     width: 300px;
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: #ffe853;
+    border: 1px solid #fa9a2b;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
   }
   
   .notification-header {
@@ -16,7 +18,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color: #f5f5f5;
+    background-color: #ffe853;
     border-bottom: 1px solid #ddd;
   }
   
@@ -27,7 +29,7 @@
   .notification-item {
     margin-bottom: 10px;
     padding: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #fa9a2b;
     border-radius: 3px;
   }
   
@@ -54,8 +56,8 @@
     height: 0;
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
-    border-bottom: 12px solid #fff; /* You can adjust the color */
-    z-index: 999; /* Adjust the z-index as needed */
+    border-bottom: 12px solid #ffe853;
+    z-index: 999; 
     animation: arrowFadeIn 0.3s ease-in-out forwards;
   }
   

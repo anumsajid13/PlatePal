@@ -280,7 +280,7 @@ const SignInPage =  () => {
             
           </div>
           <div className="image-side1">
-          
+              
           </div>
           
         </div>
