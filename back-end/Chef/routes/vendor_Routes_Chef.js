@@ -16,34 +16,80 @@ router.get('/vendors', async (req, res) => {
 //get the ingredients for every vendor
 router.get('/vendors-with-ingredients', async (req, res) => {
   try {
-    const vendors = await Vendor.find({}, 'name profilePicture'); // Get all vendors with limited fields
+    const vendors = await Vendor.find({}, 'name email profilePicture');
 
     const vendorsWithIngredients = [];
 
     for (const vendor of vendors) {
-      const ingredients = await Ingredient.find({ vendor: vendor._id }); // Find ingredients for each vendor
-
-      // Populate the vendor's image field if available
-      const populatedVendor = await Vendor.populate(vendor, { path: 'profilePicture' });
-
-      const vendorWithBase64Image = {
-        ...populatedVendor._doc,
-        profilePicture: populatedVendor.profilePicture
-          ? {
-              data: populatedVendor.profilePicture.data.toString('base64'),
-              contentType: populatedVendor.profilePicture.contentType,
-            }
-          : { data: '', contentType: '' }, // No image found for this vendor
-        ingredients: ingredients,
+      const vendorData = {
+        name: vendor.name,
+        email: vendor.email,
+        ingredients: [], 
       };
 
-      vendorsWithIngredients.push(vendorWithBase64Image);
+      //handlig vendors profile picture
+      if (vendor.profilePicture && vendor.profilePicture.data && vendor.profilePicture.contentType) {
+        try {
+          const base64ImageData = vendor.profilePicture.data.toString('base64');
+          vendorData.profilePicture = {
+            data: base64ImageData,
+            contentType: vendor.profilePicture.contentType,
+          };
+        } catch (error) {
+          console.error("Error converting image to base64:", error);
+          vendorData.profilePicture = {
+            data: '',
+            contentType: vendor.profilePicture.contentType,
+          };
+        }
+      } else {
+        vendorData.profilePicture = {
+          data: '',
+          contentType: '',
+        };
+      }
+
+      const ingredients = await Ingredient.find({ vendor: vendor._id });
+      for (const ingredient of ingredients) {
+        const ingredientData = {
+          name: ingredient.name,
+          description: ingredient.description,
+          price: ingredient.price,
+          quantity: ingredient.quantity,
+        };
+
+        //handling ingredient images
+        if (ingredient.productImage && ingredient.productImage.data && ingredient.productImage.contentType) {
+          try {
+            const base64ImageData = ingredient.productImage.data.toString('base64');
+            ingredientData.productImage = {
+              data: base64ImageData,
+              contentType: ingredient.productImage.contentType,
+            };
+          } catch (error) {
+            console.error("Error converting ingredient image to base64:", error);
+            ingredientData.productImage = {
+              data: '',
+              contentType: ingredient.productImage.contentType,
+            };
+          }
+        } else {
+          ingredientData.productImage = {
+            data: '',
+            contentType: '',
+          };
+        }
+
+        vendorData.ingredients.push(ingredientData);
+      }
+
+      vendorsWithIngredients.push(vendorData);
     }
 
     res.status(200).json(vendorsWithIngredients);
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    res.status(500).json({ message: error.message });
   }
-})
-  
+});
+
 module.exports = router;

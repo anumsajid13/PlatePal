@@ -26,9 +26,10 @@ const DisplayVendors = () => {
               throw new Error('Network response was not ok');
             }
             const data = await response.json();
+            console.log(data)
             setVendorsWithIngredients(data);
           } catch (error) {
-            // Handle error
+           
             console.error('Error fetching vendors with ingredients:', error);
           }
         };
@@ -83,17 +84,56 @@ const DisplayVendors = () => {
                 <div className="vendors-list">
                     <h1>List of Vendors</h1>
                         {vendorsWithIngredients.map(item => (
-                        <div key={item.vendor._id} className="vendor-item">
-                            <h2>{item.vendor.name}</h2>
-                            <p>Email: {item.vendor.email}</p>
+                        <div key={item._id} className="vendor-item">
+                             {item.profilePicture && typeof item.profilePicture === 'string' ? (
+                        <div style={{display:"flex", gap:"10px", flexDirection:'row'}}>
+                        <img
+                          src={item.profilePicture}
+                          style={{ width: '70px', height: '70px', borderRadius: '70px', objectFit:'cover' }}
+                        />
+                          
+                        </div>
+                      
+                      ) : (
+                        <div style={{display:"flex", gap:"10px", flexDirection:'row'}}>
+                        <img
+                          src={item.profilePicture.data ? `data:image/jpeg;base64,${item.profilePicture.data}` : require('../assets/images/no-profile-picture-15257.svg').default} 
+                          alt={`Chef ${item.name}`}
+                          style={{ width: '70px', height: '70px', borderRadius: '70px' , objectFit:'cover'}}
+                        />
+                          
+                        </div>
+                      
+                      )}
+                            <h2>{item.name}</h2>
+                            <p>Email: {item.email}</p>
                             <h3>Ingredients:</h3>
-                            <ul>
+                            <div className='ingredientsss-and-imagess'>
                                 {item.ingredients.map(ingredient => (
-                                    <li key={ingredient._id}>
-                                        {ingredient.name} - {ingredient.description}
-                                    </li>
+                                    <ul key={ingredient._id} >
+                                            {ingredient.productImage && typeof ingredient.productImage === 'string' ? (
+                                                <div style={{display:"flex", gap:"10px", flexDirection:'row'}}>
+                                                <img
+                                                src={ingredient.productImage}
+                                                style={{ width: '70px', height: '70px', borderRadius: '70px', objectFit:'cover', justifyContent: 'center', alignItems: 'center' }}
+                                                />
+                                               
+                                                </div>
+                                            
+                                            ) : (
+                                                <div style={{display:"flex", gap:"10px", flexDirection:'row'}}>
+                                                <img
+                                                src={ingredient.productImage.data ? `data:image/jpeg;base64,${ingredient.productImage.data}` : require('../assets/images/no-profile-picture-15257.svg').default} 
+                                               
+                                                style={{ width: '70px', height: '70px', borderRadius: '70px' , objectFit:'cover',  justifyContent: 'center', alignItems: 'center' }}
+                                                />
+                                                </div>
+                                            
+                                            )}
+                                        {ingredient.name} 
+                                    </ul>
                                 ))}
-                            </ul>
+                            </div>
                             {recipeId !== '1' && (
                                 <button
                                     className="vendor-chef-displayVendors"

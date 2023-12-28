@@ -49,3 +49,10 @@
   .vendor-chef-displayVendors:hover {
     background-color: rgb(228, 207, 117);
   }
+
+  .ingredientsss-and-imagess{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap:2%;
+  }
