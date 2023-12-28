@@ -191,12 +191,14 @@ router.get('/:id', async (req, res) => {
 });
 
 //get all my recipes where there is a vendor collab like its postedd (person who is logged in)
-router.get('/myrecipes/vendors', authenticateToken,  async (req, res) => {
+router.get('/myrecipes/vendors/:recipeName?', authenticateToken,  async (req, res) => {
     const loggedInUserId = req.user.id; 
     try {
-        const userRecipesWithVendor = await Recipe.find({
+      const { recipeName } = req.params;
+      const userRecipesWithVendor = await Recipe.find({
             chef: loggedInUserId,
-            vendor: { $exists: true, $ne: null } //filtering for recipes with a vendor
+            vendor: { $exists: true, $ne: null }, //filtering for recipes with a vendor
+            title: { $regex: new RegExp(recipeName, 'i')}
           }).populate('chef', 'name').populate({
             path: 'comments', 
             populate: {
@@ -241,13 +243,16 @@ router.get('/myrecipes/vendors', authenticateToken,  async (req, res) => {
 });
 
 //get all my recipes where there is no vendor collab like its not postedd yett (person who is logged in)
-router.get('/myrecipes/noVendor', authenticateToken,  async (req, res) => {
+router.get('/myrecipes/noVendor/:recipeName?', authenticateToken,  async (req, res) => {
     const loggedInUserId = req.user.id; 
     
     try {
-        const userRecipesWithoutVendor = await Recipe.find({
+
+      const { recipeName } = req.params;
+     const userRecipesWithoutVendor = await Recipe.find({
             chef: loggedInUserId,
             $or: [{ vendor: { $exists: false } }, { vendor: null }], //filtering for recipes without a vendor
+            title: { $regex: new RegExp(recipeName, 'i') },
           }).populate('chef', 'name').populate('chef', 'name').populate({
             path: 'comments', 
             populate: {
