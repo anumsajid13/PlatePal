@@ -19,19 +19,22 @@ const DisplayVendors = () => {
     const [showPopup, setShowPopup] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:9000/vendors_chef/vendors-with-ingredients')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Fetched data:', data);
-                setVendorsWithIngredients(data || []); 
-            })
-            .catch(error => console.error('Error fetching vendors with ingredients:', error));
-    }, []);
+        const fetchData = async () => {
+          try {
+            const response = await fetch('http://localhost:9000/vendors_chef/vendors-with-ingredients');
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setVendorsWithIngredients(data);
+          } catch (error) {
+            // Handle error
+            console.error('Error fetching vendors with ingredients:', error);
+          }
+        };
+    
+        fetchData();
+      }, []);
 
     const handleReportClick = (vendorId) => {
         console.log('gee')
