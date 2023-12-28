@@ -28,7 +28,7 @@ const recipeSeekerSchema = new mongoose.Schema({
   },
   address: String,
   creditCardInfo: String,
-  recipeBookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
+  recipeFavourites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
   followings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chef' }],
   notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User_Notification' }],
 });

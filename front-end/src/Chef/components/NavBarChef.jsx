@@ -65,9 +65,9 @@ const ChefNav = () => {
           
                 {isLoading ? (
                 <span>Logging out...</span>
-            ) : (
-                <span className="material-icons google-icon" onClick={handleLogoutClick}>logout</span>
-            )}
+                  ) : (
+                      <span className="material-icons google-icon" onClick={handleLogoutClick}>logout</span>
+                  )}
          
         </div>
 

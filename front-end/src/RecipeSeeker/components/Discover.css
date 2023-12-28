@@ -78,6 +78,19 @@
     margin-left: 2%;
     
   }
+
+  .recipe-list-today{
+    display: flex;
+    flex-direction: row;
+    row-gap: 10px;
+    margin-top: 3%;
+    margin-left: 3%;
+    width:93%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; 
+
+  }
   .category-slider-container {
     margin-top:50px;
     overflow: hidden;
@@ -93,11 +106,24 @@
   }
 
   
+  .recipe-list-today::-webkit-scrollbar {
+    width: 3px; 
+  }
+  
+  .recipe-list-today ::-webkit-scrollbar-thumb {
+    background-color:transparent; 
+  }
+  
+  .recipe-list-today::-webkit-scrollbar-track {
+    background-color: transparent; 
+  }
+
+  
   .category-slider::-webkit-scrollbar {
     width: 3px; 
   }
   
-  .category-slider::-webkit-scrollbar-thumb {
+  .category-slider ::-webkit-scrollbar-thumb {
     background-color:transparent; 
   }
   

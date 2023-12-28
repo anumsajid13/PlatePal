@@ -16,6 +16,63 @@
     
   }
 
+  
+
+  .today-recipe:hover {
+
+    border-top: 5px solid #ffe853;
+
+ /*  animation: changeColors 2s ;*/
+}
+
+
+/*
+@keyframes changeColors {
+    25% {
+        border-right:5px solid #F17228;
+    }
+    50% {
+        border-bottom: 5px solid #F17228;
+    }
+    75% {
+        border-left:5px solid #F17228;
+    }
+    100% {
+        border-top: 5px solid #F17228;
+    }
+}*/
+
+  .add-to-favorites{
+    display:flex;
+    gap:2%;
+  }
+
+  .favorites-heading{
+
+    margin-left: 40%;
+    margin-top: 6%;
+    
+  width: 600px;
+  height: 25px;
+
+  /* Headline 4 Bold */
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 43px;
+  line-height: 112%;
+  /* or 48px */
+  text-align: center;
+
+  color: #F17228;
+
+  margin-left: 25%;
+ 
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  }
+
   .relative-container {
     position: relative;
   }
@@ -24,7 +81,7 @@
     position: absolute;
     top: 10px; 
     left: 10px;
-    background-color: purple; 
+    background-color: #F17228; 
     color: white; 
     border: none;
     padding: 5px 10px;
@@ -36,10 +93,21 @@
   }
 
   .recepie-category{
-    background-color: #e6dddd;
-    color:purple;
+    background-color:#ffe853;
+    color:black;
   }
   
+  .outer-recipe.popup-open {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.274); 
+   /* backdrop-filter: blur(5px);*/
+    z-index: 1;
+    overflow: hidden;
+  }
   .recipe-card:hover {
     transform: scale(1.05);
   }
@@ -71,7 +139,7 @@
     padding: 24px;
     z-index: 10000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 80vh;
+    max-height: 85vh;
     overflow-y: auto;
   }
   
@@ -174,7 +242,7 @@
   
   .ViewRatingsButton {
     
-    color: rgb(218, 94, 218);
+    color: #F17228;
     border: none;
     padding: 10px 15px;
     text-align: center;
@@ -192,7 +260,7 @@
   
   .comments-section h3 {
     cursor: pointer;
-    color: rgb(218, 94, 218);
+    color: #F17228;
     margin-bottom: 10px;
     font-size: 18px;
   }
@@ -241,7 +309,7 @@
   
   
   .comment button {
-    background-color: #4caf50;
+    background-color: #F17228;
     color: white;
     padding: 8px 12px;
     border: none;
@@ -279,14 +347,14 @@
     text-transform: uppercase;
     border: none;
     border-radius: 5px;
-    background-color: #b69ab6; 
+    background-color: #f3803d; 
     color: #fff; 
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
   }
   
   .add-to-cart-button:hover {
-    background-color: #cc53cc; 
+    background-color: #f36b1c; 
   }
   
   .icon {

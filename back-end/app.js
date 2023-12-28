@@ -40,7 +40,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.json());
 
-
 // Connecting to MongoDB
 mongoose.connect('mongodb+srv://anumsajid13:6grTh91EsFrpMXSl@cluster0.lzdbmp9.mongodb.net/PlatePal', { useNewUrlParser: true });
 const con = mongoose.connection;
@@ -73,6 +72,7 @@ const SearchByChef = require('./RecipeSeeker/routes/SearchBy_ChefName')
 const Display_recipeSeekers = require('./RecipeSeeker/routes/Display_recipeseeker')
 const AddOrder = require('./RecipeSeeker/routes/AddToCart')
 const DisplayCategories= require('./RecipeSeeker/routes/DisplayCategories')
+const Favourites= require('./RecipeSeeker/routes/Favourites')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
 
 const admin_signin = require('./Admin/routes/login');
@@ -143,6 +143,8 @@ app.use('/recepieSeeker', Edit_user_profile);
 app.use('/recepieSeeker', Display_Notifications);
 app.use('/recepieSeeker', Display_recipeSeekers);
 app.use('/recepieSeeker', AddOrder );
+app.use('/recepieSeeker', Favourites );
+
 //app.use('/recepieSeeker', follow_nutritionist);
 app.use('/recepieSeeker', Send_msg_to_nutritionist);
 app.use('/recepieSeeker', SearchByRecipe);

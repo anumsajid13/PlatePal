@@ -43,6 +43,11 @@
 
   }
 
+  .nolink{
+    color:black;
+    text-decoration: none;
+  }
+
   .active-link-12 {
     color:  #fa9a2b;
     text-decoration: none;

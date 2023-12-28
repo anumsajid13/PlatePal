@@ -9,7 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 import useCartStore from './cartStore'; 
 
 
-const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
+const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRecipe = false }) => {
 
   const token = useTokenStore((state) => state.token);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -24,6 +24,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
   const currentUserId = decodedToken.id;
   const [isRatingsVisible, setIsRatingsVisible] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [isInFavorites, setIsInFavorites] = useState(false);
   localStorage.setItem('token', token);
   
   const imageData = new Uint8Array(recipe.recipeImage.data).reduce(
@@ -37,6 +38,74 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
 
   console.log('Current decoded token:', decodedToken);
   console.log("recipe id: ",recipe._id )
+
+  useEffect(() => {
+    // Check if the recipe is in favorites when the component mounts
+    const checkFavorites = async () => {
+      try {
+        const response = await fetch(`http://localhost:9000/recepieSeeker/is-in-favorites/${recipe._id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        if (response.ok) {
+          const { isInFavorites } = await response.json();
+          setIsInFavorites(isInFavorites);
+        } else {
+          console.error('Failed to check if recipe is in favorites:', response.status, response.statusText);
+        }
+      } catch (error) {
+        console.error('Error checking if recipe is in favorites:', error.message);
+      }
+    };
+  
+    checkFavorites();
+  }, [currentUserId, recipe._id, token]);
+
+  const handleAddToFavorites = async () => {
+    try {
+      const response = await fetch(`http://localhost:9000/recepieSeeker/add-to-favourites/${recipe._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        console.log('Recipe added to favorites successfully');
+        setIsInFavorites(true);
+      } else {
+        console.error('Failed to add recipe to favorites:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error adding recipe to favorites:', error.message);
+    }
+  };
+
+  const handleRemoveFromFavorites = async () => {
+    try {
+      const response = await fetch(`http://localhost:9000/recepieSeeker/remove-from-favourites/${recipe._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      if (response.ok) {
+        console.log('Recipe removed from  favorites successfully');
+        setIsInFavorites(false);
+      } else {
+        console.error('Failed to remove recipe from favorites:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error removing recipe from favorites:', error.message);
+    }
+  };
   const handleCardClick = async () => {
     try {
       const ratingResponse = await fetch(
@@ -264,8 +333,8 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
   return (
     <>
        
-      <div className="outer-recipe">
-        <div className="recipe-card">
+      <div className={`outer-recipe ${isPopupOpen ? 'popup-open' : ''}`}>
+        <div className={`recipe-card ${isTodayRecipe ? 'today-recipe' : ''}`}>
           <div className='relative-container'>
           
           <img   className="pagal-image " src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}  / >
@@ -291,6 +360,24 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
         
             <div className="recipe-details-left">
             <img   className="" src={`data:image/jpeg;base64,${recipe.recipeImage.data}`}   />
+
+            <div className="add-to-favorites">
+              {isInFavorites ? (
+                <>
+                     <img style={{ width:"30px" ,height:"30px"}} className="add-to-favorites-img" src="/filled-heart.svg" alt="Filled Heart" onClick={handleRemoveFromFavorites} />
+                     <span style={{marginTop:"2%"}}> Your Favourite</span>
+                </>
+              
+              ) : (
+                <>
+                  
+                <img style={{ width:"30px" ,height:"30px"}} className="add-to-favorites-img" src="/unfilled-heart.jpg" alt="Empty Heart" onClick={handleAddToFavorites} />
+                <span style={{marginTop:"2%"}}>Add to Favorites</span>
+                </>
+               
+              )}
+            
+            </div>
 
            
             <div className="top-chef-recipe-description">
@@ -426,7 +513,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
                     padding: '10px 15px',
                     fontSize: '16px',
                     cursor: 'pointer',
-                    background: 'rgb(218, 94, 218)',
+                    background: '#F17228',
                     color: 'white',
                     border: 'none',
                     height: '35px',
@@ -456,7 +543,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow }) => {
                     padding: '10px 15px',
                     fontSize: '16px',
                     cursor: 'pointer',
-                    background: 'rgb(218, 94, 218)',
+                    background: '#F17228',
                     color: 'white',
                     border: 'none',
                     height: '35px',

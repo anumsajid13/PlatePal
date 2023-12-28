@@ -9,7 +9,6 @@ router.post('/addOrder', authenticateToken, async (req, res) => {
     try {
         const { items } = req.body;
       
-
           //   console.log("IDS: ",items[0].chef," waitt  ", items[0].vendorId)
           const existingCart = await Cart.findOne({ recipeSeekerId: req.user.id });
       
@@ -105,5 +104,20 @@ router.delete('/removeItem/:orderId', authenticateToken, async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
+router.delete('/logout', authenticateToken, async (req, res) => {
+  try {
+    console.log("user logging out: ",req.user.id)
+    // Clear the cart for the logged-in RecipeSeeker
+    await Cart.findOneAndDelete({ recipeSeekerId: req.user.id });
+     console.log("Deleted")
+    // Logout the user by destroying the token
+    res.clearCookie('token').status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    console.error('Logout error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 module.exports = router;

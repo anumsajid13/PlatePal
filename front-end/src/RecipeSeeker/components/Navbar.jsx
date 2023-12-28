@@ -11,11 +11,13 @@ import CartPopup from './CartPopup';
 
 
 
+
 const Navbar = ({ activeLink }) => {
   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
  // const token = useTokenStore((state) => state.token);
   const token = localStorage.getItem('token');
@@ -81,15 +83,63 @@ const Navbar = ({ activeLink }) => {
     }
   };
 
+  const handleLogout = async () => {
+   
+      // Show loading animation
+      setIsLoading(true);
+
+      setTimeout( async() => {
+       
+        try {
+          const response = await fetch(`http://localhost:9000/recepieSeeker/logout`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+            
+          });
+          if (!response.ok) {
+            throw new Error('Failed to logout');
+          }
+    
+         
+          localStorage.removeItem('token');
+    
+          
+          // Redirect to the homepage
+          navigate('/');
+    
+        } catch (error) {
+          console.error('Logout error:', error);
+        }
+      }, 4000); 
+     
+  };
+
   return (
     <nav className="navbar-1">
+
+        {isLoading && (
+                <div className="chef-overlay">
+                <div className="chef-spinner"></div>
+                  <span className="loading-text">Logging out...</span>
+                </div>
+              )}
       <div className="logo">Plate Pal</div>
       <div className="nav-links-1">
         <Link
           to="http://localhost:3000/recipe-seeker/Discover"
-          className={activeLink === 'Discover' ? 'active-link-12' : ''}
+          className={activeLink === 'Discover' ? 'active-link-12' : 'nolink'}
         >
           Discover
+        </Link>
+
+        <Link
+          to="http://localhost:3000/recipe-seeker/Favourites"
+          className={activeLink === 'Favourites' ? 'active-link-12' : 'nolink'}
+        >
+        My Favourites
         </Link>
        
 
@@ -101,7 +151,7 @@ const Navbar = ({ activeLink }) => {
           {showNotifications && <div className="notification-arrow" />}
         </div>
           
-          <span className="material-icons google-icon" style={{cursor:"pointer"}}>logout</span>
+          <span className="material-icons google-icon" style={{cursor:"pointer"}} onClick={handleLogout}>logout</span>
           <span class="material-icons google-icon icon-link-1"  onClick={toggleSidebar}>menu</span>
           
       </div>
@@ -109,7 +159,6 @@ const Navbar = ({ activeLink }) => {
       <div className={`sidebar1 ${isSidebarOpen ? 'sidebar-open' : ''}`}>
         <Link to="/recipe-seeker/Consult_Nutritionist">Consult Nutritionists</Link>
         <Link to="/recipe-seeker/Inbox" >Inbox</Link>
-        <Link to="">My Bookmark</Link>
         <Link to="">My Followings</Link>
         <Link to="/recipe-seeker/UpdateProfile">Edit Profile</Link>
        

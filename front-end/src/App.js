@@ -13,6 +13,7 @@ import DiscoverPage from './RecipeSeeker/components/Discover';
 import SuccessComponent from './RecipeSeeker/components/SuccessComponent';
 import CancelComponent from './RecipeSeeker/components/CancelComponent';
 import Edit_profil_user from './RecipeSeeker/components/edit_profile';
+import Favourites from './RecipeSeeker/components/Favourites';
 import BlockReports from './Admin/pages/BlockReports';
 import ChefSignUp from './Chef/pages/ChefSignUp';
 import ChefMainPage from './Chef/pages/ChefMainPage';
@@ -70,6 +71,7 @@ function App() {
         <Route path="/recipe-seeker/UpdateProfile" element={<Edit_profil_user />} />
         <Route path="/recipe-seeker/Inbox" element={<RecipeSeeker_InboxPage />} />
         <Route path="/recipe-seeker/Consult_Nutritionist" element={<ConsultNutritionist />} />
+        <Route path="/recipe-seeker/Favourites" element={<Favourites />} />
         <Route path="/Pyement/Success" element={<SuccessComponent />} />
         <Route path="/Pyement/Failure" element={<CancelComponent />} />
         <Route path="/admin/blockreport" element={<BlockReports />} />

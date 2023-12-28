@@ -15,7 +15,27 @@ const Discover = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(12); 
+  const [todaysRecipes, setTodaysRecipes] = useState([]);
+ 
 
+  const fetchTodaysRecipes = async () => {
+    try {
+      const todayResponse = await fetch('http://localhost:9000/recepieSeeker/todaysRecipes', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (todayResponse.ok) {
+        const todayData = await todayResponse.json();
+        setTodaysRecipes(todayData || []);
+      } else {
+        console.error('Failed to fetch today\'s recipes:', todayResponse.status, todayResponse.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching today\'s recipes:', error.message);
+    }
+  };
 
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(parseInt(prevPage) - 1, 1));
@@ -179,6 +199,7 @@ const Discover = () => {
   useEffect(() => {
     fetchRecipes();
     fetchCategories();
+    fetchTodaysRecipes();
   }, [token, currentPage, pageSize]);
 
   return (
@@ -201,16 +222,43 @@ const Discover = () => {
             </select>
             <span onClick={handleSearch} style={{ cursor: "pointer" }} className="material-icons google-icon">search</span>
           </div>
+
+           {/* Today's Recipes */}
+           <div className="todays-recipes-container">
+              <h2 className="Categories-choose">Today's Featured Recipes</h2>
+              <div className="recipe-list-today">
+              {todaysRecipes.length > 0 ? (
+                todaysRecipes.map((recipe) => (
+                  <div key={recipe._id}>
+                    <RecipeCard
+                      key={recipe._id}
+                      recipe={recipe}
+                      isFollowingChef={recipe.chef && followingChefIds && followingChefIds.includes(recipe.chef._id)}
+                      onToggleFollow={() => recipe && recipe.chef && toggleFollowChef(recipe.chef._id)}
+                      isTodayRecipe ={true}
+                    />
+                  </div>
+                ))
+              ) : (
+                <p></p>
+              )}
+
+              </div>
+            </div>
+
           <div className="category-slider-container">
             <div className="category-slider">
               {categories.map((category) => (
                 <div key={category} className="category-card" onClick={() => handleCategoryChange(category)}>
-                  {category.replace(/"/g, '')}
+                  {category.replace(/"/g, '')}                               
                 </div>
               ))}
             </div>
           </div>
         </div>
+
+          
+
         <div  className="Categories-choose">
           <p>Indulge in Culinary Delights</p>
         </div>
