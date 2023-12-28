@@ -1,9 +1,15 @@
 // NotificationBox.js
 import React, { useState, useEffect } from 'react';
 import './NotificationBox.css';
+import { Link } from 'react-router-dom';
+import NutritionistChat from './NutritionistChat';
 
+const NotificationBox = ({ notifications, onClose ,handleDeleteNotification}) => {
 
-const NotificationBox = ({ notifications, onClose }) => {
+  const token = localStorage.getItem('token');
+
+  
+
   return (
     <div className="notification-box-user">
       <div className="notification-header">
@@ -11,13 +17,38 @@ const NotificationBox = ({ notifications, onClose }) => {
         
       </div>
       <div className="notification-list">
-        {notifications.map((notification) => (
-          <div key={notification._id} className="notification-item">
-            <span className="notification-text">{notification.notification_text}</span>
+      {notifications && notifications.map((notification, index) => (
+         <Link  className='chef-linkss'
+         key={index} 
+         to={
+              
+              notification.type === 'message from Chef'
+             ? '/recipe-seeker/Inbox'
+             : notification.type === 'New Recipe Added'
+             ? 'recipe-seeker/Discover' 
+             : notification.type === 'unfollow'
+             ? '#' 
+             : notification.type === 'comment'
+             ? '#' 
+             : notification.type === 'review'
+             ? '#' 
+             : notification.type === 'Request accepted'
+             ? '#' 
+             : '#'
+         }
+       >
+         <div className="notification-item">
+         <span className="material-icons" 
+            onClick={() => handleDeleteNotification(notification._id)}  
+            >close</span>
+           <span className="notification-text">{notification.notification_text}</span>
             <span className="notification-time">{new Date(notification.Time).toLocaleString()}</span>
-          </div>
-        ))}
-      </div>
+            
+         </div>
+        
+       </Link>
+    ))}
+    </div>
     </div>
   );
 };

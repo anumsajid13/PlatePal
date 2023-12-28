@@ -33,6 +33,10 @@ const recipeSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  postedAt:{
+    type: Date,
+    default: Date.now,
+  },
   description: String,
   Nutrients:[{
     nutrientName: String,

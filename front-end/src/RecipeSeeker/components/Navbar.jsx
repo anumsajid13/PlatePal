@@ -10,6 +10,7 @@ import useCartStore from './cartStore';
 import CartPopup from './CartPopup';
 
 
+
 const Navbar = ({ activeLink }) => {
   
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -59,6 +60,27 @@ const Navbar = ({ activeLink }) => {
 
   const cartItemsCount = useCartStore((state) => state.cartItems.length);
 
+  const handleDeleteNotification = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:9000/recepieSeeker/deletenotifications/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete notification');
+      }
+
+      const updatedNotifications = notifications.filter((notification) => notification._id !== id);
+      setNotifications(updatedNotifications);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <nav className="navbar-1">
       <div className="logo">Plate Pal</div>
@@ -94,7 +116,7 @@ const Navbar = ({ activeLink }) => {
       </div>
      
       {showNotifications && (
-        <NotificationBox notifications={notifications} onClose={toggleNotifications} />
+        <NotificationBox notifications={notifications} onClose={toggleNotifications} handleDeleteNotification={handleDeleteNotification} />
       )}
 
       {useCartStore((state) => state.isCartPopupOpen) && (
