@@ -6,7 +6,7 @@
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    background-color: #ffe853;
   }
   
   .calculator-input-container {
@@ -24,7 +24,7 @@
   }
   
   .calculate-button {
-    background-color: #4caf50;
+    background-color: #fa9a2b;
     color: #fff;
     padding: 10px 15px;
     border: none;
@@ -32,8 +32,12 @@
     cursor: pointer;
   }
   
-  .calculate-button:hover {
-    background-color: #45a049;
+  .calculate-button, .i-dont-know:hover {
+    background-color: #f58d17;
+  }
+
+  .i-dont-know{
+    background-color: #fa9a2b;
   }
   
   .result-container {
@@ -45,7 +49,7 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    background-color: #ffe853;
     width:60%;
     height:40%;
   }
@@ -54,7 +58,7 @@
     display: flex;
     overflow-x: auto;
     scrollbar-width:thin;
-    scrollbar-color: #b6b4b4 #B7B6C1;
+    scrollbar-color: transparent;
   }
   
   
@@ -63,11 +67,11 @@
   }
   
   .nutritionist-list::-webkit-scrollbar-thumb {
-    background-color: #aaa7a7; 
+    background-color: transparent; 
   }
   
   .nutritionist-list::-webkit-scrollbar-track {
-    background-color: #B7B6C1; 
+    background-color: transparent; 
   }
   
   .nutritionist-item {
@@ -77,7 +81,7 @@
     transition: background-color 0.3s ease;
   
     &:hover {
-      background-color: #f4f4f4;
+      background-color: #fa9523;
     }
   
     img {
@@ -95,7 +99,7 @@
   }
 
   .nutritionist-item.selected {
-    background-color: #f4f4f4;
+    background-color: #fa9523;
   }
 
   .mealplans-container{
@@ -105,7 +109,7 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    background-color: #fa9a2b;
     width:100%;
     height:auto;
     
@@ -114,7 +118,7 @@
 
   .mealplan-card{
 
-    border: 1px solid #ddd;
+    border: 1px solid ;
     border-radius: 8px; 
     margin: 16px;
     cursor: pointer;
@@ -122,7 +126,7 @@
     margin-left: 2%;
     min-height:auto;
     transition: transform 0.2s ease-in-out;
-    background-color: #fffdfd;
+    background-color: #ffe853;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding-top: 0;
     display: flex;

@@ -7,7 +7,7 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
+    background-color: #ffe853;
   
     
   }
@@ -60,11 +60,11 @@
     height: 110px;
     border-radius: 50%;
     margin-top: 20px;
-    border: 3px solid #4caf50;
+    border: 3px solid #fa9523;
   }
   
   .editprofile-button {
-    background-color: #4caf50;
+    background-color: #fa9523;
     color: #fff;
     padding: 14px;
     border: none;
@@ -74,6 +74,7 @@
   }
   
   .editprofile-button:hover {
-    background-color: #45a049;
+    background-color: #f38d18;
+    color:black;
   }
   

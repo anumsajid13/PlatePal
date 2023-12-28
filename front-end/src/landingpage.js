@@ -32,6 +32,28 @@ const LandingPage = () => {
     fetchRecipes();
     
   }, []);
+
+  const handleAboutClick = () => {
+    const aboutSection = document.getElementById('about-us-section');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+  
+
+  const handleContact = () => {
+    const contactSection = document.getElementById('contact-footer-section');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handlediscover = () =>{
+    const recipeSection = document.getElementById('lala');
+    if (recipeSection) {
+      recipeSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
  
   return (
     <div className='The-most-outer-part'>
@@ -63,16 +85,16 @@ const LandingPage = () => {
           >
             Home
           </Link>
-          <div onClick={() => setActiveLink('Contact Us')} className={activeLink === 'Contact Us' ? 'active-link' : ''}
+          <div  onClick={() => handleContact()} className={activeLink === 'Contact Us' ? 'active-link' : ''}
            style={{
-            color: activeLink === 'Contact Us' ? 'red' : 'black', 
+           
             textDecoration: 'none', 
             cursor: 'pointer', 
           }}
           >Contact Us</div>
-          <div onClick={() => setActiveLink('About Us')} className={activeLink === 'About Us' ? 'active-link' : ''}
+          <div onClick={() => handleAboutClick()} className={activeLink === 'About Us' ? 'active-link' : ''}
            style={{
-            color: activeLink === 'About US' ? 'red' : 'black', 
+            
             textDecoration: 'none', 
             cursor: 'pointer', 
           }}
@@ -104,7 +126,7 @@ const LandingPage = () => {
           <div className="additional-text">
             <p>Explore our delicious and nutritious food options made with the freshest ingredients.</p>
           </div>
-          <button className="discover-menu-button" style={{marginLeft:"3%"}}>Discover Menu</button>
+          <button onClick={() => handlediscover()} className="discover-menu-button" style={{marginLeft:"3%"}}>Discover Menu</button>
         </div>
 
         {/* You can replace the placeholder with the actual image source */}
@@ -130,7 +152,7 @@ const LandingPage = () => {
           </div>*/}
        
        <div className="how-it-works">
-          <p>How Does It Work?</p>
+          <p style={{marginLeft:'25%'}}>How Does It Work?</p>
         </div>
 
         <div className="how-it-works-steps">
@@ -141,8 +163,8 @@ const LandingPage = () => {
         </div>
 
       {/* Food information divs */}
-      <div className="LALALALA">
-      <div className="recipe-list" style={{marginLeft:"0%", gap:"2%"}}>
+      <div className="LALALALA" id='lala'>
+      <div className="recipe-list" style={{marginLeft:"6%", gap:"2%"}}>
           {recipes.map((recipe) => (
             <div key={recipe._id}>
               <RecipeCard
@@ -153,6 +175,32 @@ const LandingPage = () => {
             </div>
           ))}
         </div>
+      <div className="landing-about-us-wrapper" id="about-us-section">
+        <div className="landing-about-us" >
+          <div className='about-us-image'>
+            <img src='./AboutUs_Image_1.avif'/>
+          </div>
+          
+          <h2 className="landing-about-us-heading" >Our Mission</h2>
+          <p className="landing-about-us-text">At PlatePal, our mission is to inspire and empower everyone to cook delicious, chef-curated meals effortlessly. We strive to deliver premium-quality, farm-fresh ingredients along with easy-to-follow recipes, ensuring our customers enjoy cooking wholesome meals while fostering a deeper appreciation for food</p>
+        </div>
+
+        <div className="landing-about-us" >
+          <h2 className="landing-about-us-heading" >About us</h2>
+          <p className="landing-about-us-text">Founded in 2023, PlatePal was born out of a shared passion for culinary innovation and a commitment to making home cooking enjoyable and hassle-free. Our founders, Anum, Haniya, Amna and Aiyza, envisioned a service that would eliminate meal planning stress and encourage healthier eating habits.</p>
+          <div className='about-us-image-2'>
+            <img src='./pictureee.avif'/>
+          </div>
+        </div>
+        </div>
+        <footer className="contact-footer" id="contact-footer-section">
+          <div className="contact-info">
+            <h3>Contact Us</h3>
+            <p>Email: platePal@example.com</p>
+            <p>Phone: +92345-3245666</p>
+          </div>
+        </footer>
+
         
       </div>
 
@@ -161,5 +209,5 @@ const LandingPage = () => {
   );
 }
 
-// Export the component for use in other files
+
 export default LandingPage;

@@ -239,20 +239,7 @@ const SignInPage =  () => {
           >
             Home
           </Link>
-          <div onClick={() => setActiveLink('Contact Us')} className={activeLink === 'Contact Us' ? 'active-link' : ''}
-           style={{
-            color: activeLink === 'Contact Us' ? 'red' : 'black', 
-            textDecoration: 'none', 
-            cursor: 'pointer', 
-          }}
-          >Contact Us</div>
-          <div onClick={() => setActiveLink('About Us')} className={activeLink === 'About Us' ? 'active-link' : ''}
-           style={{
-            color: activeLink === 'About US' ? 'red' : 'black', 
-            textDecoration: 'none', 
-            cursor: 'pointer', 
-          }}
-          >About Us</div>
+          
         
               <button  className="landing-signin-button" > <Link to="/signin" className='link'>Log In</Link></button>
               <button  className="landing-signup-button-2"><Link to="/signup" className='link'>Sign Up</Link></button>
@@ -293,7 +280,7 @@ const SignInPage =  () => {
             
           </div>
           <div className="image-side1">
-          
+              
           </div>
           
         </div>

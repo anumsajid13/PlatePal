@@ -44,7 +44,7 @@ router.post('/sendMessageToUser/:userId', authenticateToken, async (req, res) =>
     //create a notification for the Recipe Seeker
     const userNotification = new UserNotification({
       user: userId,
-      type: `message`, 
+      type: `message from Chef`, 
       notification_text: `Chef ${chefName} sent you a message.`,
       Time: new Date(),
     });
@@ -90,7 +90,7 @@ router.get('/allUsers', async (req, res) => {
       }
     });
     
-    console.log(usersWithBase64Image)
+   
     //console.log("hahhaha",topChefsWithBase64Image)
     return res.json( usersWithBase64Image);
 

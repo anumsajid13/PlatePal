@@ -5,7 +5,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    background-color :#E4DEFF;
+    background-color :white;
    
   }
   
@@ -22,9 +22,9 @@
     
   }
   
-  .nav-links-1 a {
+  .nav-links-1-a {
     text-decoration: none;
-    color: #333;
+    color: #000000;
     font-weight: bold;
   }
   
@@ -43,8 +43,10 @@
 
   }
 
-  .active-link-1 {
-    color: #ff0000; 
+  .active-link-12 {
+    color:  #fa9a2b;
+    text-decoration: none;
+    font-size: larger;
   }
 
   .sidebar1 {
@@ -55,7 +57,7 @@
     top: 0;
     margin-top: 3.5%;
     right: -200px; 
-    background-color:#94958B; 
+    background-color: #ffe853;
     padding-top: 50px;
     transition: right 0.3s ease; 
     z-index: 1000;
@@ -71,7 +73,7 @@
   }
   
   .sidebar1 a:hover {
-    background-color: #D5CFE1; 
+    background-color: #fa9a2b; 
   }
   
   

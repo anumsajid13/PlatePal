@@ -147,7 +147,7 @@
   
   
   .chat-messages-between-chefanduser p {
-    text-align: center;
+    text-align: left;
     color: #777;
   }
 
@@ -184,7 +184,6 @@
     cursor: pointer;
   }
   
-  /* Optional: Style the button on hover */
   .messageToChef-byuser-input button:hover {
     background-color: #45a049; /* Set your desired button background color on hover */
   }

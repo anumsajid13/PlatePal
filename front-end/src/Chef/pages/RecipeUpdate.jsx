@@ -143,6 +143,8 @@ const RecipeUpdateModal = ({ selectedRecipe, onClose, onUpdate}) => {
                 body: formDataToSend,
             });
 
+            onClose();
+
             if (!response.ok) {
                 const data = await response.json();
                 console.error('Error:', data.message);

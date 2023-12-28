@@ -41,7 +41,8 @@ const ChefChat = () => {
         .then((data) => {
           if (isMounted) {
             console.log('Fetched messages:', data);
-            setChatMessages(data.messages);
+            const newMessages = Array.isArray(data.messages) ? data.messages : [data.messages];
+            setChatMessages((prevChatMessages) => [...(prevChatMessages || []), ...newMessages]);
           }
         })
         .catch((error) => console.error('Error fetching chat messages:', error));
@@ -71,7 +72,18 @@ const ChefChat = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          setChatMessages((prevChatMessages) => [...prevChatMessages, messageInput]);
+          console.log("data",data);
+          setChatMessages((prevChatMessages) => {
+            const updatedMessages = Array.isArray(prevChatMessages) ? prevChatMessages : [];
+            return [
+              ...updatedMessages,
+              {
+                message: messageInput,
+                author: currentUserId,
+                time: new Date().toISOString(),
+              },
+            ];
+          });
           console.log('Message sent successfully:', data);
         })
         .catch((error) => console.error('Error sending message:', error));
@@ -123,23 +135,21 @@ const ChefChat = () => {
               </div>
               <div className="chat-messages-between-chefanduser">
               {console.log("Back to  divs: ")}
-              {chatMessages && chatMessages.length > 0 ? (
+              {chatMessages && Array.isArray(chatMessages) && chatMessages.length > 0 ? (
                 chatMessages.map((message, index) => (
-                    <div key={index} className={`message-to-chef ${message.author !== currentUserId ? 'other-user' : ''}`}>
+                  <div key={index} className={`message-to-chef ${message && message.author === currentUserId ? 'other-user' : ''}`}>
                     <div className="author-textmsg">
-                    <p className="author">
-                        {message.author != currentUserId ? 'You' : message.author}
-                    </p>
-                    <p className="message-text">{message.message}</p>
-                    </div>   
-                   
-                    <p className="time">{new Date(message.time).toLocaleTimeString()}</p>
-
+                      <p className="author">
+                        {message && message.author === currentUserId ? 'You' : (message && message.author)}
+                      </p>
+                      <p className="message-text">{message && message.message}</p>
                     </div>
+                    <p className="time">{message && new Date(message.time).toLocaleTimeString()}</p>
+                  </div>
                 ))
-                ) : (
-                <p>No messages yet</p>
-                )}
+              ) : (
+                <p style={{marginTop:"10%"}}>No messages yet</p>
+              )}
                 </div>
               <div className="messageToChef-byuser-input">
                 <input
