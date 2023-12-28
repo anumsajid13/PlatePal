@@ -135,14 +135,16 @@ const DisplayVendors = () => {
                                 ))}
                             </div>
                             {recipeId !== '1' && (
+                                
                                 <button
                                     className="vendor-chef-displayVendors"
-                                    onClick={() => handleButtonClick(item.vendor._id)}
+                                   
+                                    onClick={() => handleButtonClick(item._id)}
                                 >
                                     Collaborate
                                 </button>
                             )}
-                            <button className='vendor-chef-displayVendors' onClick={() => handleReportClick(item.vendor._id)}>Report</button>
+                            <button className='vendor-chef-displayVendors' onClick={() => handleReportClick(item._id)}>Report</button>
 
                         </div>
                     ))}

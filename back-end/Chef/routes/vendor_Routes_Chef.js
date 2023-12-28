@@ -16,12 +16,13 @@ router.get('/vendors', async (req, res) => {
 //get the ingredients for every vendor
 router.get('/vendors-with-ingredients', async (req, res) => {
   try {
-    const vendors = await Vendor.find({}, 'name email profilePicture');
+    const vendors = await Vendor.find({}, ' _id name email profilePicture');
 
     const vendorsWithIngredients = [];
 
     for (const vendor of vendors) {
       const vendorData = {
+        _id: vendor._id,
         name: vendor.name,
         email: vendor.email,
         ingredients: [], 

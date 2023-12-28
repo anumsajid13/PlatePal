@@ -4,6 +4,7 @@ import './navbarChef.css';
 import './chefsidebar.css';
 import { Link, useNavigate  } from 'react-router-dom'; 
 import ChefNotificationBox from '../components/ChefNotificationss';
+import useTokenStore from '../../tokenStore';
 
 const ChefNav = () => {
   
@@ -24,6 +25,7 @@ const ChefNav = () => {
   const handleLogoutClick = () => {
     setIsLoading(true);
 
+    useTokenStore.getState().logout();
     
     setTimeout(() => {
       setIsLoading(false);
