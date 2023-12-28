@@ -39,26 +39,30 @@ router.get('/top-chefs', async (req, res) => {
         try {
           const base64ImageData = chef.profilePicture.data.toString('base64');
           return {
-            ...chef._doc,
+            _id: chef._id,
+            name: chef.name,
+            username: chef.username,          
             profilePicture: { data: base64ImageData, contentType: chef.profilePicture.contentType },
             followers: chef.followersCount,
           };
         } catch (error) {
           console.error("Error converting image to base64:", error);
           return {
-            ...chef._doc,
+            _id: chef._id,
+            name: chef.name,
+            username: chef.username,
             profilePicture: { data: '', contentType: chef.profilePicture.contentType }, 
             followers: chef.followersCount,
-            username: chef.username,
           };
         }
       } else {
        
         return {
-          ...chef._doc,
-          profilePicture: { data: '', contentType: '' }, 
+          _id: chef._id,
+          name: chef.name,
+          username: chef.username,
+           profilePicture: { data: '', contentType: '' }, 
           followers: chef.followersCount,
-          username: chef.username, 
 
         };
       }
@@ -104,22 +108,28 @@ router.get('/top-nutritionists', async (req, res) => {
         try {
           const base64ImageData = nutritionist.profilePicture.data.toString('base64');
           return {
-            ...nutritionist._doc,
-            profilePicture: { data: base64ImageData, contentType: nutritionist.profilePicture.contentType },
+            _id: nutritionist._id,
+            name: nutritionist.name,
+            username: nutritionist.username,
+                        profilePicture: { data: base64ImageData, contentType: nutritionist.profilePicture.contentType },
             followers: nutritionist.followersCount,
           };
         } catch (error) {
           console.error("Error converting image to base64:", error);
           return {
-            ...nutritionist._doc,
-            profilePicture: { data: '', contentType: nutritionist.profilePicture.contentType }, 
+            _id: nutritionist._id,
+            name: nutritionist.name,
+            username: nutritionist.username,
+                        profilePicture: { data: '', contentType: nutritionist.profilePicture.contentType }, 
             followers: nutritionist.followersCount,
           };
         }
       } else {
         return {
-          ...nutritionist._doc,
-          profilePicture: { data: '', contentType: '' }, 
+          _id: nutritionist._id,
+          name: nutritionist.name,
+          username: nutritionist.username,
+                    profilePicture: { data: '', contentType: '' }, 
           followers: nutritionist.followersCount,
         };
       }

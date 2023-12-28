@@ -61,9 +61,55 @@ console.log("woo", data)
     }
   };
 
+  const changebool = async (notificationId) => {
+    try {
+      const response = await fetch(`http://localhost:9000/n/n-createplan/${notificationId}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create plan');
+      }
+      const data = await response.json();
+   
+      // Refetch notifications
+      fetchNotifications();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  
+  const handleNotificationClick = (notification) => {
+    console.log("lll")
+    if (!notification.seen) {
+      // Call changebool function
+      console.log("lll")
+
+      changebool(notification._id);
+
+      console.log(notification.type)
+
+
+      // Conditionally navigate based on notification type
+      if (notification.type === 'follower alert') {
+        console.log("fol")
+
+        navigate('/nut/followers');
+      } else if (notification.type === 'Message by Recepie Seeker') {
+        console.log("nice")
+
+        navigate('/n/chat');
+      }
+    }
+  };
+
   return (
     <div className="notification-popup">
-      <div className="notification-header">
+      <div className="notification-header1">
         <h2>Notifications</h2>
         <button className="close-button" onClick={onClose}>
           <span className="material-icons">close</span>
@@ -76,11 +122,11 @@ console.log("woo", data)
           <p>No notifications</p>
         ) : (
           notifications.map((notification) => (
-            <div key={notification._id} className="notification-item">
-              <strong>{notification.sender.username}</strong>: {notification.notification_text}  {!notification.seen && notification.type !== 'follower alert' && (
+            <div key={notification._id} className="notification-item"  onClick={() => handleNotificationClick(notification)}>
+              <strong>{notification.sender.username}</strong>: {notification.notification_text}  {!notification.seen && notification.type !== 'follower alert' &&  notification.type !== 'Message by Recepie Seeker' && (
                 <span className="bmi-text">BMI: {notification.bmi}</span>
               )}
-              {!notification.seen && notification.type !== 'follower alert' && (
+              {!notification.seen && notification.type !== 'follower alert' &&  notification.type !== 'Message by Recepie Seeker' && (
                 <button className="createPlan" onClick={() => handleCreatePlan(notification._id, notification.sender._id, notification.bmi)}>
                   Create Plan
                 </button>

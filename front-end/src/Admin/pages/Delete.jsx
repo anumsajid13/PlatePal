@@ -7,6 +7,7 @@ import useTokenStore from '../../tokenStore';
 import AdminNav from '../components/AdminNav';
 import useBlockStore from './blockstore';
 import BlockReports from './BlockReports';
+import PopupMessage from './PopupMessage';
 
 const ChefList = () => {
 
@@ -14,6 +15,8 @@ const ChefList = () => {
 
   const { chefs, setChefs, setLoading, nutri, vendor, setVendor, setNutri } = useStore();
   const [error, setError] = useState(null);
+  const [popupMessage, setPopupMessage] = useState(null);
+
   const token = useTokenStore((state) => state.token);
 
   useEffect(() => {
@@ -61,13 +64,13 @@ const ChefList = () => {
         const result = await response.json();
   
         if (response.ok) {
-          // Trigger a refetch of the data from the server after successful deletion
-          setError(`User (${entityType}) deleted successfully`);
+          setPopupMessage(`User (${entityType}) deleted successfully`);
         } else {
-          setError(result.error || 'Error deleting user');
+          setPopupMessage(result.error || 'Error deleting user');
         }
       } else {
-        setError(`Block count for user (${entityType}) is not greater than 3`);
+        setPopupMessage(`Block count for user (${entityType}) is not greater than 3!`);
+
       }
     } catch (error) {
       console.error(error);
@@ -75,6 +78,9 @@ const ChefList = () => {
     }
   };
   
+  const closePopup = () => {
+    setPopupMessage(null);
+  };
 
   return (
     <>
@@ -84,6 +90,12 @@ const ChefList = () => {
         {error && <p className="error">{error}</p>}
         {chefs.map((chef) => (
           <div key={chef._id} className="chef-item">
+            <div className="round-image">
+              <img
+                src={`data:${chef.profilePicture.contentType};base64,${chef.profilePicture.data}`}
+                alt={chef.username}
+              />
+              </div>
             <p>{chef.username}</p>
             <p>Block Count: {chef.blockCount}</p>
             <button className="delete-button" onClick={() => deleteEntity('chef', chef._id, chef.blockCount)}>Delete</button>
@@ -96,6 +108,12 @@ const ChefList = () => {
         {error && <p className="error">{error}</p>}
         {vendor.map((vendor) => (
           <div key={vendor._id} className="chef-item">
+              <div className="round-image">
+              <img
+                src={`data:${vendor.profilePicture.contentType};base64,${vendor.profilePicture.data}`}
+                alt={vendor.username}
+              />
+              </div>
             <p>{vendor.username}</p>
             <p>Block Count: {vendor.blockCount}</p>
             <button className="delete-button" onClick={() => deleteEntity('vendor', vendor._id, vendor.blockCount)}>Delete</button>
@@ -108,6 +126,12 @@ const ChefList = () => {
         {error && <p className="error">{error}</p>}
         {nutri.map((nutritionist) => (
           <div key={nutritionist._id} className="chef-item">
+             <div className="round-image">
+              <img
+                src={`data:${nutritionist.profilePicture.contentType};base64,${nutritionist.profilePicture.data}`}
+                alt={nutritionist.username}
+              />
+              </div>
             <p>{nutritionist.username}</p>
             <p>Block Count: {nutritionist.blockCount}</p>
             <button className="delete-button" onClick={() => deleteEntity('nutritionist', nutritionist._id, nutritionist.blockCount)}>
@@ -116,6 +140,8 @@ const ChefList = () => {
           </div>
         ))}
       </div>
+      {popupMessage && <PopupMessage message={popupMessage} onClose={closePopup} />}
+
     </>
   );
 };
