@@ -19,6 +19,7 @@ const ChefMainPage = () => {
     const [selectedRecipe, setSelectedRecipe] = useState(null);
     const [updateselectedRecipe, setupdateselectedRecipe] = useState(null);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const handleRecipeUpdate = (recipe) => {
        console.log(recipe)
@@ -35,7 +36,7 @@ const ChefMainPage = () => {
         try {
            
             //fetch recipes with a vendor collaboration
-            const responseWithVendor = await fetch('http://localhost:9000/recipes/myrecipes/vendors',  {
+            const responseWithVendor = await fetch(`http://localhost:9000/recipes/myrecipes/vendors/${searchTerm}`,  {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,9 +50,10 @@ const ChefMainPage = () => {
             const dataWithVendor = await responseWithVendor.json();
             console.log(dataWithVendor);
             setRecipesWithVendor(dataWithVendor);
+            
 
             //fetch recipes without a vendor collaboration
-            const responseWithoutVendor = await fetch('http://localhost:9000/recipes/myrecipes/noVendor',  {
+            const responseWithoutVendor = await fetch(`http://localhost:9000/recipes/myrecipes/noVendor/${searchTerm}`,  {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -75,7 +77,7 @@ const ChefMainPage = () => {
     useEffect(() => {
         
         fetchData();
-    }, []);
+    }, [searchTerm]);
 
     const handleRecipeDeletion = (deletedRecipeId) => {
         //filter out the deleted recipe from both recipe lists
@@ -112,7 +114,14 @@ const ChefMainPage = () => {
 
             <div className="discover-container-1">
                 <div style={{background:'#ffe853'}} className="search-card-11">
-                    <input style={{marginLeft: '19%'}} className='searchRecepie' type="text" placeholder="Search..." />
+                    <input 
+                    style={{marginLeft: '19%'}}
+                    className='searchRecepie' 
+                    type="text" 
+                    placeholder="Search..." 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                     <span className="material-icons google-icon">search</span>
                 </div>
             </div>
