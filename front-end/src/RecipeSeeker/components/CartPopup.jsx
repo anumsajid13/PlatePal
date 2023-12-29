@@ -3,13 +3,14 @@ import React, { useState, useEffect } from 'react';
 import  useTokenStore  from  '../../tokenStore.js'
 import './Cardpopup.css';
 import {loadStripe} from '@stripe/stripe-js';
-
+import { jwtDecode } from 'jwt-decode';
 
 const CartPopup = ({ onClose }) => {
   const [cartDetails, setCartDetails] = useState(null);
   const token = useTokenStore((state) => state.token);
   const [fetchdetails, setfetchdetails] = useState(false);
-
+  const decodedToken = jwtDecode(token); 
+  const currentUserId = decodedToken.id;
   localStorage.setItem('token', token);
 
   useEffect(() => {
@@ -67,7 +68,8 @@ const CartPopup = ({ onClose }) => {
     console.log()
     const stripe = await loadStripe('pk_test_51ORDf9SDTv76xgxgA5aRRcFyb38OZjtthrza5fmHNBT75xU1ypA6uPdjwH8ehAnGxRfn0NSUcItTe9XTdOvei7Eu004pHtYK53');
     const body = {
-        products:cartDetails
+        products:cartDetails,
+        userID:currentUserId
     }
     const headers = {
         "Content-Type":"application/json"

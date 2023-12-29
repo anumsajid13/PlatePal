@@ -14,6 +14,7 @@ import SuccessComponent from './RecipeSeeker/components/SuccessComponent';
 import CancelComponent from './RecipeSeeker/components/CancelComponent';
 import Edit_profil_user from './RecipeSeeker/components/edit_profile';
 import Favourites from './RecipeSeeker/components/Favourites';
+import TransactionComponent from './RecipeSeeker/components/TransactionHistory';
 import BlockReports from './Admin/pages/BlockReports';
 import ChefSignUp from './Chef/pages/ChefSignUp';
 import ChefMainPage from './Chef/pages/ChefMainPage';
@@ -71,6 +72,7 @@ function App() {
         <Route path="/recipe-seeker/UpdateProfile" element={<Edit_profil_user />} />
         <Route path="/recipe-seeker/Inbox" element={<RecipeSeeker_InboxPage />} />
         <Route path="/recipe-seeker/Consult_Nutritionist" element={<ConsultNutritionist />} />
+        <Route path="/recipe-seeker/TransactionHistory" element={<TransactionComponent />} />
         <Route path="/recipe-seeker/Favourites" element={<Favourites />} />
         <Route path="/Pyement/Success" element={<SuccessComponent />} />
         <Route path="/Pyement/Failure" element={<CancelComponent />} />
@@ -82,7 +84,7 @@ function App() {
         <Route path="/admin/check-c" element={<AcceptCert/>} />
         <Route path="/admin/chef-block" element={<ChefBlockReports/>} />
         <Route path="/admin/n-block" element={<NutritionistBlockReports/>} />
-
+        TransactionComponent
 
 
         <Route path="/signup/chef" element={<ChefSignUp/>}/>

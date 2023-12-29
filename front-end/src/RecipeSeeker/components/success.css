@@ -1,0 +1,40 @@
+.transaction-card {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 20px;
+    width: 70%;
+    margin-left: 15%;
+    margin-bottom: 5%;
+    transition: box-shadow 0.3s ease; 
+  
+    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .transaction-card:hover {
+    box-shadow: 0 0 20px #ffe853;
+  }
+  
+  .recipe-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .recipe-table th, .recipe-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .recipe-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .recipe-table img {
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 4px;
+  }
+  

@@ -159,7 +159,7 @@ const Navbar = ({ activeLink }) => {
       <div className={`sidebar1 ${isSidebarOpen ? 'sidebar-open' : ''}`}>
         <Link to="/recipe-seeker/Consult_Nutritionist">Consult Nutritionists</Link>
         <Link to="/recipe-seeker/Inbox" >Inbox</Link>
-        <Link to="">My Followings</Link>
+        <Link to="/recipe-seeker/TransactionHistory">Transaction History</Link>
         <Link to="/recipe-seeker/UpdateProfile">Edit Profile</Link>
        
       </div>

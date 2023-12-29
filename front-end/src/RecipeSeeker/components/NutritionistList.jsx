@@ -62,7 +62,7 @@ const NutritionistList = ({ onSelectNutritionist }) => {
                 onClick={() => handleSelectNutritionist(nutritionist._id)}
                 src={nutritionist.profilePicture}
                 alt={`Nutritionist ${nutritionist.name}`}
-                style={{ width: '40px', height: '40px', borderRadius: '20px' }}
+                style={{ width: '80px', height: '80px', borderRadius: '40px' }}
               />
               <h4 onClick={() => handleSelectNutritionistName(nutritionist._id)}>{nutritionist.name}</h4>
             </div>

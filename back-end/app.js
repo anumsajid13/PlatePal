@@ -11,6 +11,7 @@ const Nutritionist_Notification = require('./models/Nutritionist_Notification Sc
 const User_Nutritionist_Inbox = require('./models/User-Nutritionist_Inbox Schema');
 const Vendor_Notification = require('./models/Vendor_Notification Schema');
 const Nutritionist = require('./models/Nutritionist Schema');
+const Transaction = require('./models/Transaction');
 const NutritionistBlockReport = require('./models/NutritionistBlockReport Schema');
 const Order = require('./models/Order Schema');
 const Cart = require('./models/Cart Schema');
@@ -71,6 +72,7 @@ const SearchByRecipe = require('./RecipeSeeker/routes/SearchBy_RecepieName')
 const SearchByChef = require('./RecipeSeeker/routes/SearchBy_ChefName')
 const Display_recipeSeekers = require('./RecipeSeeker/routes/Display_recipeseeker')
 const AddOrder = require('./RecipeSeeker/routes/AddToCart')
+
 const DisplayCategories= require('./RecipeSeeker/routes/DisplayCategories')
 const Favourites= require('./RecipeSeeker/routes/Favourites')
 const Reipe_routes = require('./Chef/routes/Recipe_routes');
@@ -151,23 +153,31 @@ app.use('/recepieSeeker', SearchByRecipe);
 app.use('/recepieSeeker', SearchByChef);
 app.use('/recepieSeeker', DisplayCategories);
 
+const authenticateToken = require('./TokenAuthentication/token_authentication'); 
+
 // checkout api
 app.post("/api/create-checkout-session",async(req,res)=>{
-    const { products } = req.body;
+    const { products,userID } = req.body;
+    console.log("Products",products)
    // console.log("products",products);
    if(products)
    {
+       console.log("inside if")
+        var Total=0;
+
     for (const order of products.orders) {
         const chefId = order.items[0].chefId;
         const vendorId = order.items[0].vendorId;
         const price = order.items[0].price * order.items[0].quantity;
-  
+
+        Total+=price;
         // Calculate 40% of the price
         const chefAmount = Math.round((40 / 100) * price);
         const vendorAmount = Math.round((60 / 100) * price);
   
         // Update Chef and Vendor balances
         try {
+
           const chef = await Chef.findById(chefId);
           chef.balance += chefAmount;
           console.log("chef balane: ",chef.balance)
@@ -223,8 +233,33 @@ app.post("/api/create-checkout-session",async(req,res)=>{
            }
           }
         }
-      }
+
         
+      }
+
+     
+
+      try{
+        console.log("Inside transaction ")
+        const transaction = new Transaction({
+          recipeseekerId: userID,
+          recipes: products.orders.map(order => ({
+            recipeId: order.items[0].recipe._id,
+            quantity: order.items[0].quantity,
+          })),
+          totalAmount:products.totalAmount 
+          });
+
+        console.log("transaction completed")
+        await transaction.save();
+
+      
+      } catch (error) {
+        console.error('Error creating transaction:', error.message);
+        
+      }
+    
+       console.log("helooo")
   
       const lineItems = products.orders.map((order)=>({
          
@@ -239,6 +274,7 @@ app.post("/api/create-checkout-session",async(req,res)=>{
           quantity:order.items[0].quantity
       }));
   
+      console.log("Line items: ",lineItems)
       const totalamount=products.totalAmount;
   
       const session = await stripe.checkout.sessions.create({

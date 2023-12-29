@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../../models/Order Schema');
+const Transaction=require('../../models/Transaction')
 const Recipe = require('../../models/Recipe Schema');
 const Cart = require('../../models/Cart Schema');
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
@@ -116,6 +117,100 @@ router.delete('/logout', authenticateToken, async (req, res) => {
   } catch (error) {
     console.error('Logout error:', error);
     res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+router.get('/latestTransaction',authenticateToken, async (req, res) => {
+  try {
+   
+    const userId = req.user.id;
+    console.log(userId);
+    const latestTransaction = await Transaction.findOne({ recipeseekerId: userId })
+      .sort({ checkoutDate: -1 })
+      .populate({
+        path: 'recipes',
+        populate: {
+          path: 'recipeId',
+          model: 'Recipe',
+        },
+      })
+      .exec();
+
+    if (!latestTransaction) {
+      return res.status(404).json({ message: 'No transactions found for the user' });
+    }
+
+    const recipesWithBase64Image = latestTransaction.recipes.map(recipe => {
+      const uint8Array = new Uint8Array(recipe.recipeId.recipeImage.data);
+      const base64ImageData = Buffer.from(uint8Array).toString('base64');
+      return {
+        ...recipe.toObject(),
+        recipeId: {
+          ...recipe.recipeId.toObject(),
+          recipeImage: { data: base64ImageData, contentType: recipe.recipeId.recipeImage.contentType }
+        }
+      };
+    });
+
+  
+    const response = {
+      OrderId:latestTransaction._id,
+      totalAmount: latestTransaction.totalAmount,
+      checkoutDate: latestTransaction.checkoutDate,
+      isDelivered: latestTransaction.isDelivered,
+      recipes: recipesWithBase64Image,
+    };
+
+    res.status(200).json(response);
+
+  } catch (error) {
+    console.error('Error retrieving latest transaction:', error.message);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+});
+
+router.get('/allTransactions', authenticateToken, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const allTransactions = await Transaction.find({ recipeseekerId: userId })
+      .sort({ checkoutDate: -1 })
+      .populate({
+        path: 'recipes',
+        populate: {
+          path: 'recipeId',
+          model: 'Recipe',
+        },
+      })
+      .exec();
+
+    if (!allTransactions || allTransactions.length === 0) {
+      return res.status(404).json({ message: 'No transactions found for the user' });
+    }
+
+    const transactionsWithBase64Image = allTransactions.map(transaction => ({
+      OrderId: transaction._id,
+      totalAmount: transaction.totalAmount,
+      checkoutDate: transaction.checkoutDate,
+      isDelivered: transaction.isDelivered,
+      recipes: transaction.recipes.map(recipe => {
+        const uint8Array = new Uint8Array(recipe.recipeId.recipeImage.data);
+        const base64ImageData = Buffer.from(uint8Array).toString('base64');
+        return {
+          ...recipe.toObject(),
+          recipeId: {
+            ...recipe.recipeId.toObject(),
+            recipeImage: { data: base64ImageData, contentType: recipe.recipeId.recipeImage.contentType }
+          }
+        };
+      }),
+    }));
+
+    res.status(200).json(transactionsWithBase64Image);
+
+  } catch (error) {
+    console.error('Error retrieving all transactions:', error.message);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
 
