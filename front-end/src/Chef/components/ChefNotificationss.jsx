@@ -6,7 +6,9 @@ import { Link } from 'react-router-dom';
 const ChefNotificationBox = () => {
   const [notifications, setNotifications] = useState([]);
 
-  const { token, setToken } = useTokenStore(); 
+  //const { token, setToken } = useTokenStore(); 
+
+  const token = localStorage.getItem('token');
     console.log('notificationnn',token)
   useEffect(() => {
     //fetch notifications 

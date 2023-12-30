@@ -8,8 +8,8 @@ import ChefGenericPopup from '../components/ChefGenericPopup';
 
 const DisplayVendors = () => {
 
-    const { token, setToken } = useTokenStore(); 
-
+    //const { token, setToken } = useTokenStore(); 
+    const token = localStorage.getItem('token');
     const { id: recipeId } = useParams();
 
     const [vendorsWithIngredients, setVendorsWithIngredients] = useState([]);

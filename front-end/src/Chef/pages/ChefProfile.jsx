@@ -14,7 +14,9 @@ const ChefProfile = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState('');
 
-    const { token, setToken } = useTokenStore(); 
+    //const { token, setToken } = useTokenStore(); 
+
+    const token = localStorage.getItem('token');
 
     const handleClosePopup = () => {
         setShowPopup(false);

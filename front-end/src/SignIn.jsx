@@ -177,6 +177,7 @@ const SignInPage =  () => {
             }
 
             console.log('Token:', data.token);
+            localStorage.setItem('token', data.token);
             setToken(data.token);
             //alert('Chef log in successful');
             navigate('/Chef/Mainpage');

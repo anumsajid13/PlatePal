@@ -9,7 +9,9 @@ import RecipeUpdateModal from './RecipeUpdate'
 const ChefMainPage = () => {
 
    
-    const { token, setToken } = useTokenStore(); 
+   // const { token, setToken } = useTokenStore(); 
+
+    const token = localStorage.getItem('token');
 
     console.log(token);
 

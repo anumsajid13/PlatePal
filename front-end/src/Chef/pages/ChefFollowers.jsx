@@ -5,7 +5,9 @@ import useTokenStore from '../../tokenStore';
 
 const ChefDisplayFollowers = () => {
     const [followers, setFollowers] = useState([]);
-    const { token, setToken } = useTokenStore(); 
+   // const { token, setToken } = useTokenStore(); 
+
+   const token = localStorage.getItem('token');
 
     useEffect(() => {
        

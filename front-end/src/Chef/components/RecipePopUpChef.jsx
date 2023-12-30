@@ -9,7 +9,9 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
 
     const navigate = useNavigate();
 
-    const { token, setToken } = useTokenStore(); 
+    //const { token, setToken } = useTokenStore(); 
+
+    const token = localStorage.getItem('token');
 
     if (!selectedRecipe) return null;
 

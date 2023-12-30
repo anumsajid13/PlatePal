@@ -5,7 +5,9 @@ import useTokenStore from '../../tokenStore';
 
 const ChefViewReviews = () => {
     const [reviews, setReviews] = useState([]);
-    const { token } = useTokenStore(); 
+    //const { token } = useTokenStore(); 
+
+    const token = localStorage.getItem('token');
 
     const fetchReviews = async () => {
         try {

@@ -13,7 +13,9 @@ const ReportPopUp = ({ vendorId, onClose  }) => {
 
     console.log(vendorId)
 
-    const { token, setToken } = useTokenStore(); 
+    //const { token, setToken } = useTokenStore(); 
+
+    const token = localStorage.getItem('token');
      //function to handle proof picture change
      const handleProofChange = (event) => {
         const file = event.target.files[0];

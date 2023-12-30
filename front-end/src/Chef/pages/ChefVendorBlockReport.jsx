@@ -7,8 +7,8 @@ import useTokenStore from '../../tokenStore';
 const BlockReportsList  = () => {
 
     const [reports, setReports] = useState([]);
-    const { token, setToken } = useTokenStore(); 
-
+   // const { token, setToken } = useTokenStore(); 
+   const token = localStorage.getItem('token');
     useEffect(() => {
         const fetchReports = async () => {
           try {

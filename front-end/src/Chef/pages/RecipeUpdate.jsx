@@ -4,7 +4,9 @@ import useTokenStore from '../../tokenStore';
 const RecipeUpdateModal = ({ selectedRecipe, onClose, onUpdate}) => {
     console.log(selectedRecipe)
 
-    const { token, setToken } = useTokenStore(); 
+    //const { token, setToken } = useTokenStore(); 
+
+    const token = localStorage.getItem('token');
 
     const [formData, setFormData] = useState({
         title: selectedRecipe.title, 

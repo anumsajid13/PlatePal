@@ -5,8 +5,10 @@ import useTokenStore from '../../tokenStore';
 
 const ChefCollabs = () => {
     const [collabRequests, setCollabRequests] = useState([]);
-    const { token, setToken } = useTokenStore(); 
+   // const { token, setToken } = useTokenStore(); 
 
+   const token = localStorage.getItem('token');
+   
     useEffect(() => {
        
         const fetchCollabs = async () => {

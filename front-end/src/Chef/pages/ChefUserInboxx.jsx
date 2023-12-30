@@ -10,7 +10,9 @@ const ChefUserInboxx = () => {
     const [selectedUserName, setSelectedUserName] = useState(null);
     const [messageInput, setMessageInput] = useState('');
     const [chatMessages, setChatMessages] = useState([]);
-    const token = useTokenStore.getState().token;
+    //const token = useTokenStore.getState().token;
+
+    const token = localStorage.getItem('token');
     const decodedToken = jwtDecode(token);
     const currentUserId = decodedToken.name;
     console.log('decodedToken',decodedToken)

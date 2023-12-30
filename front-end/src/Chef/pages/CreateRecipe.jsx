@@ -6,8 +6,8 @@ import useTokenStore from '../../tokenStore';
 
 const CreateRecipe = () => {
 
-    const { token, setToken } = useTokenStore(); 
-
+    //const { token, setToken } = useTokenStore(); 
+    const token = localStorage.getItem('token');
     console.log(token)
     const [formData, setFormData] = useState({
         title: '',
