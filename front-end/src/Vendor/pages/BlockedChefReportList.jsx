@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './chefVendorBlockReport.css'
-import ChefNav from '../components/NavBarChef';
+import '../../Chef/components/reportPopup.css';
+import ChefGenericPopup from '../../Chef/components/ChefGenericPopup';
 import useTokenStore from '../../tokenStore';
-
+import NavigationBar from '../components/NavigationBar';
 
 const BlockedchefReportsList  = () => {
 
     const [reports, setReports] = useState([]);
 
-   const token = localStorage.getItem('token');
+    const { token } = useTokenStore();
     useEffect(() => {
         const fetchReports = async () => {
           try {
@@ -32,14 +32,14 @@ const BlockedchefReportsList  = () => {
     
       const handleDelete = async (reportId) => {
         try {
-          await fetch(`http://localhost:9000/vendor/BlockReport//retractBlockReport/${reportId}`, {
+         const response= await fetch(`http://localhost:9000/vendor/BlockReport/retractBlockReport/${reportId}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`,
             },
           });
-          alert(data.Authorizat)
+          alert(response.message);
           setReports(reports.filter((report) => report._id !== reportId));
         } catch (error) {
           console.error('Error deleting report:', error);
@@ -48,7 +48,7 @@ const BlockedchefReportsList  = () => {
     return(
 
         <>
-             <ChefNav/>
+             <NavigationBar/>
 
              <div className="vendorbr-list">
                     <h1>Vendor Block Reports</h1>
