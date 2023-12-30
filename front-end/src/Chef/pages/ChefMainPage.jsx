@@ -141,7 +141,7 @@ const ChefMainPage = () => {
                                    
                                 </div>
                             </div>
-                            <button className='recipe-update-buttonn' onClick={() => handleRecipeUpdate(recipe._id)}>Update</button>
+                            <button className='recipe-update-buttonn' onClick={() => handleRecipeUpdate(recipe)}>Update</button>
                         </div>
                         ))}
                     </div>
