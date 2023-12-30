@@ -59,6 +59,8 @@ import Followers from './Nutrionist/pages/Followers';
 import ChefCollabs from './Chef/pages/ChefCollabRequests';
 import ChefViewReviews from './Chef/pages/ChefReviews';
 import MainBlock from './Admin/pages/MainBlock'
+import ForgotPassword from './ForgotPassword';
+import ResetPassword from './ResetPassword';
 function App() {
   return (
     <div className="App">
@@ -125,6 +127,9 @@ function App() {
 
         <Route path="/nut/followers" element={<Followers/>} />
         <Route path="/n/chat" element={<Chat/>} />
+
+        <Route path='/forgot-password' element={<ForgotPassword/>}/>
+        <Route path='/reset-password/:userType/:id/:token' element={<ResetPassword/>}/>
 
 
       </Routes>

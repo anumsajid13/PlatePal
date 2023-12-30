@@ -18,6 +18,8 @@ const ChefProfile = () => {
 
     const token = localStorage.getItem('token');
 
+    console.log('profile',token)
+
     const handleClosePopup = () => {
         setShowPopup(false);
         navigate('/');
@@ -31,7 +33,7 @@ const ChefProfile = () => {
         setProfilePictureFile(file);
     };
     
-    console.log(token)
+   
     useEffect(() => {
         fetchChefData();
     }, []);
@@ -73,6 +75,8 @@ const ChefProfile = () => {
         formData.append('oldpassword', chef.oldpassword);
         formData.append('newpassword', chef.newpassword);
 
+        console.log(chef.oldpassword,chef.newpassword)
+
         try {
           const response = await fetch('http://localhost:9000/chef/update', {
             method: 'PUT',
@@ -87,7 +91,7 @@ const ChefProfile = () => {
             throw new Error('Failed to update Chef data');
           }
     
-          
+          console.log(response.message)
           fetchChefData();
         } catch (error) {
           console.error(error);
