@@ -66,30 +66,36 @@ const togglePinReview = async (reviewId, isPinned) => {
 
     return (
         <>
-           <ChefNav />
-            <div className="review-container">
-                <h2 className='chef-review-heading'>Chef's Reviews</h2>
-                {reviews.map((review) => (
-                    <div key={review._id} className="review-item">
-                        {/* Displaying review information */}
-                        <h3 className='chef-review-subheading'>{review.recipe.title}</h3>
-                        <p className='chef-review-text'>User: {review.user.name}</p>
-                        <p className='chef-review-text'>Review: {review.Review}</p>
-                        <p className='chef-review-text'>Time: {new Date(review.Time).toLocaleString()}</p>
-                        <div className="button-container">
-                            {/* Button to toggle pinning/unpinning reviews */}
-                            <button onClick={() => togglePinReview(review._id, review.isPinned)} className="pin-button">
-                                {review.isPinned ? 'Unpin Review' : 'Pin Review'}
-                            </button>
-                            {review.isPinned && 
-                            <span className="material-icons google-icon" >
-                                      push_pin
-                            </span>}
-                        </div>
-                    </div>
-                ))}
+        <ChefNav />
+        <div className="review-container">
+          <h2 className='chef-review-heading'>Chef's Reviews</h2>
+          {reviews.length === 0 ? (
+            <div className='no-reviewsss'>
+            <p>No reviews available</p>
             </div>
-        </>
+          ) : (
+            reviews.map((review) => (
+              <div key={review._id} className="review-item">
+                {/* Displaying review information */}
+                <h3 className='chef-review-subheading'>{review.recipe.title}</h3>
+                <p className='chef-review-text'>User: {review.user.name}</p>
+                <p className='chef-review-text'>Review: {review.Review}</p>
+                <p className='chef-review-text'>Time: {new Date(review.Time).toLocaleString()}</p>
+                <div className="button-container">
+                  {/* Button to toggle pinning/unpinning reviews */}
+                  <button onClick={() => togglePinReview(review._id, review.isPinned)} className="pin-button">
+                    {review.isPinned ? 'Unpin Review' : 'Pin Review'}
+                  </button>
+                  {review.isPinned && 
+                  <span className="material-icons google-icon" >
+                    push_pin
+                  </span>}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </>
     );
 
 };

@@ -29,7 +29,8 @@
     display:flex;
     flex-direction: column;
     width: 30%; 
-    background-color: #ffe853;
+    background-color: white;
+    border: 1px solid #ffe853;;
     padding: 45px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -38,4 +39,17 @@
 
   .chef-collab-names-text{
     margin-left:70px;
+  }
+
+  .no-collabs{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    padding: 50px;
+    background-color: #ffe853;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 70%;
+    margin: 30px auto;
+    margin-left: 10px;
   }
