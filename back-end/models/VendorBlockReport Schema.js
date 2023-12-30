@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const Vendor = require('./Vendor Schema');
+const Vendor = require('../models/Vendor Schema');
+const Chef = require('../models/Chef Schema');
 
 const vendorBlockReportSchema = new mongoose.Schema({
   vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },

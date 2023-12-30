@@ -24,7 +24,9 @@ const Vendor = require('./models/Vendor Schema');
 const VendorBlockReport = require('./models/VendorBlockReport Schema');
 const VendorCollaboration = require('./models/VendorCollaboration Schema');
 const vendorChat = require('./models/Vendor-Chef_Inbox Schema');
-/* const VendorBlocksChef=require('./models/VendorBlocksChef Schema'); */
+const VendorBlocksChef=require('./models/VendorBlockReport Schema');
+const VendorRating = require('./models/VendorRating Schema');
+const vendorReview = require('./models/vendorReview Schema');
 //app.js
 const express = require('express');
 const mongoose = require('mongoose');
@@ -112,6 +114,8 @@ const chefReviews = require('./Chef/routes/ManageReviews_routes');
 
 //forget password rotues
 const forgetpassword = require('./ForgotPassword/ForgotPasswordRoutes');
+//vendor review route
+
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -346,6 +350,7 @@ app.use('/chef', chatwithvendorChef);
 
 //chef reviews (cheff)
 app.use('/chef', chefReviews);
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
