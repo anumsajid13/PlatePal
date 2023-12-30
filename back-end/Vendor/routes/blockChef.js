@@ -12,20 +12,19 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage }); 
 
 //create a vendor block report
-router.post('/createBlockReport/:vendorId', authenticateToken, upload.single('proof'), async (req, res) => {
+router.post('/createBlockReport/:chefId', authenticateToken, upload.single('proof'), async (req, res) => {
     try {
       const {  reason } = req.body;
-      const { vendorId } = req.params;
-      const { buffer, mimetype } = req.file;
-  
+      const {  chefId } = req.params;
       const newBlockReport = new BlockReport({
-        vendor: vendorId,
+        chef: chefId,
         reason: reason,
         proof: {
-          data: buffer,
-          contentType: mimetype
+          data: req.file.buffer,
+          contentType: req.file.mimetype
         },
         vendor:req.user.id,
+        status: 'Pending',
       });
   
       const savedReport = await newBlockReport.save();
@@ -49,21 +48,26 @@ router.post('/createBlockReport/:vendorId', authenticateToken, upload.single('pr
 
 
 
-//delete a vendor block report
-router.delete('/deleteBlockReport/:reportId', authenticateToken, async (req, res) => {
+//retract a vendor block report
+router.delete('/retractBlockReport/:reportId', authenticateToken, async (req, res) => {
     try {
       const { reportId } = req.params;
 
-      await BlockReport.findByIdAndDelete(reportId);
+      const report=await BlockReport.findById(reportId);
+      if (report.status === 'Approved' || report.status === 'Rejected') {
+        return res.status(400).json({ message: `Report has already been ${report.status}` });
+        
+      }
+      
 
       const adminNotification = new AdminNotification({
         user: '657dab6364bd105aeb65e8c7',
         type: 'Chef Block Report Deleted',
-        notification_text: `A chef block report has been deleted by vendor${req.user.name}.`
+        notification_text: `A chef block report has been retracted by vendor${req.user.name}.`
       });
       await adminNotification.save();
 
-      res.json({ message: 'Report deleted' });
+      return res.json({ message: 'Report successfully retracted' });
 
     } catch (error) {
       console.error(error);
@@ -71,35 +75,29 @@ router.delete('/deleteBlockReport/:reportId', authenticateToken, async (req, res
     }
 });
   
-//get all vendor reports of a logged-in chef
-  router.get('/BlockReports', authenticateToken, async (req, res) => {
-    try {
-      const loggedInChefId = req.user.id;
-    
-      const reports = await BlockReport.find({ chef: loggedInChefId })
-      .populate({ path: 'vendor', select: 'name', model: 'Vendor' })
+router.get('/ChefBlockReports', authenticateToken, async (req, res) => {
+  try {
+    const loggedInVendorId = req.user.id;
+
+    const reports = await VendorBlocksChef.find({ vendor: loggedInVendorId })
       .populate({ path: 'chef', select: 'name', model: 'Chef' });
 
-      // Convert the image buffer to a Base64 string
-      const reportswithBasestring = reports.map(report => {
-        const unit8Array = new Uint8Array(report.proof.data);
-        const base64string = Buffer.from(unit8Array).toString('base64');
-        const vendorName = report.vendor ? report.vendor.name : 'Vendor Name Not Available';
-         const chefName = report.chef ? report.chef.name : 'Chef Name Not Available';
-        return{
-          ...report.toObject(),
-          proof: { data: base64string, contentType: report.proof.contentType },
-          vendor: vendorName, 
-          chef: chefName
-        };
-      });
-     
-      return res.status(200).json(reportswithBasestring);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server Error' });
-    }
+    const reportsWithBase64String = reports.map(report => ({
+      ...report.toObject(),
+      proof: {
+        data: report.proof.data.toString('base64'),
+        contentType: report.proof.contentType,
+      },
+      chef: report.chef ? report.chef.name : 'Chef Name Not Available',
+    }));
+
+    return res.status(200).json(reportsWithBase64String);
+  } catch (error) {
+    console.error('Error fetching block reports:', error);
+    res.status(500).json({ message: 'Error fetching block reports', error: error.message });
+  }
 });
+
   
 //get a specific vendor block report
   router.get('/getVendorReport/:reportId', authenticateToken, async (req, res) => {
@@ -118,5 +116,13 @@ router.delete('/deleteBlockReport/:reportId', authenticateToken, async (req, res
     }
 });
 
- 
+router.get('/getAllChefs', async (req, res) => {
+  try {
+    const chefs = await Chef.find();
+    res.status(200).json(chef.name,chef.email,chef.profile);
+  } catch (error) {
+    console.error('Error getting chefs information:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+});
 module.exports = router;

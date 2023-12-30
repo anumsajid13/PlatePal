@@ -39,7 +39,7 @@ import BlockReportsList from './Chef/pages/ChefVendorBlockReport';
 
 import ChefProfile1 from './Nutrionist/pages/Edit-Profile';
 import Chat from './Nutrionist/pages/Chat';
-
+//Vendor routes
 import VendorSignUp from './Vendor/pages/SignUp_vendor';
 import VendorMainpage from './Vendor/pages/VendorMainpage';
 import IngredientDetails from './Vendor/pages/ProductDetails';
@@ -51,6 +51,8 @@ import AddNewProduct from './Vendor/pages/AddNewProducts';
 import Inbox from './Vendor/pages/chatwithchef';
 import  PasswordResetPage  from './Vendor/pages/PasswordResetPage';
 import OrderDisplay from './Vendor/pages/OrderDisplay';
+import vendorBlocksChef from './Vendor/components/ReportChef';
+
 import Edit1 from './Admin/pages/Edit-P';
 import AcceptCert from './Admin/pages/AcceptCert';
 import Followers from './Nutrionist/pages/Followers';
@@ -119,6 +121,10 @@ function App() {
         <Route path="/vendor/inbox" element={<Inbox/>} />
         <Route path="/vendor/reset-password" element={<PasswordResetPage />} />
          <Route path="/vendor/orders" element={<OrderDisplay />} />
+         <Route path="/vendor/reportChef" element={<vendorBlocksChef />} />
+        
+
+
         <Route path="/Chef/AllCollabs" element={<ChefCollabs/>} />
         <Route path="/Chef/AllReviews" element={<ChefViewReviews/>} />
 

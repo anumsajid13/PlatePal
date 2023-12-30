@@ -1,10 +1,10 @@
 import {React, useState} from 'react';
 import useTokenStore from '../../tokenStore';
-import './reportPopup.css';
-import ChefGenericPopup from '../components/ChefGenericPopup';
+import '../../Chef/components/reportPopup.css';
+import ChefGenericPopup from '../../Chef/components/ChefGenericPopup';
 
 
-const ReportPopUp = ({ vendorId, onClose  }) => {
+const ChefReportPopUp = ({ vendorId, onClose  }) => {
 
     const [reason, setReason] = useState('');
     const [proof, setProof] = useState(null);
@@ -16,7 +16,7 @@ const ReportPopUp = ({ vendorId, onClose  }) => {
     //const { token, setToken } = useTokenStore(); 
 
     const token = localStorage.getItem('token');
-
+     //function to handle proof picture change
      const handleProofChange = (event) => {
         const file = event.target.files[0];
         setProof(file);
@@ -27,10 +27,10 @@ const ReportPopUp = ({ vendorId, onClose  }) => {
     
         const formData = new FormData();
         formData.append('reason', reason);
-        formData.append('proof', proof); 
+        formData.append('proof', proof); // Assuming selectedFile is the uploaded image file
     
         try {
-            const response = await fetch(`http://localhost:9000/chef/createVendorReport/${vendorId}`, {
+            const response = await fetch(`http://localhost:9000/vendor/BlockReport/createVendorReport/${vendorId}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -98,4 +98,4 @@ const ReportPopUp = ({ vendorId, onClose  }) => {
 
 };
 
-export default ReportPopUp;
+export default ChefReportPopUp;
