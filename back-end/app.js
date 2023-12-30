@@ -24,6 +24,7 @@ const Vendor = require('./models/Vendor Schema');
 const VendorBlockReport = require('./models/VendorBlockReport Schema');
 const VendorCollaboration = require('./models/VendorCollaboration Schema');
 const vendorChat = require('./models/Vendor-Chef_Inbox Schema');
+const VendorBlocksChef=require('./models/VendorBlocksChef Schema');
 //app.js
 const express = require('express');
 const mongoose = require('mongoose');
