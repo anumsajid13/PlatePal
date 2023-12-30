@@ -19,11 +19,11 @@
   }
   
   .vendor-item {
-    border: 1px solid #ccc;
+    border: 1px solid #ffb32f;
     padding: 20px;
     margin: 10px;
     border-radius: 8px;
-    background-color:#ffb32f;
+    background-color:#f8d69a;
     text-align: left;
     transition: transform 0.3s ease-in-out;
     cursor:pointer;

@@ -1,0 +1,72 @@
+
+.vendor-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's above other elements */
+  }
+  
+  .vendor-popup {
+    position: relative;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 80%;
+    overflow-y: auto;
+    max-height: 80%;
+    max-width: 80%;
+    
+  }
+  
+  
+  .vendor-popup h2 {
+    margin-bottom: 10px;
+  }
+  
+  .vendor-popup p {
+    margin-bottom: 5px;
+  }
+  
+  .vendor-popup h3 {
+    margin-bottom: 8px;
+  }
+  
+  .ingredientsss-and-imagess {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .ingredient-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .vendor-popup-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .vendor-popup-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 14px;
+  }
+  
+  .vendor-popup-buttons button:hover {
+    background-color: #0056b3;
+  }
+  

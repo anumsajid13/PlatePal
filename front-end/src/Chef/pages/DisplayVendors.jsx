@@ -5,6 +5,7 @@ import ReportPopUp from '../components/ReportPopup';
 import { useParams } from 'react-router-dom';
 import useTokenStore from '../../tokenStore';
 import ChefGenericPopup from '../components/ChefGenericPopup';
+import VendorPopup from './VendorPopup';
 
 const DisplayVendors = () => {
 
@@ -17,6 +18,8 @@ const DisplayVendors = () => {
     const [selectedVendorId, setSelectedVendorId] = useState('');
     const [responseMessage, setResponseMessage] = useState('');
     const [showPopup, setShowPopup] = useState(false);
+    const [selectedVendor, setSelectedVendor] = useState(null); 
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -105,35 +108,8 @@ const DisplayVendors = () => {
                         </div>
                       
                       )}
-                            <h2>{item.name}</h2>
-                            <p>Email: {item.email}</p>
-                            <h3>Ingredients:</h3>
-                            <div className='ingredientsss-and-imagess'>
-                                {item.ingredients.map(ingredient => (
-                                    <ul key={ingredient._id} >
-                                            {ingredient.productImage && typeof ingredient.productImage === 'string' ? (
-                                                <div style={{display:"flex", gap:"10px", flexDirection:'row'}}>
-                                                <img
-                                                src={ingredient.productImage}
-                                                style={{ width: '70px', height: '70px', borderRadius: '70px', objectFit:'cover', justifyContent: 'center', alignItems: 'center' }}
-                                                />
-                                               
-                                                </div>
-                                            
-                                            ) : (
-                                                <div style={{display:"flex", gap:"10px", flexDirection:'row'}}>
-                                                <img
-                                                src={ingredient.productImage.data ? `data:image/jpeg;base64,${ingredient.productImage.data}` : require('../assets/images/no-profile-picture-15257.svg').default} 
-                                               
-                                                style={{ width: '70px', height: '70px', borderRadius: '70px' , objectFit:'cover',  justifyContent: 'center', alignItems: 'center' }}
-                                                />
-                                                </div>
-                                            
-                                            )}
-                                        {ingredient.name} 
-                                    </ul>
-                                ))}
-                            </div>
+                            <h2 onClick={() => setSelectedVendor(item)}  style={{ cursor: 'pointer' }} >{item.name}</h2>
+                            
                             {recipeId !== '1' && (
                                 
                                 <button
@@ -155,6 +131,8 @@ const DisplayVendors = () => {
                 )}
 
                 {showPopup && <ChefGenericPopup message={responseMessage} onClose={handleClosePopup} />}
+
+                {selectedVendor && <VendorPopup vendor={selectedVendor} onClose={() => setSelectedVendor(null)} />}
         </>
     
     );
