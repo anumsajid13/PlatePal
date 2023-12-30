@@ -156,7 +156,7 @@ router.put('/update', upload.single('profilePicture'), authenticateToken, async 
    
   if (ProfilePicture) {
       
-    console.log('heheh')
+    //console.log('heheh')
       chef.profilePicture.data = ProfilePicture.buffer; 
       chef.profilePicture.contentType = ProfilePicture.mimetype;
   }else{

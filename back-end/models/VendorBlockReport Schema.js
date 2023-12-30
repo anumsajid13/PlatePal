@@ -10,6 +10,11 @@ const vendorBlockReportSchema = new mongoose.Schema({
     contentType: String
   },
   chef: { type: mongoose.Schema.Types.ObjectId, ref: 'Chef' },
+  status: {
+    type: String,
+    enum: ['Pending', 'Approved', 'Rejected'],
+    default: 'Pending'
+  }, 
 });
 
 const VendorBlockReport = mongoose.model('VendorBlockReport', vendorBlockReportSchema);

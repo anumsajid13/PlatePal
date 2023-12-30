@@ -70,7 +70,9 @@ const BlockReportsList  = () => {
                        
                     ))
                     ) : (
+                      <div className='no-reportsss'>
                     <p>No reports</p>
+                    </div>
                 )}
                 </div>
             </div>  

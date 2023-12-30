@@ -82,10 +82,10 @@ router.post('/reset-password/:userType/:id/:token', async (req, res) => {
     try {
       const { userType, id, token } = req.params;
 
-      console.log('Received token:', token);
+      //console.log('Received token:', token);
       const { newPassword } = req.body;
   
-      console.log(newPassword)
+      //console.log(newPassword)
       let User;
   
       switch (userType) {
@@ -109,7 +109,7 @@ router.post('/reset-password/:userType/:id/:token', async (req, res) => {
       }
   
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
-      console.log('Decoded:', decoded);
+      //console.log('Decoded:', decoded);
       if (!decoded) {
         return res.status(400).json({ message: 'Error with token' });
       }

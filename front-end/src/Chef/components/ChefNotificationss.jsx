@@ -60,45 +60,52 @@ const ChefNotificationBox = () => {
 
   return (
     <div className="notification-box">
-        <div className="notification-header">
+      <div className="notification-header">
         <span>Notifications</span>
-        
       </div>
       <div className="notification-list">
-      {notifications && notifications.map((notification, index) => (
-         <Link  className='chef-linkss'
-         key={index} 
-         to={
-              notification.type === 'follow'
-             ? '/Chef/myFollowers' 
-             : notification.type === 'message from recipe seeker'
-             ? '/Chef/usersInbox' 
-             : notification.type === 'message'
-             ? '/Chef/vendorsInbox' 
-             : notification.type === 'unfollow'
-             ? '/Chef/myFollowers' 
-             : notification.type === 'comment'
-             ? '/Chef/Mainpage' 
-             : notification.type === 'review'
-             ? '/Chef/AllReviews' 
-             : notification.type === 'Request accepted'
-             ? '/Chef/AllCollabs' 
-             : '#'
-         }
-       >
-         <div className="notification-item">
-         <span className="material-icons" 
-            onClick={() => handleDeleteNotification(notification._id)}  
-            >close</span>
-           <span className="notification-text">{notification.notification_text}</span>
-            <span className="notification-time">{new Date(notification.Time).toLocaleString()}</span>
-            
-         </div>
-        
-       </Link>
-    ))}
+        {notifications.length > 0 ? (
+          notifications.map((notification, index) => (
+            <Link
+              className='chef-linkss'
+              key={index}
+              to={
+                notification.type === 'follow'
+                  ? '/Chef/myFollowers'
+                  : notification.type === 'message from recipe seeker'
+                  ? '/Chef/usersInbox'
+                  : notification.type === 'message'
+                  ? '/Chef/vendorsInbox'
+                  : notification.type === 'unfollow'
+                  ? '/Chef/myFollowers'
+                  : notification.type === 'comment'
+                  ? '/Chef/Mainpage'
+                  : notification.type === 'review'
+                  ? '/Chef/AllReviews'
+                  : notification.type === 'Request accepted'
+                  ? '/Chef/AllCollabs'
+                  : '#'
+              }
+            >
+              <div className="notification-item">
+                <span className="material-icons"
+                  onClick={() => handleDeleteNotification(notification._id)}
+                >
+                  close
+                </span>
+                <span className="notification-text">{notification.notification_text}</span>
+                <span className="notification-time">{new Date(notification.Time).toLocaleString()}</span>
+              </div>
+            </Link>
+          ))
+        ) : (
+          <div className="notification-item">
+            <span>No notifications</span>
+          </div>
+        )}
+      </div>
     </div>
-    </div>
+
   );
 };
 

@@ -274,7 +274,7 @@ const CreateRecipe = () => {
                       <label className='create-recipe-label'>
                         Generate Description:
                         </label>
-                        <input className='create-recipe-input'
+                        <input className='create-recipe-checkboxx'
                           type="checkbox"
                           checked={formData.generateDescription}
                           onChange={handleGenerateDescriptionChange}
@@ -422,7 +422,7 @@ const CreateRecipe = () => {
                         <label className='create-recipe-label' htmlFor="instructions">Instructions</label>
                         {formData.instructions.map((item, index) => (
                             <div key={index}>
-                                <input className='create-recipe-input'
+                                <textarea className='create-recipe-input'
                                 type='text'
                                 value={item}
                                 onChange={(e) => handleArrayFieldChange('instructions', index, e)}
