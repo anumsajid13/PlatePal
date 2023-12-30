@@ -26,7 +26,9 @@ const VendorCollaboration = require('./models/VendorCollaboration Schema');
 const vendorChat = require('./models/Vendor-Chef_Inbox Schema');
 const VendorBlocksChef=require('./models/VendorBlockReport Schema');
 const VendorRating = require('./models/VendorRating Schema');
-const vendorReview = require('./models/vendorReview Schema');
+const VendorReview = require('./models/VendorReview Schema');
+
+
 //app.js
 const express = require('express');
 const mongoose = require('mongoose');
@@ -97,6 +99,9 @@ const collaboration_Request= require('./Vendor/routes/collabRequest');
 const vendorChatRoute = require('./Vendor/routes/inbox');
 const vendorNotificationRoute = require('./Vendor/routes/notificationroute');
 const orderRoute = require('./Vendor/routes/orderRoute');
+const vendorBlockchefRoute = require('./Vendor/routes/blockChef');
+const vendorReviewRoute = require('./Vendor/routes/vendorReview');
+const vendorRatingRoute = require('./Vendor/routes/vendorRating');
 
 const blockreportroVendorRoutes = require('./Chef/routes/blockReport_Routes');
 
@@ -115,6 +120,8 @@ const chefReviews = require('./Chef/routes/ManageReviews_routes');
 //forget password rotues
 const forgetpassword = require('./ForgotPassword/ForgotPasswordRoutes');
 //vendor review route
+
+
 
 
 app.use((req, res, next) => {
@@ -329,6 +336,7 @@ app.use('/collaboration-request',collaboration_Request);
 app.use('/chatWithchef',vendorChatRoute );
 app.use('/vendor/notifications',vendorNotificationRoute );
 app.use('/vendor/cart', orderRoute);
+app.use('/vendor/BlockReport', vendorBlockchefRoute);
 
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);

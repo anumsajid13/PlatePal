@@ -7,7 +7,7 @@ const VendorNotification = require('../../models/Vendor_Notification Schema');
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
 
 // Endpoint for a Chef to give a review
-app.post('/chef/review',authenticateToken, async (req, res) => {
+router.post('/chef/review',authenticateToken, async (req, res) => {
   try {
 
     const chefId = req.user.id; 

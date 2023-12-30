@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
 const Chef = require('../models/Chef Schema');
-const vendor=require('../models/Vendor Schema');
-
+const Vendor = require('../models/Vendor Schema');
 
 const VendorBlocksChefSchema = new mongoose.Schema({
   chef: { type: mongoose.Schema.Types.ObjectId, ref: 'Chef' },
-  vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'vendor' }, 
+  vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' }, // Fix: Change 'vendor' to 'Vendor'
   reason: String,
   proof: {
     data: Buffer,
@@ -20,4 +19,4 @@ const VendorBlocksChefSchema = new mongoose.Schema({
 
 const VendorBlocksChef = mongoose.model('VendorBlocksChef', VendorBlocksChefSchema);
 
-module.exports = ChefBlockReport;
+module.exports = VendorBlocksChef; 
