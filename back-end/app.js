@@ -109,6 +109,10 @@ const collabVendorsChef = require('./Chef/routes/CollabVendors_routes');
 
 const chefReviews = require('./Chef/routes/ManageReviews_routes');
 
+
+//forget password rotues
+const forgetpassword = require('./ForgotPassword/ForgotPasswordRoutes');
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -153,6 +157,8 @@ app.use('/recepieSeeker', Send_msg_to_nutritionist);
 app.use('/recepieSeeker', SearchByRecipe);
 app.use('/recepieSeeker', SearchByChef);
 app.use('/recepieSeeker', DisplayCategories);
+
+app.use('/user', forgetpassword);
 
 const authenticateToken = require('./TokenAuthentication/token_authentication'); 
 

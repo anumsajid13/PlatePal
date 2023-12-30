@@ -143,8 +143,9 @@ router.get('/get', authenticateToken, async (req, res) => {
 //update profile
 router.put('/update', upload.single('profilePicture'), authenticateToken, async (req, res) => {
   const id = req.user.id;
-  const { password, newPassword, ...otherUpdates } = req.body;
-  const ProfilePicture = req.file; 
+  const { oldpassword, newpassword, ...otherUpdates } = req.body;
+  let  ProfilePicture = req.file; 
+
   try {
     const chef = await Chef.findById(id);
 
@@ -152,27 +153,42 @@ router.put('/update', upload.single('profilePicture'), authenticateToken, async 
       return res.status(404).json({ message: 'Chef not found' });
     }
 
-
-  if (ProfilePicture !== undefined || ProfilePicture !== null) {
+   
+  if (ProfilePicture) {
       
+    console.log('heheh')
       chef.profilePicture.data = ProfilePicture.buffer; 
       chef.profilePicture.contentType = ProfilePicture.mimetype;
+  }else{
+    ProfilePicture= chef.profilePicture;
   }
 
-  if(password && newPassword){
+ 
+  if(oldpassword !== 'undefined' && newpassword !== 'undefined') {
 
-    const passwordMatch = await bcrypt.compare(password, chef.password);
+    //console.log('passworddddd')
+    const passwordMatch = await bcrypt.compare(oldpassword, chef.password);
 
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Incorrect password' });
     }
-    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    const hashedNewPassword = await bcrypt.hash(newpassword, 10);
     chef.password = hashedNewPassword;
     
   }
-     // Only update other fields if they exist in the request body
-     if (Object.keys(otherUpdates).length > 0) {
-      Object.assign(chef, otherUpdates);
+ 
+    //exclude profilePicture, oldpassword, newpassword from otherUpdates
+    const filteredUpdates = Object.keys(otherUpdates)
+      .filter(key => !['profilePicture'].includes(key))
+      .reduce((obj, key) => {
+        obj[key] = otherUpdates[key];
+        return obj;
+      }, {});
+
+    //update chef with the filteredUpdates
+    if (Object.keys(filteredUpdates).length > 0) {
+      //console.log('Other Updates:', filteredUpdates);
+      Object.assign(chef, filteredUpdates);
     }
 
     const updatedChef = await chef.save();

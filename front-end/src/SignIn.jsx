@@ -240,8 +240,7 @@ const SignInPage =  () => {
           >
             Home
           </Link>
-          
-        
+
               <button  className="landing-signin-button" > <Link to="/signin" className='link'>Log In</Link></button>
               <button  className="landing-signup-button-2"><Link to="/signup" className='link'>Sign Up</Link></button>
           
@@ -275,6 +274,7 @@ const SignInPage =  () => {
               </select>
             </label>
             <br />
+          <Link to="/forgot-password" className='chef-linkss' >forgot password ?</Link>
             <button className='button-signin' type="button" onClick={handleSignIn}>
               Sign In
             </button>
