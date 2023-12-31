@@ -120,6 +120,7 @@ const chefReviews = require('./Chef/routes/ManageReviews_routes');
 //forget password rotues
 const forgetpassword = require('./ForgotPassword/ForgotPasswordRoutes');
 //vendor review route
+const vendorReview = require('./Chef/routes/vendor_review');
 
 
 
@@ -358,6 +359,9 @@ app.use('/chef', chatwithvendorChef);
 
 //chef reviews (cheff)
 app.use('/chef', chefReviews);
+
+//vendor reviews (chef)
+app.use('/chef', vendorReview);
 
 
 app.listen(port, () => {
