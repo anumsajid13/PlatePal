@@ -339,6 +339,7 @@ app.use('/chatWithchef',vendorChatRoute );
 app.use('/vendor/notifications',vendorNotificationRoute );
 app.use('/vendor/cart', orderRoute);
 app.use('/vendor/BlockReport', vendorBlockchefRoute);
+app.use('/vendor/review', vendorReviewRoute);
 
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);

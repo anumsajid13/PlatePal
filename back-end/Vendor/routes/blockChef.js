@@ -35,7 +35,7 @@ router.post('/createBlockReport/:chefId', authenticateToken, upload.single('proo
         sender: req.user.id, 
         senderType: 'Vendor',
         type: 'Chef Block Report',
-        notification_text: `A chef block report has been submitted by vendor ${req.user.name}.`
+        notification_text: `A chef block report has been submitted by vendor ${req.user.username}.`
       });
       await adminNotification.save();
   
@@ -59,11 +59,11 @@ router.delete('/retractBlockReport/:reportId', authenticateToken, async (req, re
         
       }
       
-
+      await BlockReport.findByIdAndDelete(reportId);
       const adminNotification = new AdminNotification({
         user: '657dab6364bd105aeb65e8c7',
         type: 'Chef Block Report Deleted',
-        notification_text: `A chef block report has been retracted by vendor${req.user.name}.`
+        notification_text: `A chef block report has been retracted by vendor${req.user.username}.`
       });
       await adminNotification.save();
 
@@ -103,7 +103,7 @@ router.get('/ChefBlockReports', authenticateToken, async (req, res) => {
   router.get('/getVendorReport/:reportId', authenticateToken, async (req, res) => {
     try {
       const { reportId } = req.params;
-      const report = await BlockReport.findById(reportId);
+      const report = await Blockeport.findById(reportId);
 
       if (!report) {
         return res.status(404).json({ message: 'Report not found' });
@@ -118,11 +118,12 @@ router.get('/ChefBlockReports', authenticateToken, async (req, res) => {
 
 router.get('/getAllChefs', async (req, res) => {
   try {
-    const chefs = await Chef.find();
-    res.status(200).json(chef.name,chef.email,chef.profile);
+    const chefs = await Chef.find({}, { name: 1, email: 1, profilePicture: 1 });
+    res.status(200).json(chefs);
   } catch (error) {
     console.error('Error getting chefs information:', error);
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
+
 module.exports = router;
