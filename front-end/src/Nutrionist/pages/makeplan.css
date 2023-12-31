@@ -5,29 +5,29 @@
 }
 
 .search-container14 {
-  display: flex;
-  justify-content: space-between;
+
   align-items: center;
   padding: 20px;
+  max-width: 200%;
 }
 
 .search-card14 {
   border-radius: 10px;
-    margin-top: 3%;
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-right: 20px;
-    background-color: rgb(228, 207, 117); 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-    width:90%;
-    margin-left: 5%;
+  margin-top: 3%;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #ffe853; 
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  width:80%;
+  margin-right: 200px;
+  margin-left: 30px;
 }
 
 .search-recipe14 {
   margin-left: 10px;
-  width: 70%; /* Adjust the width of the search input */
+  width: 100%; /* Adjust the width of the search input */
 }
 
 .search-icon14 {
@@ -45,22 +45,35 @@
 }
 
 .recipe-item14 {
-  width: calc(33.33% - 20px); /* Calculate the width for three items per row with a gap of 20px */
-  box-sizing: border-box;
-  padding: 10px; /* Reduce padding */
+  width: calc(25% - 20px); /* Change the width for four items per row with a gap of 20px */
+  padding: 5px; /* Reduce padding */
+    box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: rgb(255,232,83);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px; /* Add margin to create space between rows */
+
+  overflow: hidden;
+  transition: height 0.3s ease-in-out;
 }
+
+
 
 .recipe-name14 {
   font-size: 1.2rem; /* Adjust the font size */
   font-weight: bold;
   margin-bottom: 8px; /* Adjust margin */
   font-family: Chonburi;
+
 }
+
+.recipe-image14 img {
+  width: 100%;
+  max-height: 180px; /* Adjust the max height of the images */
+  border-radius: 10px;
+}
+
 
 .recipe-description14 {
   margin-bottom: 8px; /* Adjust margin */
@@ -85,11 +98,6 @@
   margin-bottom: 3px; /* Adjust margin */
 }
 
-.recipe-image14 img {
-  width: 100%;
-  border-radius: 10px;
-}
-
 .plus-icon14 {
   margin-left: 5px; /* Adjust margin */
   cursor: pointer;
@@ -106,7 +114,7 @@
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #4caf50;
+  background-color: rgb(255,182,47);
   color: white;
   padding: 15px;
   border-radius: 5px;
@@ -128,10 +136,19 @@
   display: block;
   margin-top: 8px; /* Adjust the margin-top as needed */
   font-weight: bold;
-  color: #007bff; /* Change the color to your preference */
+  color: rgb(255,182,47); /* Change the color to your preference */
   cursor: pointer;
 }
 
 .show-more-link:hover {
   text-decoration: underline;
+}
+
+.wow
+{
+  padding:10px;
+  border:2px solid  white;
+  border-radius: 10px;
+  font-size:14px;
+  background-color:  rgb(255,182,47);
 }

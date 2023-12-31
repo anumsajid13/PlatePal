@@ -32,10 +32,14 @@ const MealPlansPage = () => {
     };
 
     fetchMealPlans();
-  }, [nutritionistId]);
+  }, [nutritionistId,notification]);
 
-  const handleSendToUser = async (user, mealPlanId) => {
+  const handleSendToUser = async (user, mealPlanId,name) => {
     try {
+
+      const decodedToken = jwtDecode(token);
+      const nutritionistName = decodedToken.name;
+  
       const response = await fetch('http://localhost:9000/n/send-notification', {
         method: 'POST',
         headers: {
@@ -43,14 +47,18 @@ const MealPlansPage = () => {
         },
         body: JSON.stringify({
           userId: user,
-          type: 'mealPlan',
-          notification_text: `Meal plan sent by ${nutritionistName}`,
+          type: 'meal plan',
+          notification_text: `Meal plan sent by ${name}`,
         }),
       });
 
       if (!response.ok) {
         throw new Error('Failed to send notification');
       }
+
+      const data1 = await response.json();
+      console.log('Notification response:', data1);
+  
 
       // Update the 'seen' field to true for the meal plan
       const markSeenResponse = await fetch(`http://localhost:9000/n/mark-seen/${mealPlanId}`, {
@@ -61,7 +69,6 @@ const MealPlansPage = () => {
         throw new Error('Failed to mark meal plan as seen');
       }
 
-      const data = await response.json();
       setNotification(`Meal plan sent to user`);
        // Clear notification after 3 seconds (adjust as needed)
     setTimeout(() => {
@@ -91,7 +98,7 @@ const MealPlansPage = () => {
             <p>Date Created: {new Date(mealPlan.date).toLocaleDateString()}</p>
             <button
               className="ViewBtn"
-              onClick={() => handleSendToUser(mealPlan.user._id, mealPlan._id)}
+              onClick={() => handleSendToUser(mealPlan.user._id, mealPlan._id,mealPlan.nutritionist.name)}
               disabled={sentToUser.includes(mealPlan._id)}
             >
               {sentToUser.includes(mealPlan._id) ? 'Sent' : 'Send to User'}

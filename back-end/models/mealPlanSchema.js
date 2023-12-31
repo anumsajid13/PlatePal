@@ -15,6 +15,11 @@ const mealPlanSchema = new mongoose.Schema({
     },seen: {
       type: Boolean,
       default: false,
+    },
+    amount:
+    {
+      type:Number,
+      default:20
     }
   });
   

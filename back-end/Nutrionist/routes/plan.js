@@ -155,9 +155,8 @@ router.post('/n-createplan/:notificationId', async (req, res) => {
 // Endpoint to send a notification
 router.post('/send-notification', async (req, res) => {
   try {
-    const { userId,  notification_text } = req.body;
+    const { userId,  notification_text ,type } = req.body;
 
-    const type = 'meal plan';
 
 
     // Create a new notification
@@ -213,6 +212,10 @@ router.get('/unsent-plans/:nutritionistId', async (req, res) => {
         path: 'user',
         model: 'RecipeSeeker',
         select: 'username',
+      }).populate({
+        path: 'nutritionist',
+        model: 'Nutritionist',
+        select: 'name', // Add other fields if needed
       })
       .populate({
         path: 'recipes',

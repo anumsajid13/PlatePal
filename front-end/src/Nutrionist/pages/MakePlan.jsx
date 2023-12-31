@@ -2,7 +2,7 @@
 import NutNav from '../components/N-Nav';
 import React, { useEffect, useState } from 'react';
 import useTokenStore from '../../tokenStore.js';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import './makeplan.css'; // Updated CSS file name
 
 const Discover = () => {
@@ -13,6 +13,7 @@ const Discover = () => {
   const { userId, bmi } = useParams();
   const [notification, setNotification] = useState('');
   const [recipeStates, setRecipeStates] = useState({});
+  const navigate = useNavigate();
 
   const fetchRecipes = async () => {
     try {
@@ -74,6 +75,8 @@ const Discover = () => {
 
       console.log("food", data);
       setSelectedRecipes([]);
+
+      navigate('/n/planmade/:nutritionistId')
     } catch (error) {
       console.error('Error adding recipes to meal plan:', error.message);
     }
@@ -83,16 +86,34 @@ const Discover = () => {
     setSearchQuery(event.target.value);
   };
 
+  const handleShowMoreToggle = (recipeId) => {
+    setRecipeStates((prev) => {
+      const newStates = { [recipeId]: !prev[recipeId] };
+  
+      // Reset state for other recipes
+      Object.keys(prev).forEach((id) => {
+        if (id !== recipeId) {
+          newStates[id] = false;
+        }
+      });
+  
+      return newStates;
+    });
+  };
+  
+  
   return (
     <>
       <NutNav />
+      {notification && <div className="notification">{notification}</div>}
+
       <div className='main-container14'>
         <div className="search-container14">
           <div className="search-card14">
             <input
               className='search-recipe14'
               type="text"
-              placeholder="Search..."
+              placeholder="Enter Calorie"
               value={searchQuery}
               onChange={handleSearchChange}
             />
@@ -101,16 +122,20 @@ const Discover = () => {
         </div>
         <div className="recipe-list14">
           {recipes.map((recipe) => (
-            <div key={recipe._id} className="recipe-item14">
-              <div className="recipe-name14">
+            <div key={recipe._id} className={`recipe-item14 ${recipeStates[recipe._id] ? 'expanded' : ''}`}>
+            <div className="recipe-name14">
                 {recipe.title}
-                <span className="material-icons search-icon14" onClick={() => handleAddToMealPlan(recipe._id)}>
-                  add_circle
-                </span>
-                <span className="material-icons remove-icon" onClick={() => handleRemoveFromMealPlan(recipe._id)}>
-                remove_circle
-              </span>
+              
               </div>
+
+              <div className="recipe-icons">
+                  <span className="material-icons search-icon14" onClick={() => handleAddToMealPlan(recipe._id)}>
+                    add_circle
+                  </span>
+                  <span className="material-icons remove-icon" onClick={() => handleRemoveFromMealPlan(recipe._id)}>
+                    remove_circle
+                  </span>
+                </div>
               <div className="recipe-image14">
                 <img src={`data:${recipe.recipeImage.contentType};base64,${recipe.recipeImage.data}`} alt="Recipe" />
               </div>
@@ -118,12 +143,7 @@ const Discover = () => {
                 {recipe.description}
                 <span
                   className="show-more-link"
-                  onClick={() =>
-                    setRecipeStates((prev) => ({
-                      ...prev,
-                      [recipe._id]: !prev[recipe._id],
-                    }))
-                  }
+                  onClick={() => handleShowMoreToggle(recipe._id)}
                 >
                   {recipeStates[recipe._id] ? "Show Less" : "Show More"}
                 </span>
@@ -175,7 +195,7 @@ const Discover = () => {
         </div>
         {selectedRecipes.length > 0 && (
           <div>
-            <button onClick={handleCreateMealPlan}>Create Meal Plan</button>
+            <button  className ="wow" onClick={handleCreateMealPlan}>Create Meal Plan</button>
           </div>
         )}
       </div>
