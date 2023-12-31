@@ -4,7 +4,7 @@ const authenticateToken = require('../../TokenAuthentication/token_authenticatio
 const vendor = require('../../models/Vendor Schema');
 const Chef=require('../../models/Chef Schema');
 const AdminNotification = require('../../models/Admin_Notification Schema'); 
-const BlockReport = require('../../models/vendorBlockchef Schema');
+const BlockReport = require('../../models/VendorBlockchef Schema');
 const multer = require('multer');
 
 //multer configuration
@@ -79,7 +79,7 @@ router.get('/ChefBlockReports', authenticateToken, async (req, res) => {
   try {
     const loggedInVendorId = req.user.id;
 
-    const reports = await VendorBlocksChef.find({ vendor: loggedInVendorId })
+    const reports = await BlockReport.find({ vendor: loggedInVendorId })
       .populate({ path: 'chef', select: 'name', model: 'Chef' });
 
     const reportsWithBase64String = reports.map(report => ({
@@ -93,7 +93,7 @@ router.get('/ChefBlockReports', authenticateToken, async (req, res) => {
 
     return res.status(200).json(reportsWithBase64String);
   } catch (error) {
-    console.error('Error fetching block reports:', error);
+
     res.status(500).json({ message: 'Error fetching block reports', error: error.message });
   }
 });

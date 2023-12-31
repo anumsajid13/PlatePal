@@ -24,9 +24,10 @@ const Vendor = require('./models/Vendor Schema');
 const VendorBlockReport = require('./models/VendorBlockReport Schema');
 const VendorCollaboration = require('./models/VendorCollaboration Schema');
 const vendorChat = require('./models/Vendor-Chef_Inbox Schema');
-const VendorBlocksChef=require('./models/VendorBlockReport Schema');
+const VendorBlocksChef = require('./models/VendorBlockchef Schema');
 const VendorRating = require('./models/VendorRating Schema');
 const VendorReview = require('./models/VendorReview Schema');
+
 
 
 //app.js
