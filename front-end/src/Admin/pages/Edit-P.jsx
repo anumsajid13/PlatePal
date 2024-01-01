@@ -5,6 +5,8 @@ import useTokenStore from '../../tokenStore';
 import ChefGenericPopup from '../../Chef/components/ChefGenericPopup';
 import NutNav from '../components/AdminNav';
 import AdminNav from '../components/AdminNav';
+import { jwtDecode } from 'jwt-decode';
+
 
 const Edit1 = () => {
 
@@ -28,7 +30,10 @@ const Edit1 = () => {
         setProfilePictureFile(file);
     };
     
-    console.log(token)
+    console.log('edit',token)
+    const decodedToken = jwtDecode(token);
+  //const currentUserId = decodedToken.name;
+  console.log('decodedToken',decodedToken)
     useEffect(() => {
         fetchChefData();
     }, []);
@@ -48,7 +53,7 @@ const Edit1 = () => {
           }
     
           const data = await response.json();
-          console.log(data)
+          console.log('admin',data)
           setChef(data);
         } catch (error) {
           console.error(error);

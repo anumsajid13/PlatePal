@@ -1,7 +1,7 @@
 import React from 'react';
 import './NutritionistPopup.css';
 
-const NutritionistPopup = ({ nutritionist, onClose, onFollow }) => {
+const NutritionistPopup = ({ nutritionist, onClose, isFollowingNut = false,onToggleFollow }) => {
   return (
     <div className="nutritionist-popup">
       <div className="popup-content">
@@ -17,7 +17,11 @@ const NutritionistPopup = ({ nutritionist, onClose, onFollow }) => {
           <h3 className="popup-details-h3">{nutritionist.name}</h3>
           <h4>{nutritionist.email}</h4>
           <p>{nutritionist.description}</p>
-          <button className="popup-details-button"  onClick={() => onFollow(nutritionist._id)}>Follow</button>
+          <button className="popup-details-button" 
+           onClick={onToggleFollow}>
+             {isFollowingNut && 'Following'}
+            {!isFollowingNut && 'Follow Chef'}
+          </button>
         </div>
       </div>
     </div>

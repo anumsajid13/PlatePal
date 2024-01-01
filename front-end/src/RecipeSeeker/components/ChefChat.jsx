@@ -12,7 +12,7 @@ const ChefChat = () => {
   const [chatMessages, setChatMessages] = useState([]);
   const token = useTokenStore.getState().token;
   const decodedToken = jwtDecode(token);
-  const currentUserId = decodedToken.id;
+  const currentUserId = decodedToken.name;
   console.log('decodedToken',decodedToken)
 
   useEffect(() => {
@@ -130,7 +130,7 @@ const ChefChat = () => {
         <div className="chat-box">
           {selectedChef && (
             <>
-              <div className="chat-header">
+              <div className="chat-header-user">
                 <h2>Chef {selectedChefName}</h2>
               </div>
               <div className="chat-messages-between-chefanduser">

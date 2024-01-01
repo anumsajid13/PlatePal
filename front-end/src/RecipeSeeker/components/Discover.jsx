@@ -157,7 +157,7 @@ const Discover = () => {
 
   const fetchRecipes_Category = async (clickedCategory) => {
     try {
-      let url = `http://localhost:9000/recepieSeeker//searchByCategory/${clickedCategory}`;
+      let url = `http://localhost:9000/recepieSeeker/searchByCategory/${clickedCategory}`;
 
       const response = await fetch(url);
       const data = await response.json();

@@ -110,7 +110,7 @@ const ChefUserInboxx = () => {
                     className={`chef-option ${selectedUser === user._id ? 'selected' : ''}`}
                     onClick={() => handleChefClick(user._id, user.name)}
                     >
-                     {console.log("Profile pic data",user.profilePicture)}
+                    
                      {user.profilePicture && typeof user.profilePicture === 'string' ? (
                         <div style={{display:"flex", gap:"10px", flexDirection:'row'}}>
                         <img

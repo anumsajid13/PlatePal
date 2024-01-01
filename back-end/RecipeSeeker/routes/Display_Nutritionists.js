@@ -102,7 +102,7 @@ router.get('/allNutritionists', async (req, res) => {
       }
     });
 
-    console.log(nutritionists);
+  //  console.log(nutritionists);
     res.status(200).json({ nutritionists: nutritionistsWithBase64Image });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });

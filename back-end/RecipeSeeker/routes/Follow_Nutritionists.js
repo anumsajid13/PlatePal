@@ -6,7 +6,7 @@ const nutritionist_Notification = require('../../models/Nutritionist_Notificatio
 const RecipeSeeker = require('../../models/RecipeSeekerSchema');
 
 // Route for a RecipeSeeker to follow a Chef
-router.post('/followNutritionst/:nutId', authenticateToken, async (req, res) => {
+router.post('/followNut/:nutId', authenticateToken, async (req, res) => {
     try {
       const { nutId } = req.params;
       const recipeSeekerId = req.user.id; 
@@ -51,5 +51,73 @@ router.post('/followNutritionst/:nutId', authenticateToken, async (req, res) => 
       res.status(500).json({ message: 'Internal server error', error: error.message });
     }
   });
+
+  router.post('/unfollowNut/:nutId', authenticateToken, async (req, res) => {
+    try {
+      const { nutId } = req.params;
+      const recipeSeekerId = req.user.id;
+  
+      const nut = await Nutritionist.findById(nutId);
+      if (!nut) {
+        return res.status(404).json({ message: 'Nutritionist not found' });
+      }
+  
+      const recipeSeeker = await RecipeSeeker.findById(recipeSeekerId);
+      if (!recipeSeeker) {
+        return res.status(404).json({ message: 'RecipeSeeker not found' });
+      }
+  
+     
+      if (!recipeSeeker.followings.includes(nutId)) {
+        return res.status(400).json({ message: 'RecipeSeeker is not following the Nut' });
+      }
+  
+      await RecipeSeeker.updateOne({ _id: recipeSeekerId }, { $pull: { followings: nutId } });
+  
+     
+      await Nutritionist.updateOne({ _id: nutId }, { $pull: { followers: recipeSeekerId } });
+  
+ 
+      const notificationText = `${recipeSeeker.name} stopped following you.`;
+      const nutritionistNotification = new nutritionist_Notification({
+        user: nutId,
+        type: 'unfollow',
+        sender:recipeSeekerId,
+        notification_text: notificationText,
+      });
+      await nutritionistNotification.save();
+  
+      res.status(200).json({ message: 'RecipeSeeker is now unfollowing the Nutritionist' });
+    } catch (error) {
+      res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+  });
+  
+
+  
+router.get('/nutritionist-followings', authenticateToken, async (req, res) => {
+  try {
+    const recipeSeekerId = req.user.id; 
+     console.log("user id: ",recipeSeekerId)
+    const recipeSeeker = await RecipeSeeker.findById(recipeSeekerId);
+    if (!recipeSeeker) {
+      return res.status(404).json({ message: 'RecipeSeeker not found' });
+    }
+
+    const populatedRecipeSeeker = await recipeSeeker
+      .populate({
+        path: 'followings',
+        select: 'name ', 
+      });
+
+    const followingsWithNames = populatedRecipeSeeker.followings;
+
+    res.status(200).json({ followings: followingsWithNames });
+  } catch (error) {
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+});
+
+
   
   module.exports = router;

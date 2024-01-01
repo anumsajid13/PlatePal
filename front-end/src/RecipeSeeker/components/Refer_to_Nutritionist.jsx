@@ -56,6 +56,7 @@ const ConsultNutritionist = () => {
       } else {
         const data = await response.json();
         console.log('Notification sent successfully:', data.message);
+        alert("Notification for Meal Plan sent successfully")
       }
     } catch (error) {
       console.error('Error sending notification:', error);

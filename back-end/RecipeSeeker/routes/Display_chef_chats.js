@@ -56,13 +56,14 @@ router.get('/UserNutrchatMessages/:nutID', authenticateToken, async (req, res) =
       return res.status(404).json({ message: 'UserNutritionistInbox not found' });
     }
 
+
     const chatMessages = userNutrInbox.messages.map((message) => ({
       _id: message._id,
       message: message.message,
       author: message.author,
       time: message.time,
     }));
-     console.log("chat msgs: ",chatMessages)
+    
 
     res.status(200).json({ messages: chatMessages });
   } catch (error) {
