@@ -4,7 +4,6 @@ import './Nsignup.css';
 import useNavbarStore from '../../navbarStore';
 import { Link, useNavigate   } from 'react-router-dom';
 
-
 const RegisterN = () =>{
 
     const navigate = useNavigate();
@@ -12,6 +11,8 @@ const RegisterN = () =>{
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
+    const [description, setDescription] = useState('');
+
     const [password, setPassword] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
     const [certificationImage, setCertificationImage] = useState(null);
@@ -19,7 +20,6 @@ const RegisterN = () =>{
     const [showSuccess, setShowSuccess] = useState(false);
     const [showError, setShowError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [description, setDescription] = useState('');
 
     const handleClose = () => {
         setShowSuccess(false);
@@ -40,9 +40,10 @@ const RegisterN = () =>{
           formData.append('email', email);
           formData.append('password', password);
           formData.append('profilePicture', profilePicture);
-          formData.append('certificationImage', certificationImage);
-          formData.append('description', description); // Add description to form data
+          formData.append('description', description);
 
+          formData.append('certificationImage', certificationImage);
+    
           const response = await fetch('http://localhost:9000/n/signup', {
             method: 'POST',
             body: formData,
@@ -77,36 +78,30 @@ const RegisterN = () =>{
     return (
 
         <>
-            <nav className="navbar" style={{ height: '45px' }}>
+             <nav className="navbar-landingpage">
+                {/* Plate Pal logo on the left */}
                 <div className="logo">Plate Pal</div>
+
+                {/* Clickable components on the right */}
                 <div className="nav-links">
-                <Link to="/"  style={{ color: 'black', textDecoration: 'none' }} onClick={() => setActiveLink('Home')} className={activeLink === 'Home' ? 'active-link' : ''}>
-                Home
+                <Link
+                    to="/"
+                    style={{ color: 'black', textDecoration: 'none', marginRight:'5%'}}
+                    onClick={() => setActiveLink('Home')}
+                    className={activeLink === 'Home' ? 'active-link' : ''}
+                >
+                    Home
                 </Link>
-                <div onClick={() => setActiveLink('Contact Us')} className={activeLink === 'Contact Us' ? 'active-link' : ''}>
-                    Contact Us
-                </div>
-                <div onClick={() => setActiveLink('About Us')} className={activeLink === 'About Us' ? 'active-link' : ''}>
-                    About Us
-                </div>
-                <div className="icon-link dropdown" title="Profile" onClick={toggleDropdown}>
-                    <span className="material-icons google-icon">person</span>
-                    {showDropdown && (
-                    <div className="dropdown-menu">
-                        <Link to="/signup" className="link">
-                        Sign Up
-                        </Link>
-                        <Link to="/signin" className="link">
-                        Sign In
-                        </Link>
-                    </div>
-                    )}
-                </div>
+                    
+                
+                    <button  className="landing-signin-button" > <Link to="/signin" className='link'>Log In</Link></button>
+                    <button  className="landing-signup-button-2"><Link to="/signup" className='link'>Sign Up</Link></button>
+                
                 </div>
             </nav>
 
             <div className="chef-signup-container">
-                <div className='chef-for-flex'>
+                <div className='chef-chef-for-flex'>
                     <form className="chef-card-container1">
                         <h2 className='chl1'>Nutrionist Sign Up</h2>
                             <label className="chef-form-label">
@@ -121,7 +116,6 @@ const RegisterN = () =>{
                                 Email:
                             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="chef-form-input" />
                             </label>
-
                             <label className="chef-form-label">
                                 Description:
                                 <textarea
@@ -142,13 +136,13 @@ const RegisterN = () =>{
                                 Certificate PDF:
                             <input className='Profile-Picture' type="file" onChange={(e) => setCertificationImage(e.target.files[0])}  />
                             </label>
-                            <button type="button" onClick={handleSignUp} disabled={loading} className="chef-form-button">
+                            <button type="button" onClick={handleSignUp} disabled={loading} className="chef-chef-form-button">
                             {loading ? 'Signing Up...' : 'Sign Up'}
                             </button>
                     
                     </form>
 
-                    <div className='chef-image-side'></div>
+                    <div className='chef-chef-image-side'></div>
                 </div>
             </div>
 

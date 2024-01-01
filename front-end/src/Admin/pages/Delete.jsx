@@ -19,33 +19,32 @@ const ChefList = () => {
 
   const token = useTokenStore((state) => state.token);
 
+  const fetchAllData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const chefResponse = await fetch('http://localhost:9000/admin/list-all-chefs');
+      const chefData = await chefResponse.json();
+      setChefs(chefData);
+
+      const vendorResponse = await fetch('http://localhost:9000/admin/list-all-vendors');
+      const vendorData = await vendorResponse.json();
+      setVendor(vendorData);
+
+      const nutriResponse = await fetch('http://localhost:9000/admin/list-all-nutritionists');
+      const nutriData = await nutriResponse.json();
+      setNutri(nutriData);
+
+      console.log("coo", chefData);
+    } catch (error) {
+      console.error(error);
+      setError('Error fetching data');
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchAllData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const chefResponse = await fetch('http://localhost:9000/admin/list-all-chefs');
-        const chefData = await chefResponse.json();
-        setChefs(chefData);
-
-        const vendorResponse = await fetch('http://localhost:9000/admin/list-all-vendors');
-        const vendorData = await vendorResponse.json();
-        setVendor(vendorData);
-
-        const nutriResponse = await fetch('http://localhost:9000/admin/list-all-nutritionists');
-        const nutriData = await nutriResponse.json();
-        setNutri(nutriData);
-
-        console.log("coo", chefData);
-      } catch (error) {
-        console.error(error);
-        setError('Error fetching data');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchAllData();
   }, [setChefs, setLoading, setError, setVendor, setNutri,blockReports]);
 
@@ -65,6 +64,8 @@ const ChefList = () => {
   
         if (response.ok) {
           setPopupMessage(`User (${entityType}) deleted successfully`);
+          fetchAllData();
+
         } else {
           setPopupMessage(result.error || 'Error deleting user');
         }

@@ -57,7 +57,7 @@ const BlockReports = () => {
 
   useEffect(() => {
     fetchBlockReports(token);
-  }, [token]);
+  }, [token,blockReports]);
 
   return (
     <div>

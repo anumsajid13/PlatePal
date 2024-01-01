@@ -26,7 +26,7 @@ router.delete('/delete-nutritionist/:nutritionistId',  autheticateToken, async (
       await NutritionistNotification.deleteMany({ user: nutritionist._id });
   
       // Delete the nutritionist
-      await nutritionist.remove();
+      await Nutritionist.findByIdAndDelete(req.params.nutritionistId);
   
       }
       
@@ -53,8 +53,8 @@ router.delete('/delete-chef/:chefId',  autheticateToken, async (req, res) => {
       await ChefNotification.deleteMany({ user: chef._id });
   
       // Delete the chef
-      await chef.remove();
-      }
+      await Chef.findByIdAndDelete(req.params.chefId);
+    }
   
       return res.json({ message: 'Chef deleted successfully' });
     } catch (error) {
