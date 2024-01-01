@@ -39,4 +39,30 @@ router.get('/recipeSeeker/:id', authenticateToken, async (req, res) => {
   }
 });
 
+router.get('/get-subscription-count',authenticateToken, async (req, res) => {
+  const  userId  = req.user.id;
+
+  try {
+    const recipeSeeker = await RecipeSeeker.findById(userId);
+
+    if (!recipeSeeker) {
+      return res.status(404).json({ message: 'Recipe seeker not found' });
+    }
+
+    const subscriptionCount = recipeSeeker.SubscribtionCount;
+    recipeSeeker.SubscribtionCount=0;
+
+  //  recipeSeeker.SubscribtionCount_Paid=0;
+
+    recipeSeeker.save();
+
+    res.json({ subscriptionCount });
+  } catch (error) {
+    console.error('Error fetching subscription count:', error.message);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+
+
 module.exports = router;

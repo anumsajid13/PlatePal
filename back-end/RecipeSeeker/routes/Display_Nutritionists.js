@@ -51,6 +51,7 @@ router.get('/mealPlans', async (req, res) => {
         bmi: mealPlan.bmi,
         calorieRange: mealPlan.calorieRange,
         date: mealPlan.date,
+        isSubscribed:mealPlan.isSubscribed
       };
     }));
 

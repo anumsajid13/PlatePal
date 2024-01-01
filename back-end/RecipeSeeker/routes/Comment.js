@@ -18,16 +18,13 @@ router.post('/addComment/:recipeId', authenticateToken, async (req, res) => {
     if (!recipe) {
       return res.status(404).json({ message: 'Recipe not found' });
     }
-
     // Create a new comment
     const newComment = new Comment({
       comment: commentText,
       user: userId,
       recipe: recipeId,
     });
-
     const savedComment = await newComment.save();
-
     // Update the recipe's comments array
     recipe.comments.push(savedComment._id);
     await recipe.save();

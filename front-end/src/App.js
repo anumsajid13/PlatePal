@@ -90,7 +90,7 @@ function App() {
         <Route path="/admin/check-c" element={<AcceptCert/>} />
         <Route path="/admin/chef-block" element={<ChefBlockReports/>} />
         <Route path="/admin/n-block" element={<NutritionistBlockReports/>} />
-        TransactionComponent
+        
 
 
         <Route path="/signup/chef" element={<ChefSignUp/>}/>

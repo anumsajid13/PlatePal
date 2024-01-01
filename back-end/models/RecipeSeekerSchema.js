@@ -26,11 +26,23 @@ const recipeSeekerSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String
   },
+ 
   address: String,
   creditCardInfo: String,
   recipeFavourites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
   followings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Chef' }],
   notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User_Notification' }],
+
+  SubscribtionCount: {
+    type:Number,
+    default:0
+  },
+  SubscribtionCount_Paid: {
+    type:Number,
+    default:0
+  },
+
+
 });
 
 const RecipeSeeker = mongoose.model('RecipeSeeker', recipeSeekerSchema);

@@ -19,7 +19,12 @@ const mealPlanSchema = new mongoose.Schema({
     amount:
     {
       type:Number,
-      default:20
+      default:200
+    }
+    ,
+    isSubscribed:{
+      type: Boolean,
+      default: false,
     }
   });
   

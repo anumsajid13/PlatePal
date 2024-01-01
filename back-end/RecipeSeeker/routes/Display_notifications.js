@@ -23,19 +23,15 @@ router.delete('/deletenotifications/:id', authenticateToken, async (req, res) =>
   try {
       const notificationId = req.params.id;
       const userId = req.user.id;
-
-
       console.log("userId: ",userId )
       console.log("notification id: ",notificationId )
       const notification = await User_Notification.findOne({
           _id: notificationId,
           user: userId
       });
-
       if (!notification) {
           return res.status(404).json({ message: 'Notification not found' });
       }
-
       await User_Notification.findByIdAndDelete(notificationId);
 
       res.status(200).json({ message: 'Notification deleted successfully' });

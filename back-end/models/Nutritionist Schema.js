@@ -12,6 +12,22 @@ const nutritionistSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    unblockTime: {
+      type: Date,
+      default: null, // Initially set to null, indicating not blocked
+    }, description: {
+      type: String, // Add description field
+      default: '', // Set a default value if needed
+    },
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'RecipeSeeker' }],
+    
+      notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'nutritionist_Notification' }],
+      profilePicture: {    
+        data: Buffer,
+        contentType: String
+  
+        },
+    
     email: {
         type: String,
         required: true,
@@ -21,12 +37,8 @@ const nutritionistSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    
-    profilePicture: {    
-      data: Buffer,
-      contentType: String
-
-      },
+   
+   
       certificationImage:{
         data: Buffer,
         contentType: String
@@ -41,16 +53,13 @@ const nutritionistSchema = new mongoose.Schema({
 }, blockCount: {
   type: Number,
   default: 0,
-}, unblockTime: {
-  type: Date,
-  default: null, // Initially set to null, indicating not blocked
-}, description: {
-  type: String, // Add description field
-  default: '', // Set a default value if needed
 },
-followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'RecipeSeeker' }],
+balance: {
+  type: Number,
+  default: 0,
+}
 
-  notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'nutritionist_Notification' }],
+
 });
 
 const Nutritionist =  mongoose.model('Nutritionist', nutritionistSchema);

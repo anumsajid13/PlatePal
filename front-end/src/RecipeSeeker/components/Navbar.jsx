@@ -71,7 +71,6 @@ const Navbar = ({ activeLink }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-
       if (!response.ok) {
         throw new Error('Failed to delete notification');
       }
