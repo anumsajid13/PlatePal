@@ -24,7 +24,7 @@ const InboxPage = () => {
               padding: '10px 20px',
               marginRight: '20px',
               marginLeft:'450px',
-              color:"purple",
+              color:"#fda33c",
               borderRadius: '5px',
               backgroundColor: selectedOption === 'nutritionist' ? '#888' : '#e6dddd',
              
@@ -38,7 +38,7 @@ const InboxPage = () => {
               cursor: 'pointer',
               padding: '10px 20px',
               borderRadius: '5px',
-              color:"purple",
+              color:"#fda33c",
               backgroundColor: selectedOption === 'chef' ? '#888' : '#e6dddd',
              
             }}

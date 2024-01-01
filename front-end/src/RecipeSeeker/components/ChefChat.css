@@ -10,7 +10,7 @@
   
   .chef-text-sidebar {
     width: 20%;
-    background-color: #B7B6C1;
+    background-color: #ffe853;
     padding: 20px;
     margin-top: 1.5%;
     overflow-y: scroll;
@@ -48,7 +48,7 @@
   }
   
   .chef-option.selected {
-    background-color: purple;
+    background-color: #ffc73a;
     color: white;
   }
   
@@ -77,8 +77,8 @@
   }
   
   
-  .chat-header {
-    background-color: #B7B6C1;
+  .chat-header-user {
+    background-color: #ffe853;
     color: white;
     padding: 10px;
     text-align: center;
@@ -185,5 +185,5 @@
   }
   
   .messageToChef-byuser-input button:hover {
-    background-color: #45a049; /* Set your desired button background color on hover */
+    background-color: #45a049; 
   }

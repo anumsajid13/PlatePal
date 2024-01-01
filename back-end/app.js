@@ -170,7 +170,7 @@ app.use('/recepieSeeker', Favourites );
 app.use('/recepieSeeker', Subscribe );
 app.use('/recepieSeeker', Update_total );
 
-//app.use('/recepieSeeker', follow_nutritionist);
+app.use('/recepieSeeker', follow_nutritionist);
 app.use('/recepieSeeker', Send_msg_to_nutritionist);
 app.use('/recepieSeeker', SearchByRecipe);
 app.use('/recepieSeeker', SearchByChef);
@@ -218,6 +218,8 @@ app.post("/api/create-checkout-session",async(req,res)=>{
           user.SubscribtionCount_Paid=user.SubscribtionCount_Paid+user.SubscribtionCount;
           user.SubscribtionCount=0;
           await user.save();
+
+          
   
         } catch (error) {
           console.error('Error updating balances:', error.message);

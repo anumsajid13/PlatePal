@@ -11,7 +11,7 @@ const CartPopup = ({ onClose }) => {
   const [fetchdetails, setfetchdetails] = useState(false);
   const [subscriptionCount, setsubscriptionCount] = useState(0);
   const [IncreasedAmount, setIncreasedAmount] = useState(0);
-
+  const [mealplansub,setmealplansub]=useState(0);
  
   const decodedToken = jwtDecode(token); 
   const currentUserId = decodedToken.id;
@@ -40,7 +40,6 @@ const CartPopup = ({ onClose }) => {
         console.error('Error fetching cart details:', error.message);
       }
     };
-
     const fetchUserSubscriptionCount = async () => {
       try {
         const response = await fetch('http://localhost:9000/recepieSeeker/get-subscription-count', {
@@ -55,7 +54,11 @@ const CartPopup = ({ onClose }) => {
           const data = await response.json();
           console.log("Subscription count: ", data)
           setsubscriptionCount(data.subscriptionCount);
-          setIncreasedAmount(data.subscriptionCount * 200);
+          if(!(data.subscriptionCount===subscriptionCount))
+          {       
+            setIncreasedAmount((data.subscriptionCount-subscriptionCount) * 200);
+          //  handleUpdateTotalAmount();
+          }       
   
         } else {
           console.error('Failed to fetch Subscription Count:', response.status, response.statusText);
@@ -64,34 +67,38 @@ const CartPopup = ({ onClose }) => {
         console.error('Error fetching Subscription Count:', error.message);
       }
     };
-  
-    const handleUpdateTotalAmount = async () => {
-      try {
-        const response = await fetch('http://localhost:9000/recepieSeeker/update-total-amount', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
-          },
-          body: JSON.stringify({ increasedAmount: subscriptionCount * 200 }),
-        });
-  
-        if (!response.ok) {
-          const data = await response.json();
-          console.error('Error updating total amount:', data.message);
-        } else {
-          const updatedCart = await response.json();
-          console.log('Updated Cart with extra amount:', updatedCart);
-        }
-      } catch (error) {
-        console.error('Error updating total amount:', error);
-      }
-    };
-  
-    fetchUserSubscriptionCount();
-    handleUpdateTotalAmount();
+
+    fetchUserSubscriptionCount()
     fetchCartDetails();
   }, [fetchdetails,IncreasedAmount]);
+
+
+  
+  const handleUpdateTotalAmount = async () => {
+    try {
+      const response = await fetch('http://localhost:9000/recepieSeeker/update-total-amount', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ increasedAmount: IncreasedAmount }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        console.error('Error updating total amount:', data.message);
+      } else {
+        const updatedCart = await response.json();
+        setmealplansub(IncreasedAmount);
+        console.log('Updated Cart with extra amount:', updatedCart);
+      }
+    } catch (error) {
+      console.error('Error updating total amount:', error);
+    }
+  };
+
+  
 
   const handleRemoveItem = async (orderId) => {
     try {
@@ -191,14 +198,14 @@ const CartPopup = ({ onClose }) => {
               <tr>
                 <td colSpan="2"></td>
                 <td>Total:</td>
-                <td>{cartDetails.totalAmount}</td>
+                <td>{cartDetails.totalAmount + (subscriptionCount* 200)}</td>
               </tr>
             </tfoot>
             <tfoot>
               <tr>
                 <td colSpan="2"></td>
-                <td>Meal Plan Subscription:</td>
-                <td>{IncreasedAmount}</td>
+                <td  >Meal Plan Subscription:</td>
+                <td>{subscriptionCount*200}</td>
               </tr>
             </tfoot>
           </table>

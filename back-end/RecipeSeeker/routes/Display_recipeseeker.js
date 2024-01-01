@@ -50,7 +50,7 @@ router.get('/get-subscription-count',authenticateToken, async (req, res) => {
     }
 
     const subscriptionCount = recipeSeeker.SubscribtionCount;
-    recipeSeeker.SubscribtionCount=0;
+   // recipeSeeker.SubscribtionCount=0;
 
   //  recipeSeeker.SubscribtionCount_Paid=0;
 

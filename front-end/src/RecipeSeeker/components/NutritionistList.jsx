@@ -7,17 +7,43 @@ const NutritionistList = ({ onSelectNutritionist }) => {
   const [nutritionists, setNutritionists] = useState([]);
   const [selectedNutritionist, setSelectedNutritionist] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [followingNutIds, setFollowingNutIds] = useState([]);
+  const token=localStorage.getItem('token')
 
   useEffect(() => {
-    // Fetch nutritionists data from your backend endpoint
-    fetch('http://localhost:9000/recepieSeeker/allNutritionists')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("nutritionists data", data.nutritionists)
-        setNutritionists(data.nutritionists)
-      })
-      .catch((error) => console.error('Error fetching nutritionists:', error));
-  }, []);
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:9000/recepieSeeker/allNutritionists');
+        const data = await response.json();
+        console.log("nutritionists data", data.nutritionists);
+        setNutritionists(data.nutritionists);
+  
+        const followingResponse = await fetch('http://localhost:9000/recepieSeeker/nutritionist-followings', {
+          headers: {
+            method:'POST',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        if (followingResponse.ok) {
+          const followingData = await followingResponse.json();
+  
+          if (Array.isArray(followingData.followings)) {
+            setFollowingNutIds(followingData.followings.map(Nut => Nut._id));
+          } else {
+            console.error('Invalid following nut data format');
+            setFollowingNutIds([]);
+          }
+        } else {
+          console.error('Failed to fetch following Nut:', followingResponse.status, followingResponse.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
+  }, [token]);
 
   const handleSelectNutritionist = (nutritionistId) => {
 
@@ -46,6 +72,31 @@ const NutritionistList = ({ onSelectNutritionist }) => {
     onSelectNutritionist(selectedNutritionist);
   
   };
+
+  const toggleFollowChef = async (NutId) => {
+    try {
+      const response = await fetch(`http://localhost:9000/recepieSeeker/${followingNutIds.includes(NutId) ? 'unfollowNut' : 'followNut'}/${NutId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        setFollowingNutIds((prevFollowingNutIds) =>
+          prevFollowingNutIds.includes(NutId)
+            ? prevFollowingNutIds.filter((id) => id !== NutId)
+            : [...prevFollowingNutIds, NutId]
+        );
+      } else {
+        console.error('Failed to follow/unfollow Nut:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error following/unfollowing Nut:', error.message);
+    }
+  };
+
 
   return (
     <div className="nutritionist-list-container">
@@ -78,7 +129,9 @@ const NutritionistList = ({ onSelectNutritionist }) => {
         <NutritionistPopup
           nutritionist={nutritionists.find((n) => n._id === selectedNutritionist)}
           onClose={handleClosePopup}
-          onFollow={(id) => console.log(`Follow clicked for Nutritionist ${id}`)}
+          isFollowingNut={selectedNutritionist && followingNutIds && followingNutIds.includes(selectedNutritionist)}
+          onToggleFollow={() =>  selectedNutritionist && toggleFollowChef(selectedNutritionist)}
+         
         />
       </>
       )}

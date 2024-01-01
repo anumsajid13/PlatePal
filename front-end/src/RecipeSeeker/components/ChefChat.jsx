@@ -130,7 +130,7 @@ const ChefChat = () => {
         <div className="chat-box">
           {selectedChef && (
             <>
-              <div className="chat-header">
+              <div className="chat-header-user">
                 <h2>Chef {selectedChefName}</h2>
               </div>
               <div className="chat-messages-between-chefanduser">

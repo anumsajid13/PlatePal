@@ -25,6 +25,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
   const [isRatingsVisible, setIsRatingsVisible] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [isInFavorites, setIsInFavorites] = useState(false);
+
   localStorage.setItem('token', token);
   
   const imageData = new Uint8Array(recipe.recipeImage.data).reduce(
