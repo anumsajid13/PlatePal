@@ -19,7 +19,7 @@ const mealPlanSchema = new mongoose.Schema({
     amount:
     {
       type:Number,
-      default:20
+      default:200
     }
   });
   

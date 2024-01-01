@@ -99,7 +99,7 @@ router.delete('/delete', authenticateToken, async (req, res) => {
 // Get Admin Profile
 router.get('/get', authenticateToken, async (req, res) => {
   const id = req.user.id;
-  console.log(id)
+  console.log("lol" , id)
   try {
     const admin = await Admin.findById(id);
     if (!admin) {
