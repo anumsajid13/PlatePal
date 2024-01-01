@@ -202,7 +202,7 @@ const SignInPage =  () => {
 
       if (!response.ok) {
         console.error('Nutritionist Sign In failed:', data.error);
-        setErrorMessage(data.message);
+        setErrorMessage(data.error);
         setShowError(true);
 
         return;
