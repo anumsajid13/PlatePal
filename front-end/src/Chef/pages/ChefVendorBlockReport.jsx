@@ -64,7 +64,9 @@ const BlockReportsList  = () => {
                         <h1>Chef:</h1> <p>{report.chef}</p> 
                         <h1>Proof:</h1>
                         <img className='vendor-chef-br-image' src={`data:image/jpeg;base64,${report.proof.data}`} alt={`Proof for report ${report._id}`} />
-                        <button className='vendor-chef-br' onClick={() => handleDelete(report._id)}>Delete</button>
+                        {report.status === 'Pending' ? (
+                          <button className='vendor-chef-br' onClick={() => handleDelete(report._id)}>Delete</button>
+                        ) : null}
                         </div>
                         </div>
                        
