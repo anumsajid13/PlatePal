@@ -19,7 +19,7 @@ router.post('/recipeSeeker_signin', async (req, res) => {
       return res.status(401).json({ message: 'Invalid password' });
     }
     // Generate a JWT token
-    const token = jwt.sign({ id: recipeSeeker._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign({ id: recipeSeeker._id, name: recipeSeeker.name }, process.env.SECRET_KEY, { expiresIn: '1h' });
       const newCart = new Cart({
         recipeSeekerId: recipeSeeker._id,
         orders: [],

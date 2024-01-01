@@ -12,7 +12,7 @@ const ChefChat = () => {
   const [chatMessages, setChatMessages] = useState([]);
   const token = useTokenStore.getState().token;
   const decodedToken = jwtDecode(token);
-  const currentUserId = decodedToken.id;
+  const currentUserId = decodedToken.name;
   console.log('decodedToken',decodedToken)
 
   useEffect(() => {

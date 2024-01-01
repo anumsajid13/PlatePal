@@ -11,8 +11,10 @@ const ChefChat = () => {
   const [messageInput, setMessageInput] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
   const token = useTokenStore.getState().token;
+  console.log(token)
   const decodedToken = jwtDecode(token);
-  const currentUserId = decodedToken.id;
+  console.log('hhehe',decodedToken.name)
+  const currentUserId = decodedToken.name;
   console.log('decodedToken',decodedToken)
 
   useEffect(() => {
@@ -37,12 +39,16 @@ const ChefChat = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((response) => response.json())
+      .then((response) => {
+        console.log('Response:', response); // Log the response here
+        return response.json(); // Continue parsing the response body as JSON
+      })
         .then((data) => {
           if (isMounted) {
             console.log('Fetched messages:', data);
-            const newMessages = Array.isArray(data.messages) ? data.messages : [data.messages];
-            setChatMessages((prevChatMessages) => [...(prevChatMessages || []), ...newMessages]);
+           // const newMessages = Array.isArray(data.messages) ? data.messages : [data.messages];
+            //setChatMessages((prevChatMessages) => [...(prevChatMessages || []), ...newMessages]);
+            setChatMessages(data.messages)
           }
         })
         .catch((error) => console.error('Error fetching chat messages:', error));
@@ -104,7 +110,7 @@ const ChefChat = () => {
               className={`chef-option ${selectednutritionist === nutritionist._id ? 'selected' : ''}`}
               onClick={() => handleChefClick(nutritionist._id, nutritionist.name)}
             >
-                {console.log("Profile pic data",nutritionist.profilePicture)}
+               
               {nutritionist.profilePicture && typeof nutritionist.profilePicture === 'string' ? (
                 <div style={{display:"flex", gap:"10px"}}>
                  <img
@@ -131,15 +137,16 @@ const ChefChat = () => {
           {selectednutritionist && (
             <>
               <div className="chat-header-user">
-                <h2>Chef {selectednutritionistsName}</h2>
+                <h2>Nutrionist {selectednutritionistsName}</h2>
               </div>
               <div className="chat-messages-between-chefanduser">
               {console.log("chatMessages ",chatMessages)}
               {chatMessages && Array.isArray(chatMessages) && chatMessages.length > 0 ? (
                 chatMessages.map((message, index) => (
-                  <div key={index} className={`message-to-chef ${message && message.author !== currentUserId ? 'other-user' : ''}`}>
+                  <div key={index} className={`message-to-chef ${message && message.author === currentUserId ? 'other-user' : ''}`}>
                     <div className="author-textmsg">
                       <p className="author">
+                        {console.log(currentUserId)}
                         {message && message.author === currentUserId ? 'You' : ( message.author)}
                       </p>
                       <p className="message-text">{message && message.message}</p>
