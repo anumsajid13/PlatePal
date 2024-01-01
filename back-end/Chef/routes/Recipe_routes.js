@@ -199,7 +199,7 @@ router.get('/myrecipes/vendors/:recipeName?', authenticateToken,  async (req, re
             chef: loggedInUserId,
             vendor: { $exists: true, $ne: null }, //filtering for recipes with a vendor
             title: { $regex: new RegExp(recipeName, 'i')}
-          }).populate('chef', 'name').populate({
+          }).sort({ postedAt: -1 }).populate('chef', 'name').populate({
             path: 'comments', 
             populate: {
                 path: 'user', 
@@ -253,7 +253,7 @@ router.get('/myrecipes/noVendor/:recipeName?', authenticateToken,  async (req, r
             chef: loggedInUserId,
             $or: [{ vendor: { $exists: false } }, { vendor: null }], //filtering for recipes without a vendor
             title: { $regex: new RegExp(recipeName, 'i') },
-          }).populate('chef', 'name').populate('chef', 'name').populate({
+          }).sort({ postedAt: -1 }).populate('chef', 'name').populate('chef', 'name').populate({
             path: 'comments', 
             populate: {
                 path: 'user', 

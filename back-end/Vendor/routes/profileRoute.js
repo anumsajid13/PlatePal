@@ -180,7 +180,11 @@ console.log("user",user)
 // Edit profile
 router.put('/editprofile', upload.single('profilePicture'), authenticateToken, async (req, res) => {
   try {
-    const profilePicture = req.file;
+  
+      const profilePicture = req.file;
+      console.log("profilePicture",req.file)
+  
+  
     const { ...otherUpdates } = req.body;
     
     const updatedUser = await Vendor.findById(req.user.id);
@@ -207,7 +211,42 @@ router.put('/editprofile', upload.single('profilePicture'), authenticateToken, a
   }
 });
 
+/* 
+router.put('/editprofile', upload.single('profilePicture'), authenticateToken, async (req, res) => {
+  try {
+    const profilePicture = req.file;
+    const { ...otherUpdates } = req.body;
 
+    const updatedUser = await Vendor.findById(req.user.id);
+
+    if (!updatedUser) {
+      return res.status(401).json({ message: 'Invalid user.' });
+    }
+
+    // Check if a new profile picture has been provided
+    if (profilePicture) {
+      updatedUser.profilePicture.data = profilePicture.buffer;
+      updatedUser.profilePicture.contentType = profilePicture.mimetype;
+    }
+
+    // Update other fields if provided
+    if (Object.keys(otherUpdates).length > 0) {
+      Object.assign(updatedUser, otherUpdates);
+    }
+
+    // Save only if changes are made
+    if (profilePicture || Object.keys(otherUpdates).length > 0) {
+      await updatedUser.save();
+      return res.status(200).json({ message: 'Profile updated successfully', data: updatedUser });
+    } else {
+      return res.status(200).json({ message: 'No changes made to the profile', data: updatedUser });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal Server Error', error });
+  }
+});
+ */
 //ForgetPassword
 router.put('/forgotpassword',authenticateToken, async (req,res) => {
 

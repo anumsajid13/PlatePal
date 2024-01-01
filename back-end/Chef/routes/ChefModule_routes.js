@@ -102,9 +102,25 @@ router.post('/login', async (req,res) => {
           return res.status(403).json({ message: 'Admin is reviewing your certificate' });
         }
       
+         // Check if the chef is blocked
         if (chef.isBlocked) {
-          return res.status(403).json({ message:'Access denied - you were blocked by the admin'});
-      }
+          // Check if the unblock time is set
+          if (chef.unblockTime) {
+            // Check if the unblock time has passed
+            if (new Date() >= chef.unblockTime) {
+              // Unblock the chef
+              chef.isBlocked = false;
+              chef.unblockTime = null;
+              await chef.save();
+            } else {
+              // is still blocked
+              return res.status(403).json({  message:'Access denied - you were blocked by the admin' });
+            }
+          } else {
+            //  is blocked indefinitely
+            return res.status(403).json({  message:'Access denied - you were indefinitely blocked by the admin' });
+          }
+        }
 
     }
     catch (error) {
