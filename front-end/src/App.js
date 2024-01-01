@@ -67,6 +67,8 @@ import MainBlock from './Admin/pages/MainBlock'
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
 
+import TransactionList from './Nutrionist/pages/TransactionList'
+
 
 function App() {
   return (
@@ -93,7 +95,7 @@ function App() {
         <Route path="/admin/check-c" element={<AcceptCert/>} />
         <Route path="/admin/chef-block" element={<ChefBlockReports/>} />
         <Route path="/admin/n-block" element={<NutritionistBlockReports/>} />
-        TransactionComponent
+        
 
 
         <Route path="/signup/chef" element={<ChefSignUp/>}/>
@@ -143,6 +145,7 @@ function App() {
 
         <Route path='/forgot-password' element={<ForgotPassword/>}/>
         <Route path='/reset-password/:userType/:id/:token' element={<ResetPassword/>}/>
+        <Route path='n/transactions/:nutId' element={<TransactionList/>}/>
 
 
       </Routes>

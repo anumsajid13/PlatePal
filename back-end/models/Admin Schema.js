@@ -32,7 +32,6 @@ const adminSchema = new mongoose.Schema({
           message: props => `${props.value} is not a valid image file. Please use PNG, JPG, or JPEG.`,
         },
       },
-      address: String,
 
   notifications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'admin_Notification' }],
 });

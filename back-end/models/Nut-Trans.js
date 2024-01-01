@@ -14,16 +14,9 @@ const NutTransSchema= new Schema({
     ref: 'RecipeSeeker', 
     required: true,
   },
-  mealPlan: [
-    {
-      PlanId: {
-        type: Schema.Types.ObjectId,
-        ref: 'MealPlan', 
-        required: true,
-      },
-     
-    },
-  ],
+
+  recipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
+
   Paid: {
     type: Number,
     required: true,
@@ -31,6 +24,6 @@ const NutTransSchema= new Schema({
   },
 });
 
-const Transaction = mongoose.model('Nut-trans', NutTransSchema);
+const NTransaction = mongoose.model('Nut-trans', NutTransSchema);
 
-module.exports = Transaction;
+module.exports = NTransaction;
