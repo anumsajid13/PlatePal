@@ -69,7 +69,13 @@ alert("Collaboration request has been "+action+"ed");
       <div className='closeicon' onClick={closeOverlay}>
         <FaTimes />
       </div>
-      <h2 style={{}}>Collaboration Request</h2>
+      {request.isAccepted==null || undefined ? (
+  <h2 >Collaboration</h2>
+) : (
+  <h2 >Collaboration Request</h2>
+)}
+
+  
       <label>Chef: {chefName}</label>
       <label>Recipe: {recipeName}</label>
 

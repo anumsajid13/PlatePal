@@ -1,7 +1,11 @@
 .profilePageContainer {
     max-width: 800px;
     margin: 0 auto;
+    margin-top:50px;
     padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #c5c3c3;
+    border-radius: 10px;
   }
   
   .profileHeader {
@@ -15,46 +19,48 @@
   }
   
   .profilePictureContainer {
-    flex: 1;
-    margin-right: 20px; 
-    border:2px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right:20px;
   }
   
   .profilePicture {
-    width: 100%;
-    max-width: 200px;
-
-    border-radius: 50%;
-   
+    max-width: 100%; 
+    max-height: 100%; 
+    width: 210px; 
+    height: 210px; 
+    border-radius: 50%; 
   }
+  
   
   .profileDetails {
     flex: 2;
   }
   /* Add these styles to your existing CSS or create a new stylesheet */
 .passwordReset,
-.deleteConfirm 
-{
-  background-color: #4caf50; /* Green background color */
-  color: white; /* White text color */
-  padding: 10px 20px; /* Padding inside the button */
-  border: none; /* Remove border */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Cursor on hover */
-  margin-right: 10px; /* Adjust margin as needed */
-  font-size: 16px; /* Adjust font size */
-  transition: background-color 0.3s ease-in-out; /* Add smooth transition */
+.acceptButton {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
 }
-.cancelButton{
-  background-color: #b41c11; /* Green background color */
-  color: white; /* White text color */
-  padding: 10px 20px; /* Padding inside the button */
-  border: none; /* Remove border */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Cursor on hover */
-  margin-right: 10px; /* Adjust margin as needed */
-  font-size: 16px; /* Adjust font size */
-  transition: background-color 0.3s ease-in-out; /* Add smooth transition */
+
+.cancelButton {
+  background-color: #b41c11;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 16px;
+  transition: background-color 0.3s ease-in-out;
 }
 
 

@@ -15,7 +15,7 @@ const VendorInbox = () => {
   const [loadingMessages, setLoadingMessages] = useState(false);
   const navigate = useNavigate();
 const {token} = useTokenStore();
-  const currentUserId = decodedToken.name;
+  const currentUserId =token.name;
 
   useEffect(() => {
     fetchVendors();

@@ -1,70 +1,73 @@
 .editProfileContainer {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
-    background-color:  rgb(221, 220, 220);
-  
-  }
-  
-  .editProfileContainer.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .editProfileContainer .backButton {
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-  }
-  
-  .editProfileContainer  .backButton svg {
-    margin-right: 5px;
-  }
-  
-  .editProfileContainer h2 {
-    margin-top: 20px;
-    color: #333;
-  }
-  
-  .editProfileContainer .formContainer {
-    margin-top: 20px;
-  }
-  
-  .editProfileContainer label {
-    display: block;
-    margin-bottom: 8px;
-    color: #333;
-    font-weight: bold;
-  }
-  .file{
-    height: 30px;
-  }
-  .editProfileContainer input,
-  textarea {
-    width: 95%;
-    padding: 8px;
-    margin-bottom: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
+  background-color: #fee858;
 
-  
-  }
-  
-  .editProfileContainer button {
-    background-color: #4caf50;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .editProfileContainer button:hover {
-    background-color: #45a049;
-  }
-  
+}
+
+.editProfileContainer.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editProfileContainer .backButton {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  background-color: #fa9523;
+}
+
+.editProfileContainer  .backButton svg {
+  margin-right: 5px;
+}
+
+.editProfileContainer h2 {
+  margin-top: 20px;
+  color: #333;
+}
+
+.editProfileContainer .formContainer {
+  margin-top: 20px;
+}
+
+.editProfileContainer label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: bold;
+}
+
+.editProfileContainer input,
+textarea {
+  width: 95%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+
+
+}
+
+
+ 
+
+.editprofile-button {
+background-color: #fa9523;
+color: #fff;
+padding: 10px 15px;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+font-size: 16px;
+cursor: pointer;
+}
+
+.backButton .editprofile-button:hover {
+background-color: #b56509;
+  color:black;
+}
