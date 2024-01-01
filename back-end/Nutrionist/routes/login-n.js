@@ -9,6 +9,7 @@ const Nutritionist = require('../../models/Nutritionist Schema');
 require('dotenv').config();
 const router = express.Router();
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
+const Transaction = require('../../models/Nut-Trans'); // Assuming your model is in a file named 'NutTrans.js'
 
 // Endpoint to handle nutritionist login
 router.post('/login', async (req, res) => {
@@ -188,6 +189,32 @@ router.get('/get', authenticateToken, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to retrieve profile' });
+  }
+});
+
+router.get('/transactions/:nutId', async (req, res) => {
+  const nutId = req.params.nutId;
+  try {
+    // Find transactions for the given nutritionist ID where Paid is not equal to 0
+    const transactions = await Transaction.find({
+      NutId: nutId, Paid: { $ne: 0 },
+    })
+      .populate('NutId', 'name') // Populate the 'NutId' field with the nutritionist's name (adjust as needed)
+      .populate('sender', 'name') // Populate the 'sender' field with the recipe seeker's name (adjust as needed)
+      .populate({
+        path: 'mealPlan.PlanId.recipes',
+        model: 'Recipe', // Specify the model for the 'recipes' field
+      })
+      .exec();
+
+    if (!transactions || transactions.length === 0) {
+      return res.status(404).json({ message: 'No transactions found for the nutritionist' });
+    }
+
+    res.status(200).json(transactions);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to retrieve transactions' });
   }
 });
 

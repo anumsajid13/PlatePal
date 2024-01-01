@@ -19,7 +19,6 @@ const Sidebar = ({ isOpen, onClose }) => {
           <Link to="/vendor/CollaborationRequest">Collaboration Request</Link>
         </li>
         <li>
-     
           <Link to="/Vendor/Mainpage">Products</Link>
         </li>
         <li>

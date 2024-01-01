@@ -66,6 +66,10 @@ import ChefViewReviews from './Chef/pages/ChefReviews';
 import MainBlock from './Admin/pages/MainBlock'
 import ForgotPassword from './ForgotPassword';
 import ResetPassword from './ResetPassword';
+
+import TransactionList from './Nutrionist/pages/TransactionList'
+
+
 function App() {
   return (
     <div className="App">
@@ -141,6 +145,7 @@ function App() {
 
         <Route path='/forgot-password' element={<ForgotPassword/>}/>
         <Route path='/reset-password/:userType/:id/:token' element={<ResetPassword/>}/>
+        <Route path='n/transactions/:nutId' element={<TransactionList/>}/>
 
 
       </Routes>

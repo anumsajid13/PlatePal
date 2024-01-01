@@ -97,6 +97,10 @@ const AdminNav = () => {
         <a href="#">Chat</a>
         </Link>
 
+        <Link to="/n/transactions/:nutId" onClick={handleSidebarToggle}>
+        <a href="#">View Balance</a>
+        </Link>
+
       </div>
     </div>
   );

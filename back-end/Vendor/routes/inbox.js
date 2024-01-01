@@ -9,7 +9,7 @@ const Chef = require('../../models/Chef Schema');
 // Endpoint to get all messages for a vendor
 router.get('/', authenticateToken, async (req, res) => {
   try {
-    const vendorId = req.user.id; 
+const vendorId = req.user.id; 
 
     const inboxEntry = await VendorChefInbox.find({ vendor: vendorId }); 
 
@@ -65,74 +65,77 @@ router.get('/chefs', async (req, res) => {
 
 // Endpoint to reply to messages in the inbox
 router.post('/sendmessage', authenticateToken, async (req, res) => {
-    try {
-      const vendorId = req.user.id; 
-      const { chefId, message } = req.body;
-  
-      let inboxEntry = await VendorChefInbox.findOne({ vendor:vendorId,chef:chefId});
-  
-      if (!inboxEntry) {
-        inboxEntry = new VendorChefInbox({ vendor: vendorId, chef: chefId, messages: [] });
-      }
-      const vendor=await Vendor.findById(vendorId);
-      inboxEntry.messages.push({
-        message,
-        author: vendor.name,
-        time: new Date(),
-      });
-  
-      await inboxEntry.save();
-
-
-   
-    const chefNotification = new Chef_Notification({
-      user: chefId,
-      type: `message`, 
-      notification_text: `Vendor ${vendor.name} sent you a message.`,
-      Time: new Date(),
-    });
-
-     await chefNotification.save();
-  
-      res.json({ message: 'Message sent successfully' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal Server Error' });
-    }
-  });
-  
-// Endpoint to get messages from a specific chef in the inbox
-router.get('/retrievemessages/:chefId', authenticateToken, async (req, res) => {
   try {
-    const vendorId = req.user.id;
-    const chefId = req.params.chefId;
-console.log("chefId",chefId);
-    // Check if chefId is null, and handle it gracefully
-    if (chefId == null) {
-      res.status(400).json({ message: 'Chef ID is required' });
-      return;
-    }
+    const vendorId = req.user.id; 
+    const { chefId, message } = req.body;
 
-    // Find the inbox entry for the specified vendor and chef
-    let inboxEntry = await VendorChefInbox.findOne({ vendor: vendorId, chef: chefId });
+    let inboxEntry = await VendorChefInbox.findOne({ vendor:vendorId,chef:chefId});
 
-    // If no inbox entry is found, create a new one with an empty messages array
     if (!inboxEntry) {
       inboxEntry = new VendorChefInbox({ vendor: vendorId, chef: chefId, messages: [] });
-      await inboxEntry.save();
     }
+    const vendor=await Vendor.findById(vendorId);
+    inboxEntry.messages.push({
+      message,
+      author: vendor.name,
+      time: new Date(),
+    });
 
-    // Retrieve the messages from the inbox entry
-    const messages = inboxEntry.messages || [];
+    await inboxEntry.save();
 
-    res.json(messages);
+
+ 
+  const chefNotification = new Chef_Notification({
+    user: chefId,
+    type: `message`, 
+    notification_text: `Vendor ${vendor.name} sent you a message.`,
+    Time: new Date(),
+  });
+
+   await chefNotification.save();
+
+    res.json({ message: 'Message sent successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
-  
+// Endpoint to get messages from a specific chef in the inbox
+router.get('/retrievemessages/:chefId', authenticateToken, async (req, res) => {
+try {
+  const vendorId = req.user.id;
+  const chefId = req.params.chefId;
+console.log("chefId",chefId);
+  // Check if chefId is null, and handle it gracefully
+  if (chefId == null) {
+    res.status(400).json({ message: 'Chef ID is required' });
+    return;
+  }
+
+  // Find the inbox entry for the specified vendor and chef
+  let inboxEntry = await VendorChefInbox.findOne({ vendor: vendorId, chef: chefId });
+
+  // If no inbox entry is found, create a new one with an empty messages array
+  if (!inboxEntry) {
+    inboxEntry = new VendorChefInbox({ vendor: vendorId, chef: chefId, messages: [] });
+    await inboxEntry.save();
+  }
+
+  // Retrieve the messages from the inbox entry
+  const messages = inboxEntry.messages || [];
+
+  res.json(messages);
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ message: 'Internal Server Error' });
+}
+});
+
+
 module.exports = router;
+
+
+
  
 

@@ -1,0 +1,35 @@
+/* TransactionList.css */
+
+.transaction-list-container {
+  margin: 20px auto; /* Center the container horizontally */
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center the text inside the container */
+  background-color: rgb(255,232,83);
+  max-width: 600px;
+}
+
+.header {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.transaction-list {
+  list-style: none;
+  padding: 0;
+}
+
+.transaction-item {
+  margin-bottom: 20px;
+}
+
+.loading-message,
+.no-transactions-message {
+  margin: 20px auto; /* Center the message horizontally */
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
