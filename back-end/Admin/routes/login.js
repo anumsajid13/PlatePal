@@ -16,17 +16,18 @@ router.post('/login', async (req, res) => {
     if (username === 'admin' && password === 'admin123') {
       try {
         // Find the admin by username
-        const admin = await Admin.find({ username });
+        const admin = await Admin.findOne({ username });
         console.log(admin);
   
         if (!admin) {
           return res.status(404).json({ error: 'Admin not found' });
         }
   
+        console.log('hwhwhwh', admin._id)
         // Create a JWT token with the admin's ID
         const token = jwt.sign({ id: admin._id },`${process.env.SECRET_KEY}`
         , { expiresIn: '24h' });
-  console.log(token);
+        console.log(token);
         return res.json({ token });
       } catch (error) {
         console.error(error);
@@ -98,21 +99,28 @@ router.delete('/delete', authenticateToken, async (req, res) => {
 
 // Get Admin Profile
 router.get('/get', authenticateToken, async (req, res) => {
-  const id = req.user.id;
-  console.log("lol" , id)
+  const adminid = req.user.id;
+  //console.log("lol" , adminid)
   try {
-    const admin = await Admin.findById(id);
+    const admin = await Admin.findById(adminid);
     if (!admin) {
       return res.status(404).json({ message: 'Admin not found' });
     }
 
-    // Convert the image buffer to a Base64 string
+    if(admin.profilePicture){
+
+       // Convert the image buffer to a Base64 string
     const unit8Array = new Uint8Array(admin.profilePicture.data);
     const base64string = Buffer.from(unit8Array).toString('base64');
 
     const adminDataWithBase64Image = { ...admin._doc, profilePicture: base64string };
 
     return res.status(200).json(adminDataWithBase64Image);
+
+    }
+
+    return res.status(200).json(admin);
+   
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to retrieve admin profile' });
