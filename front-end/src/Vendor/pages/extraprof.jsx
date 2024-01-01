@@ -122,7 +122,7 @@ const goBack = () => {
           />
 
           <label htmlFor="profilePicture">Profile Picture:</label>
-          <input style={{ marginLeft: "20%", border: "none" }}
+          <input style={{marginLeft:"20%"}}
               type="file"
               id="profilePicture"
               accept="image/*"

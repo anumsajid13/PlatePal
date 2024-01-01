@@ -130,7 +130,7 @@ const CollaborationRequestCard = ({ request }) => {
         />
       )}
       <div className='request'>
-        <input type='checkbox' checked={isChecked} onChange={handleCheckboxChange} />
+       {/*  <input type='checkbox' checked={isChecked} onChange={handleCheckboxChange} /> */}
         <label onClick={openOverlay}>
           Chef {chefName} sent you a collaboration request for the recipe {recipeName}.
         </label>

@@ -58,14 +58,14 @@ const handleSortOptionChange = (option,order) => {
     <div className="discover-container-1">
                     <div className="search-card-11">
                     <input className='searchRecepie' type="text" placeholder="Search..."  value={filterValue}
-              onChange={(e) => setFilterValue(e.target.value)} />
+              onChange={(e) => setFilterValue(e.target.value)}  />
                       <select  id="vendor-filterType"
                           name="vendor-filterType"
                           value={filterType}
-                          onChange={(e) => setFilterType(e.target.value)}className="search-dropdown-1">
-                        <option value="recipe" className='vendor-filter-options'>Search by Recipe Name</option>
-                        <option value="status" className='vendor-filter-options'>Search by Status</option>
-                        <option value="chef"className='vendor-filter-options' >Search by Chef</option>
+                          onChange={(e) => setFilterType(e.target.value)} >
+                        <option value="recipe"className="sortButton">Search by Recipe Name</option>
+                        <option value="status"className="sortButton">Search by Status</option>
+                        <option value="chef" className="sortButton" >Search by Chef</option>
                     </select>
                   
                     
@@ -73,7 +73,7 @@ const handleSortOptionChange = (option,order) => {
             </div>
 
         <div className="vendor-sort-dropdown">
-          <button onClick={() => setShowSortOptionDropdown(!showSortOptionDropdown)}>
+          <button onClick={() => setShowSortOptionDropdown(!showSortOptionDropdown)} className='sortButton'>
             Sort by {sortOption || 'Select'} <FaSort />
           </button>
           {showSortOptionDropdown && (

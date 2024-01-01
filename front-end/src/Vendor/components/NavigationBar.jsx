@@ -26,6 +26,8 @@ const ChefNav = () => {
   const handleLogoutClick = () => {
     setIsLoading(true);
 
+    localStorage.removeItem('token');
+    console.log("logging out", localStorage.getItem('token'));
     
     setTimeout(() => {
       setIsLoading(false);

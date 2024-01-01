@@ -39,6 +39,7 @@ router.get('/profile', authenticateToken, async (req, res) => {
   }
 });
 
+
 //register as new vendor
 router.post("/register", upload.fields([ { name: 'certificationImage', maxCount: 1 }, { name: 'profilePicture', maxCount: 1 }]), async (req, res) => {
   try {
@@ -177,37 +178,37 @@ console.log("user",user)
 //     }
 //   });
 
-// Edit profile
-router.put('/editprofile', upload.single('profilePicture'), authenticateToken, async (req, res) => {
+router.put('/editProfile', authenticateToken, upload.single('profilePicture'), async (req, res) => {
   try {
-  
-      const profilePicture = req.file;
-      console.log("profilePicture",req.file)
-  
-  
-    const { ...otherUpdates } = req.body;
-    
-    const updatedUser = await Vendor.findById(req.user.id);
+    const userId = req.user.id;
 
-    if (!updatedUser) {
-      return res.status(401).json({ message: 'Invalid user.' });
+    const vendor = await Vendor.findById(userId);
+
+    if (!vendor) {
+      return res.status(404).json({ message: 'RecipeSeeker not found' });
     }
 
-    if (profilePicture) {
-      updatedUser.profilePicture.data = profilePicture.buffer;
-      updatedUser.profilePicture.contentType = profilePicture.mimetype;
+    // Update user information with the new data
+    vendor.name = req.body.name || vendor.name;
+    vendor.email = req.body.email || vendor.email;
+    vendor.username = req.body.username || vendor.username;
+
+
+    // Update profile picture if provided
+    if (req.file) {
+      vendor.profilePicture = {
+        data: req.file.buffer,
+        contentType: req.file.mimetype,
+      };
     }
 
-    if (Object.keys(otherUpdates).length > 0) {
-      Object.assign(updatedUser, otherUpdates);
-    }
+    // Save the updated user information
+    await vendor.save();
 
-    await updatedUser.save();
-
-    return res.status(200).json({ message: 'Profile updated successfully', data: updatedUser });
+    res.status(200).json({ message: 'Profile updated successfully' });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Internal Server Error', error });
+    console.error('Error updating profile:', error.message);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
 

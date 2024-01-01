@@ -85,9 +85,7 @@ const VendorProfile = () => {
           <button to="/Vendor/Mainpage" className="backButton">
             <FaArrowLeft /> Back
           </button>
-          
-         
-       
+
         </div> */}
         <h1>
             {vendor.name}'s Profile
@@ -116,7 +114,7 @@ const VendorProfile = () => {
               <strong>Email:</strong> {vendor.email}
             </p>
             <p>
-              <strong>Balance:</strong> {vendor.balance}
+              <strong>Balance:</strong> Pkr. {vendor.balance}
             </p>
             <button className="passwordReset" onClick={handleReset}>Reset Password</button>
             <button onClick={handleDelete} className='deleteConfirm'>Delete Profile</button>
