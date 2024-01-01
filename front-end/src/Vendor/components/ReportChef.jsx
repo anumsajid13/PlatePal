@@ -4,7 +4,7 @@ import '../../Chef/components/reportPopup.css';
 import ChefGenericPopup from '../../Chef/components/ChefGenericPopup';
 
 
-const ChefReportPopUp = ({ vendorId, onClose  }) => {
+const ReportChef = ({ vendorId, onClose  }) => {
 
     const [reason, setReason] = useState('');
     const [proof, setProof] = useState(null);
@@ -13,9 +13,8 @@ const ChefReportPopUp = ({ vendorId, onClose  }) => {
 
     console.log(vendorId)
 
-    //const { token, setToken } = useTokenStore(); 
+    const { token, setToken } = useTokenStore(); 
 
-    const token = localStorage.getItem('token');
      //function to handle proof picture change
      const handleProofChange = (event) => {
         const file = event.target.files[0];
@@ -30,7 +29,7 @@ const ChefReportPopUp = ({ vendorId, onClose  }) => {
         formData.append('proof', proof); // Assuming selectedFile is the uploaded image file
     
         try {
-            const response = await fetch(`http://localhost:9000/vendor/BlockReport/createVendorReport/${vendorId}`, {
+            const response = await fetch(`http://localhost:9000/vendor/BlockReport/createBlockReport/${vendorId}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -62,13 +61,13 @@ const ChefReportPopUp = ({ vendorId, onClose  }) => {
     return(
 
         <>
-            <div class="report-popup-overlay">
+            <div className="report-popup-overlay">
             <div className="reprort-popup-container">
             <div className="report-popup-inner">
                     <button className="report-chef-pop-close-btn" onClick={onClose} >
                         <span className="material-icons">close</span>
                     </button>
-                <h2 className='reportt-heading'>Report Vendor</h2>
+                <h2 className='reportt-heading'>Report Chef</h2>
                 <form onSubmit={handleSubmit}>
                     <label className='create-recipe-label' htmlFor="reason">Reason:</label>
                     <input className='reportt-input'
@@ -98,4 +97,4 @@ const ChefReportPopUp = ({ vendorId, onClose  }) => {
 
 };
 
-export default ChefReportPopUp;
+export default ReportChef;

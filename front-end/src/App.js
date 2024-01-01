@@ -40,7 +40,7 @@ import BlockReportsList from './Chef/pages/ChefVendorBlockReport';
 import ChefProfile1 from './Nutrionist/pages/Edit-Profile';
 import Chat from './Nutrionist/pages/Chat';
 
-//Vendor [pages
+//Vendor pages
 import VendorSignUp from './Vendor/pages/SignUp_vendor';
 import VendorMainpage from './Vendor/pages/VendorMainpage';
 import IngredientDetails from './Vendor/pages/ProductDetails';
@@ -52,8 +52,9 @@ import AddNewProduct from './Vendor/pages/AddNewProducts';
 import Inbox from './Vendor/pages/chatwithchef';
 import  PasswordResetPage  from './Vendor/pages/PasswordResetPage';
 import OrderDisplay from './Vendor/pages/OrderDisplay';
-import VendorBlocksChef from './Vendor/components/ReportChef';
+import VendorBlocksChef from './Vendor/pages/DisplayChef';
 import VendorBlockedlist from './Vendor/pages/BlockedChefReportList';
+import VendorReview from './Vendor/pages/VendorReviews';
 
 import Edit1 from './Admin/pages/Edit-P';
 import AcceptCert from './Admin/pages/AcceptCert';
@@ -92,7 +93,7 @@ function App() {
         <Route path="/admin/check-c" element={<AcceptCert/>} />
         <Route path="/admin/chef-block" element={<ChefBlockReports/>} />
         <Route path="/admin/n-block" element={<NutritionistBlockReports/>} />
-        TransactionComponent
+        
 
 
         <Route path="/signup/chef" element={<ChefSignUp/>}/>
@@ -125,8 +126,9 @@ function App() {
         <Route path="/vendor/inbox" element={<Inbox/>} />
         <Route path="/vendor/reset-password" element={<PasswordResetPage />} />
          <Route path="/vendor/orders" element={<OrderDisplay />} />
-         <Route path="/vendor/reportChef" element={<vendorBlocksChef />} />
+         <Route path="/vendor/reportChef" element={<VendorBlocksChef />} />
           <Route path="/vendor/blockedChef" element={<VendorBlockedlist />} />
+        <Route path="/vendor/reviews" element={<VendorReview />} />
         
 
 

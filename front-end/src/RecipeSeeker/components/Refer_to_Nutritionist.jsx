@@ -4,6 +4,7 @@ import './ConsultNutritionist.css';
 import NutritionistList from './NutritionistList'
 import  useTokenStore  from  '../../tokenStore.js'
 import MealCard from './MealCard.jsx'
+import SubscriptionModal from './SubscriptionModal.jsx';
 
 const ConsultNutritionist = () => {
   const [weight, setWeight] = useState('');
@@ -13,6 +14,10 @@ const ConsultNutritionist = () => {
   const [selectedNutritionist, setSelectedNutritionist] = useState(null);
   const [recipes, setRecipes] = useState([]);
   const [mealplan, setMealPlan] = useState([]);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [subscriptionModalOpen, setSubscriptionModalOpen] = useState(false);
+  const [subscribedMealPlanId, setSubscribedMealPlanId] = useState(null);
+  const [selectedMealPlanId, setselectedMealPlanId] = useState(null);
   const token = useTokenStore((state) => state.token);
 
   const calculateBMI = () => {
@@ -57,8 +62,46 @@ const ConsultNutritionist = () => {
     }
   };
 
+  const handleSubscriptionClose = () => {
+    
+    setSubscriptionModalOpen(false);
+  };
+  const handleSubscriptionOpen = (mealPlanId) => {
+    if (1) {
+      setSubscriptionModalOpen(true);
+      setselectedMealPlanId(mealPlanId);
+    }
+  };
+
+  const handleSubscribe = async (mealPlanId) => {
+    try {
+     console.log("mealplan is to send: ",mealPlanId)
+      const response = await fetch(`http://localhost:9000/recepieSeeker/subscribe/${mealPlanId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        const data = await response.json();
+        console.error('Error subscribing:', data.message);
+      } else {
+
+        const updatedMealPlan = await response.json();
+  
+      
+        setSubscribedMealPlanId(updatedMealPlan._id);
+        setIsSubscribed(true);
+        setSubscriptionModalOpen(false);
+      }
+    } catch (error) {
+      console.error('Error subscribing:', error);
+    }
+  };
+
   useEffect(() => {
-    // Call your meal plan route here and set the states accordingly
+  
     const fetchMealPlansAndRecipes = async () => {
       try {
         const mealPlanResponse = await fetch('http://localhost:9000/recepieSeeker/mealPlans', {
@@ -77,13 +120,12 @@ const ConsultNutritionist = () => {
         // Now set the state
         setMealPlan(mealPlansArray);
 
-     //   console.log("MealPlan : ", mealplan);
-        // Assuming the meal plan object has a "recipes" field
-     //   setRecipes(mealPlanData.recipes || []);
+ 
       } catch (error) {
         console.error('Error fetching meal plans:', error.message);
       }
     };
+
 
     fetchMealPlansAndRecipes();
   }, [token]);
@@ -129,12 +171,15 @@ const ConsultNutritionist = () => {
       <NutritionistList onSelectNutritionist={handleSelectNutritionist} />
       </div>
 
-      <div className="">
+      <div className=""  >
       {console.log('Meal Plan:', mealplan)}
+    
         {mealplan.map((meal,index) => (
-          <div key={index} className="mealplan-card">
+          <div key={meal.mealPlanId} className={`mealplan-card ${(meal.mealPlanId === subscribedMealPlanId || meal.isSubscribed===true) ? '' : 'blurred'}`}
+          onClick={() => handleSubscriptionOpen(meal.mealPlanId)}  >
             
             <div className="detailss">
+            {console.log('issuscribed:', mealplan.isSubscribed)}
             <h2>Customized Meal Plan</h2>
             <img
                 src={meal.nutritionist.profilePicture}
@@ -148,7 +193,7 @@ const ConsultNutritionist = () => {
             </div>
             
             {meal.recipes.map((recipe) => (
-              <div key={recipe._id}>
+              <div key={recipe._id} className="">
                 <MealCard recipe={recipe}
                 
                />
@@ -159,6 +204,13 @@ const ConsultNutritionist = () => {
         ))}
        </div>
 
+      
+      {/* Subscription modal */}
+      {subscriptionModalOpen && (
+     
+      <SubscriptionModal onClose={handleSubscriptionClose} onSubscribe={handleSubscribe} selectedMealPlanId={selectedMealPlanId} />
+
+      )}
     </>
   );
 };

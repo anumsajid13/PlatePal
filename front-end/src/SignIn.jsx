@@ -65,18 +65,15 @@ const SignInPage =  () => {
           },
           body: JSON.stringify({ username, password }),
         });
-  
         if (!response.ok) {
           const data = await response.json();
           console.error('Sign In failed:', data.message);
         
           return;
         }
-  
         const data = await response.json();
         console.log('Sign In successful:', data.message);
         alert('Sign In successful')
-        
         setToken(data.token);
         localStorage.setItem('token', data.token);
         navigate('/recipe-seeker/Discover');

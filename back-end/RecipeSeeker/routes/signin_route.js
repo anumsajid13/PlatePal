@@ -1,9 +1,9 @@
 // Signin
-const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const RecipeSeeker = require('../../models/RecipeSeekerSchema');
 const Cart = require('../../models/Cart Schema');
+const express = require('express');
 const router = express.Router();
 
 router.post('/recipeSeeker_signin', async (req, res) => {
@@ -13,13 +13,11 @@ router.post('/recipeSeeker_signin', async (req, res) => {
     if (!recipeSeeker) {
       return res.status(404).json({ message: 'RecipeSeeker not found' });
     }
-
     const passwordMatch = await bcrypt.compare(req.body.password, recipeSeeker.password);
 
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Invalid password' });
     }
-
     // Generate a JWT token
     const token = jwt.sign({ id: recipeSeeker._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
       const newCart = new Cart({
@@ -27,7 +25,6 @@ router.post('/recipeSeeker_signin', async (req, res) => {
         orders: [],
         totalAmount: 0,
       });
-
       await newCart.save();
       console.log("New cart created!");
     

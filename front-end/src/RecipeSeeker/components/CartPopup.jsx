@@ -9,6 +9,10 @@ const CartPopup = ({ onClose }) => {
   const [cartDetails, setCartDetails] = useState(null);
   const token = useTokenStore((state) => state.token);
   const [fetchdetails, setfetchdetails] = useState(false);
+  const [subscriptionCount, setsubscriptionCount] = useState(0);
+  const [IncreasedAmount, setIncreasedAmount] = useState(0);
+
+ 
   const decodedToken = jwtDecode(token); 
   const currentUserId = decodedToken.id;
   localStorage.setItem('token', token);
@@ -37,8 +41,57 @@ const CartPopup = ({ onClose }) => {
       }
     };
 
+    const fetchUserSubscriptionCount = async () => {
+      try {
+        const response = await fetch('http://localhost:9000/recepieSeeker/get-subscription-count', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`, 
+          },
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Subscription count: ", data)
+          setsubscriptionCount(data.subscriptionCount);
+          setIncreasedAmount(data.subscriptionCount * 200);
+  
+        } else {
+          console.error('Failed to fetch Subscription Count:', response.status, response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching Subscription Count:', error.message);
+      }
+    };
+  
+    const handleUpdateTotalAmount = async () => {
+      try {
+        const response = await fetch('http://localhost:9000/recepieSeeker/update-total-amount', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ increasedAmount: subscriptionCount * 200 }),
+        });
+  
+        if (!response.ok) {
+          const data = await response.json();
+          console.error('Error updating total amount:', data.message);
+        } else {
+          const updatedCart = await response.json();
+          console.log('Updated Cart with extra amount:', updatedCart);
+        }
+      } catch (error) {
+        console.error('Error updating total amount:', error);
+      }
+    };
+  
+    fetchUserSubscriptionCount();
+    handleUpdateTotalAmount();
     fetchCartDetails();
-  }, [fetchdetails]);
+  }, [fetchdetails,IncreasedAmount]);
 
   const handleRemoveItem = async (orderId) => {
     try {
@@ -133,11 +186,19 @@ const CartPopup = ({ onClose }) => {
               ))}
             </tbody>
             {/* Display total price row */}
+            
             <tfoot>
               <tr>
                 <td colSpan="2"></td>
                 <td>Total:</td>
                 <td>{cartDetails.totalAmount}</td>
+              </tr>
+            </tfoot>
+            <tfoot>
+              <tr>
+                <td colSpan="2"></td>
+                <td>Meal Plan Subscription:</td>
+                <td>{IncreasedAmount}</td>
               </tr>
             </tfoot>
           </table>

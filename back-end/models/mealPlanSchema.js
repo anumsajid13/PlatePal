@@ -21,6 +21,11 @@ const mealPlanSchema = new mongoose.Schema({
       type:Number,
       default:200
     }
+    ,
+    isSubscribed:{
+      type: Boolean,
+      default: false,
+    }
   });
   
   const MealPlan = mongoose.model('MealPlan', mealPlanSchema);

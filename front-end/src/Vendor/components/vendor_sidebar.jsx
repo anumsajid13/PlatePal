@@ -29,10 +29,13 @@ const Sidebar = ({ isOpen, onClose }) => {
           <Link to="/vendor/orders">Orders</Link>
         </li>
         <li>
-          <Link to="/vendor/reportChef">All Chefs</Link>
+          <Link to="/vendor/reportChef">Chefs</Link>
         </li>
         <li>
           <Link to="/vendor/blockedChef">Reports</Link>
+        </li>
+        <li>
+          <Link to="/vendor/reviews">Reviews</Link>
         </li>
       </ul>
     </div>

@@ -46,6 +46,7 @@
 }
   
   .vendor-popup h2 {
+    color:#ffb32f;
     font-weight: bold;
     font-family: Chonburi;
     margin-bottom: 10px;
@@ -56,6 +57,7 @@
   }
   
   .vendor-popup h3 {
+    color:#ffb32f;
     font-weight: bold;
     font-family: Chonburi;
     margin-bottom: 8px;

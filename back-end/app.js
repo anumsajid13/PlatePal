@@ -12,6 +12,7 @@ const User_Nutritionist_Inbox = require('./models/User-Nutritionist_Inbox Schema
 const Vendor_Notification = require('./models/Vendor_Notification Schema');
 const Nutritionist = require('./models/Nutritionist Schema');
 const Transaction = require('./models/Transaction');
+const NTransaction = require('./models/Nut-Trans');
 const NutritionistBlockReport = require('./models/NutritionistBlockReport Schema');
 const Order = require('./models/Order Schema');
 const Cart = require('./models/Cart Schema');
@@ -46,9 +47,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 
 app.use(express.json());
-
 // Connecting to MongoDB
-mongoose.connect('mongodb+srv://anumsajid13:6grTh91EsFrpMXSl@cluster0.lzdbmp9.mongodb.net/PlatePal', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://anumsajid13:6grTh91EsFrpMXSl@cluster0.lzdbmp9.mongodb.net/PlatePal'
+, { useNewUrlParser: true });
 const con = mongoose.connection;
 con.on('open', () => {
     console.log('Connected to MongoDB');
@@ -74,9 +75,11 @@ const follow_nutritionist = require('./RecipeSeeker/routes/Follow_Nutritionists'
 const Display_Notifications = require('./RecipeSeeker/routes/Display_notifications')
 const Send_notification_to_nutritionist = require('./RecipeSeeker/routes/Send_noti_to_Nutri')
 const Send_msg_to_nutritionist = require('./RecipeSeeker/routes/Send_msgToNutritionist')
+const Update_total = require('./RecipeSeeker/routes/Update_total')
 const SearchByRecipe = require('./RecipeSeeker/routes/SearchBy_RecepieName')
 const SearchByChef = require('./RecipeSeeker/routes/SearchBy_ChefName')
 const Display_recipeSeekers = require('./RecipeSeeker/routes/Display_recipeseeker')
+const Subscribe = require('./RecipeSeeker/routes/Subscribe')
 const AddOrder = require('./RecipeSeeker/routes/AddToCart')
 
 const DisplayCategories= require('./RecipeSeeker/routes/DisplayCategories')
@@ -121,6 +124,7 @@ const chefReviews = require('./Chef/routes/ManageReviews_routes');
 //forget password rotues
 const forgetpassword = require('./ForgotPassword/ForgotPasswordRoutes');
 //vendor review route
+const vendorReview = require('./Chef/routes/vendor_review');
 
 
 
@@ -163,6 +167,8 @@ app.use('/recepieSeeker', Display_Notifications);
 app.use('/recepieSeeker', Display_recipeSeekers);
 app.use('/recepieSeeker', AddOrder );
 app.use('/recepieSeeker', Favourites );
+app.use('/recepieSeeker', Subscribe );
+app.use('/recepieSeeker', Update_total );
 
 //app.use('/recepieSeeker', follow_nutritionist);
 app.use('/recepieSeeker', Send_msg_to_nutritionist);
@@ -171,6 +177,7 @@ app.use('/recepieSeeker', SearchByChef);
 app.use('/recepieSeeker', DisplayCategories);
 
 app.use('/user', forgetpassword);
+
 
 const authenticateToken = require('./TokenAuthentication/token_authentication'); 
 
@@ -206,6 +213,11 @@ app.post("/api/create-checkout-session",async(req,res)=>{
           vendor.balance += vendorAmount;
           console.log("Vendor balane: ",vendor.balance)
           await vendor.save();
+
+          const user= await RecipeSeeker.findById(userID);
+          user.SubscribtionCount_Paid=user.SubscribtionCount_Paid+user.SubscribtionCount;
+          user.SubscribtionCount=0;
+          await user.save();
   
         } catch (error) {
           console.error('Error updating balances:', error.message);
@@ -338,6 +350,7 @@ app.use('/chatWithchef',vendorChatRoute );
 app.use('/vendor/notifications',vendorNotificationRoute );
 app.use('/vendor/cart', orderRoute);
 app.use('/vendor/BlockReport', vendorBlockchefRoute);
+app.use('/vendor/review', vendorReviewRoute);
 
 //block report by chef
 app.use('/chef', blockreportroVendorRoutes);
@@ -359,6 +372,9 @@ app.use('/chef', chatwithvendorChef);
 
 //chef reviews (cheff)
 app.use('/chef', chefReviews);
+
+//vendor reviews (chef)
+app.use('/chef', vendorReview);
 
 
 app.listen(port, () => {
