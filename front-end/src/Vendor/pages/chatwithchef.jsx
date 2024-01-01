@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import NavigationBar from '../components/NavigationBar';
 import useTokenStore from '../../tokenStore.js';
-import { jwtDecode } from 'jwt-decode';
 import '../assets/styles/chat.css';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -15,9 +14,7 @@ const VendorInbox = () => {
   const [loadingVendors, setLoadingVendors] = useState(true);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const navigate = useNavigate();
-
-  const token = useTokenStore.getState().token;
-  const decodedToken = jwtDecode(token);
+const {token} = useTokenStore();
   const currentUserId = decodedToken.name;
 
   useEffect(() => {

@@ -13,11 +13,9 @@ router.post('/add-to-favourites/:recipeId', authenticateToken, async (req, res) 
 
     const recipeSeeker = await RecipeSeeker.findById(userId);
     const recipe = await Recipe.findById(recipeId);
-
     if (!recipeSeeker || !recipe) {
       return res.status(404).json({ message: 'Recipe Seeker or Recipe not found' });
     }
-
     // Check if the recipe is already in the favourites
     if (!recipeSeeker.recipeFavourites.includes(recipeId)) {
       recipeSeeker.recipeFavourites.push(recipeId);

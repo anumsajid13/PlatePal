@@ -7,13 +7,9 @@ const Vendor_Chef_InboxSchema = new mongoose.Schema({
   vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
   messages: [
     {
-      message: String,
-      author: String,
-      time: Date,
+      message: String,author: String,time: Date, 
     },
   ],
-
-  
 });
 
 const Vendor_Chef_Inbox = mongoose.model('VendorInbox', Vendor_Chef_InboxSchema );
