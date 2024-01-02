@@ -5,6 +5,7 @@ import NavigationBar from '../components/NavigationBar';
 import { FaPlusCircle, FaSearch, FaSort, FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import '../assets/styles/CartList.css';
+import { BASE_URL } from '../../url';
 
 const CartList = () => {
   const [carts, setCarts] = useState([]);
@@ -19,7 +20,7 @@ const CartList = () => {
 
     const fetchCarts = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/vendor/cart?filterType=${filterType}&filterValue=${filterValue}&sortBy=${sortOption}&sortOrder=${sortOrder}`, {
+        const response = await fetch(`${BASE_URL}/vendor/cart?filterType=${filterType}&filterValue=${filterValue}&sortBy=${sortOption}&sortOrder=${sortOrder}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,

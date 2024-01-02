@@ -4,7 +4,7 @@ import { FaArrowLeft, FaPlusCircle } from 'react-icons/fa';
 import useTokenStore from '../../tokenStore';
 import NavigationBar from '../components/NavigationBar';
 import '../assets/styles/addNewProducts.css';
-
+import {BASE_URL} from '../../url';
 const AddNewProduct = () => {
   const navigate = useNavigate();
   const { token } = useTokenStore();
@@ -32,7 +32,7 @@ const AddNewProduct = () => {
 
   const handleAddIngredient = async () => {
     try {
-      const response = await fetch('http://localhost:9000/ingredients/new', {
+      const response = await fetch(`${BASE_URL}/ingredients/new`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

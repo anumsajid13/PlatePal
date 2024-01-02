@@ -6,6 +6,7 @@ import '../assets/styles/vendorProfile.css';
 import defaultProfilePicture from '../assets/images/vendor_signup.svg';
 import NavigationBar from '../components/NavigationBar';
 import { useNavigate } from 'react-router-dom';
+import {BASE_URL} from '../../url';
 
 const VendorProfile = () => {
   const { token } = useTokenStore();
@@ -20,7 +21,7 @@ const VendorProfile = () => {
   useEffect(() => {
     const fetchVendorDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/vendor/profile`, {
+        const response = await fetch(`${BASE_URL}/vendor/profile`, {
         method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -53,7 +54,7 @@ const VendorProfile = () => {
   };
   const confirmDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:9000/vendor/deleteprofile`, {
+      const response = await fetch(`${BASE_URL}/vendor/deleteprofile`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,

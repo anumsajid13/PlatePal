@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useTokenStore from '../../tokenStore';
+import { BASE_URL } from '../../url';
 
 const ShowSupplierNotificationBox = () => {
   const [supplierNotifications, setSupplierNotifications] = useState([]);
@@ -8,7 +9,7 @@ const ShowSupplierNotificationBox = () => {
   // Define the fetch function
   const fetchSupplierNotifications = async () => {
     try {
-      const response = await fetch('http://localhost:9000/vendor/supplierNotify', {
+      const response = await fetch(`${BASE_URL}/vendor/supplierNotify`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,

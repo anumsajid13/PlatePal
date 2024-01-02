@@ -5,6 +5,7 @@ import useTokenStore from '../../tokenStore';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
 import '../assets/styles/editProfile.css';
+import {BASE_URL} from '../../url';
 const PasswordReset=()=>{
 
     const { token } = useTokenStore();
@@ -23,7 +24,7 @@ const PasswordReset=()=>{
   
     const handleUpdate = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/vendor/forgotpassword`, {
+        const response = await fetch(`${BASE_URL}/vendor/forgotpassword`, {
           method: 'PUT',
           headers: {
             Authorization: `Bearer ${token}`,

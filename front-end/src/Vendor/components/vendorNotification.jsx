@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useTokenStore from '../../tokenStore';
 import { Link } from 'react-router-dom';
+import {BASE_URL} from '../../url';
 
 const VendorNotificationBox = () => {
   const [notifications, setNotifications] = useState([]);
@@ -9,7 +10,7 @@ const VendorNotificationBox = () => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await fetch('http://localhost:9000/vendor/notifications', {
+        const response = await fetch(`${BASE_URL}/vendor/notifications`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -33,7 +34,7 @@ const VendorNotificationBox = () => {
 
   const markNotificationAsRead = async (notificationId) => {
     try {
-      const response = await fetch(`http://localhost:9000/vendor/notifications/${notificationId}`, {
+      const response = await fetch(`${BASE_URL}/vendor/notifications/${notificationId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

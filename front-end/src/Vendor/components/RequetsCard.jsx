@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import RequestOverlay from '../pages/requestOverlay';
 import { FaArrowLeft, FaTimes } from 'react-icons/fa';
 import NavigationBar from '../components/NavigationBar';
+import { BASE_URL } from '../../url';
 
 const CollaborationRequestCard = ({ request }) => {
   const [chefName, setChefName] = useState('');
@@ -20,7 +21,7 @@ const CollaborationRequestCard = ({ request }) => {
   const onDelete = async () => {
     try {
       // Call the server endpoint to delete collaboration requests
-      const response = await fetch('http://localhost:9000/collaboration-request/delete', {
+      const response = await fetch('${BASE_URL}/collaboration-request/delete', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +51,7 @@ const CollaborationRequestCard = ({ request }) => {
   useEffect(() => {
     const fetchChefName = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/collaboration-request/chef/${request.chef}`, {
+        const response = await fetch(`${BASE_URL}/collaboration-request/chef/${request.chef}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -70,7 +71,7 @@ const CollaborationRequestCard = ({ request }) => {
 
     const fetchRecipeName = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/collaboration-request/recipe/${request.recipe}`, {
+        const response = await fetch(`${BASE_URL}/collaboration-request/recipe/${request.recipe}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

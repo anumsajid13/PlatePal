@@ -4,6 +4,7 @@ import CollaborationCard from '../components/CollaborationCard';
 import { FaArrowLeft, FaSort } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
+import { BASE_URL } from '../../url';
 
 const CollaborationsList = () => {
   const [collaborations, setCollaborations] = useState([]);
@@ -20,7 +21,7 @@ const CollaborationsList = () => {
   const fetchCollaborations = async () => {
     try {
       const response = await fetch(
-        `http://localhost:9000/collaboration?filterType=${filterType}&filterValue=${filterValue}&sortBy=${sortOption}&sortOrder=${sortOrder}`,
+        `${BASE_URL}/collaboration?filterType=${filterType}&filterValue=${filterValue}&sortBy=${sortOption}&sortOrder=${sortOrder}`,
         {
           method: 'GET',
           headers: {

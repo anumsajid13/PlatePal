@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../Chef/pages/chefFollowers.css';
 import   NavigationBar from '../components/NavigationBar';
 import useTokenStore from '../../tokenStore';
-
+import { BASE_URL } from '../../url';
 const VendorCollaborators = () => {
     const [collaborators, setCollaborators] = useState([{}]);
     const { token} = useTokenStore(); 
@@ -11,7 +11,7 @@ const VendorCollaborators = () => {
        
         const fetchCollaborators = async () => {
             try {
-                const response = await fetch('http://localhost:9000/collaboration/mycollaborators', {
+                const response = await fetch(`${BASE_URL}/collaboration/mycollaborators`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
