@@ -3,6 +3,7 @@ import AdminNav from '../components/AdminNav';
 import './main_admin.css';
 import { useStore } from './TopStore';
 import React, { useEffect } from 'react';
+import {BASE_URL} from '../../url';
 
 const Adminmain = () => {
   const { topChefs, topNutritionists, topVendors, fetchTopChefs, fetchTopNutritionists, fetchTopVendors } = useStore();
@@ -11,16 +12,16 @@ const Adminmain = () => {
     // Make the API calls
     const fetchData = async () => {
       try {
-        const chefResponse = await fetch('http://localhost:9000/admin/top-chefs');
+        const chefResponse = await fetch(`${BASE_URL}/admin/top-chefs`);
         const chefData = await chefResponse.json();
         fetchTopChefs(chefData.topChefs); // Set the topChefs array
         console.log(chefData.topChefs, "YAAAAAAA");
 
-        const nutritionistResponse = await fetch('http://localhost:9000/admin/top-nutritionists');
+        const nutritionistResponse = await fetch(`${BASE_URL}/admin/top-nutritionists`);
         const nutritionistData = await nutritionistResponse.json();
         fetchTopNutritionists(nutritionistData.topNutritionists); // Set the topNutritionists array
 
-        const vendorResponse = await fetch(`http://localhost:9000/admin/top-vendors`);
+        const vendorResponse = await fetch(`${BASE_URL}/admin/top-vendors`);
         const vendorData = await vendorResponse.json();
         console.log(vendorData);
         fetchTopVendors(vendorData.topVendors); // Set the topVendors array

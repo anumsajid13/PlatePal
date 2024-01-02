@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './chefcollabreqs.css';
 import ChefNav from '../components/NavBarChef';
 import useTokenStore from '../../tokenStore';
+import { BASE_URL } from '../../url';
 
 const ChefCollabs = () => {
     const [collabRequests, setCollabRequests] = useState([]);
@@ -13,7 +14,7 @@ const ChefCollabs = () => {
        
         const fetchCollabs = async () => {
             try {
-                const response = await fetch('http://localhost:9000/chefVendors/collabRequests', {
+                const response = await fetch(`${BASE_URL}/chefVendors/collabRequests`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

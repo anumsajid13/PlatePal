@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useParams  } from 'react-router-dom';
 import useNavbarStore from './navbarStore';
 import './SignIn.css';
+import { BASE_URL } from './url';
 
 const ResetPassword = () => {
 
@@ -11,7 +12,7 @@ const ResetPassword = () => {
     const navigate = useNavigate();
     const handleResetPassword = async () => {
         try {
-          const response = await fetch(`http://localhost:9000/user/reset-password/${userType}/${id}/${token}`, {
+          const response = await fetch(`${BASE_URL}/user/reset-password/${userType}/${id}/${token}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

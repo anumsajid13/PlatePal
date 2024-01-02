@@ -8,6 +8,7 @@ import AdminNav from '../components/AdminNav';
 import useBlockStore from './blockstore';
 import BlockReports from './BlockReports';
 import PopupMessage from './PopupMessage';
+import {BASE_URL} from '../../url';
 
 const ChefList = () => {
 
@@ -24,15 +25,15 @@ const ChefList = () => {
       setLoading(true);
       setError(null);
 
-      const chefResponse = await fetch('http://localhost:9000/admin/list-all-chefs');
+      const chefResponse = await fetch(`${BASE_URL}/admin/list-all-chefs`);
       const chefData = await chefResponse.json();
       setChefs(chefData);
 
-      const vendorResponse = await fetch('http://localhost:9000/admin/list-all-vendors');
+      const vendorResponse = await fetch(`${BASE_URL}/admin/list-all-vendors`);
       const vendorData = await vendorResponse.json();
       setVendor(vendorData);
 
-      const nutriResponse = await fetch('http://localhost:9000/admin/list-all-nutritionists');
+      const nutriResponse = await fetch(`${BASE_URL}/admin/list-all-nutritionists`);
       const nutriData = await nutriResponse.json();
       setNutri(nutriData);
 
@@ -53,7 +54,7 @@ const ChefList = () => {
       // Check if blockCount is greater than zero
       if (blockCount > 3) {
         // Make API call to delete entity based on the type (chef, vendor, nutritionist)
-        const response = await fetch(`http://localhost:9000/admin/delete-${entityType}/${entityId}`, {
+        const response = await fetch(`${BASE_URL}/admin/delete-${entityType}/${entityId}`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${token}`,

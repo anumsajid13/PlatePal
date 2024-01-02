@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useNavbarStore from './navbarStore';
 import './SignIn.css';
 import './forgotPassword.css';
+import { BASE_URL } from './url';
 
 const ForgotPassword = () => {
 
@@ -13,7 +14,7 @@ const ForgotPassword = () => {
     const handleForgot =  async () => {
 
         try {
-            const response = await fetch('http://localhost:9000/user/forgot-password', {
+            const response = await fetch(`${BASE_URL}/user/forgot-password`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

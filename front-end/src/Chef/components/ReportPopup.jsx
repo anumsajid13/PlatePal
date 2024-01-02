@@ -2,6 +2,7 @@ import {React, useState} from 'react';
 import useTokenStore from '../../tokenStore';
 import './reportPopup.css';
 import ChefGenericPopup from '../components/ChefGenericPopup';
+import { BASE_URL } from '../../url';
 
 
 const ReportPopUp = ({ vendorId, onClose  }) => {
@@ -30,7 +31,7 @@ const ReportPopUp = ({ vendorId, onClose  }) => {
         formData.append('proof', proof); 
     
         try {
-            const response = await fetch(`http://localhost:9000/chef/createVendorReport/${vendorId}`, {
+            const response = await fetch(`${BASE_URL}/chef/createVendorReport/${vendorId}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,

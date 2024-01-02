@@ -4,6 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import useNavbarStore from './navbarStore';
 import useTokenStore from './tokenStore';
 import './SignIn.css';
+import { BASE_URL } from './url';
+
+console.log('BASE_URL:', BASE_URL);
 
 const AlertMessage = ({ message, onClose }) => {
   return (
@@ -58,7 +61,7 @@ const SignInPage =  () => {
 
   const signInRecipeSeeker = async () => {
     try {
-        const response = await fetch('http://localhost:9000/recepieSeeker/recipeSeeker_signin', {
+        const response = await fetch(`${BASE_URL}/recepieSeeker/recipeSeeker_signin`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -86,7 +89,7 @@ const SignInPage =  () => {
   const signInAdmin = async () => {
 
     try {
-      const response = await fetch('http://localhost:9000/admin/login', {
+      const response = await fetch(`${BASE_URL}/admin/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -120,7 +123,7 @@ const SignInPage =  () => {
   
   const signInVendor = async () => {
     try {
-      const response = await fetch('http://localhost:9000/vendor/login', {
+      const response = await fetch(`${BASE_URL}/vendor/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -156,7 +159,7 @@ const SignInPage =  () => {
    
       try{
 
-        const response = await fetch('http://localhost:9000/chef/login', {
+        const response = await fetch(`${BASE_URL}/chef/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -190,7 +193,7 @@ const SignInPage =  () => {
 
   const signInNutritionist = async () => {
     try {
-      const response = await fetch('http://localhost:9000/n/login', {
+      const response = await fetch(`${BASE_URL}/n/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

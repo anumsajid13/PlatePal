@@ -5,6 +5,7 @@ import './AllUsers.css';
 import AdminNav from '../components/AdminNav';
 import useTokenStore from '../../tokenStore';
 import useUserStore from '../../userStore';
+import { BASE_URL } from '../../url';
 
 const AllUsers = () => {
   const store = useAllUsersStore();
@@ -16,17 +17,17 @@ const AllUsers = () => {
     const fetchAllUsers = async () => {
       try {
         // Make API calls to fetch all users
-        const vendorResponse = await fetch('http://localhost:9000/admin/list-registered-vendors', {
+        const vendorResponse = await fetch(`${BASE_URL}/admin/list-registered-vendors`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        const nutritionistResponse = await fetch('http://localhost:9000/admin/list-registered-nutritionists', {
+        const nutritionistResponse = await fetch(`${BASE_URL}/admin/list-registered-nutritionists`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        const chefResponse = await fetch('http://localhost:9000/admin/list-registered-chefs', {
+        const chefResponse = await fetch(`${BASE_URL}/admin/list-registered-chefs`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
