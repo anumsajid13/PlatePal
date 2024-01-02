@@ -25,15 +25,24 @@ const ingredientSchema = new mongoose.Schema({
   quantity: {
     type: Number,
   },
-  constituentsOf: {
-    type: String,
-    default: ' ',
-  },
   vendor: { type: mongoose.Schema.Types.ObjectId, ref: 'Vendor' },
   Time: {
     type: Date,
     default: Date.now,
   },
+  unit:{
+    type:String,
+    default:'1 kg'
+  },
+  limit:{
+    type:Number,
+    default:0
+  },
+  stock:{
+    type:Number,
+    default:0
+  },
+  
 });
 
 const Ingredient = mongoose.model('Ingredient', ingredientSchema);

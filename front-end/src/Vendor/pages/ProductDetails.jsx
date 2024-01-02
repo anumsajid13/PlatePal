@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { FaArrowLeft, FaEdit } from 'react-icons/fa';
 import useTokenStore from '../../tokenStore';
-import '../assets/styles/productDetails.css';
 import NavigationBar from '../components/NavigationBar';
 import image from '../assets/images/vendor_signup_image.jpg';
 import { useNavigate } from 'react-router-dom';
@@ -28,6 +27,7 @@ const IngredientDetails = () => {
         }
 
         const ingredientData = await response.json();
+        console.log(ingredientData);
         setIngredient(ingredientData);
       } catch (error) {
         console.error('Error fetching ingredient details:', error.message);
@@ -53,20 +53,22 @@ const IngredientDetails = () => {
           <FaArrowLeft /> Back
         </button>
         {ingredient && (
-          <>
-            <img src={image} alt="ingredient" className="productimage" />
-            
+          <><div className='imageContainer'>
+             <img className="product-image" src={`data:image/jpeg;base64,${ingredient.productImage}`} alt="Ingredient" />
+          </div>
             <div className="iconContainer">
             <h2>{ingredient.name}</h2>
             <button className="editButton1" onClick={handleNext}>
                 <FaEdit /> Edit Information
               </button>
             </div>
-           
-            <p>Description: {ingredient.description}</p>
-            <p>Category: {ingredient.type}</p>
-            <p>Price: {ingredient.price}</p>
-            <p>Quantity: {ingredient.quantity}</p>
+            <label className="labelstyle">Description: {ingredient.description}</label>
+        <label className="labelstyle labelstyle-category">Category: {ingredient.type}</label>
+        <label className="labelstyle">Price: Pkr.{ingredient.price}</label>
+        <label className="labelstyle">Quantity: {ingredient.quantity} packs ({ingredient.unit})</label>
+        <label className="labelstyle">Limit: {ingredient.limit} </label>
+        <label className="labelstyle">Refill stock: {ingredient.stock} </label>
+
           </>
         )}
       </div>

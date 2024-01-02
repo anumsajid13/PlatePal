@@ -4,6 +4,7 @@ import '../../Chef/pages/displayVendors.css';
 import ReportChef from '../components/ReportChef';
 import useTokenStore from '../../tokenStore';
 import ChefGenericPopup from '../../Chef/components/ChefGenericPopup';
+import { useNavigate } from 'react-router-dom';
 
 const DisplayChefs = () => {
   const { token } = useTokenStore();
@@ -12,6 +13,8 @@ const DisplayChefs = () => {
   const [showReportPopup, setShowReportPopup] = useState(false);
   const [selectedChefId, setSelectedChefId] = useState('');
   const [selectedVendor, setSelectedVendor] = useState(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +43,9 @@ const DisplayChefs = () => {
   const handleCloseReportPopup = () => {
     setShowReportPopup(false);
   };
-
+const gotochat=()=>{
+  navigate('/vendor/inbox')
+};
   return (
     <>
       <NavigationBar />
@@ -48,35 +53,26 @@ const DisplayChefs = () => {
         <h1>List of Chef</h1>
         {chef.map((item) => (
           <div key={item._id} className="vendor-item">
-            {item.profilePicture && typeof item.profilePicture === 'string' ? (
+            {item.profilePicture && typeof item.profilePicture.contentType === 'string' ? (
               <div style={{ display: 'flex', gap: '10px', flexDirection: 'row' }}>
-                <img
-                  src={item.profilePicture}
-                  style={{ width: '70px', height: '70px', borderRadius: '70px', objectFit: 'cover' }}
-                />
+                <img src={`data:${item.profilePicture.contentType};base64,${item.profilePicture.data}`} alt={item.name} style={{ width: '70px', height: '70px', borderRadius: '70px', objectFit: 'cover' }} />
+                {/* Other details or components */}
               </div>
             ) : (
-              <div style={{ display: 'flex', gap: '10px', flexDirection: 'row' }}>
-                <img
-                  src={
-                    item.profilePicture.data
-                      ? `data:image/jpeg;base64,${item.profilePicture.data}`
-                      : require('../assets/images/no-profile-picture-15257.svg').default
-                  }
-             
-                  style={{ width: '70px', height: '70px', borderRadius: '70px', objectFit: 'cover' }}
-                />
-              </div>
+              // Render something else or nothing if profilePicture is undefined
+              <p>No profile picture available</p>
             )}
-            <h2
-              onClick={() => setSelectedVendor(item)}
-              style={{ cursor: 'pointer' }}
-            >
+
+            {/* Additional details */}
+            <h2 onClick={() => setSelectedVendor(item)} style={{ cursor: 'pointer' }}>
               {item.name}
             </h2>
-            <h4  style={{ color:'grey'}}>{item.email}</h4>
+            <h4 style={{ color: 'grey' }}>{item.email}</h4>
             <button className="vendor-chef-displayVendors" onClick={() => handleReportClick(item._id)}>
               Report
+            </button>
+            <button className="vendor-chef-displayVendors" onClick={gotochat}>
+              Send message
             </button>
           </div>
         ))}

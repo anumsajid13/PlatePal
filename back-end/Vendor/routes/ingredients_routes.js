@@ -3,7 +3,10 @@ const router = express.Router();
 const Ingredient = require('../../models/Ingredient Schema');
 const jwt = require("jsonwebtoken");
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
- 
+const multer = require('multer');
+// Multer configuration
+const storage = multer.memoryStorage(); // Store the image in memory
+const upload = multer({ storage: storage });
 // Endpoint to get all ingredients with filtering, sorting, and pagination
 router.get('/All', authenticateToken, async (req, res) => {
   try {
@@ -88,12 +91,16 @@ router.get('/:id', authenticateToken, async (req, res) => {
 
     // Find the ingredient by ID and vendor
     const foundIngredient = await Ingredient.findOne({ _id: id, vendor: vendorId });
-
+   
     if (!foundIngredient) {
       return res.status(404).json({ message: 'Ingredient not found or unauthorized' });
     }
-
-    return res.json(foundIngredient);
+    const unit8Array = new Uint8Array(foundIngredient.productImage.data);
+    const base64string = Buffer.from(unit8Array).toString('base64');
+    
+    const ingredientDataWithBase64Image = { ...foundIngredient._doc, productImage: base64string };
+ 
+    return res.json(ingredientDataWithBase64Image);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -101,12 +108,22 @@ router.get('/:id', authenticateToken, async (req, res) => {
 });
 
 // Add a new ingredient
-router.post('/new', authenticateToken, async (req, res) => {
+router.post('/new', authenticateToken, upload.single('productImage'), async (req, res) => {
   try {
-    const { name, price, type,description, quantity, constituentsOf } = req.body;
+    console.log("im here",req.body)
+console.log("im inher",req.file);
+const productImage = req.file ? req.file.buffer : null;
+
+// Check if productImage is still undefined or null
+if (productImage === undefined || productImage === null) {
+  return res.status(400).json({ message: 'Product image is required.' });
+}
+const bufferData = Buffer.from(productImage.buffer);
+    const { name, price, type, description, quantity,unit,limit,stock } = req.body;
+
 
     // Validate required fields
-    if (!name || !price || !type || !quantity) {
+    if (!name || !price || !type || !quantity || !limit || !stock )  {
       return res.status(400).json({ message: 'Name, price, type, and quantity are required fields.' });
     }
 
@@ -120,8 +137,15 @@ router.post('/new', authenticateToken, async (req, res) => {
       price,
       type,
       quantity,
-      constituentsOf: constituentsOf || '',
+      unit,
+      limit,
+      stock,
       vendor: vendorId,
+      productImage: {
+        data: bufferData,
+        contentType: productImage.mimetype,
+    
+        },
     });
 
     // Save the new ingredient
@@ -134,25 +158,38 @@ router.post('/new', authenticateToken, async (req, res) => {
   }
 });
 
-//update an ingredient
-router.put('/update/:id', authenticateToken, async (req, res) => {
+router.put('/update/:id', authenticateToken, upload.single('productImage'), async (req, res) => {
   const { id } = req.params;
 
   try {
-    // Find the authenticated vendor from the middleware
-    const vendorId = req.user.id;
-
     // Find the ingredient by ID and vendor
-    const ingredient = await Ingredient.findOne({ _id: id, vendor: vendorId });
+    const ingredient = await Ingredient.findById(id);
 
     if (!ingredient) {
       return res.status(404).json({ message: 'Ingredient not found or unauthorized' });
     }
 
-    // Update the ingredient information
-    const updatedIngredient = await Ingredient.findByIdAndUpdate(id, { $set: req.body }, { new: true });
+    const ingredientData = JSON.parse(req.body.ingredientData); // Parse JSON data
 
-    return res.json(updatedIngredient);
+    ingredient.name = ingredientData.name || ingredient.name;
+    ingredient.price = ingredientData.price || ingredient.price;
+    ingredient.type = ingredientData.type || ingredient.type;
+    ingredient.description = ingredientData.description || ingredient.description;
+    ingredient.quantity = ingredientData.quantity || ingredient.quantity;
+    ingredient.unit = ingredientData.unit || ingredient.unit;
+    ingredient.limit = ingredientData.limit || ingredient.limit;
+    ingredient.stock = ingredientData.stock || ingredient.stock;
+
+    if (req.file) {
+      ingredient.productImage = {
+        data: req.file.buffer,
+        contentType: req.file.mimetype,
+      };
+    }
+
+    await ingredient.save(); // Save the updated ingredient
+
+    return res.json({ message: 'Ingredient updated successfully', ingredient });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal Server Error' });

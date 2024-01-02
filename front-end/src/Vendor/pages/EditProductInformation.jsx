@@ -10,68 +10,93 @@ const EditIngredient = () => {
   const { id } = useParams();
   const { token } = useTokenStore();
   const navigate = useNavigate();
-  const [ingredient, setIngredient] = useState({
-    name: '',
-    price: 0,
-    description: '',
-    type: '',
-    quantity: 0,
-    constituentsOf: [],
-  });
+  const [name, setName] = useState('');
+  const [price, setPrice] = useState(0); 
+  const [type, setType] = useState('');
+  const [description, setDescription] = useState('');
+  const [quantity, setQuantity] = useState(0); 
+  const [limit, setLimit] = useState(0);
+  const [stock, setStock] = useState(0);
+  const [productImage, setProductImage] = useState(null);
+  const [newproductImage, setNewproductImage] = useState(null);
+  const [unit, setUnit] = useState('1 kg'); 
 
-  useEffect(() => {
-    const fetchIngredientDetails = async () => {
-      try {
-        const response = await fetch(`http://localhost:9000/ingredients/${id}`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
+  const handleproductImageChange = (e) => {
+    const file = e.target.files[0];
+    setNewproductImage(file);
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch ingredient details');
-        }
-
-        const ingredientData = await response.json();
-        setIngredient(ingredientData);
-      } catch (error) {
-        console.error('Error fetching ingredient details:', error.message);
-      }
+ 
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProductImage(reader.result);
     };
-
-    fetchIngredientDetails();
-  }, [id, token]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setIngredient((prevIngredient) => ({
-      ...prevIngredient,
-      [name]: value,
-    }));
+    reader.readAsDataURL(file);
   };
+  useEffect(() => {
 
-  const handleUpdate = async () => {
-    try {
-      const response = await fetch(`http://localhost:9000/ingredients/update/${id}`, {
-        method: 'PUT',
+      fetch(`http://localhost:9000/ingredients/${id}`, {
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(ingredient),
-      });
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        setName(data.name);
+        setPrice(data.price);
+        setType(data.type);
+        setDescription(data.description);
+        setQuantity(data.quantity);
+        setUnit(data.unit);
+        setLimit(data.limit);
+        setStock(data.stock);
+          setProductImage(data.productImage);
 
-      if (!response.ok) {
-        throw new Error('Failed to update ingredient');
+      })
+      .catch((error)=> {
+        alert(`Error fetching ingredient details:${error.message}`);
+      });
+    }, [id, token]);  
+  
+
+
+    const handleUpdate = async (e) => {
+      e.preventDefault();
+    
+      const updatedIngredient = {
+        name,
+        price,
+        type,
+        description,
+        quantity,
+        unit,
+        limit,
+        stock
+      };
+    console.log("updatedIngredient",updatedIngredient);
+      const formData = new FormData();
+      formData.append('productImage', newproductImage);  
+      formData.append('ingredientData', JSON.stringify(updatedIngredient)); // Append JSON data
+    console.log("formdata",formData);
+      try {
+        const response = await fetch(`http://localhost:9000/ingredients/update/${id}`, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        });
+    
+        const data = await response.json();
+       alert('Ingredient updated successfully');
+       navigate(`/ingredients/${id}`)
+
+      } catch (error) {
+       alert(`Error updating ingredient:${ error.message }`);
       }
-      navigate(`/ingredients/${id}`);
-      console.log('Ingredient updated successfully');
-    } catch (error) {
-      console.error('Error updating ingredient:', error.message);
-    }
-  };
+    };
+    
 const goBack = () => {
     navigate(`/ingredients/${id}`);
 };
@@ -84,15 +109,16 @@ const goBack = () => {
           <FaArrowLeft /> Back
         </button>
         </div>
-      <h2>Edit Ingredient Information</h2>
+    <form onSubmit={handleUpdate}>
+    <h2>Edit Ingredient Information</h2>
       <div className="formContainer">
         <label htmlFor="name">Name:</label>
         <input
           type="text"
           id="name"
           name="name"
-          value={ingredient.name}
-          onChange={handleInputChange}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
 
         <label htmlFor="price">Price:</label>
@@ -100,16 +126,20 @@ const goBack = () => {
           type="number"
           id="price"
           name="price"
-          value={ingredient.price}
-          onChange={handleInputChange}
+          value={price}
+           onChange={(e) => {
+             const enteredValue = e.target.value;
+            if (enteredValue >= 0) {
+              setPrice(enteredValue);
+            }}}
         />
 
         <label htmlFor="description">Description:</label>
         <textarea
           id="description"
           name="description"
-          value={ingredient.description}
-          onChange={handleInputChange}
+          value={description}
+           onChange={(e) => setDescription(e.target.value)}
         />
 
         <label htmlFor="type">Type:</label>
@@ -117,8 +147,8 @@ const goBack = () => {
           type="text"
           id="type"
           name="type"
-          value={ingredient.type}
-          onChange={handleInputChange}
+          value={type}
+           onChange={(e) => setType(e.target.value)}
         />
 
         <label htmlFor="quantity">Quantity:</label>
@@ -126,12 +156,52 @@ const goBack = () => {
           type="number"
           id="quantity"
           name="quantity"
-          value={ingredient.quantity}
-          onChange={handleInputChange}
+          value={quantity}
+           onChange={(e) =>{ const enteredValue = e.target.value;
+            if (enteredValue >= 0) {
+              setQuantity(enteredValue);
+            }}}
         />
-
-        <button onClick={handleUpdate}>Update Ingredient</button>
+           <label htmlFor="unit">Unit:</label>
+        <input
+          type="text"
+          id="unit"
+          name="unit"
+          value={unit}
+           onChange={(e) => setUnit(e.target.value)}/>
+            <label htmlFor="limit">Limit:</label>
+        <input
+          type="number"
+          id="limit"
+          name="limit"
+          value={limit}
+           onChange={(e) =>{ const enteredValue = e.target.value;
+            if (enteredValue >= 0) {
+              setLimit(enteredValue);
+            }}}
+        />
+         <label htmlFor="stock">Refill Stock:</label>
+        <input
+          type="number"
+          id="stock"
+          name="stock"
+          value={stock}
+           onChange={(e) =>{ const enteredValue = e.target.value;
+            if (enteredValue >= 0) {
+              setStock(enteredValue);
+            }}}
+        />
+        <label htmlFor=" ">productImage:</label>
+          <input style={{ marginLeft: "20%", border: "none" }}
+              type="file"
+              id="productImage"
+              accept="image/*"
+              onChange={handleproductImageChange}
+            />
+        <button type='submit'>Update Ingredient</button>
       </div>
+    </form>
+    
     </div>
     </>
    

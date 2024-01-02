@@ -69,12 +69,12 @@ router.post('/sendmessage', authenticateToken, async (req, res) => {
     const vendorId = req.user.id; 
     const { chefId, message } = req.body;
 
-    let inboxEntry = await VendorChefInbox.findOne({ vendor:vendorId,chef:chefId});
+    let inboxEntry = await VendorChefInbox.findOne({ vendor:req.user.id,chef:chefId});
 
     if (!inboxEntry) {
-      inboxEntry = new VendorChefInbox({ vendor: vendorId, chef: chefId, messages: [] });
+      inboxEntry = new VendorChefInbox({ vendor: req.user.id, chef: chefId, messages: [] });
     }
-    const vendor=await Vendor.findById(vendorId);
+    const vendor=await Vendor.findById(req.user.id);
     inboxEntry.messages.push({
       message,
       author: vendor.name,
@@ -114,7 +114,7 @@ console.log("chefId",chefId);
   }
 
   // Find the inbox entry for the specified vendor and chef
-  let inboxEntry = await VendorChefInbox.findOne({ vendor: vendorId, chef: chefId });
+  let inboxEntry = await VendorChefInbox.findOne({ vendor: req.user.id, chef: chefId });
 
   // If no inbox entry is found, create a new one with an empty messages array
   if (!inboxEntry) {

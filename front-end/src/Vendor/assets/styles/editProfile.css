@@ -5,7 +5,7 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
-  background-color: #fee858;
+  background-color: #faea81;
 
 }
 
@@ -18,8 +18,8 @@
 .editProfileContainer .backButton {
   text-decoration: none;
   display: flex;
-  align-items: center;
-  background-color: #fa9523;
+  align-items: center;  
+  background-color: #e9830e;
 }
 
 .editProfileContainer  .backButton svg {

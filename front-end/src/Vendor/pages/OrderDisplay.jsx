@@ -87,9 +87,7 @@ useEffect(() => {
         </div>
         
       <div className="header">
-          <button className="back-button" onClick={handleGoBack}>
-            <FaArrowLeft /> Back
-          </button>
+       
         </div>
       <div className="cart-container">
       
