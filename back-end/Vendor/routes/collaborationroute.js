@@ -23,18 +23,20 @@ console.log("sort by",sortBy,"sort order",sortOrder);
     if (filterType && filterValue) {
       if (filterType == 'chef') {
       console.log("filter value",filterValue)
-        const chefid= await Chef.findOne({name:filterValue});
+      const regex = new RegExp(filterValue, 'i'); // 'i' for case-insensitive
+      const chefid = await Chef.findOne({ name: { $regex: regex } });
         console.log("chef id",chefid)
         if(chefid){
           query.chef = chefid._id;
           console.log("chef id",chefid._id,"query",query.chef)
-        } 
-        else{
+        } else
+        {
           query.chef = null;
         }
+       
       } else if (filterType == 'recipe') {
         console.log("filter value",filterValue)
-       const recipeId=await Recipe.findOne({title:filterValue});
+        const recipeId=await Recipe.findOne({ title: { $regex: new RegExp(filterValue, 'i') } });
        console.log("recipe id",recipeId)
        if(recipeId){
         query.recipe = recipeId._id;

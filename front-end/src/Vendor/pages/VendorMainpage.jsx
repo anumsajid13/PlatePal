@@ -6,6 +6,7 @@ import useTokenStore from '../../tokenStore';
 import NavigationBar from '../components/NavigationBar';
 import { FaPlusCircle ,FaSearch,FaSort} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import{FaArrowUp,FaArrowDown} from 'react-icons/fa';
 
 
 
@@ -32,10 +33,11 @@ const MainPage = () => {
         }
       );
       if (!response.ok) {
-        throw new Error('Failed to fetch Ingredients', response.message);
+        throw new Error(`Failed to fetch Ingredients ${response.message}`);
       }
       const data = await response.json();
       setIngredients(data);
+      navigate('/Vendor/Mainpage')
     } catch (error) {
       console.error('Error fetching Ingredients:', error.message);
     }
@@ -90,7 +92,7 @@ const MainPage = () => {
             placeholder="Search..."
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button className="search-button-1" onClick={fetchIngredients}>
+          <button className="vendor-filterType" onClick={fetchIngredients}>
             Search <FaSearch />
           </button>
         </div>
@@ -133,8 +135,8 @@ const MainPage = () => {
             </button>
             {showSortOptionDropdown && (
               <div className="vendor-sort-options-div">
-              <div  className="vendor-sort-options"onClick={() => handleSortOptionChange('Time','asc')}>time(asc)</div>
-                <div  className="vendor-sort-options" onClick={() => handleSortOptionChange('Time','desc')}>time(desc)</div>
+              <div  className="vendor-sort-options"onClick={() => handleSortOptionChange('Time','asc')}>Time<FaArrowUp /></div>
+                <div  className="vendor-sort-options" onClick={() => handleSortOptionChange('Time','desc')}>Time<FaArrowDown /></div>
                 <div  className="vendor-sort-options" onClick={() => handleSortOptionChange('price','asc')}>Price(asc)</div>
                 <div  className="vendor-sort-options" onClick={() => handleSortOptionChange('price','desc')}>Price(desc)</div>
                 <div  className="vendor-sort-options" onClick={() => handleSortOptionChange('quantity','asc')}>Quantity(acs)</div>

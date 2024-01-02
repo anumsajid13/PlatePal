@@ -57,7 +57,7 @@ const EditVendorProfile = () => {
       const updatedProfileData = {
         name,
         email,
-        address: username,
+        username,
       };
       const formData = new FormData();
       formData.append('profilePicture', newProfilePicture);

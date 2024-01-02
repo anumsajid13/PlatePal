@@ -1,141 +1,125 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
-import useTokenStore from '../../tokenStore';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft, FaPlusCircle } from 'react-icons/fa';
+import useTokenStore from '../../tokenStore';
 import NavigationBar from '../components/NavigationBar';
-import '../assets/styles/editProfile.css';
+import '../assets/styles/addNewProducts.css';
 
-const EditVendorProfile = () => {
-  const token = useTokenStore((state) => state.token);
+const AddNewProduct = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
-  const [profilePicture, setProfilePicture] = useState(null);
-  const [newProfilePicture, setNewProfilePicture] = useState(null);
- 
-  const handleProfilePictureChange = (e) => {
-    const file = e.target.files[0];
-    setNewProfilePicture(file);
+  const { token } = useTokenStore();
+
+  const [data, setData] = useState({
+    name: '',
+    price: 0,
+    description: '',
+    type: '',
+    quantity: 0,
+    unit:'',
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
  
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setProfilePicture(reader.result);
-    };
-    reader.readAsDataURL(file);
+    const sanitizedValue = name === 'quantity' || name === 'price' ? Math.max(0, parseInt(value, 10)) : value;
+
+    setData((prevData) => ({
+      ...prevData,
+      [name]: sanitizedValue,
+    }));
   };
 
-  
-  useEffect(() => {
-    fetch(`http://localhost:9000/vendor/profile`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setName(data.name);
-        setEmail(data.email);
-        setUsername(data.username || '');
-        setProfilePicture(data.profilePicture);
-      })
-      .catch((error) => console.error('Error fetching user details:', error));
-  }, [token]);
+  const handleAddIngredient = async () => {
+    try {
+      const response = await fetch('http://localhost:9000/ingredients/new', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-  
-
-
-
-  const handleUpdate = async (e) => {
-  
-  e.preventDefault();
-  
-      const updatedProfileData = {
-        name,
-        email,
-        address: username,
-      };
-      const formData = new FormData();
-      formData.append('profilePicture', newProfilePicture);
-      formData.append('profileData', JSON.stringify(updatedProfileData));
-
-      try {
-        const response = await fetch(`http://localhost:9000/vendor/editprofile`, {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData,
-        });
-  
-        const data = await response.json();
-        console.log(data.message);
-        alert(data.message)
-      } catch (error) {
-        console.error('Error updating profile:', error);
-        alert('Error updating profile')
+      if (!response.ok) {
+        throw new Error('Failed to add a new ingredient');
       }
+
+      const newIngredient = await response.json();
+      console.log('New ingredient added successfully:', newIngredient);
+
+      navigate('/Vendor/Mainpage');
+    } catch (error) {
+      console.error('Error adding a new ingredient:', error.message);
+    }
   };
 
+  const handleGoBack = () => {
+    navigate('/Vendor/Mainpage');
+  };
 
-const goBack = () => {  
-  navigate('/vendor/profile');
-}
   return (
     <>
       <NavigationBar />
-      <div className="editProfileContainer">
+      <div className="addIngredientContainer">
         <div className="header">
-          <button className="backButton" onClick={goBack}>
+          <button className="backButton" onClick={handleGoBack}>
             <FaArrowLeft /> Back
           </button>
         </div>
-        <form onSubmit={handleUpdate} className="edit-profile-form">
-        <h2>Edit Vendor Profile</h2>
+        <h2>Add New Ingredient</h2>
         <div className="formContainer">
-            <label htmlFor="name">Name:</label>
+          <label htmlFor="name">Name:</label>
           <input
             type="text"
             id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            name="name"
+            value={data.name}
+            onChange={handleInputChange}
           />
 
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="price">Price:</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            value={data.price}
+            onChange={handleInputChange}
+          />
+
+          <label htmlFor="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            value={data.description}
+            onChange={handleInputChange}
+            rows="7" 
+          />
+
+          <label htmlFor="type">Type:</label>
           <input
             type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            id="type"
+            name="type"
+            value={data.type}
+            onChange={handleInputChange}
           />
 
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="quantity">Quantity:</label>
           <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="number"
+            id="quantity"
+            name="quantity"
+            value={data.quantity}
+            onChange={handleInputChange}
           />
-
-          <label htmlFor="profilePicture">Profile Picture:</label>
-          <input style={{marginLeft:"20%"}}
-              type="file"
-              id="profilePicture"
-              accept="image/*"
-              onChange={handleProfilePictureChange}
-            />
-         
-          <button className="editprofile-button" type="submit">Update Profile</button>
-       
+          <button onClick={handleAddIngredient}>
+           Add product
+          </button>
         </div>
-        </form>
       </div>
     </>
   );
 };
 
-export default EditVendorProfile;
+export default AddNewProduct;

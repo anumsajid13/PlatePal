@@ -20,10 +20,10 @@
 }
 
 .deleteIcon {
-  color: red;
+  color: rgb(54, 51, 51);
   cursor: pointer;
-  width: 18px;
-  height: 28px;
+  width: 14px;
+  height: 16px;
   margin-right: 1%;
 }
 
