@@ -5,6 +5,7 @@ import './Discover.css';
 import { React, useEffect, useState } from 'react';
 import useTokenStore from '../../tokenStore.js';
 import { jwtDecode } from 'jwt-decode';
+import { BASE_URL } from '../../url';
 
 const Discover = () => {
   const [recipes, setRecipes] = useState([]);
@@ -20,7 +21,7 @@ const Discover = () => {
 
   const fetchTodaysRecipes = async () => {
     try {
-      const todayResponse = await fetch('http://localhost:9000/recepieSeeker/todaysRecipes', {
+      const todayResponse = await fetch(`${BASE_URL}/recepieSeeker/todaysRecipes`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -46,7 +47,7 @@ const Discover = () => {
 
   const toggleFollowChef = async (chefId) => {
     try {
-      const response = await fetch(`http://localhost:9000/recepieSeeker/${followingChefIds.includes(chefId) ? 'unfollowChef' : 'followChef'}/${chefId}`, {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/${followingChefIds.includes(chefId) ? 'unfollowChef' : 'followChef'}/${chefId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +73,7 @@ const Discover = () => {
     try {
 
       console.log("currentPage",currentPage) 
-      const url = `http://localhost:9000/recepieSeeker/allRecipes?page=${currentPage}&pageSize=${pageSize}`;
+      const url = `${BASE_URL}/recepieSeeker/allRecipes?page=${currentPage}&pageSize=${pageSize}`;
 
       const response = await fetch(url, {
         headers: {
@@ -82,7 +83,7 @@ const Discover = () => {
 
       const data = await response.json();
 
-      const followingResponse = await fetch('http://localhost:9000/recepieSeeker/followings', {
+      const followingResponse = await fetch('${BASE_URL}/recepieSeeker/followings', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -115,7 +116,7 @@ const Discover = () => {
  
   const fetchCategories = async () => {
     try {
-      const response = await fetch('http://localhost:9000/recepieSeeker/uniqueCategories');
+      const response = await fetch('${BASE_URL}/recepieSeeker/uniqueCategories');
       const data = await response.json();
       setCategories(data.uniqueCategories || []);
     } catch (error) {
@@ -125,12 +126,12 @@ const Discover = () => {
 
   const fetchRecipes_Search = async (searchTerm, searchType) => {
     try {
-      let url = `http://localhost:9000/recepieSeeker/${searchType}/${searchTerm}`;
+      let url = `${BASE_URL}/recepieSeeker/${searchType}/${searchTerm}`;
 
       const response = await fetch(url);
       const data = await response.json();
 
-      const followingResponse = await fetch('http://localhost:9000/recepieSeeker/followings', {
+      const followingResponse = await fetch('${BASE_URL}/recepieSeeker/followings', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -157,12 +158,12 @@ const Discover = () => {
 
   const fetchRecipes_Category = async (clickedCategory) => {
     try {
-      let url = `http://localhost:9000/recepieSeeker/searchByCategory/${clickedCategory}`;
+      let url = `${BASE_URL}/recepieSeeker/searchByCategory/${clickedCategory}`;
 
       const response = await fetch(url);
       const data = await response.json();
 
-      const followingResponse = await fetch('http://localhost:9000/recepieSeeker/followings', {
+      const followingResponse = await fetch(`${BASE_URL}/recepieSeeker/followings`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

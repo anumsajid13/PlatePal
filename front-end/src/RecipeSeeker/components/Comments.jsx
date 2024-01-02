@@ -3,6 +3,8 @@ import React from 'react';
 import './RecipeCard.css';
 import { useState, useRef } from 'react';
 
+
+
 const Comments = ({ comments, currentUser }) => {
   const [commentsVisible, setCommentsVisible] = useState(false);
 

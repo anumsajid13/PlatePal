@@ -7,6 +7,7 @@ import Comments from './Comments';
 import Reviews from './Reviews';
 import { jwtDecode } from 'jwt-decode';
 import useCartStore from './cartStore'; 
+import { BASE_URL } from '../../url';
 
 
 const RecipeCard = ({ recipe }) => {
@@ -70,7 +71,7 @@ const RecipeCard = ({ recipe }) => {
         };
   
         console.log("recipe id sending: ",recipe._id)
-        const response = await fetch('http://localhost:9000/recepieSeeker/addOrder', {
+        const response = await fetch(`${BASE_URL}/recepieSeeker/addOrder`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

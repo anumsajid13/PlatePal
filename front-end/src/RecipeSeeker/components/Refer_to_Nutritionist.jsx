@@ -5,6 +5,8 @@ import NutritionistList from './NutritionistList'
 import  useTokenStore  from  '../../tokenStore.js'
 import MealCard from './MealCard.jsx'
 import SubscriptionModal from './SubscriptionModal.jsx';
+import { BASE_URL } from '../../url';
+
 
 const ConsultNutritionist = () => {
   const [weight, setWeight] = useState('');
@@ -38,7 +40,7 @@ const ConsultNutritionist = () => {
     setSelectedNutritionist(nutritionistId);
 
     try {
-      const response = await fetch(`http://localhost:9000/recepieSeeker/sendNotification/${selectedNutritionist}`, {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/sendNotification/${selectedNutritionist}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +79,7 @@ const ConsultNutritionist = () => {
   const handleSubscribe = async (mealPlanId) => {
     try {
      console.log("mealplan is to send: ",mealPlanId)
-      const response = await fetch(`http://localhost:9000/recepieSeeker/subscribe/${mealPlanId}`, {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/subscribe/${mealPlanId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -105,7 +107,7 @@ const ConsultNutritionist = () => {
   
     const fetchMealPlansAndRecipes = async () => {
       try {
-        const mealPlanResponse = await fetch('http://localhost:9000/recepieSeeker/mealPlans', {
+        const mealPlanResponse = await fetch(`${BASE_URL}/recepieSeeker/mealPlans`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

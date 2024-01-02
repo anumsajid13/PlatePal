@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import RecipeCard from './RecipieCard';
 import Navbar from './Navbar'
+import { BASE_URL } from '../../url';
 
 const Favorites = () => {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
@@ -9,7 +10,7 @@ const Favorites = () => {
     const fetchFavoriteRecipes = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:9000/recepieSeeker/favourite-recipes', {
+        const response = await fetch(`${BASE_URL}/recepieSeeker/favourite-recipes`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

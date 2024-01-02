@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './ChefChat.css';
 import useTokenStore from '../../tokenStore.js';
 import { jwtDecode } from 'jwt-decode';
+import { BASE_URL } from '../../url';
 
 const ChefChat = () => {
   const [nutritionists, setnutritionists] = useState([]);
@@ -18,7 +19,7 @@ const ChefChat = () => {
   console.log('decodedToken',decodedToken)
 
   useEffect(() => {
-    fetch('http://localhost:9000/recepieSeeker/allNutritionists')
+    fetch(`${BASE_URL}/recepieSeeker/allNutritionists`)
       .then((response) => response.json())
       .then((data) => setnutritionists(data.nutritionists))
       .catch((error) => console.error('Error fetching nutritionists:', error));
@@ -32,7 +33,7 @@ const ChefChat = () => {
       setChatMessages([]);
       document.body.classList.add('no-scroll');
    
-      fetch(`http://localhost:9000/recepieSeeker/UserNutrchatMessages/${selectednutritionist}`, {
+      fetch(`${BASE_URL}/recepieSeeker/UserNutrchatMessages/${selectednutritionist}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -40,8 +41,8 @@ const ChefChat = () => {
         },
       })
       .then((response) => {
-        console.log('Response:', response); // Log the response here
-        return response.json(); // Continue parsing the response body as JSON
+        console.log('Response:', response); 
+        return response.json(); 
       })
         .then((data) => {
           if (isMounted) {
@@ -68,7 +69,7 @@ const ChefChat = () => {
   const handleSendMessage = () => {
     if (selectednutritionist && messageInput.trim() !== '') {
     
-      fetch(`http://localhost:9000/recepieSeeker/sendMessageToNutritionist/${selectednutritionist}`, {
+      fetch(`${BASE_URL}/recepieSeeker/sendMessageToNutritionist/${selectednutritionist}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

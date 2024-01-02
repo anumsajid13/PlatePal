@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Navbar from './Navbar';
+import { BASE_URL } from '../../url';
 
 import './sucess.css';
 
