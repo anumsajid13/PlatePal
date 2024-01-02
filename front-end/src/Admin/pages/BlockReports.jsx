@@ -5,14 +5,14 @@ import useBlockStore from './blockstore';
 import './blockreport.css';
 import useTokenStore from '../../tokenStore';
 import AdminNav from '../components/AdminNav';
-
+import { BASE_URL } from '../../url';
 const BlockReports = () => {
   const { blockReports, setBlockReports } = useBlockStore();
   const token = useTokenStore((state) => state.token);
 
   const fetchBlockReports = async (token) => {
     try {
-      const response = await fetch('http://localhost:9000/admin/view-vendor-block-reports', {
+      const response = await fetch(`${BASE_URL}/admin/view-vendor-block-reports`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -32,7 +32,7 @@ const BlockReports = () => {
 
   const blockVendor = async (vendorId) => {
     try {
-      const response = await fetch(`http://localhost:9000/admin/block-vendor/${vendorId}`, {
+      const response = await fetch(`${BASE_URL}/admin/block-vendor/${vendorId}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

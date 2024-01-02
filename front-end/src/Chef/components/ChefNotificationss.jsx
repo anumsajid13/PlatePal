@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useTokenStore from '../../tokenStore';
 import './chefNotifications.css';
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '../../url';
 
 const ChefNotificationBox = () => {
   const [notifications, setNotifications] = useState([]);
@@ -14,7 +15,7 @@ const ChefNotificationBox = () => {
     //fetch notifications 
     const fetchNotifications = async () => {
       try {
-        const response = await fetch('http://localhost:9000/chef/notifications', {
+        const response = await fetch(`${BASE_URL}/chef/notifications`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -39,7 +40,7 @@ const ChefNotificationBox = () => {
 
   const handleDeleteNotification = async (id) => {
     try {
-      const response = await fetch(`http://localhost:9000/chef/deletenotifications/${id}`, {
+      const response = await fetch(`${BASE_URL}/chef/deletenotifications/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

@@ -5,6 +5,7 @@ import useBlockStore from './blockstore';
 import './blockreport.css';
 import useTokenStore from '../../tokenStore';
 import AdminNav from '../components/AdminNav';
+import { BASE_URL } from '../../url';
 
 const ChefBlockReports = () => {
   const { blockReports, setBlockReports } = useBlockStore();
@@ -12,7 +13,7 @@ const ChefBlockReports = () => {
 
   const fetchChefBlockReports = async (token) => {
     try {
-      const response = await fetch('http://localhost:9000/admin/view-chef-block-reports', {
+      const response = await fetch(`${BASE_URL}/admin/view-chef-block-reports`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -32,7 +33,7 @@ const ChefBlockReports = () => {
 
   const blockChef = async (chefId) => {
     try {
-      const response = await fetch(`http://localhost:9000/admin/block-chef/${chefId}`, {
+      const response = await fetch(`${BASE_URL}/admin/block-chef/${chefId}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
