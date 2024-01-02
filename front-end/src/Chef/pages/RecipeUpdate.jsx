@@ -1,5 +1,6 @@
 import {React , useState} from 'react';
 import useTokenStore from '../../tokenStore';
+import { BASE_URL } from '../../url';
 
 const RecipeUpdateModal = ({ selectedRecipe, onClose, onUpdate}) => {
     console.log(selectedRecipe)
@@ -137,7 +138,7 @@ const RecipeUpdateModal = ({ selectedRecipe, onClose, onUpdate}) => {
 
             formDataToSend.append('recipeImage', formData.recipeImage);
 
-            const response = await fetch(`http://localhost:9000/recipes/update/${selectedRecipe._id}`, {
+            const response = await fetch(`${BASE_URL}/recipes/update/${selectedRecipe._id}`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`,
