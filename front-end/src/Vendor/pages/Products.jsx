@@ -11,7 +11,13 @@ const Indiviual = ({ ingredients, handleDelete, handleEdit }) => {
   const handleDeleteClick = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+    const userConfirmed = window.confirm("Are you sure you want to delete this ingredient?");
+
+  if (userConfirmed) {
     await handleDelete(ingredients._id);
+  } else {
+    console.log("Deletion canceled by the user");
+  }
   };
 
   const handleClick = () => {
@@ -28,10 +34,10 @@ const Indiviual = ({ ingredients, handleDelete, handleEdit }) => {
         <FaTrash className="deleteIcon" onClick={handleDeleteClick} />
       </div>
 
-      <p className="description">{ingredients.description}</p>
+      <p className="description">Description:{ingredients.description}</p>
       <p className="type">Category: {ingredients.type}</p>
-      <p className="price">Price: {ingredients.price}</p>
-      <p className="quantity">Quantity: {ingredients.quantity}</p>
+      <p className="price">Price: Pkr. {ingredients.price}</p>
+      <p className="quantity">Quantity: {ingredients.quantity} packs ({ingredients.unit})</p>
     </div>
   );
 };

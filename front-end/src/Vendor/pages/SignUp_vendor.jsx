@@ -20,44 +20,61 @@ const VendorSignUp = () => {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
+  
     const handleSignUp = async () => {
-        setLoading(true);
-    
-        try {
-          const formData = new FormData();
-          formData.append('name', name);
-          formData.append('username', username);
-          formData.append('email', email);
-          formData.append('password', password);
-          formData.append('profilePicture', profilePicture);
-          formData.append('certificationImage', Certification);
-    
-          const response = await fetch('http://localhost:9000/vendor/register', {
-            method: 'POST',
-            body: formData,
-          });
-    
-          if (!response.ok) {
-            const data = await response.json();
-            console.error('Sign Up failed:', data.message);
-            setIsFormCleared(true);
-            setMessage(data.message);
-            return;
-          }
-    
+      setLoading(true);
+  
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        setMessage('Invalid email format. Please enter a valid email address.eg yourname@mail.com');
+        setLoading(false);
+        return;
+      }
+  
+      // Validate password format
+      const passwordRegex = /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{6,15}$/;
+      if (!passwordRegex.test(password)) {
+        setMessage('Password must be 6-15 characters long, contain at least one number, one capital letter, and one special character.');
+        setLoading(false);
+        return;
+      }
+  
+      try {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('profilePicture', profilePicture);
+        formData.append('certificationImage', Certification);
+  
+        const response = await fetch('http://localhost:9000/vendor/register', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        if (!response.ok) {
           const data = await response.json();
-      
-          alert('Admin is currently reviewing your Certificates.Please wait before you login');
+          console.error('Sign Up failed:', data.message);
           setIsFormCleared(true);
-          navigate('/signin');
-
-        } catch (error) {
-          console.error('Error during Sign Up:', error.message);
-       
-        } finally {
-          setLoading(false);
+          setMessage(data.message);
+          return;
         }
-      };
+  
+        const data = await response.json();
+  
+        alert('Admin is currently reviewing your Certificates. Please wait before you login');
+        setIsFormCleared(true);
+        navigate('/signin');
+  
+      } catch (error) {
+        console.error('Error during Sign Up:', error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
       const handleWrongInfo = () => {
         setMessage('');
         if (isFormCleared) {

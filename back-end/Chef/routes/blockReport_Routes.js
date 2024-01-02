@@ -58,13 +58,7 @@ router.delete('/deleteVendorReport/:reportId', authenticateToken, async (req, re
       if(blockreport.status === 'Pending'){
 
         await VendorBlockReport.findByIdAndDelete(reportId);
-        const adminNotification = new AdminNotification({
-          user: '657dab6364bd105aeb65e8c7',
-          type: 'Vendor Block Report Deleted',
-          notification_text: `A vendor block report has been deleted by Chef ${req.user.name}.`
-        });
-        await adminNotification.save();
-
+      
         res.json({ message: 'Report deleted' });
         
       }else{

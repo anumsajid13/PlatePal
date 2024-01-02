@@ -20,7 +20,7 @@ const NutritionistPopup = ({ nutritionist, onClose, isFollowingNut = false,onTog
           <button className="popup-details-button" 
            onClick={onToggleFollow}>
              {isFollowingNut && 'Following'}
-            {!isFollowingNut && 'Follow Chef'}
+            {!isFollowingNut && 'Follow '}
           </button>
         </div>
       </div>

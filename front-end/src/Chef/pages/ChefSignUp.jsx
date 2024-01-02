@@ -131,7 +131,7 @@ const ChefSignUp = () =>{
                     
                     </form>
 
-                    <div className='chef-chef-image-side'></div>
+                    <div className='chef-chef-chef-image-side'></div>
                 </div>
             </div>
 

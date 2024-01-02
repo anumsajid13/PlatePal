@@ -259,9 +259,28 @@ app.post("/api/create-checkout-session",async(req,res)=>{
               const dbIngredient = await Ingredient.findOne({ name: ingredient.name , vendor:vendorCollaboration.vendor._id});
               if (dbIngredient) {
                 console.log("quantity in db before: ",dbIngredient.quantity)
-                dbIngredient.quantity -= quantityToDecrement;
+                if(dbIngredient.quantity<dbIngredient.limit)
+               {dbIngredient.quantity=dbIngredient.quantity+dbIngredient.stock;
+              // Notification to vendor for low ingredient supply
+              const vendor = await Vendor.findById(vendorCollaboration.vendor._id);
+                    vendor.notify.push({
+                      supplier: 'Supplier',
+                      time: Date.now(),
+                      message: `Alert: The supply of ${ingredient.name} is running low!`,
+                    });
+
+                    // Notification to vendor for ingredient supply
+                    vendor.notify.push({
+                      supplier: 'Supplier',
+                      time: Date.now(),
+                      message: `Success: ${ingredient.name} has been successfully supplied.`,
+                    });
+
+                    // Save the updated vendor document
+                    await vendor.save();
+                 dbIngredient.quantity -= quantityToDecrement;
                 console.log(dbIngredient, " left in amount: ",dbIngredient.quantity )
-                await dbIngredient.save();
+                await dbIngredient.save();}
               }
            }
           }

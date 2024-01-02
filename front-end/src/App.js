@@ -55,7 +55,7 @@ import OrderDisplay from './Vendor/pages/OrderDisplay';
 import VendorBlocksChef from './Vendor/pages/DisplayChef';
 import VendorBlockedlist from './Vendor/pages/BlockedChefReportList';
 import VendorReview from './Vendor/pages/VendorReviews';
-
+import VendorCollaborators from './Vendor/pages/collaborator';
 import Edit1 from './Admin/pages/Edit-P';
 import AcceptCert from './Admin/pages/AcceptCert';
 import Followers from './Nutrionist/pages/Followers';
@@ -131,7 +131,7 @@ function App() {
          <Route path="/vendor/reportChef" element={<VendorBlocksChef />} />
           <Route path="/vendor/blockedChef" element={<VendorBlockedlist />} />
         <Route path="/vendor/reviews" element={<VendorReview />} />
-        
+        <Route path="/vendor/collaborators" element={<VendorCollaborators />} />
 
 
         <Route path="/Chef/AllCollabs" element={<ChefCollabs/>} />
