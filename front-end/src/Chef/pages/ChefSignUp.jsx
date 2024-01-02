@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './chefSignup.css'; 
 import useNavbarStore from '../../navbarStore';
 import { Link, useNavigate   } from 'react-router-dom';
+import { BASE_URL } from '../../url';
 
 
 const ChefSignUp = () =>{
@@ -41,7 +42,7 @@ const ChefSignUp = () =>{
           formData.append('profilePicture', profilePicture);
           formData.append('certificationImage', certificationImage);
     
-          const response = await fetch('http://localhost:9000/chef/signup', {
+          const response = await fetch(`${BASE_URL}/chef/signup`, {
             method: 'POST',
             body: formData,
           });

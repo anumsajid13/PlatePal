@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ChefNav from '../components/NavBarChef';
 import useTokenStore from '../../tokenStore.js';
 import { jwtDecode } from 'jwt-decode';
+import { BASE_URL } from '../../url.js';
 
 const ChefUserInboxx = () => {
 
@@ -18,7 +19,7 @@ const ChefUserInboxx = () => {
     console.log('decodedToken',decodedToken)
 
     useEffect(() => {
-        fetch('http://localhost:9000/chef/allUsers')
+        fetch(`${BASE_URL}/chef/allUsers`)
           .then((response) => response.json())
           .then((data) => {
             console.log('Data received:', data); 
@@ -36,7 +37,7 @@ const ChefUserInboxx = () => {
           document.body.classList.add('no-scroll');
        
           console.log('selected user', selectedUser)
-          fetch(`http://localhost:9000/chef/chatMessages/${selectedUser}`, {
+          fetch(`${BASE_URL}/chef/chatMessages/${selectedUser}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -68,7 +69,7 @@ const ChefUserInboxx = () => {
         
         if (selectedUser && messageInput.trim() !== '') {
         
-          fetch(`http://localhost:9000/chef/sendMessageToUser/${selectedUser}`, {
+          fetch(`${BASE_URL}/chef/sendMessageToUser/${selectedUser}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

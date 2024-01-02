@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ChefNav from '../components/NavBarChef';
 import useTokenStore from '../../tokenStore.js';
 import { jwtDecode } from 'jwt-decode';
+import { BASE_URL } from '../../url.js';
 
 const ChefVendorInboxx = () => {
 
@@ -17,7 +18,7 @@ const ChefVendorInboxx = () => {
     console.log('decodedToken',decodedToken)
 
     useEffect(() => {
-        fetch('http://localhost:9000/chef/allVendors')
+        fetch(`${BASE_URL}/chef/allVendors`)
           .then((response) => response.json())
           .then((data) => {
             console.log('Data received:', data); 
@@ -34,7 +35,7 @@ const ChefVendorInboxx = () => {
           setChatMessages([]);
           document.body.classList.add('no-scroll');
        
-          fetch(`http://localhost:9000/chef/vendorchatMessages/${selectedUser}`, {
+          fetch(`${BASE_URL}/chef/vendorchatMessages/${selectedUser}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -65,7 +66,7 @@ const ChefVendorInboxx = () => {
       const handleSendMessage = () => {
         if (selectedUser && messageInput.trim() !== '') {
         
-          fetch(`http://localhost:9000/chef/sendMessageToVendor/${selectedUser}`, {
+          fetch(`${BASE_URL}/chef/sendMessageToVendor/${selectedUser}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
