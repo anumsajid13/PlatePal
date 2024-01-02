@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const VendorCollaboration = require('../../models/VendorCollaboration Schema');
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
 const vendor = require('../../models/Vendor Schema');
 const Ingredient = require('../../models/Ingredient Schema');
 const Chef=require('../../models/Chef Schema');
 const Recipe=require('../../models/Recipe Schema');
+
+
   
 //Endpoint to see all collaborations of a vendor with a chef 
 router.get('/', authenticateToken, async (req, res) => {
@@ -57,7 +60,7 @@ console.log("sort by",sortBy,"sort order",sortOrder);
     // Find collaborations for the specified vendor and filter criteria
     const collaborations = await VendorCollaboration.find(query).sort(sort);
 
-   
+   console.log(collaborations);
 
     return res.json(collaborations );
   } catch (error) {
@@ -65,7 +68,27 @@ console.log("sort by",sortBy,"sort order",sortOrder);
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+// Endpoint to get all collaborations
+router.get('/mycollaborators', authenticateToken, async (req, res) => {
+  console.log("what is happening")
+    console.log("im here",req.user.id)
+  try {
+    console.log("what is happening")
+    console.log("im here",req.user.id)
+  
+    // Fetch all collaborations for the specific vendor
+    const collaborations = await VendorCollaboration.find({ vendor: req.user.id})
+      .populate('vendor', 'name') 
+      .populate('chef', 'name profileImage')
+      .populate('recipe', 'title recipeImage')
+      .populate('ingredients', 'name');
 
+    res.json(collaborations);
+  } catch (error) {
+    console.error('Error fetching collaborations:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 //Endpoint to see  a specific collaboration with a chef
 router.get('/:collaborationId', authenticateToken, async (req, res) => {
     try {
@@ -111,5 +134,11 @@ router.post('/names', async (req, res) => {
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
+
+
+
+
+module.exports = router;
 
   module.exports = router;

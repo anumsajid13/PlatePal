@@ -36,6 +36,9 @@ const Sidebar = ({ isOpen, onClose }) => {
         <li>
           <Link to="/vendor/reviews">Reviews</Link>
         </li>
+        <li>
+          <Link to="/vendor/collaborators">Collaborators</Link>
+        </li>
       </ul>
     </div>
   );

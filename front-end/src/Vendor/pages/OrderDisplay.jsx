@@ -91,17 +91,17 @@ useEffect(() => {
         </div>
       <div className="cart-container">
       
-        <h1 className="cart-list-title">Cart List</h1>
+        <h1 className="cart-list-title">Orders</h1>
         {carts.map((cart,cartIndex) => (
           <div key={cart._id} className="cart-item">
-            <h2 className="cart-id">Cart ID: {/* {cart._id} */}{cartIndex+1}</h2>
+            <h2 className="cart-id">Cart: {/* {cart._id} */}{cartIndex+1}</h2>
             <p className="recipe-seeker">Recipe Seeker: {cart.recipeSeekerId && cart.recipeSeekerId.name}</p>
             <p className="total-amount">Total Amount: {cart.totalAmount}</p>
             <h2 className="orders-title">Orders:</h2>
             <ul className="order-list">
               {cart.orders.map((order, orderIndex) => (
                 <div key={orderIndex} className="order-item">
-                <h3 className="order-id">Order ID: {orderIndex+1}</h3>
+                <h3 className="order-id">Order: {orderIndex+1}</h3>
                   <ul className="item-list">
                     {order.items.map((item, itemIndex) => (
                       <li key={itemIndex} className="item">
