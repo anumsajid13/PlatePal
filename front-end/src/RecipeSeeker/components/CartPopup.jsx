@@ -4,6 +4,7 @@ import  useTokenStore  from  '../../tokenStore.js'
 import './Cardpopup.css';
 import {loadStripe} from '@stripe/stripe-js';
 import { jwtDecode } from 'jwt-decode';
+import { BASE_URL } from '../../url';
 
 const CartPopup = ({ onClose }) => {
   const [cartDetails, setCartDetails] = useState(null);
@@ -21,7 +22,7 @@ const CartPopup = ({ onClose }) => {
     // Fetch cart details
     const fetchCartDetails = async () => {
       try {
-        const response = await fetch('http://localhost:9000/recepieSeeker/cartDetails', {
+        const response = await fetch(`${BASE_URL}/recepieSeeker/cartDetails`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ const CartPopup = ({ onClose }) => {
     };
     const fetchUserSubscriptionCount = async () => {
       try {
-        const response = await fetch('http://localhost:9000/recepieSeeker/get-subscription-count', {
+        const response = await fetch(`${BASE_URL}/recepieSeeker/get-subscription-count`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -76,7 +77,7 @@ const CartPopup = ({ onClose }) => {
   
   const handleUpdateTotalAmount = async () => {
     try {
-      const response = await fetch('http://localhost:9000/recepieSeeker/update-total-amount', {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/update-total-amount`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -103,7 +104,7 @@ const CartPopup = ({ onClose }) => {
   const handleRemoveItem = async (orderId) => {
     try {
       console.log(orderId)
-      const response = await fetch(`http://localhost:9000/recepieSeeker/removeItem/${orderId}`, {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/removeItem/${orderId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -134,7 +135,7 @@ const CartPopup = ({ onClose }) => {
     const headers = {
         "Content-Type":"application/json"
     }
-    const response = await fetch("http://localhost:9000/api/create-checkout-session",{
+    const response = await fetch(`${BASE_URL}/api/create-checkout-session`,{
         method:"POST",
         headers:headers,
         body:JSON.stringify(body)
@@ -180,7 +181,7 @@ const CartPopup = ({ onClose }) => {
                   <td>{order.items[0].quantity}</td>
                   <td>{order.items[0].price*order.items[0].quantity}</td>
                   <td>
-                    {/* Use a delete icon for the remove action */}
+                    {}
                     <span
                       className="material-icons google-icon"
                       style={{ cursor: 'pointer' }}

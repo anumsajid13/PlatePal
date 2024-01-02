@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ConsultNutritionist.css';
 import './NutritionistPopup.css';
 import NutritionistPopup from './Nutri_popup';
+import { BASE_URL } from '../../url';
 
 const NutritionistList = ({ onSelectNutritionist }) => {
   const [nutritionists, setNutritionists] = useState([]);
@@ -13,12 +14,12 @@ const NutritionistList = ({ onSelectNutritionist }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:9000/recepieSeeker/allNutritionists');
+        const response = await fetch(`${BASE_URL}/recepieSeeker/allNutritionists`);
         const data = await response.json();
         console.log("nutritionists data", data.nutritionists);
         setNutritionists(data.nutritionists);
   
-        const followingResponse = await fetch('http://localhost:9000/recepieSeeker/nutritionist-followings', {
+        const followingResponse = await fetch(`${BASE_URL}/recepieSeeker/nutritionist-followings`, {
           headers: {
             method:'POST',
             Authorization: `Bearer ${token}`,
@@ -75,7 +76,7 @@ const NutritionistList = ({ onSelectNutritionist }) => {
 
   const toggleFollowChef = async (NutId) => {
     try {
-      const response = await fetch(`http://localhost:9000/recepieSeeker/${followingNutIds.includes(NutId) ? 'unfollowNut' : 'followNut'}/${NutId}`, {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/${followingNutIds.includes(NutId) ? 'unfollowNut' : 'followNut'}/${NutId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './NotificationBox.css';
 import { Link } from 'react-router-dom';
 import NutritionistChat from './NutritionistChat';
+import { BASE_URL } from '../../url';
 
 const NotificationBox = ({ notifications, onClose ,handleDeleteNotification}) => {
 

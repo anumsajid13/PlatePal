@@ -8,6 +8,7 @@ import  useTokenStore  from  '../../tokenStore.js'
 import { jwtDecode } from 'jwt-decode';
 import useCartStore from './cartStore'; 
 import CartPopup from './CartPopup';
+import { BASE_URL } from '../../url';
 
 
 
@@ -40,7 +41,7 @@ const Navbar = ({ activeLink }) => {
 
     setToken(token);
     
-    fetch(`http://localhost:9000/recepieSeeker/notifications/${currentUserId}`, {
+    fetch(`${BASE_URL}/recepieSeeker/notifications/${currentUserId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +65,7 @@ const Navbar = ({ activeLink }) => {
 
   const handleDeleteNotification = async (id) => {
     try {
-      const response = await fetch(`http://localhost:9000/recepieSeeker/deletenotifications/${id}`, {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/deletenotifications/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +91,7 @@ const Navbar = ({ activeLink }) => {
       setTimeout( async() => {
        
         try {
-          const response = await fetch(`http://localhost:9000/recepieSeeker/logout`, {
+          const response = await fetch(`${BASE_URL}/recepieSeeker/logout`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
@@ -128,14 +129,14 @@ const Navbar = ({ activeLink }) => {
       <div className="logo">Plate Pal</div>
       <div className="nav-links-1">
         <Link
-          to="http://localhost:3000/recipe-seeker/Discover"
+          to={`${BASE_URL}/recipe-seeker/Discover`}
           className={activeLink === 'Discover' ? 'active-link-12' : 'nolink'}
         >
           Discover
         </Link>
 
         <Link
-          to="http://localhost:3000/recipe-seeker/Favourites"
+          to={`${BASE_URL}/recipe-seeker/Favourites`}
           className={activeLink === 'Favourites' ? 'active-link-12' : 'nolink'}
         >
         My Favourites

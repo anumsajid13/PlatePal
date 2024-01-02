@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './RecipeSeekerSignUp.css'; 
 import useNavbarStore from '../../navbarStore';
 import { Link } from 'react-router-dom';
+import { BASE_URL } from '../../url';
 
 const RecipeSeekerSignUp = () => {
 
@@ -26,7 +27,7 @@ const RecipeSeekerSignUp = () => {
           formData.append('password', password);
           formData.append('profilePicture', profilePicture);
     
-          const response = await fetch('http://localhost:9000/recepieSeeker/recipeSeeker_signup', {
+          const response = await fetch(`${BASE_URL}/recepieSeeker/recipeSeeker_signup`, {
             method: 'POST',
             body: formData,
           });

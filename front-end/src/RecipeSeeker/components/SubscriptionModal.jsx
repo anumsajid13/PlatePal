@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './ConsultNutritionist.css';
+import { BASE_URL } from '../../url';
 
 const SubscriptionModal = ({ onClose, onSubscribe, selectedMealPlanId }) => {
   const [cardDetails, setCardDetails] = useState({
@@ -18,7 +19,7 @@ const SubscriptionModal = ({ onClose, onSubscribe, selectedMealPlanId }) => {
    
     try {
        
-         const response1 = await fetch(`http://localhost:9000/recepieSeeker/fill-nut-transaction/${selectedMealPlanId}`, {
+         const response1 = await fetch(`${BASE_URL}/recepieSeeker/fill-nut-transaction/${selectedMealPlanId}`, {
            method: 'POST',
            headers: {
              'Content-Type': 'application/json',
@@ -26,7 +27,7 @@ const SubscriptionModal = ({ onClose, onSubscribe, selectedMealPlanId }) => {
            },
          });
 
-         const response2 = await fetch('http://localhost:9000/recepieSeeker/increase-subscription', {
+         const response2 = await fetch(`${BASE_URL}/recepieSeeker/increase-subscription`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',

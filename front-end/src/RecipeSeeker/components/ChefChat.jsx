@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './ChefChat.css';
 import useTokenStore from '../../tokenStore.js';
 import { jwtDecode } from 'jwt-decode';
+import { BASE_URL } from '../../url';
 
 const ChefChat = () => {
   const [chefs, setChefs] = useState([]);
@@ -16,7 +17,7 @@ const ChefChat = () => {
   console.log('decodedToken',decodedToken)
 
   useEffect(() => {
-    fetch('http://localhost:9000/recepieSeeker/allChefs')
+    fetch(`${BASE_URL}/recepieSeeker/allChefs`)
       .then((response) => response.json())
       .then((data) => setChefs(data.chefs))
       .catch((error) => console.error('Error fetching chefs:', error));
@@ -30,7 +31,7 @@ const ChefChat = () => {
       setChatMessages([]);
       document.body.classList.add('no-scroll');
    
-      fetch(`http://localhost:9000/recepieSeeker/chatMessages/${selectedChef}`, {
+      fetch(`${BASE_URL}/chatMessages/${selectedChef}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +63,7 @@ const ChefChat = () => {
   const handleSendMessage = () => {
     if (selectedChef && messageInput.trim() !== '') {
     
-      fetch(`http://localhost:9000/recepieSeeker/sendMessageToChef/${selectedChef}`, {
+      fetch(`${BASE_URL}/recepieSeeker/sendMessageToChef/${selectedChef}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

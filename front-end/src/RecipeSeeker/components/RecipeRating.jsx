@@ -6,11 +6,11 @@ const RecipeRating = ({ recipeId, initialRating, onSaveRating }) => {
   const maxRating = 5;
 
   const handleStarClick = (selectedRating) => {
-    // Toggle the star and update the rating
+ 
     const newRating = rating === selectedRating ? rating - 1 : selectedRating;
     setRating(newRating);
 
-    // Save the rating to the backend
+   
     onSaveRating(recipeId, newRating);
   };
 

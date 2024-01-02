@@ -7,7 +7,7 @@ import Comments from './Comments';
 import Reviews from './Reviews';
 import { jwtDecode } from 'jwt-decode';
 import useCartStore from './cartStore'; 
-
+import { BASE_URL } from '../../url';
 
 const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRecipe = false }) => {
 
@@ -44,7 +44,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
     // Check if the recipe is in favorites when the component mounts
     const checkFavorites = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/recepieSeeker/is-in-favorites/${recipe._id}`, {
+        const response = await fetch(`${BASE_URL}/recepieSeeker/is-in-favorites/${recipe._id}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
 
   const handleAddToFavorites = async () => {
     try {
-      const response = await fetch(`http://localhost:9000/recepieSeeker/add-to-favourites/${recipe._id}`, {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/add-to-favourites/${recipe._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
 
   const handleRemoveFromFavorites = async () => {
     try {
-      const response = await fetch(`http://localhost:9000/recepieSeeker/remove-from-favourites/${recipe._id}`, {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/remove-from-favourites/${recipe._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
   const handleCardClick = async () => {
     try {
       const ratingResponse = await fetch(
-        `http://localhost:9000/recepieSeeker/ratings/${recipe._id}`,
+        `${BASE_URL}/recepieSeeker/ratings/${recipe._id}`,
         {
           method: 'GET',
           headers: {
@@ -121,7 +121,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
       );
 
       const commentResponse = await fetch(
-        `http://localhost:9000/recepieSeeker/comments/${recipe._id}`,
+        `${BASE_URL}/recepieSeeker/comments/${recipe._id}`,
         {
           method: 'GET',
           headers: {
@@ -132,7 +132,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
       );
 
       const ReviewResponse = await fetch(
-        `http://localhost:9000/recepieSeeker/reviews/${recipe._id}`,
+        `${BASE_URL}/recepieSeeker/reviews/${recipe._id}`,
         {
           method: 'GET',
           headers: {
@@ -180,7 +180,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
 
   const handleCommentSubmit = async () => {
     try {
-      const response = await fetch(`http://localhost:9000/recepieSeeker/addComment/${recipe._id}`, {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/addComment/${recipe._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -205,7 +205,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
 
   const handleReviewSubmit = async () => {
     try {
-      const response = await fetch(`http://localhost:9000/recepieSeeker/addReview/${recipe._id}`, {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/addReview/${recipe._id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -230,7 +230,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
 
   const handleSaveRating = async (recipeId, selectedRating) => {
     try {
-      const response = await fetch(`http://localhost:9000/recepieSeeker/rateRecipe/${recipeId}`, {
+      const response = await fetch(`${BASE_URL}/recepieSeeker/rateRecipe/${recipeId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -245,7 +245,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
         setRatings(ratings.filter((rating) => rating.user_id !== currentUserId));
 
         const updatedRatingResponse = await fetch(
-          `http://localhost:9000/recepieSeeker/ratings/${recipeId}`,
+          `${BASE_URL}/recepieSeeker/ratings/${recipeId}`,
           {
             method: 'GET',
             headers: {
@@ -302,7 +302,7 @@ const RecipeCard = ({ recipe, isFollowingChef = false, onToggleFollow,isTodayRec
           };
           
           console.log("item: ",recipe._id)
-          const response = await fetch('http://localhost:9000/recepieSeeker/addOrder', {
+          const response = await fetch(`${BASE_URL}/recepieSeeker/addOrder`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

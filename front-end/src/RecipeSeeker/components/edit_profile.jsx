@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 import './editProfile.css';
 import  useTokenStore  from  '../../tokenStore.js'
 import { jwtDecode } from 'jwt-decode';
+import { BASE_URL } from '../../url';
 
 const Edit_profil_user = () => {
     const [name, setName] = useState('');
@@ -16,7 +17,7 @@ const Edit_profil_user = () => {
     const userId = decodedToken.id;
   
     useEffect(() => {
-      fetch(`http://localhost:9000/recepieSeeker/finddetails/${userId}`, {
+      fetch(`${BASE_URL}/recepieSeeker/finddetails/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +62,7 @@ const Edit_profil_user = () => {
       formData.append('profileData', JSON.stringify(updatedProfileData));
   
       try {
-        const response = await fetch(`http://localhost:9000/recepieSeeker/updateProfile/${userId}`, {
+        const response = await fetch(`${BASE_URL}/recepieSeeker/updateProfile/${userId}`, {
           method: 'PUT',
           headers: {
             Authorization: `Bearer ${token}`,
