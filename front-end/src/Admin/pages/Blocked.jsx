@@ -3,6 +3,7 @@ import useChefStore from './blockUserstore';
 import './AllUsers.css';
 import AdminNav from '../components/AdminNav';
 import useTokenStore from '../../tokenStore';
+import { BASE_URL } from '../../url';
 
 const ChefList = () => {
   const store = useChefStore();
@@ -12,7 +13,7 @@ const ChefList = () => {
     const fetchBlockedUsers = async () => {
       try {
         // Make API call to fetch blocked chefs
-        const chefResponse = await fetch('http://localhost:9000/admin/list-blocked-chefs', {
+        const chefResponse = await fetch(`${BASE_URL}/admin/list-blocked-chefs`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -21,7 +22,7 @@ const ChefList = () => {
         store.setBlockedChefs(chefData);
 
         // Make API call to fetch blocked vendors
-        const vendorResponse = await fetch('http://localhost:9000/admin/list-blocked-vendors', {
+        const vendorResponse = await fetch(`${BASE_URL}/admin/list-blocked-vendors`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -30,7 +31,7 @@ const ChefList = () => {
         store.setBlockedVendors(vendorData);
 
         // Make API call to fetch blocked nutritionists
-        const nutritionistResponse = await fetch('http://localhost:9000/admin/list-blocked-nutritionists', {
+        const nutritionistResponse = await fetch(`${BASE_URL}/admin/list-blocked-nutritionists`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

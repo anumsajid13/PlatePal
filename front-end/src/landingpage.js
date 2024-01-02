@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import useNavbarStore from './navbarStore'; 
 import RecipeCard from './New_recipecard';
 import  {React, useEffect, useState } from 'react';
+import { BASE_URL } from './url';
 
 // Create the functional component for the landing page
 const LandingPage = () => {
@@ -14,7 +15,7 @@ const LandingPage = () => {
 
   const fetchRecipes = async () => {
     try {
-      const response = await fetch('http://localhost:9000/recepieSeeker/allRecipes?page=$1&pageSize=$3');
+      const response = await fetch(`${BASE_URL}/recepieSeeker/allRecipes?page=$1&pageSize=$3`);
  
       if (!response.ok) {
         throw new Error('Failed to fetch recipes');

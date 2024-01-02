@@ -3,6 +3,7 @@ import useTokenStore from '../../tokenStore';
 import './Acceptcert.css'; // Import your CSS file
 import AdminNav from '../components/AdminNav';
 import PopupMessage from './PopupMessage';
+import { BASE_URL } from '../../url';
 
 const ViewCertifications = () => {
   const [nutritionists, setNutritionists] = useState([]);
@@ -16,7 +17,7 @@ const ViewCertifications = () => {
     const fetchNutritionists = async () => {
       try {
         // Fetch data from the backend with bearer token
-        const response = await fetch('http://localhost:9000/admin/view-certifications', {
+        const response = await fetch(`${BASE_URL}/admin/view-certifications`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -32,7 +33,7 @@ const ViewCertifications = () => {
         setNutritionists(data.nutritionists);
 
         // Fetch data from the backend with bearer token
-        const response1 = await fetch('http://localhost:9000/admin/view-chef-certifications', {
+        const response1 = await fetch(`${BASE_URL}/admin/view-chef-certifications`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -50,7 +51,7 @@ const ViewCertifications = () => {
 
 
          // Fetch data from the backend with bearer token
-         const response2 = await fetch('http://localhost:9000/admin/view-vendor-certifications', {
+         const response2 = await fetch(`${BASE_URL}/admin/view-vendor-certifications`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -83,7 +84,7 @@ const ViewCertifications = () => {
 
   const handleAccept = async (professionalId) => {
     try {
-      const response = await fetch(`http://localhost:9000/admin/allow-chef-signup/${professionalId}`, {
+      const response = await fetch(`${BASE_URL}/admin/allow-chef-signup/${professionalId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -116,7 +117,7 @@ const ViewCertifications = () => {
   const handleReject = async (professionalId) => {
     console.log(professionalId)
     try {
-      const response = await fetch(`http://localhost:9000/admin/disallow-chef-signup/${professionalId}`, {
+      const response = await fetch(`${BASE_URL}/admin/disallow-chef-signup/${professionalId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -144,7 +145,7 @@ const ViewCertifications = () => {
 
   const handleAccept1 = async (professionalId) => {
     try {
-      const response = await fetch(`http://localhost:9000/admin/allow-nutritionist-signup/${professionalId}`, {
+      const response = await fetch(`${BASE_URL}/admin/allow-nutritionist-signup/${professionalId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -174,7 +175,7 @@ const ViewCertifications = () => {
   const handleReject1 = async (professionalId) => {
     console.log(professionalId)
     try {
-      const response = await fetch(`http://localhost:9000/admin/disallow-nutritionist-signup/${professionalId}`, {
+      const response = await fetch(`${BASE_URL}/admin/disallow-nutritionist-signup/${professionalId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -205,7 +206,7 @@ const ViewCertifications = () => {
 
     console.log("id",professionalId)
     try {
-      const response = await fetch(`http://localhost:9000/admin/allow-vendor-signup/${professionalId}`, {
+      const response = await fetch(`${BASE_URL}/admin/allow-vendor-signup/${professionalId}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -236,7 +237,7 @@ const ViewCertifications = () => {
   const handleReject2 = async (professionalId) => {
     console.log(professionalId)
     try {
-      const response = await fetch(`http://localhost:9000/admin/disallow-vendor-signup/${professionalId}`, {
+      const response = await fetch(`${BASE_URL}/admin/disallow-vendor-signup/${professionalId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,
