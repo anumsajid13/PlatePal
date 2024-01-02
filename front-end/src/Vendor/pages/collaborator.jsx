@@ -38,7 +38,7 @@ const VendorCollaborators = () => {
         <>
             < NavigationBar />
             <div className="chef-followers-list">
-                <h2 className='chef-follower-heading'>My Followers</h2>
+                <h2 className='chef-follower-heading'>My Collaborators</h2>
                 {collaborators.length === 0 ? (
     <div className='chef-followers-list-item'>
         <p style={{ marginLeft: '45%' }}>No collaborators yet</p>
