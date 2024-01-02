@@ -6,6 +6,7 @@ import ChefGenericPopup from '../../Chef/components/ChefGenericPopup';
 import NutNav from '../components/AdminNav';
 import AdminNav from '../components/AdminNav';
 import { jwtDecode } from 'jwt-decode';
+import {BASE_URL} from '../../url';
 
 
 const Edit1 = () => {
@@ -16,6 +17,7 @@ const Edit1 = () => {
     const [profilePictureFile, setProfilePictureFile] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const [popupMessage, setPopupMessage] = useState('');
+ 
 
     const { token, setToken } = useTokenStore(); 
 
@@ -40,7 +42,7 @@ const Edit1 = () => {
 
     const fetchChefData = async () => {
         try {
-          const response = await fetch('http://localhost:9000/admin/get', {
+          const response = await fetch(`${BASE_URL}/admin/get`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -76,7 +78,7 @@ const Edit1 = () => {
         formData.append('newpassword', chef.newpassword);
 
         try {
-          const response = await fetch('http://localhost:9000/admin/update', {
+          const response = await fetch(`${BASE_URL}/admin/update`, {
             method: 'PUT',
             headers: {
               

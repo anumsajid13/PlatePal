@@ -3,7 +3,7 @@ import useTokenStore from '../../tokenStore';
 import '../components/RecipePopUpChef.css';
 import RatingStars from './RatingStars';
 import { useNavigate } from 'react-router-dom';
-
+import {BASE_URL} from '../../url';
 
 const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
 
@@ -18,7 +18,7 @@ const RecipePopUpChef = ({ selectedRecipe, setSelectedRecipe, onDelete  }) => {
     const handleDelete = async () => {
         try {
            
-            await fetch(`http://localhost:9000/recipes/delete/${selectedRecipe._id}`, {
+            await fetch(`${BASE_URL}/recipes/delete/${selectedRecipe._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

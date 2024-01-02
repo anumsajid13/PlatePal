@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './chefFollowers.css';
 import ChefNav from '../components/NavBarChef';
 import useTokenStore from '../../tokenStore';
+import { BASE_URL } from '../../url';
 
 const ChefDisplayFollowers = () => {
     const [followers, setFollowers] = useState([]);
@@ -13,7 +14,7 @@ const ChefDisplayFollowers = () => {
        
         const fetchFollowers = async () => {
             try {
-                const response = await fetch('http://localhost:9000/chef/myfollowers', {
+                const response = await fetch(`${BASE_URL}/chef/myfollowers`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
