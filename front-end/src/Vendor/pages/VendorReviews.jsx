@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../Chef/pages/chefReviewss.css';
 import NavigationBar from '../components/NavigationBar';
 import useTokenStore from '../../tokenStore';
+import { BASE_URL } from '../../url';
 
 const VendorViewReviews = () => {
     const [reviews, setReviews] = useState([]);
@@ -9,7 +10,7 @@ const VendorViewReviews = () => {
 
     const fetchReviews = async () => {
         try {
-            const response = await fetch('http://localhost:9000/vendor/review', {
+            const response = await fetch(`${BASE_URL}/vendor/review`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +37,7 @@ const VendorViewReviews = () => {
     // Function to toggle pinning/unpinning a review
     const togglePinReview = async (reviewId, isPinned) => {
         try {
-            const response = await fetch(`http://localhost:9000/vendor/review/${isPinned ? 'unpinReview' : 'pinReview'}/${reviewId}`, {
+            const response = await fetch(`${BASE_URL}/vendor/review/${isPinned ? 'unpinReview' : 'pinReview'}/${reviewId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
