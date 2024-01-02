@@ -225,12 +225,14 @@ const Discover = () => {
 
            {/* Today's Recipes */}
            <div className="todays-recipes-container">
+
+           <h2 className="Categories-choose">Today's Featured Recipes</h2>
               
               <div className="recipe-list-today">
               {todaysRecipes.length > 0 ? (
                 todaysRecipes.map((recipe) => (
                   <div key={recipe._id}>
-                    <h2 className="Categories-choose">Today's Featured Recipes</h2>
+                    
                     <RecipeCard
                       key={recipe._id}
                       recipe={recipe}

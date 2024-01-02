@@ -103,6 +103,10 @@ console.log("woo", data)
         console.log("nice")
 
         navigate('/n/chat');
+      } else if (notification.type === 'subscription')
+      {
+        navigate('n/transactions/:nutId');
+
       }
     }
   };
@@ -123,10 +127,10 @@ console.log("woo", data)
         ) : (
           notifications.map((notification) => (
             <div key={notification._id} className="notification-item"  onClick={() => handleNotificationClick(notification)}>
-              <strong>{notification.sender.username}</strong>: {notification.notification_text}  {!notification.seen && notification.type !== 'follower alert' &&  notification.type !== 'Message by Recepie Seeker' && (
+              <strong>{notification.sender.username}</strong>: {notification.notification_text}  {!notification.seen && notification.type !== 'follower alert' &&  notification.type !== 'Message by Recepie Seeker' &&  notification.type !== 'subscription' && (
                 <span className="bmi-text">BMI: {notification.bmi}</span>
               )}
-              {!notification.seen && notification.type !== 'follower alert' &&  notification.type !== 'Message by Recepie Seeker' && (
+              {!notification.seen && notification.type !== 'follower alert' &&  notification.type !== 'Message by Recepie Seeker' &&   notification.type !== 'subscription' &&(
                 <button className="createPlan" onClick={() => handleCreatePlan(notification._id, notification.sender._id, notification.bmi)}>
                   Create Plan
                 </button>
