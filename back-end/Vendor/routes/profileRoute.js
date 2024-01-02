@@ -311,6 +311,23 @@ router.delete('/deleteprofile', authenticateToken, async (req, res) => {
     return res.status(500).send("Internal Server Error", error.message, error);
   }
 });
+router.get('/supplierNotify',authenticateToken, async (req, res) => {
+  const vendorId =req.user.id;
+
+  try {
+    const vendor = await Vendor.findById(vendorId);
+
+    if (!vendor) {
+      return res.status(404).json({ message: 'Vendor not found' });
+    }
+
+    const notifications = vendor.notify;
+    res.json(notifications);
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 
 

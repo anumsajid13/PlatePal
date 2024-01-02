@@ -10,12 +10,15 @@ const ChefNav = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showsuppliernotify, setShowsuppliernotify] = useState(false);
 
   const handleNotificationClick = () => {
     
     setShowNotifications(!showNotifications);
   };
-
+const handleNotifiyClick = () => {
+    setShowsuppliernotify(!showsuppliernotify);
+};
   const handleSidebarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -65,6 +68,9 @@ const ChefNav = () => {
             notifications
             {showNotifications && <span className="arrow-up"></span>}
           </span>
+        {/*   <span className="material-icons google-icon" onClick={handleNotifiyClick}>
+            {showsuppliernotify&& <span className="arrow-up"></span>}
+          </span> */}
           
                 {isLoading ? (
                 <span>Logging out...</span>
@@ -87,6 +93,7 @@ const ChefNav = () => {
     <Sidebar isOpen={isSidebarOpen} onClose={handleSidebarClose} />
 
       {showNotifications && <VendorNotificationBox />}
+    {/*   {showsuppliernotify && <ShowSupplierNotificationBox />} */}
       </div>
 
   );

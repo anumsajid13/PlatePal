@@ -4,7 +4,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    background-color: #176ab8;
+    background-color: #ecd11d; 
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -45,7 +45,7 @@
   }
   
   .vendor_sidebar a:hover {
-    color: #ff66b3;
+   color:#f55d2f; 
   }
   
  

@@ -57,7 +57,7 @@ const ResetPassword = () => {
     
     
           <div className="page-container">
-            <div className="card-container">
+            <div className="card-container-forgotpassword">
               <div className="form-side">
                 <h2 className="heading1">Reset password</h2>
                 <label>
@@ -73,7 +73,7 @@ const ResetPassword = () => {
                 </button>
                 
               </div>
-              <div className="image-side1">
+              <div className="image-side1-forgotPassword">
                   
               </div>
               

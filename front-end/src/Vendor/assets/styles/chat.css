@@ -27,8 +27,14 @@ body {
 }
 
 /* Back Button Styles */
-.back-button {
+.Bbutton {
   margin-bottom: 10px;
+/*   background-color: #e4c813; */
+}
+.chatBackButton {
+  margin-bottom: 10px;
+  border:none;
+  background-color: #e4c813;
 }
 
 /* Vendor Buttons Styles */
@@ -40,14 +46,14 @@ body {
 .vendor-buttons button {
   margin-bottom: 5px;
   padding: 10px;
-  background-color: #4caf50;
+  background-color: #e4c813;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 .vendor-buttons button:hover {
-  background-color: #45a049;
+  background-color: rgb(166, 149, 37);
 }
 
 /* Main Chat Area Styles */
@@ -58,7 +64,7 @@ body {
 
 /* Chat Header Styles */
 .chat-header {
-  background-color: #4caf50;
+  background-color: #e4c813;
   color: white;
 position:fixed;
   height: 8%;
@@ -91,16 +97,34 @@ position:fixed;
   background-color: #B7B6C1; 
 }
 
+
+
+.message-to-chef {
+  max-width: 55%;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+  background-color: #ddd;
+}
+
+.message-to-chef p.author {
+  font-weight: bold;
+  margin: 0;
+}
+
+.message-to-chef p.message {
+  margin: 5px 0;
+}
+
+.message-to-chef small {
+  color: #888;
+  font-size: smaller;
+}
+
 .message-to-chef.other-user {
   margin-left: 44%;
 }
-
-
-.small {
-  font-size: smaller;
-  color: #888; 
-}
-
 
 
   .chat-box {
@@ -110,10 +134,10 @@ position:fixed;
   }
 
 
-.chat-messages-between-vendoranduser p {
+/* .chat-messages-between-vendoranduser p {
   text-align: center;
   color: #777;
-}
+} */
 
 .messageToVendor-byuser-input {
   display: flex;
@@ -141,7 +165,7 @@ position:fixed;
 
 .messageToVendor-byuser-input button {
   padding: 8px 16px;
-  background-color: #4caf50; 
+  background-color: #e4c813;
   color: #fff; 
   border: none;
   border-radius: 4px;
@@ -150,19 +174,24 @@ position:fixed;
 
 /* Optional: Style the button on hover */
 .messageToVendor-byuser-input button:hover {
-  background-color: #45a049; /* Set your desired button background color on hover */
+  background-color: rgb(166, 149, 37);/* Set your desired button background color on hover */
 }
 
-
-.message-to-chef.other-user {
+.noMessage{
+  text-align: center;
+  color: #646464;
+} 
+/* .message-to-chef.other-user {
   margin-left: 44%;
 }
-
-.message-to-chef {
+ */
+/* .message-to-chef {
   max-width: 55%;
   margin-bottom: 8px;
   padding: 10px;
   border-radius: 8px;
   position: relative;
   background-color: #ddd;
-}
+} */
+
+

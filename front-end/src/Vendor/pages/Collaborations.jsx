@@ -67,6 +67,7 @@ const CollaborationsList = () => {
                           name="vendor-filterType"
                           value={filterType}
                           onChange={(e) => setFilterType(e.target.value)}className="search-dropdown-1">
+                        <option value="empty"className='vendor-filter-options'>Search</option> 
                         <option value="chef"className='vendor-filter-options' >Search by Chef</option>
                         <option value="recipe" className='vendor-filter-options'>Search by Recipe Name</option>
                     </select>

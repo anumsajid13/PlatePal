@@ -39,28 +39,28 @@
   }
   /* Add these styles to your existing CSS or create a new stylesheet */
 .passwordReset,
-.acceptButton {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.deleteConfirm 
+{
+  background-color: #4caf50; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
   margin-right: 10px;
-  font-size: 16px;
-  transition: background-color 0.3s ease-in-out;
+  font-size: 16px; 
+  transition: background-color 0.3s ease-in-out; 
 }
-
-.cancelButton {
-  background-color: #b41c11;
+.cancelButton{
+  background-color: #b41c11; 
   color: white;
   padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
   margin-right: 10px;
-  font-size: 16px;
-  transition: background-color 0.3s ease-in-out;
+  font-size: 16px; 
+  transition: background-color 0.3s ease-in-out; 
 }
 
 

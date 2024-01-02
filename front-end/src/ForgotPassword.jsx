@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useNavbarStore from './navbarStore';
 import './SignIn.css';
+import './forgotPassword.css';
 
 const ForgotPassword = () => {
 
@@ -59,12 +60,12 @@ const ForgotPassword = () => {
     
     
           <div className="page-container">
-            <div className="card-container">
+            <div className="card-container-forgotpassword">
               <div className="form-side">
                 <h2 className="heading1">Enter Email</h2>
                 <label>
                   Email
-                  <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <input style={{marginLeft: '30px'}}type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </label>
                 <br />
                 <br />
@@ -85,7 +86,7 @@ const ForgotPassword = () => {
                 </button>
                 
               </div>
-              <div className="image-side1">
+              <div className="image-side1-forgotPassword">
                   
               </div>
               

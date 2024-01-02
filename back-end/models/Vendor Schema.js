@@ -17,6 +17,11 @@ const vendorSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    description:{
+      type: String,
+     default: "No description provided"
+    },
+    
     password: {
         type: String,
         required: true,
@@ -66,7 +71,26 @@ allowSignup: {
   type: Boolean,
   default: false,
 },
-
+category:[String],
+notify: [{
+  supplier: {
+    type: String,
+    default: 'Supplier',
+    required: true,
+  },
+  time: {
+    type: Date,
+    default: Date.now,
+  },
+  message: {
+    type: String,
+    required: true,
+  },
+  isRead: {
+    type: Boolean,
+    default: false,
+  },  
+}],
 });
 
 const Vendor =   mongoose.model('Vendor', vendorSchema);

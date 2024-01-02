@@ -116,14 +116,29 @@ router.get('/ChefBlockReports', authenticateToken, async (req, res) => {
     }
 });
 
+
+
 router.get('/getAllChefs', async (req, res) => {
   try {
     const chefs = await Chef.find({}, { name: 1, email: 1, profilePicture: 1 });
-    res.status(200).json(chefs);
+    
+    // Convert Buffer data to base64 for each chef's profilePicture
+    const chefsWithBase64Image = chefs.map(chef => ({
+      ...chef.toObject(),
+      profilePicture: {
+        contentType: chef.profilePicture.contentType,
+        data: chef.profilePicture.data.toString('base64'),
+      },
+    }));
+
+    res.status(200).json(chefsWithBase64Image);
   } catch (error) {
     console.error('Error getting chefs information:', error);
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
+
+// ...
+
 
 module.exports = router;

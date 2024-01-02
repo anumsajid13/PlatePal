@@ -126,9 +126,9 @@ const {token} = useTokenStore();
 
       <div className="vendor-chat-container">
         <div className="vendor-text-sidebar">
-          <div className="back-button">
-            <button onClick={handleBackButton}>
-              <FaArrowLeft /> Back
+          <div className="Bbutton">
+            <button className="chatBackButton" onClick={handleBackButton}>
+            <FaArrowLeft style={{ color: "white", fontSize: "20px" }} />
             </button>
           </div>
           <div className="vendor-buttons">
@@ -165,7 +165,7 @@ const {token} = useTokenStore();
                       </div>
                     ))
                   ) : (
-                    <p>No messages yet</p>
+                    <p className='noMessage'>No messages yet</p>
                   )}
                 </div>
                 <div className="messageToVendor-byuser-input">

@@ -5,7 +5,7 @@
   }
 
   .vendor-sort-dropdown button {
-    background-color: #4caf50; /* Green background color */
+    background-color: #e9830e;
     color: white;
     padding: 10px;
     border: none;
@@ -16,7 +16,6 @@
   .vendor-sort-options-div {
     position: absolute;
     top: 100%;
-   
     background-color: #f9f9f9;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -52,12 +51,21 @@
     border-radius: 4px;
     font-size: 14px;
     margin-right: 10px;
-    background-color: #4caf50;
-    color:white;
+    background-color: #e9830e;
+    color: #fff;
+ 
   }
-  
-  #vendor-filterType:hover {
-    border-color: #888;
+  .vendor-filterType{
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-right: 10px;
+    background-color: #e9830e;
+    color: #fff;
+  }
+  .vendor-filterType #vendor-filterType:hover {
+    background-color: #af6108;
   }
  
   .vendor-filter-options {
