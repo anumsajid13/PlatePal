@@ -7,8 +7,7 @@ import NavigationBar from '../components/NavigationBar';
 import { FaPlusCircle ,FaSearch,FaSort} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import{FaArrowUp,FaArrowDown} from 'react-icons/fa';
-
-
+import { BASE_URL } from '../../url';
 
 const MainPage = () => {
   const [filterType, setFilterType] = useState('');
@@ -24,7 +23,7 @@ const MainPage = () => {
   const fetchIngredients = async () => {
     try {
       const response = await fetch(
-        `http://localhost:9000/Ingredients/All?filterType=${filterType}&filterValue=${filterValue}&search=${searchTerm}&sortBy=${sortOption}&sortOrder=${sortOrder}`,
+        `${BASE_URL}/Ingredients/All?filterType=${filterType}&filterValue=${filterValue}&search=${searchTerm}&sortBy=${sortOption}&sortOrder=${sortOrder}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -49,7 +48,7 @@ const MainPage = () => {
 
   const handleDelete = async (ingredientId) => {
     try {
-      const response = await fetch(`http://localhost:9000/Ingredients/delete/${ingredientId}`, {
+      const response = await fetch(`${BASE_URL}/Ingredients/delete/${ingredientId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
