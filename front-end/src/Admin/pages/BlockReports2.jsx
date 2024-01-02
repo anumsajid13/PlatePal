@@ -69,8 +69,8 @@ const ChefBlockReports = () => {
             <h3>Block Chef:</h3>
             <p>{report.chef.name}</p>
 
-            <h3>Complaint by Recipe Seeker: </h3>
-            <p>{report.recipeSeeker.name}</p>
+            <h3>Complaint by Vendor: </h3>
+            <p>{report.vendor.name}</p>
 
             <h3>Reason: </h3>
             <p>{report.reason}</p>

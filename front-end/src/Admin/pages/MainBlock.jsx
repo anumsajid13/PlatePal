@@ -9,8 +9,8 @@ const App = () => {
     <><AdminNav /><div className="container">
           <h1>Block Reports Dashboard</h1>
           <div className="block-reports-menu">
-              <Link to="/admin/n-block" className="block-report-option">
-                  View Nutrionist Block Reports
+              <Link to="/admin/chef-block" className="block-report-option">
+                  View Chef Block Reports
               </Link>
 
               <Link to="/admin/blockreport" className="block-report-option">
