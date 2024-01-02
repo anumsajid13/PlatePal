@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import useTokenStore from '../../tokenStore.js';
 import { useParams,useNavigate } from 'react-router-dom';
 import './makeplan.css'; // Updated CSS file name
+import { BASE_URL } from '../../url';
 
 const Discover = () => {
   const [recipes, setRecipes] = useState([]);
@@ -17,7 +18,7 @@ const Discover = () => {
 
   const fetchRecipes = async () => {
     try {
-      const response = await fetch(`http://localhost:9000/n/recipes?page=$1&pageSize=$3&q=${searchQuery}`, {});
+      const response = await fetch(`${BASE_URL}/n/recipes?page=$1&pageSize=$3&q=${searchQuery}`, {});
 
       if (!response.ok) {
         throw new Error('Failed to fetch recipes');
@@ -53,7 +54,7 @@ const Discover = () => {
 
   const handleCreateMealPlan = async () => {
     try {
-      const response = await fetch(`http://localhost:9000/n/create-meal-plan`, {
+      const response = await fetch(`${BASE_URL}/n/create-meal-plan`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
