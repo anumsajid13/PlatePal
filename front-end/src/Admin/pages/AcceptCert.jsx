@@ -13,7 +13,6 @@ const ViewCertifications = () => {
   const [message, setMessage] = useState('');
   const token = useTokenStore((state) => state.token);
 
-  useEffect(() => {
     const fetchNutritionists = async () => {
       try {
         // Fetch data from the backend with bearer token
@@ -75,8 +74,12 @@ const ViewCertifications = () => {
       }
     };
 
+   
+
+  useEffect(() => {
     fetchNutritionists();
-  }, [token,message]);
+    // ... (rest of the useEffect code)
+  }, [token, popupMessage]);
 
   const handleAccept = async (professionalId) => {
     try {
@@ -96,6 +99,7 @@ const ViewCertifications = () => {
       const data = await response.json();
      // setMessage(data.message);
      setPopupMessage(data.message);
+     fetchNutritionists();
 
 
       // You may want to refresh the certifications after accepting
@@ -128,7 +132,7 @@ const ViewCertifications = () => {
       const data = await response.json();
     //  setMessage(data.message);
     setPopupMessage(data.message);
-
+      fetchNutritionists();
       // You may want to refresh the certifications after rejecting
       // Call fetchNutritionists() or any other appropriate function here
 
@@ -156,6 +160,7 @@ const ViewCertifications = () => {
       const data = await response.json();
     //  setMessage(data.message);
       setPopupMessage(data.message);
+      fetchNutritionists();
 
       // You may want to refresh the certifications after accepting
       // Call fetchNutritionists() or any other appropriate function here
@@ -185,6 +190,7 @@ const ViewCertifications = () => {
       const data = await response.json();
     //  setMessage(data.message);
     setPopupMessage(data.message);
+    fetchNutritionists();
 
       // You may want to refresh the certifications after rejecting
       // Call fetchNutritionists() or any other appropriate function here
@@ -215,6 +221,7 @@ const ViewCertifications = () => {
       console.log("message", data)
      // setMessage(data.message);
      setPopupMessage(data.message);
+     fetchNutritionists();
 
 
       // You may want to refresh the certifications after accepting
@@ -245,6 +252,7 @@ const ViewCertifications = () => {
       const data = await response.json();
       //setMessage(data.message);
       setPopupMessage(data.message);
+      fetchNutritionists();
 
       // You may want to refresh the certifications after rejecting
       // Call fetchNutritionists() or any other appropriate function here
@@ -255,12 +263,17 @@ const ViewCertifications = () => {
     }
   };
 
+  const closePopup = () => {
+    setPopupMessage(null);
+  };
 
   return (
     <>
       <AdminNav />
       <>
         <h1>Users with Certifications</h1>
+        {popupMessage && <PopupMessage message={popupMessage} onClose={closePopup} />}
+
         {message &&   <p >{message}</p>  }
         {nutritionists.length === 0 && chefs.length === 0 ? (
           <div style={{ textAlign: 'center', marginTop: '50px' }}>

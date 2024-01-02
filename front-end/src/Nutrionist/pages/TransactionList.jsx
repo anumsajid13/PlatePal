@@ -14,6 +14,7 @@ const TransactionList = () => {
   const decodedToken = jwtDecode(token);
   const nutId = decodedToken.id;
   const nutName= decodedToken.username;
+  const [totalBalance, setTotalBalance] = useState(0);
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -29,7 +30,18 @@ const TransactionList = () => {
       }
     };
 
+    const fetchTotalBalance = async () => {
+      try {
+        const response = await fetch(`http://localhost:9000/n/balance/${nutId}`);
+        const data = await response.json();
+        setTotalBalance(data);
+      } catch (error) {
+        console.error('Error fetching total balance:', error);
+      }
+    };
     fetchTransactions();
+    fetchTotalBalance();
+
   }, [nutId]);
 
   if (loading) {
@@ -43,6 +55,8 @@ const TransactionList = () => {
   return (
     <><NutNav /><div className="transaction-list-container">
       <h2 className="header">Transactions for Nutritionist {nutName}</h2>
+      <p className="wow11">Total Balance: Rs{totalBalance.balance}</p>
+
       <ul className="transaction-list">
         {transactions.map((transaction) => (
           <li key={transaction._id} className="transaction-item">
@@ -53,9 +67,9 @@ const TransactionList = () => {
               <strong>Paid:</strong> ${transaction.Paid}
             </div>
             <div>
-              <strong>Meal Plan:</strong>{' '}
-              {transaction.mealPlan.map((plan) => plan.PlanId.recipes.map(recipe => recipe.title).join(', ')).join(', ')}
-            </div>
+              <strong>Recipes:</strong>{' '}
+                {transaction.recipes.map((recipe) => recipe.title).join(', ')}          
+                  </div>
             <hr />
           </li>
         ))}

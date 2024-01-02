@@ -202,8 +202,9 @@ router.get('/transactions/:nutId', async (req, res) => {
       .populate('NutId', 'name') // Populate the 'NutId' field with the nutritionist's name (adjust as needed)
       .populate('sender', 'name') // Populate the 'sender' field with the recipe seeker's name (adjust as needed)
       .populate({
-        path: 'mealPlan.PlanId.recipes',
-        model: 'Recipe', // Specify the model for the 'recipes' field
+        path: 'recipes',
+        model: 'Recipe',
+        select: 'title', // Include only the 'title' field from the Recipe model
       })
       .exec();
 
@@ -215,6 +216,28 @@ router.get('/transactions/:nutId', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to retrieve transactions' });
+  }
+});
+
+// Route to get the balance of a nutritionist
+router.get('/balance/:nutId', async (req, res) => {
+  const nutritionistId = req.params.nutId;
+
+  try {
+    // Find the nutritionist by ID
+    const nutritionist = await Nutritionist.findById(nutritionistId);
+
+    if (!nutritionist) {
+      return res.status(404).json({ message: 'Nutritionist not found' });
+    }
+
+    // Extract the balance from the nutritionist
+    const balance = nutritionist.balance;
+
+    res.json({balance });
+  } catch (error) {
+    console.error('Error getting balance:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 

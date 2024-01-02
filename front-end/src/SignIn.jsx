@@ -197,16 +197,17 @@ const SignInPage =  () => {
         },
         body: JSON.stringify({ username, password }),
       });
+      const data = await response.json();
+      console.log(data.message)
 
       if (!response.ok) {
-        const data = await response.json();
         console.error('Nutritionist Sign In failed:', data.error);
+        setErrorMessage(data.error);
         setShowError(true);
-        setErrorMessage('Wrong Credentials. Please Try again');
+
         return;
       }
 
-      const data = await response.json();
       console.log('Nutritionist Sign In successful:', data.token);
  //     alert('Nutritionist Sign In successful');
 
@@ -217,8 +218,8 @@ const SignInPage =  () => {
       // Redirect to the nutritionist route or any other page as needed
     } catch (error) {
       console.error('Error during Nutritionist Sign In:', error.message);
-      alert('Could not sign in as nutritionist');
-    }
+      setShowError(true);
+      setErrorMessage('Server Error');    }
   };
 
   return (

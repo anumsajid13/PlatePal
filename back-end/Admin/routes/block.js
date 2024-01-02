@@ -98,13 +98,21 @@ router.post('/block-vendor/:vendorId', authenticateToken, async (req, res) => {
 
       // Set unblock time 30 seconds later than the current time
       const unblockTime = new Date();
-      unblockTime.setSeconds(unblockTime.getSeconds() + 30);
+      unblockTime.setSeconds(unblockTime.getSeconds() + 10);
 
     // Block the vendor
     vendor.isBlocked = true;
     vendor.blockCount += 1;
     vendor.unblockTime = unblockTime; 
     await vendor.save();
+
+     // Find the corresponding VendorBlockReport and update the status to 'Approved'
+     const vendorBlockReport = await VendorBlockReport.findOneAndUpdate(
+      { vendor: vendor._id, status: 'Pending' }, // Find the report by vendor ID and status
+      { $set: { status: 'Approved' } }, // Set the status to 'Approved'
+      { new: true } // Return the updated document
+    );
+
 
     // Create a notification message for the blocked vendor
     const notification = new VendorNotification({
@@ -194,7 +202,7 @@ router.get('/view-chef-block-reports', authenticateToken, async (req, res) => {
 router.get('/view-vendor-block-reports', authenticateToken, async (req, res) => {
   try {
     // Fetch vendor block reports with the vendor details, chef details, and proof picture
-    const blockReports = await VendorBlockReport.find()
+    const blockReports = await VendorBlockReport.find({ status: 'Pending' })
       .populate('vendor', 'name') // Populate vendor field and select only 'name'
       .populate('chef', 'name')   // Populate chef field and select only 'name'
       .select('reason proof vendor chef'); // Select necessary fields

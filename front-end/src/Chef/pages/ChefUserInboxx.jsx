@@ -140,7 +140,7 @@ const ChefUserInboxx = () => {
                 <div className="chat-box">
                 {selectedUser && (
                     <>
-                    <div className="chat-header" style={{ backgroundColor: 'purple' }}>
+                    <div className="chat-header-user">
                         <h2>{selectedUserName}</h2>
                     </div>
                     <div className="chat-messages-between-chefanduser">
