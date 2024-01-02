@@ -5,6 +5,7 @@ import './TransactionList.css'; // Create a TransactionList.css file for styles
 import useTokenStore from '../../tokenStore';
 import { jwtDecode } from 'jwt-decode';
 import NutNav from '../components/N-Nav';
+import { BASE_URL } from '../../url';
 
 const TransactionList = () => {
   const token = useTokenStore((state) => state.token);
@@ -20,7 +21,7 @@ const TransactionList = () => {
     const fetchTransactions = async () => {
       try {
         console.log(nutId,"wpwww")
-        const response = await fetch(`http://localhost:9000/n/transactions/${nutId}`);
+        const response = await fetch(`${BASE_URL}/n/transactions/${nutId}`);
         const data = await response.json();
         setTransactions(data);
         setLoading(false);
@@ -32,7 +33,7 @@ const TransactionList = () => {
 
     const fetchTotalBalance = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/n/balance/${nutId}`);
+        const response = await fetch(`${BASE_URL}/n/balance/${nutId}`);
         const data = await response.json();
         setTotalBalance(data);
       } catch (error) {

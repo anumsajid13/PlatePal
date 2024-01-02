@@ -5,6 +5,7 @@ import './Viewplan.css';
 import useTokenStore from '../../tokenStore';
 import { jwtDecode } from 'jwt-decode';
 import NutNav from '../components/N-Nav';
+import { BASE_URL } from '../../url';
 
 const MealPlansPage = () => {
   const token = useTokenStore((state) => state.token);
@@ -17,7 +18,7 @@ const MealPlansPage = () => {
     // Fetch meal plans for the specific nutritionist
     const fetchMealPlans = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/n/planmade/${nutritionistId}`);
+        const response = await fetch(`${BASE_URL}/n/planmade/${nutritionistId}`);
 
         if (!response.ok) {
           throw new Error('Failed to fetch meal plans');

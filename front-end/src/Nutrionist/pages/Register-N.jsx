@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './Nsignup.css'; 
 import useNavbarStore from '../../navbarStore';
 import { Link, useNavigate   } from 'react-router-dom';
+import { BASE_URL } from '../../url';
 
 const RegisterN = () =>{
 
@@ -44,7 +45,7 @@ const RegisterN = () =>{
 
           formData.append('certificationImage', certificationImage);
     
-          const response = await fetch('http://localhost:9000/n/signup', {
+          const response = await fetch(`${BASE_URL}/n/signup`, {
             method: 'POST',
             body: formData,
           });

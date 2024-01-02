@@ -2,6 +2,7 @@ import { useState, useRef,useEffect } from 'react';
 import './vendorPopup.css';
 import ChefReviews from '../components/VendorReviews';
 import { jwtDecode } from 'jwt-decode';
+import { BASE_URL } from '../../url';
 
 
 const VendorPopup = ({ vendor, onClose }) => {
@@ -14,7 +15,7 @@ const VendorPopup = ({ vendor, onClose }) => {
 
     const fetchReviews = async () => {
         try {
-            const response = await fetch(`http://localhost:9000/chef/reviews/${vendor._id}`,
+            const response = await fetch(`${BASE_URL}/chef/reviews/${vendor._id}`,
             {
                 method: 'GET',
                 headers: {
@@ -40,7 +41,7 @@ const VendorPopup = ({ vendor, onClose }) => {
 
     const handleReviewSubmit = async () => {
         try {
-            const response = await fetch('http://localhost:9000/chef/writeReview', {
+            const response = await fetch(`${BASE_URL}/chef/writeReview`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -99,7 +99,7 @@ router.post('/block-vendor/:vendorId', authenticateToken, async (req, res) => {
 
       // Set unblock time 30 seconds later than the current time
       const unblockTime = new Date();
-      unblockTime.setSeconds(unblockTime.getSeconds() + 10);
+      unblockTime.setSeconds(unblockTime.getSeconds() + 20);
 
     // Block the vendor
     vendor.isBlocked = true;
