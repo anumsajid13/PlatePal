@@ -11,6 +11,7 @@ const authenticateToken = require('../../TokenAuthentication/token_authenticatio
 const express = require('express');
 const router = express.Router();
 const VendorNotification = require('../../models/Vendor_Notification Schema');
+const VendorBlockschef = require('../../models/VendorBlockchef Schema');
 
 
 // Endpoint to block a nutritionist based on a report
@@ -171,9 +172,9 @@ router.get('/view-nutritionist-block-reports', authenticateToken, async (req, re
 router.get('/view-chef-block-reports', authenticateToken, async (req, res) => {
   try {
     // Fetch chef block reports with the necessary details and proof picture
-    const blockReports = await ChefBlockReport.find()
+    const blockReports = await VendorBlockschef.find()
       .populate('chef', 'name') // Populate chef field and select only 'name'
-      .populate('recipeSeeker', 'name') // Populate recipeSeeker field and select only 'name'
+      .populate('vendor', 'name') // Populate recipeSeeker field and select only 'name'
       .select('reason proof chef recipeSeeker'); // Select necessary fields
 
     // Filter out reports where chef name is null
