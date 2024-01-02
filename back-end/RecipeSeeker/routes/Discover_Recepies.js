@@ -5,7 +5,7 @@ const Recipe = require('../../models/Recipe Schema');
 router.get('/allRecipes', async (req, res) => {
   try {
     const page = parseInt(req.query.currentPage) || 1;
-    const pageSize = parseInt(req.query.pageSize) || 12;
+    const pageSize = parseInt(req.query.pageSize) || 18;
     console.log("page size: " + pageSize)
     console.log("currentPage", page)
 
@@ -58,9 +58,9 @@ router.get('/allRecipes', async (req, res) => {
 router.get('/todaysRecipes', async (req, res) => {
   try {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set time to the beginning of the day
+    today.setHours(0, 0, 0, 0); // Setting time to the beginning of the day
     const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1); // Set time to the beginning of the next day
+    tomorrow.setDate(today.getDate() + 1); // Setting time to the beginning of the next day
 
     const recipes = await Recipe.find({
       postedAt: { $gte: today, $lt: tomorrow }
