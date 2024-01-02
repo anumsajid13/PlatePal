@@ -2,6 +2,7 @@ import  {React, useEffect, useState } from 'react';
 import ChefNav from '../components/NavBarChef';
 import './createRecipe.css'; 
 import useTokenStore from '../../tokenStore';
+import { BASE_URL } from '../../url';
 
 
 const CreateRecipe = () => {
@@ -165,7 +166,7 @@ const CreateRecipe = () => {
 
       const handleFetchNutrition = async (recipeId) => {
         try {
-          const response = await fetch(`http://localhost:9000/recipes/${recipeId}/fetch-nutrition`, {
+          const response = await fetch(`${BASE_URL}/recipes/${recipeId}/fetch-nutrition`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -213,7 +214,7 @@ const CreateRecipe = () => {
     formDataToSend.append('recipeImage', formData.recipeImage);
 
     console.log('lala', formDataToSend)
-          const response = await fetch('http://localhost:9000/recipes/newRecipe', {
+          const response = await fetch(`${BASE_URL}/recipes/newRecipe`, {
             method: 'POST',
             headers: {
                 

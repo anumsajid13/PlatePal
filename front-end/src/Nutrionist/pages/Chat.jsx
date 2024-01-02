@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useTokenStore from '../../tokenStore';
 import { jwtDecode } from 'jwt-decode';
 import NutNav from '../components/N-Nav';
+import { BASE_URL } from '../../url';
 
 const NutritionistUserInbox = () => {
   const [recipeSeekers, setRecipeSeekers] = useState([]);
@@ -14,7 +15,7 @@ const NutritionistUserInbox = () => {
   const currentUserId = decodedToken.name;
 
   useEffect(() => {
-    fetch('http://localhost:9000/n/allNutritionists')
+    fetch(`${BASE_URL}/n/allNutritionists`)
       .then((response) => response.json())
       .then((data) => {
         console.log('Data received:', data);
@@ -30,7 +31,7 @@ const NutritionistUserInbox = () => {
       setChatMessages([]);
       document.body.classList.add('no-scroll');
 
-      fetch(`http://localhost:9000/n/chatMessagesNutritionist/${selectedUser}`, {
+      fetch(`${BASE_URL}/n/chatMessagesNutritionist/${selectedUser}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +59,7 @@ const NutritionistUserInbox = () => {
 
   const handleSendMessage = () => {
     if (selectedUser && messageInput.trim() !== '') {
-      fetch(`http://localhost:9000/n/sendMessageToUserNutritionist/${selectedUser}`, {
+      fetch(`${BASE_URL}/n/sendMessageToUserNutritionist/${selectedUser}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

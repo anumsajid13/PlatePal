@@ -4,6 +4,7 @@ import useTokenStore from '../../tokenStore';
 import '../pages/chefMainPage.css';
 import RecipePopUpChef from '../components/RecipePopUpChef';
 import RecipeUpdateModal from './RecipeUpdate'
+import { BASE_URL } from '../../url';
 
 
 const ChefMainPage = () => {
@@ -38,7 +39,7 @@ const ChefMainPage = () => {
         try {
            
             //fetch recipes with a vendor collaboration
-            const responseWithVendor = await fetch(`http://localhost:9000/recipes/myrecipes/vendors/${searchTerm}`,  {
+            const responseWithVendor = await fetch(`${BASE_URL}/recipes/myrecipes/vendors/${searchTerm}`,  {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -55,7 +56,7 @@ const ChefMainPage = () => {
             
 
             //fetch recipes without a vendor collaboration
-            const responseWithoutVendor = await fetch(`http://localhost:9000/recipes/myrecipes/noVendor/${searchTerm}`,  {
+            const responseWithoutVendor = await fetch(`${BASE_URL}/recipes/myrecipes/noVendor/${searchTerm}`,  {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

@@ -6,6 +6,7 @@ import { FaArrowLeft,FaTimes } from 'react-icons/fa';
 import NavigationBar from '../components/NavigationBar';
 import{useState,useEffect} from 'react';
 import RequestOverlay from '../pages/requestOverlay';
+import {BASE_URL} from '../../url';
 
 
 const CollaborationCard = ({ collaboration }) => {
@@ -21,7 +22,7 @@ const CollaborationCard = ({ collaboration }) => {
   useEffect(() => {
     const fetchChefName = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/collaboration-request/chef/${collaboration.chef}`, {
+        const response = await fetch(`${BASE_URL}/collaboration-request/chef/${collaboration.chef}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -41,7 +42,7 @@ const CollaborationCard = ({ collaboration }) => {
 
     const fetchRecipeName = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/collaboration-request/recipe/${collaboration.recipe}`, {
+        const response = await fetch(`${BASE_URL}/collaboration-request/recipe/${collaboration.recipe}`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

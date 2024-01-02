@@ -5,6 +5,7 @@ import useTokenStore from '../../tokenStore';
 import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
 import '../assets/styles/editProfile.css';
+import {BASE_URL} from '../../url';
 
 const EditVendorProfile = () => {
   const token = useTokenStore((state) => state.token);
@@ -29,7 +30,7 @@ const EditVendorProfile = () => {
 
   
   useEffect(() => {
-    fetch(`http://localhost:9000/vendor/profile`, {
+    fetch(`${BASE_URL}/vendor/profile`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +65,7 @@ const EditVendorProfile = () => {
       formData.append('profileData', JSON.stringify(updatedProfileData));
 
       try {
-        const response = await fetch(`http://localhost:9000/vendor/editprofile`, {
+        const response = await fetch(`${BASE_URL}/vendor/editprofile`, {
           method: 'PUT',
           headers: {
             Authorization: `Bearer ${token}`,

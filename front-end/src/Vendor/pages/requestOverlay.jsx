@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useTokenStore from '../../tokenStore';
 import { FaTimes } from 'react-icons/fa';
 import '../assets/styles/overlay.css';
+import { BASE_URL } from '../../url';
 
 const RequestOverlay = ({ request, chefName, recipeName, closeOverlay, getStatusColor }) => {
   const { token } = useTokenStore();
@@ -10,7 +11,7 @@ const RequestOverlay = ({ request, chefName, recipeName, closeOverlay, getStatus
 
   const fetchIngredientNames = async () => {
     try {
-      const response = await fetch(`http://localhost:9000/collaboration/names`, {
+      const response = await fetch(`${BASE_URL}/collaboration/names`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -37,7 +38,7 @@ const RequestOverlay = ({ request, chefName, recipeName, closeOverlay, getStatus
   const handleAction = async (action) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:9000/collaboration-request/${request._id}/${action}`, {
+      const response = await fetch(`${BASE_URL}/collaboration-request/${request._id}/${action}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

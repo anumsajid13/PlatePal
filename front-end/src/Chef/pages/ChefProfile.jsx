@@ -4,6 +4,7 @@ import './chefProfile.css'
 import ChefNav from '../components/NavBarChef';
 import useTokenStore from '../../tokenStore';
 import ChefGenericPopup from '../components/ChefGenericPopup';
+import { BASE_URL } from '../../url';
 
 const ChefProfile = () => {
 
@@ -40,7 +41,7 @@ const ChefProfile = () => {
 
     const fetchChefData = async () => {
         try {
-          const response = await fetch('http://localhost:9000/chef/get', {
+          const response = await fetch(`${BASE_URL}/chef/get`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -78,7 +79,7 @@ const ChefProfile = () => {
         console.log(chef.oldpassword,chef.newpassword)
 
         try {
-          const response = await fetch('http://localhost:9000/chef/update', {
+          const response = await fetch(`${BASE_URL}/chef/update`, {
             method: 'PUT',
             headers: {
               
@@ -102,7 +103,7 @@ const ChefProfile = () => {
     
       const handleDelete = async () => {
         try {
-          const response = await fetch('http://localhost:9000/chef/delete', {
+          const response = await fetch(`${BASE_URL}/chef/delete`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',

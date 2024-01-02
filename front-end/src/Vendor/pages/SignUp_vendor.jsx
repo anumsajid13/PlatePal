@@ -5,7 +5,7 @@ import useNavbarStore from '../../navbarStore';
 import Message from '../components/message';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import { BASE_URL } from '../../url';
 const VendorSignUp = () => {
 
   const { showDropdown, toggleDropdown, activeLink, setActiveLink, searchInput, setSearchInput } = useNavbarStore();
@@ -48,8 +48,9 @@ const VendorSignUp = () => {
         formData.append('password', password);
         formData.append('profilePicture', profilePicture);
         formData.append('certificationImage', Certification);
+
   
-        const response = await fetch('http://localhost:9000/vendor/register', {
+        const response = await fetch(`${BASE_URL}/vendor/register`, {
           method: 'POST',
           body: formData,
         });

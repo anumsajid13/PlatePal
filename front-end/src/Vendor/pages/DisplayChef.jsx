@@ -5,6 +5,7 @@ import ReportChef from '../components/ReportChef';
 import useTokenStore from '../../tokenStore';
 import ChefGenericPopup from '../../Chef/components/ChefGenericPopup';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../url';
 
 const DisplayChefs = () => {
   const { token } = useTokenStore();
@@ -19,7 +20,7 @@ const DisplayChefs = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:9000/vendor/BlockReport/getAllChefs');
+        const response = await fetch(`${BASE_URL}/vendor/BlockReport/getAllChefs`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }

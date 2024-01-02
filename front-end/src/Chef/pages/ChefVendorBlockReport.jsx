@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './chefVendorBlockReport.css'
 import ChefNav from '../components/NavBarChef';
 import useTokenStore from '../../tokenStore';
+import { BASE_URL } from '../../url';
 
 
 const BlockReportsList  = () => {
@@ -12,7 +13,7 @@ const BlockReportsList  = () => {
     useEffect(() => {
         const fetchReports = async () => {
           try {
-            const response = await fetch('http://localhost:9000/chef/myVendorReports', {
+            const response = await fetch(`${BASE_URL}/chef/myVendorReports`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
@@ -32,7 +33,7 @@ const BlockReportsList  = () => {
     
       const handleDelete = async (reportId) => {
         try {
-          await fetch(`http://localhost:9000/chef/deleteVendorReport/${reportId}`, {
+          await fetch(`${BASE_URL}/chef/deleteVendorReport/${reportId}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',

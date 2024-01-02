@@ -3,6 +3,7 @@ import '../../Chef/components/reportPopup.css';
 import ChefGenericPopup from '../../Chef/components/ChefGenericPopup';
 import useTokenStore from '../../tokenStore';
 import NavigationBar from '../components/NavigationBar';
+import { BASE_URL } from '../../url';
 
 const BlockedchefReportsList  = () => {
 
@@ -12,7 +13,7 @@ const BlockedchefReportsList  = () => {
     useEffect(() => {
         const fetchReports = async () => {
           try {
-            const response = await fetch('http://localhost:9000/vendor/BlockReport/ChefBlockReports', {
+            const response = await fetch(`${BASE_URL}/vendor/BlockReport/ChefBlockReports`, {
               method: 'GET',
               headers: {
                 'Content-Type': 'application/json',
@@ -32,7 +33,7 @@ const BlockedchefReportsList  = () => {
     
       const handleDelete = async (reportId) => {
         try {
-         const response= await fetch(`http://localhost:9000/vendor/BlockReport/retractBlockReport/${reportId}`, {
+         const response= await fetch(`${BASE_URL}/vendor/BlockReport/retractBlockReport/${reportId}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',

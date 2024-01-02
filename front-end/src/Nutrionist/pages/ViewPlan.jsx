@@ -5,6 +5,7 @@ import './Viewplan.css';
 import useTokenStore from '../../tokenStore';
 import { jwtDecode } from 'jwt-decode';
 import NutNav from '../components/N-Nav';
+import { BASE_URL } from '../../url';
 
 const MealPlansPage = () => {
   const token = useTokenStore((state) => state.token);
@@ -18,7 +19,7 @@ const MealPlansPage = () => {
   useEffect(() => {
     const fetchMealPlans = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/n/unsent-plans/${nutritionistId}`);
+        const response = await fetch(`${BASE_URL}/n/unsent-plans/${nutritionistId}`);
 
         if (!response.ok) {
           throw new Error('Failed to fetch meal plans');
@@ -40,7 +41,7 @@ const MealPlansPage = () => {
       const decodedToken = jwtDecode(token);
       const nutritionistName = decodedToken.name;
   
-      const response = await fetch('http://localhost:9000/n/send-notification', {
+      const response = await fetch(`${BASE_URL}/n/send-notification`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

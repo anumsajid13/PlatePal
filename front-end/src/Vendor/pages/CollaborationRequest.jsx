@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import NavigationBar from '../components/NavigationBar';
 import CollaborationRequestCard from '../components/RequetsCard';
 import "../assets/styles/request.css";
+import { BASE_URL } from '../../url';
 
 const CollaborationsRequestsList = () => {
   const [collaborationRequests, setCollaborationRequests] = useState([]);
@@ -19,7 +20,7 @@ const CollaborationsRequestsList = () => {
 
   const fetchRequests = async () => {
     try {
-      const response = await fetch(`http://localhost:9000/collaboration-request?filterType=${filterType}&filterValue=${filterValue}&sortBy=${sortOption}&sortOrder=${sortOrder}`, {
+      const response = await fetch(`${BASE_URL}/collaboration-request?filterType=${filterType}&filterValue=${filterValue}&sortBy=${sortOption}&sortOrder=${sortOrder}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,

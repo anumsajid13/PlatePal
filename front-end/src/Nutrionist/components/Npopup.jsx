@@ -3,6 +3,7 @@ import '../../Admin/components/notificationPopup.css';
 import useNotificationStore from './Nstore'; // Import the Zustand store
 import useTokenStore from '../../tokenStore';
 import { useHistory, useNavigate,useParams } from 'react-router-dom';
+import { BASE_URL } from '../../url';
 
 const NotificationPopup = ({ onClose }) => {
   const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ const NotificationPopup = ({ onClose }) => {
   const fetchNotifications = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:9000/n/unseen-notifications', {
+      const response = await fetch(`${BASE_URL}/n/unseen-notifications`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +40,7 @@ console.log("woo", data)
 
   const handleCreatePlan = async (notificationId,senderId,bmi) => {
     try {
-      const response = await fetch(`http://localhost:9000/n/n-createplan/${notificationId}`, {
+      const response = await fetch(`${BASE_URL}/n/n-createplan/${notificationId}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -63,7 +64,7 @@ console.log("woo", data)
 
   const changebool = async (notificationId) => {
     try {
-      const response = await fetch(`http://localhost:9000/n/n-createplan/${notificationId}`, {
+      const response = await fetch(`${BASE_URL}/n/n-createplan/${notificationId}`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,

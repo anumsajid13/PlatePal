@@ -4,6 +4,7 @@ import useTokenStore from '../../tokenStore.js';
 import '../assets/styles/chat.css';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../url';
 
 const VendorInbox = () => {
   const [chefs, setChefs] = useState([]);
@@ -31,7 +32,7 @@ const {token} = useTokenStore();
     try {
       setLoadingVendors(true);
   
-      const response = await fetch('http://localhost:9000/chatWithchef/chefs', {
+      const response = await fetch(`${BASE_URL}/chatWithchef/chefs`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -77,7 +78,7 @@ const {token} = useTokenStore();
     try {
       setLoadingMessages(true);
 
-      const response = await fetch(`http://localhost:9000/chatWithchef/retrievemessages/${chefId}`, {
+      const response = await fetch(`${BASE_URL}/chatWithchef/retrievemessages/${chefId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -93,7 +94,7 @@ const {token} = useTokenStore();
 
   const handleSendMessage = async () => {
     try {
-      const response = await fetch('http://localhost:9000/chatWithchef/sendmessage', {
+      const response = await fetch(`${BASE_URL}/chatWithchef/sendmessage`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

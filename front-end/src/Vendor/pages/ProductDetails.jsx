@@ -5,6 +5,7 @@ import useTokenStore from '../../tokenStore';
 import NavigationBar from '../components/NavigationBar';
 import image from '../assets/images/vendor_signup_image.jpg';
 import { useNavigate } from 'react-router-dom';
+import{BASE_URL} from '../../url';
 
 const IngredientDetails = () => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ const IngredientDetails = () => {
   useEffect(() => {
     const fetchIngredientDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:9000/ingredients/${id}`, {
+        const response = await fetch(`${BASE_URL}/ingredients/${id}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,

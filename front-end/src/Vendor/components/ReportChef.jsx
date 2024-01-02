@@ -2,7 +2,7 @@ import {React, useState} from 'react';
 import useTokenStore from '../../tokenStore';
 import '../../Chef/components/reportPopup.css';
 import ChefGenericPopup from '../../Chef/components/ChefGenericPopup';
-
+import {BASE_URL} from '../../url';
 
 const ReportChef = ({ vendorId, onClose  }) => {
 
@@ -29,7 +29,7 @@ const ReportChef = ({ vendorId, onClose  }) => {
         formData.append('proof', proof); // Assuming selectedFile is the uploaded image file
     
         try {
-            const response = await fetch(`http://localhost:9000/vendor/BlockReport/createBlockReport/${vendorId}`, {
+            const response = await fetch(`${BASE_URL}/vendor/BlockReport/createBlockReport/${vendorId}`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${token}`,

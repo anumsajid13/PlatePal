@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import useTokenStore from '../../tokenStore';
 import ChefGenericPopup from '../components/ChefGenericPopup';
 import VendorPopup from './VendorPopup';
+import { BASE_URL } from '../../url';
 
 const DisplayVendors = () => {
 
@@ -24,7 +25,7 @@ const DisplayVendors = () => {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await fetch('http://localhost:9000/vendors_chef/vendors-with-ingredients');
+            const response = await fetch(`${BASE_URL}/vendors_chef/vendors-with-ingredients`);
             if (!response.ok) {
               throw new Error('Network response was not ok');
             }
@@ -53,7 +54,7 @@ const DisplayVendors = () => {
 
       const handleButtonClick = async ( vendorId) => {
         try {
-          const response = await fetch(`http://localhost:9000/chefVendors/sendCollabRequest/${recipeId}/${vendorId}`, {
+          const response = await fetch(`${BASE_URL}/chefVendors/sendCollabRequest/${recipeId}/${vendorId}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

@@ -5,6 +5,7 @@ import useTokenStore from '../../tokenStore';
 import { useNavigate } from 'react-router-dom';
 import '../assets/styles/editProductInfo.css';
 import NavigationBar from '../components/NavigationBar';
+import { BASE_URL } from '../../url';
 
 const EditIngredient = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ const EditIngredient = () => {
   };
   useEffect(() => {
 
-      fetch(`http://localhost:9000/ingredients/${id}`, {
+      fetch(`${BASE_URL}/ingredients/${id}`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -80,7 +81,7 @@ const EditIngredient = () => {
       formData.append('ingredientData', JSON.stringify(updatedIngredient)); // Append JSON data
     console.log("formdata",formData);
       try {
-        const response = await fetch(`http://localhost:9000/ingredients/update/${id}`, {
+        const response = await fetch(`${BASE_URL}/ingredients/update/${id}`, {
           method: 'PUT',
           headers: {
             Authorization: `Bearer ${token}`,

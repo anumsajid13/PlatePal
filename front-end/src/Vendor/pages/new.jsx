@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useTokenStore from '../../tokenStore';
-
+import { BASE_URL } from '../../url';
 const CollaborationRequests = () => {
   const { token } = useTokenStore();
   const [collaborationRequests, setCollaborationRequests] = useState([]);
@@ -9,7 +9,7 @@ const CollaborationRequests = () => {
   useEffect(() => {
     const fetchCollaborationRequests = async () => {
       try {
-        const response = await fetch('http://localhost:9000/collaboration', {
+        const response = await fetch(`${BASE_URL}/collaboration`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,

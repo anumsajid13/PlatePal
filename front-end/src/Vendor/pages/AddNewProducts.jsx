@@ -5,6 +5,7 @@ import useTokenStore from '../../tokenStore';
 import NavigationBar from '../components/NavigationBar';
 import '../assets/styles/addNewProducts.css';
 import defaultPicture from '../assets/images/vendor_signup_image.jpg';
+import { BASE_URL } from '../../url';
 const AddNewProduct = () => {
   const navigate = useNavigate();
   const { token } = useTokenStore();
@@ -21,6 +22,7 @@ const AddNewProduct = () => {
   });
   const [unit, setUnit] = useState('1 kg'); 
 
+
   const handleAddIngredient = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -35,7 +37,7 @@ const AddNewProduct = () => {
     formData.append('stock', stock);
     console.log("formdata",formData)
     try {
-      const response = await fetch('http://localhost:9000/ingredients/new', {
+      const response = await fetch(`${BASE_URL}/ingredients/new`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`,
