@@ -129,14 +129,14 @@ const Navbar = ({ activeLink }) => {
       <div className="logo">Plate Pal</div>
       <div className="nav-links-1">
         <Link
-          to={`${BASE_URL}/recipe-seeker/Discover`}
+          to="https://plate-rcgu1aq30-anumsajid13s-projects.vercel.app/recipe-seeker/Discover"
           className={activeLink === 'Discover' ? 'active-link-12' : 'nolink'}
         >
           Discover
         </Link>
 
         <Link
-          to={`${BASE_URL}/recipe-seeker/Favourites`}
+          to="https://plate-rcgu1aq30-anumsajid13s-projects.vercel.app/recipe-seeker/Favourites"
           className={activeLink === 'Favourites' ? 'active-link-12' : 'nolink'}
         >
         My Favourites
