@@ -54,7 +54,7 @@ const AddNewProduct = () => {
       const newIngredient = await response.json();
       console.log('New ingredient added successfully:', newIngredient);
      alert('New ingredient added successfully');
-      //navigate('/Vendor/Mainpage');
+      navigate('/Vendor/Mainpage');
     } catch (error) {
      alert(`Error adding a new ingredient:${error.message}`);
     }
