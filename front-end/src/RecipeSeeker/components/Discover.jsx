@@ -227,7 +227,7 @@ const Discover = () => {
            {/* Today's Recipes */}
            <div className="todays-recipes-container">
 
-           <h2 className="Categories-choose" style={{marginBottom:"6px"}}>Today's Featured Recipes</h2>
+           <h2 className="Categories-choose" style={{marginBottom:"0px"}}>Today's Featured Recipes</h2>
               
               <div className="recipe-list-today">
               {todaysRecipes.length > 0 ? (
