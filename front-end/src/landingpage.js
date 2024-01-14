@@ -165,7 +165,7 @@ const LandingPage = () => {
 
       {/* Food information divs */}
       <div className="LALALALA" id='lala'>
-      <div className="recipe-list" style={{marginRight:"8%", gap:"2%"}}>
+      <div className="recipe-list" style={{ gap:"2%"}}>
           {recipes.map((recipe) => (
             <div key={recipe._id}>
               <RecipeCard
