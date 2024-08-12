@@ -97,7 +97,7 @@ const CollaborationCard = ({ collaboration }) => {
       )}
         
         <div  className='request'  onClick={openOverlay} >
-      <label>You are collaboration with Chef {chefName} on the recipe {recipeName}</label>
+      <label>You are collaborating with Chef {chefName} on the recipe {recipeName}</label>
       <label>Time: {formattedTime}</label>
     </div>
       </>

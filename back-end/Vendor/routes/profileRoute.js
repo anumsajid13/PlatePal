@@ -1,13 +1,14 @@
 const express = require('express');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const router = express.Router();
+require('dotenv').config();
 const authenticateToken = require('../../TokenAuthentication/token_authentication');
 const Vendor = require('../../models/Vendor Schema');
  const Collaboration=require('../../models/VendorCollaboration Schema'); 
  const CollaborationRequest=require('../../models/CollaborationRequest Schema');
 const VendorChefInbox=require('../../models/Vendor-Chef_Inbox Schema');
-const router = express.Router();
-require('dotenv').config();
+
 const multer = require('multer');
 
 
@@ -193,7 +194,10 @@ router.put('/editProfile', authenticateToken, upload.single('profilePicture'), a
     vendor.email = req.body.email || vendor.email;
     vendor.username = req.body.username || vendor.username;
 
-
+   if (1=1)
+   {
+    print("profile picture",req.file);
+   }
     // Update profile picture if provided
     if (req.file) {
       vendor.profilePicture = {
