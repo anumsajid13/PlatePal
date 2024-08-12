@@ -198,6 +198,7 @@ router.put('/editProfile', authenticateToken, upload.single('profilePicture'), a
    {
     print("profile picture",req.file);
    }
+   
     // Update profile picture if provided
     if (req.file) {
       vendor.profilePicture = {
