@@ -83,7 +83,7 @@ const Discover = () => {
 
       const data = await response.json();
 
-      const followingResponse = await fetch('${BASE_URL}/recepieSeeker/followings', {
+      const followingResponse = await fetch(`${BASE_URL}/recepieSeeker/followings`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -116,7 +116,7 @@ const Discover = () => {
  
   const fetchCategories = async () => {
     try {
-      const response = await fetch('${BASE_URL}/recepieSeeker/uniqueCategories');
+      const response = await fetch(`${BASE_URL}/recepieSeeker/uniqueCategories`);
       const data = await response.json();
       setCategories(data.uniqueCategories || []);
     } catch (error) {
@@ -131,7 +131,7 @@ const Discover = () => {
       const response = await fetch(url);
       const data = await response.json();
 
-      const followingResponse = await fetch('${BASE_URL}/recepieSeeker/followings', {
+      const followingResponse = await fetch(`${BASE_URL}/recepieSeeker/followings`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -227,7 +227,7 @@ const Discover = () => {
            {/* Today's Recipes */}
            <div className="todays-recipes-container">
 
-           <h2 className="Categories-choose">Today's Featured Recipes</h2>
+           <h2 className="Categories-choose" style={{marginBottom:"0px"}}>Today's Featured Recipes</h2>
               
               <div className="recipe-list-today">
               {todaysRecipes.length > 0 ? (
