@@ -96,9 +96,8 @@ router.get('/:collaborationId', authenticateToken, async (req, res) => {
       // Extract vendor ID from the authenticated user
       const vendorId = req.user._id;
   
-      // Extract collaboration ID from the request parameters
-      const collaborationId = req.params.collaborationId;
-  
+      // Extract collaboration ID from the request parameters    
+  const collaborationId = req.params.collaborationId;
       // Find the specific collaboration request for the specified vendor
       const collaboration = await VendorCollaboration.findOne({_id: collaborationId,vendor: vendorId})
        

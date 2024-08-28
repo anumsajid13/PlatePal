@@ -8,7 +8,7 @@ router.get('/', authenticateToken, async (req, res) => {
     try {
      
       const {  sortBy, sortOrder, type } = req.query;
-  
+  console.log(req.query);
       const sortOptions = {};
       if (sortBy) {
         let sortvalue;
